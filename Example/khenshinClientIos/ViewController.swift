@@ -34,7 +34,8 @@ class ViewController: UIViewController {
     
     lazy private var sampleButton: UIButton = {
         let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.yellow
+        button.backgroundColor = UIColor.black
+        button.setTitleColor(UIColor.white, for: .normal)
         button.setTitle("Start payment", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         return button
