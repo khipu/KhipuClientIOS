@@ -9,10 +9,62 @@
 import UIKit
 
 class ViewController: UIViewController {
+    
+    lazy private var sampleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Khenshin test!"
+        label.textColor = UIColor.white
+        return label
+    }()
+    
+    lazy private var sampleInput: UITextField = {
+        let sampleTextField =  UITextField()
+        sampleTextField.text = "paymentId"
+        sampleTextField.font = UIFont.systemFont(ofSize: 15)
+        sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        sampleTextField.autocorrectionType = UITextAutocorrectionType.no
+        sampleTextField.keyboardType = UIKeyboardType.default
+        sampleTextField.returnKeyType = UIReturnKeyType.done
+        sampleTextField.clearButtonMode = UITextField.ViewMode.whileEditing
+        sampleTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        sampleTextField.borderStyle = .roundedRect
+        return sampleTextField
+    }()
+    
+    lazy private var sampleButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.backgroundColor = UIColor.yellow
+        button.setTitle("Start payment", for: .normal)
+        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
+        return button
+
+    }()
+    
+    @objc func buttonAction(sender: UIButton!) {
+      print("Button tapped")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 16
+
+        stackView.addArrangedSubview(sampleLabel)
+        stackView.addArrangedSubview(sampleInput)
+        stackView.addArrangedSubview(sampleButton)
+
+        self.view.addSubview(stackView)
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
     }
 
     override func didReceiveMemoryWarning() {

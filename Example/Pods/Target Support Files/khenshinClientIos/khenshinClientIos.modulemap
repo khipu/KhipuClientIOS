@@ -1,0 +1,6 @@
+framework module khenshinClientIos {
+  umbrella header "khenshinClientIos-umbrella.h"
+
+  export *
+  module * { export * }
+}

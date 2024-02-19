@@ -1,0 +1,16 @@
+PODS:
+  - khenshinClientIos (0.1.0)
+
+DEPENDENCIES:
+  - khenshinClientIos (from `../`)
+
+EXTERNAL SOURCES:
+  khenshinClientIos:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  khenshinClientIos: cfb127acd7a6c9b3b49e27ce9587a851a351f6c9
+
+PODFILE CHECKSUM: 3ab990c303ca032cfcbe9adeb30642cab0005e76
+
+COCOAPODS: 1.11.3

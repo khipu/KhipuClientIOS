@@ -1,0 +1,6 @@
+framework module Pods_khenshinClientIos_Tests {
+  umbrella header "Pods-khenshinClientIos_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}
