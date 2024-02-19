@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import khenshinClientIos
 
 class ViewController: UIViewController {
+    
+    let khenshinClient = KhenshinClient(serverUrl: "https://khenshin-ws.khipu.com")
     
     lazy private var sampleLabel: UILabel = {
         let label = UILabel()
@@ -43,12 +46,14 @@ class ViewController: UIViewController {
     }()
     
     @objc func buttonAction(sender: UIButton!) {
-      print("Button tapped")
+        print("Connecting khenshin")
+        khenshinClient.connect()
+        print("Khenshin connected")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center

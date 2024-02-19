@@ -1,16 +1,39 @@
 PODS:
-  - khenshinClientIos (0.1.0)
+  - khenshinClientIos (0.1.0):
+    - KhenshinProtocol
+    - KhenshinSecureMessage
+    - Socket.IO-Client-Swift
+  - KhenshinProtocol (1.0.31)
+  - KhenshinSecureMessage (1.0.0):
+    - Sodium (= 0.9.1)
+  - Socket.IO-Client-Swift (16.1.0):
+    - Starscream (~> 4.0.6)
+  - Sodium (0.9.1)
+  - Starscream (4.0.6)
 
 DEPENDENCIES:
   - khenshinClientIos (from `../`)
+
+SPEC REPOS:
+  trunk:
+    - KhenshinProtocol
+    - KhenshinSecureMessage
+    - Socket.IO-Client-Swift
+    - Sodium
+    - Starscream
 
 EXTERNAL SOURCES:
   khenshinClientIos:
     :path: "../"
 
 SPEC CHECKSUMS:
-  khenshinClientIos: cfb127acd7a6c9b3b49e27ce9587a851a351f6c9
+  khenshinClientIos: 90ed004e3df5084ca4e423afd46b09c2b89f8779
+  KhenshinProtocol: d377147592b157d01f7f0d5317e7cbd039b36bc9
+  KhenshinSecureMessage: 9d4009b965e013c20f9f6d1cd81883c3830606d9
+  Socket.IO-Client-Swift: ee4b8f80a3db18dd7f32b266ddf273310609443c
+  Sodium: 23d11554ecd556196d313cf6130d406dfe7ac6da
+  Starscream: fb2c4510bebf908c62bd383bcf05e673720e91fd
 
-PODFILE CHECKSUM: 3ab990c303ca032cfcbe9adeb30642cab0005e76
+PODFILE CHECKSUM: 6cc1fa6d2c64e213dff5c57a43fa1806e1452049
 
 COCOAPODS: 1.11.3
