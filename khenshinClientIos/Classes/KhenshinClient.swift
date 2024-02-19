@@ -14,32 +14,17 @@ public class KhenshinClient {
     private let socketManager: SocketManager
     private let socket: SocketIOClient
     private let secureMessage: SecureMessage
+    private let KHENSHIN_PUBLIC_KEY: String = "w5tIW3Ic0JMlnYz2Ztu1giUIyhv+T4CZJuKKMrbSEF8="
     
     public init(serverUrl url: String) {
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
-        let  ca_cert = Bundle.main.path(forResource: "ca", ofType: "cert")
-        let  intermediate_cert = Bundle.main.path(forResource: "intermediate", ofType: "cert")
-        var certs = [SSLCert]()
-        if let certificateData = try? Data(contentsOf: URL(fileURLWithPath: ca_cert!)) as Data {
-            let certificate = SSLCert(data: certificateData)
-            certs.append(certificate)
-        }
-        
-        if let certificateData = try? Data(contentsOf: URL(fileURLWithPath: intermediate_cert!)) as Data {
-            let certificate = SSLCert(data: certificateData)
-            certs.append(certificate)
-        }
-
-        let security: SocketIO.SSLSecurity = SocketIO.SSLSecurity(certs: certs, usePublicKeys: false)
-        security.security.validatedDN = false
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
             .log(true),
             .compress,
-            .secure(true),
-            .selfSigned(true),
+            //.secure(true),
+            //.selfSigned(true),
             .forceWebsockets(true),
             .forceNew(true),
-            .security(security),
             .connectParams([
                 "clientId": UUID().uuidString,
                 "clientPublicKey":secureMessage.publicKeyBase64,
@@ -62,6 +47,8 @@ public class KhenshinClient {
         socket.on(MessageType.operationRequest.rawValue) { data, ack in
             if let message = data.first as? String {
                 print("Mensaje recibido: \(message)")
+                let desencryptedMessage = self.secureMessage.decrypt(cipherText: message, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                print("Mensaje desencriptado: \(desencryptedMessage)")
             }
         }
         // Agrega más eventos según sea necesario
@@ -74,12 +61,5 @@ public class KhenshinClient {
     }
     func sendMessage(_ message: String) {
         socket.emit("tu_evento_personalizado", message)
-    }
-}
-
-extension ServerLiveDataSocket : URLSessionDelegate
-{
-    func urlSession(_ session: URLSession, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        completionHandler(.useCredential, URLCredential(trust: challenge.protectionSpace.serverTrust!))
     }
 }

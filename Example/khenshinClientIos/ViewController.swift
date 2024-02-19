@@ -11,7 +11,7 @@ import khenshinClientIos
 
 class ViewController: UIViewController {
     
-    let khenshinClient = KhenshinClient(serverUrl: "https://khenshin-ws.khipu.com")
+    let khenshinClient = KhenshinClient(serverUrl: "http://localhost:8000")
     
     lazy private var sampleLabel: UILabel = {
         let label = UILabel()
