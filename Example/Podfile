@@ -1,0 +1,13 @@
+use_frameworks!
+
+platform :ios, '10.0'
+
+target 'khenshinClientIos_Example' do
+  pod 'khenshinClientIos', :path => '../'
+
+  target 'khenshinClientIos_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
