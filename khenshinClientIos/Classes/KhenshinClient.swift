@@ -16,6 +16,8 @@ public class KhenshinClient {
     private let secureMessage: SecureMessage
     private let KHENSHIN_PUBLIC_KEY: String
     private var operationId: String
+    private var receivedMessages: [String]
+    private var formMocks: FormMocks
     
     public init(serverUrl url: String, publicKey: String, operationId: String) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
@@ -30,7 +32,7 @@ public class KhenshinClient {
             .connectParams([
                 "clientId": UUID().uuidString,
                 "clientPublicKey":secureMessage.publicKeyBase64,
-                "locale":"es-cl",
+                "locale":"ES",
                 "userAgent":"ios",
                 "uiType":"payment",
                 "browserId":UUID().uuidString,
@@ -38,27 +40,228 @@ public class KhenshinClient {
             ])
         ])
         self.operationId = operationId
+        self.receivedMessages = []
         self.socket = socketManager.defaultSocket
+        self.formMocks = FormMocks()
         self.setupSocketEvents()
     }
     
     private func setupSocketEvents() {
-        // Configura eventos de Socket.IO aquí
         socket.on(clientEvent: .connect) { data, ack in
-            print("Socket conectado")
+            print("[id: \(self.operationId)] connected")
         }
+        
+        socket.on(clientEvent: .reconnect) { data, ack in
+            print("[id: \(self.operationId)] reconnect")
+        }
+        
+        socket.on(clientEvent: .reconnectAttempt) { data, ack in
+            print("[id: \(self.operationId)] reconnect attempt \(data.first!)")
+        }
+        
+        socket.on(clientEvent: .error) { data, ack in
+            print("[id: \(self.operationId)] error \(data.first!)")
+        }
+        
+        socket.on(clientEvent: .disconnect) { data, ack in
+            let reason = data.first as! String
+            print("[id: \(self.operationId)] disconnected, reason \(reason)")
+        }
+        
         socket.on(MessageType.operationRequest.rawValue) { data, ack in
-            if let message = data.first as? String {
-                print("Mensaje recibido: \(message)")
-                let desencryptedMessage = self.secureMessage.decrypt(cipherText: message, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-                print("Mensaje desencriptado: \(desencryptedMessage)")
+            if (self.isRepeatedMessage(data: data, type: MessageType.operationRequest.rawValue)) {
+                return
+            }
+            if ((data.first as? String) != nil) {
                 self.sendOperationResponse()
+            }
+        }
+        
+        socket.on(MessageType.translation.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.translation.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let translations = try Translations(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.formRequest.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.formRequest.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try FormRequest(decryptedMessage!)
+                let formResponse = self.formMocks.createResponse(request: formRequest)
+                self.sendMessage(type: MessageType.formResponse.rawValue, message: formResponse)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.progressInfo.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.progressInfo.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try ProgressInfo(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.siteInfo.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.siteInfo.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try SiteInfo(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.operationSuccess.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.operationSuccess.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try OperationSuccess(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.operationWarning.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.operationWarning.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try OperationWarning(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.operationFailure.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.operationFailure.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            print(decryptedMessage)
+            do {
+                let formRequest = try OperationFailure(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.operationDescriptorInfo.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.operationDescriptorInfo.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try OperationDescriptorInfo(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.operationInfo.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.operationInfo.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try OperationInfo(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.siteOperationComplete.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.siteOperationComplete.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try SiteOperationComplete(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.preAuthorizationStarted.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.preAuthorizationStarted.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try PreAuthorizationStarted(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
+            }
+        }
+        
+        socket.on(MessageType.preAuthorizationCanceled.rawValue) { data, ack in
+            if (self.isRepeatedMessage(data: data, type: MessageType.preAuthorizationCanceled.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let formRequest = try PreAuthorizationCanceled(decryptedMessage!)
+            } catch {
+                print("Error processing form message, mid \(mid)")
             }
         }
     }
     
     public func connect() {
         socket.connect()
+    }
+    
+    func isRepeatedMessage(data: [Any], type: String) -> Bool {
+        if let mid = data[1] as? String {
+            print("[id: \(self.operationId)] Received message \(type), mid \(mid)")
+            if (receivedMessages.contains(mid)) {
+                return true
+            }
+            receivedMessages.append(mid)
+        }
+        return false
     }
     
     func disconnect() {
@@ -88,7 +291,7 @@ public class KhenshinClient {
         
     }
     
-    func sendMessage(type: String, message: Encodable) {
+    public func sendMessage(type: String, message: Encodable) {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted
             do {
