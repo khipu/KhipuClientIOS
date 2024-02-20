@@ -9,30 +9,19 @@ public class KhenshinView {
 
     public init(containerView: UIView) {
         self.containerView = containerView
-
         overlayView = UIView(frame: containerView.bounds)
         overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         containerView.addSubview(overlayView)
     }
 
-    public func drawComponent(messageType: String, message: String) {
-        switch messageType {
-        case MessageType.operationInfo.rawValue:
-            drawOperationInfoComponent(message)
-        case MessageType.operationRequest.rawValue:
-            drawOperationRequestComponent()
-        default:
-            print("Tipo de mensaje no reconocido: \(messageType)")
-        }
-    }
 
-    private func drawOperationInfoComponent(_ message: String) {
+    public func drawProgressInfoComponent(progressInfo: ProgressInfo) {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        let progressInfo = ProgressInfo(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), message: message)
-        progressInfo.center = overlayView.center
-        overlayView.addSubview(progressInfo)
+        let progressInfoField = ProgressInfoField(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), progressInfo: progressInfo)
+        progressInfoField.center = overlayView.center
+        overlayView.addSubview(progressInfoField)
     }
 
     private func drawOperationRequestComponent() {

@@ -20,7 +20,7 @@ public class KhenshinClient {
     private var containerView: UIView
     private var khenshinView: KhenshinView
     private var formMocks: FormMocks
-    
+
     public init(serverUrl url: String, publicKey: String, operationId: String, containerView: UIView) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
@@ -48,31 +48,31 @@ public class KhenshinClient {
         self.khenshinView = KhenshinView(containerView: containerView)
         self.formMocks = FormMocks()
         self.setupSocketEvents()
-        
+
     }
-    
+
     private func setupSocketEvents() {
         socket.on(clientEvent: .connect) { data, ack in
             print("[id: \(self.operationId)] connected")
         }
-        
+
         socket.on(clientEvent: .reconnect) { data, ack in
             print("[id: \(self.operationId)] reconnect")
         }
-        
+
         socket.on(clientEvent: .reconnectAttempt) { data, ack in
             print("[id: \(self.operationId)] reconnect attempt \(data.first!)")
         }
-        
+
         socket.on(clientEvent: .error) { data, ack in
             print("[id: \(self.operationId)] error \(data.first!)")
         }
-        
+
         socket.on(clientEvent: .disconnect) { data, ack in
             let reason = data.first as! String
             print("[id: \(self.operationId)] disconnected, reason \(reason)")
         }
-        
+
         socket.on(MessageType.operationRequest.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.operationRequest.rawValue)) {
                 return
@@ -81,7 +81,7 @@ public class KhenshinClient {
                 self.sendOperationResponse()
             }
         }
-        
+
         socket.on(MessageType.translation.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.translation.rawValue)) {
                 return
@@ -95,7 +95,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.formRequest.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.formRequest.rawValue)) {
                 return
@@ -111,7 +111,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.progressInfo.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.progressInfo.rawValue)) {
                 return
@@ -121,11 +121,24 @@ public class KhenshinClient {
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
             do {
                 let formRequest = try KhenshinProtocol.ProgressInfo(decryptedMessage!)
+
+                if let jsonData = decryptedMessage?.data(using: .utf8) {
+                    do {
+                        let decoder = JSONDecoder()
+                        let progressInfo = try decoder.decode(ProgressInfo.self, from: jsonData)
+
+                        self.khenshinView.drawProgressInfoComponent(progressInfo: progressInfo)
+                    } catch {
+                        print("Error al decodificar JSON: \(error)")
+                    }
+                } else {
+                    print("Error al convertir cadena a datos.")
+                }
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.siteInfo.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.siteInfo.rawValue)) {
                 return
@@ -139,7 +152,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.operationSuccess.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.operationSuccess.rawValue)) {
                 return
@@ -153,7 +166,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.operationWarning.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.operationWarning.rawValue)) {
                 return
@@ -167,7 +180,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.operationFailure.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.operationFailure.rawValue)) {
                 return
@@ -182,7 +195,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.operationDescriptorInfo.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.operationDescriptorInfo.rawValue)) {
                 return
@@ -196,7 +209,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.operationInfo.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.operationInfo.rawValue)) {
                 return
@@ -206,12 +219,11 @@ public class KhenshinClient {
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
             do {
                 let formRequest = try OperationInfo(decryptedMessage!)
-                self.khenshinView.drawComponent(messageType: MessageType.operationInfo.rawValue, message: decryptedMessage!)
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.siteOperationComplete.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.siteOperationComplete.rawValue)) {
                 return
@@ -225,7 +237,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.preAuthorizationStarted.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.preAuthorizationStarted.rawValue)) {
                 return
@@ -239,7 +251,7 @@ public class KhenshinClient {
                 print("Error processing form message, mid \(mid)")
             }
         }
-        
+
         socket.on(MessageType.preAuthorizationCanceled.rawValue) { data, ack in
             if (self.isRepeatedMessage(data: data, type: MessageType.preAuthorizationCanceled.rawValue)) {
                 return
@@ -254,11 +266,11 @@ public class KhenshinClient {
             }
         }
     }
-    
+
     public func connect() {
         socket.connect()
     }
-    
+
     func isRepeatedMessage(data: [Any], type: String) -> Bool {
         if let mid = data[1] as? String {
             print("[id: \(self.operationId)] Received message \(type), mid \(mid)")
@@ -269,11 +281,11 @@ public class KhenshinClient {
         }
         return false
     }
-    
+
     func disconnect() {
         socket.disconnect()
     }
-    
+
     func sendOperationResponse() {
         if (self.operationId.count > 12){
             let operationResponse = OperationResponse(
@@ -294,9 +306,9 @@ public class KhenshinClient {
             )
             self.sendMessage(type: operationResponse.type.rawValue as String, message: operationResponse)
         }
-        
+
     }
-    
+
     public func sendMessage(type: String, message: Encodable) {
         let encoder = JSONEncoder()
         encoder.outputFormatting = .prettyPrinted

@@ -10,9 +10,9 @@ import UIKit
 import khenshinClientIos
 
 class ViewController: UIViewController {
-    
-    
-    
+
+
+
     lazy private var sampleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -20,10 +20,10 @@ class ViewController: UIViewController {
         label.textColor = UIColor.white
         return label
     }()
-    
+
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "sibbiiptnnzf"
+        sampleTextField.text = "9zzzr5c4pwku"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         sampleTextField.borderStyle = .roundedRect
         return sampleTextField
     }()
-    
+
     lazy private var sampleButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.black
@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         return button
 
     }()
-    
+
     @objc func buttonAction(sender: UIButton!) {
         print("Connecting khenshin")
         let khenshinClient = KhenshinClient(
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
@@ -81,7 +81,6 @@ class ViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
 
 }

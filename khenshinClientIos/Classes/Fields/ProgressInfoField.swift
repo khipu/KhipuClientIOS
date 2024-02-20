@@ -1,15 +1,7 @@
 import UIKit
+import KhenshinProtocol
 
-class ProgressInfo: UIView {
-
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
-        label.text = "Progress Info"
-        label.textColor = UIColor.black
-        return label
-    }()
+class ProgressInfoField: UIView {
 
     private let progressLabel: UILabel = {
         let label = UILabel()
@@ -25,11 +17,11 @@ class ProgressInfo: UIView {
         return imageView
     }()
 
-    init(frame: CGRect, message: String) {
+    init(frame: CGRect, progressInfo: ProgressInfo) {
         super.init(frame: frame)
         backgroundColor = UIColor.white
         setupViews()
-        updateUI(with: message)
+        updateUI(with: progressInfo)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -39,20 +31,13 @@ class ProgressInfo: UIView {
 
     private func setupViews() {
         backgroundColor = UIColor.white
-        addSubview(titleLabel)
         addSubview(progressLabel)
         addSubview(progressImageView)
 
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
         progressLabel.translatesAutoresizingMaskIntoConstraints = false
         progressImageView.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-
-            progressImageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
             progressImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
             progressImageView.heightAnchor.constraint(equalToConstant: 80),
             progressImageView.widthAnchor.constraint(equalToConstant: 80),
@@ -63,8 +48,8 @@ class ProgressInfo: UIView {
         ])
     }
 
-    private func updateUI(with message: String) {
-        progressLabel.text = message
+    private func updateUI(with progressInfo: ProgressInfo) {
+        progressLabel.text = progressInfo.message
         if let url = URL(string: "https://khenshin-web.s3.amazonaws.com/img/spin.apng") {
             URLSession.shared.dataTask(with: url) { (data, _, _) in
                 if let data = data, let image = UIImage(data: data) {
