@@ -11,7 +11,7 @@ import khenshinClientIos
 
 class ViewController: UIViewController {
     
-    let khenshinClient = KhenshinClient(serverUrl: "http://localhost:8000")
+    
     
     lazy private var sampleLabel: UILabel = {
         let label = UILabel()
@@ -23,7 +23,7 @@ class ViewController: UIViewController {
     
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "paymentId"
+        sampleTextField.text = "i8iml7yjjri3"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -47,6 +47,10 @@ class ViewController: UIViewController {
     
     @objc func buttonAction(sender: UIButton!) {
         print("Connecting khenshin")
+        let khenshinClient = KhenshinClient(
+            serverUrl: "http://localhost:8000",
+            publicKey: "w5tIW3Ic0JMlnYz2Ztu1giUIyhv+T4CZJuKKMrbSEF8=",
+            operationId: sampleInput.text!)
         khenshinClient.connect()
         print("Khenshin connected")
     }

@@ -14,9 +14,11 @@ public class KhenshinClient {
     private let socketManager: SocketManager
     private let socket: SocketIOClient
     private let secureMessage: SecureMessage
-    private let KHENSHIN_PUBLIC_KEY: String = "w5tIW3Ic0JMlnYz2Ztu1giUIyhv+T4CZJuKKMrbSEF8="
+    private let KHENSHIN_PUBLIC_KEY: String
+    private var operationId: String
     
-    public init(serverUrl url: String) {
+    public init(serverUrl url: String, publicKey: String, operationId: String) {
+        self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
             .log(true),
@@ -35,8 +37,9 @@ public class KhenshinClient {
                 "transports":["websocket"]
             ])
         ])
-        socket = socketManager.defaultSocket
-        setupSocketEvents()
+        self.operationId = operationId
+        self.socket = socketManager.defaultSocket
+        self.setupSocketEvents()
     }
     
     private func setupSocketEvents() {
@@ -49,17 +52,53 @@ public class KhenshinClient {
                 print("Mensaje recibido: \(message)")
                 let desencryptedMessage = self.secureMessage.decrypt(cipherText: message, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
                 print("Mensaje desencriptado: \(desencryptedMessage)")
+                self.sendOperationResponse()
             }
         }
-        // Agrega más eventos según sea necesario
     }
+    
     public func connect() {
         socket.connect()
     }
+    
     func disconnect() {
         socket.disconnect()
     }
-    func sendMessage(_ message: String) {
-        socket.emit("tu_evento_personalizado", message)
+    
+    func sendOperationResponse() {
+        if (self.operationId.count > 12){
+            let operationResponse = OperationResponse(
+                fingerprint: nil,
+                operationDescriptor: self.operationId,
+                operationID: nil,
+                sessionCookie: nil,
+                type: MessageType.operationResponse
+            )
+            self.sendMessage(type: operationResponse.type.rawValue as String, message: operationResponse)
+        } else {
+            let operationResponse = OperationResponse(
+                fingerprint: nil,
+                operationDescriptor: nil,
+                operationID: self.operationId,
+                sessionCookie: nil,
+                type: MessageType.operationResponse
+            )
+            self.sendMessage(type: operationResponse.type.rawValue as String, message: operationResponse)
+        }
+        
+    }
+    
+    func sendMessage(type: String, message: Encodable) {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+            do {
+                let jsonData = try encoder.encode(message)
+                if let jsonString = String(data: jsonData, encoding: .utf8){
+                    let encryptedMessage = self.secureMessage.encrypt(plainText: jsonString, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
+                    socket.emit(type, encryptedMessage!)
+                }
+            } catch {
+                print("Error sending message")
+            }
     }
 }
