@@ -7,17 +7,16 @@ public class KhenshinView {
     private let overlayView: UIView
 
 
-    public init(containerView: UIView, type: String, message: String) {
+    public init(containerView: UIView) {
         self.containerView = containerView
 
         overlayView = UIView(frame: containerView.bounds)
         overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         overlayView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         containerView.addSubview(overlayView)
-        drawComponent(for: type, with: message)
     }
 
-    private func drawComponent(for messageType: String, with message: String) {
+    public func drawComponent(messageType: String, message: String) {
         switch messageType {
         case MessageType.operationInfo.rawValue:
             drawOperationInfoComponent(message)

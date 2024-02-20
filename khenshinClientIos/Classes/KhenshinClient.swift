@@ -17,9 +17,11 @@ public class KhenshinClient {
     private let KHENSHIN_PUBLIC_KEY: String
     private var operationId: String
     private var receivedMessages: [String]
+    private var containerView: UIView
+    private var khenshinView: KhenshinView
     private var formMocks: FormMocks
     
-    public init(serverUrl url: String, publicKey: String, operationId: String) {
+    public init(serverUrl url: String, publicKey: String, operationId: String, containerView: UIView) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
@@ -42,8 +44,11 @@ public class KhenshinClient {
         self.operationId = operationId
         self.receivedMessages = []
         self.socket = socketManager.defaultSocket
+        self.containerView = containerView
+        self.khenshinView = KhenshinView(containerView: containerView)
         self.formMocks = FormMocks()
         self.setupSocketEvents()
+        
     }
     
     private func setupSocketEvents() {
@@ -115,7 +120,7 @@ public class KhenshinClient {
             let mid = data[1] as! String
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
             do {
-                let formRequest = try ProgressInfo(decryptedMessage!)
+                let formRequest = try KhenshinProtocol.ProgressInfo(decryptedMessage!)
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -201,6 +206,7 @@ public class KhenshinClient {
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
             do {
                 let formRequest = try OperationInfo(decryptedMessage!)
+                self.khenshinView.drawComponent(messageType: MessageType.operationInfo.rawValue, message: decryptedMessage!)
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
