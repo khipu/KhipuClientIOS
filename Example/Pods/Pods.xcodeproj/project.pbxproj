@@ -125,6 +125,7 @@
 		C1E6A06FBB341E783EE55402D4EC5AAE /* SocketAckManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 378F2A57A4E0DCDE3216DD134CAF4F7C /* SocketAckManager.swift */; };
 		C283E37B650EC4E384DB8A56359BA9A4 /* crypto_pwhash.h in Headers */ = {isa = PBXBuildFile; fileRef = AE4033BD0296781F8FB3CB341E226CF3 /* crypto_pwhash.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		C46D199FC936D58AD3322D9BF783370E /* FoundationHTTPServerHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0E7274430D0A4C4B5D5EC1D9A918E1B /* FoundationHTTPServerHandler.swift */; };
+		C5C3CF8A2B85039200244DB1 /* FormMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5C3CF892B85039200244DB1 /* FormMocks.swift */; };
 		C9EA9A4DCD5292F8395FCB4456650EE1 /* crypto_sign.h in Headers */ = {isa = PBXBuildFile; fileRef = B5047C050C61E2FECEDBBBFB70E2ED22 /* crypto_sign.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		CB31D13920C1AF516DBDBDB8750904D8 /* SocketRawView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAE6D6E9E56FEC3DB1770EB396B7DF0A /* SocketRawView.swift */; };
 		CB92145B4CE0AB13DAE8A7DDBBA1FC52 /* core.h in Headers */ = {isa = PBXBuildFile; fileRef = 2621EAF603DB08B7A6B1D5E84D7D8252 /* core.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -273,7 +274,7 @@
 		172C8B7487071CE85F4C5F364A8492FB /* Starscream-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Starscream-dummy.m"; sourceTree = "<group>"; };
 		17B97A034E741CA142294F0F447BCCAA /* Pods-khenshinClientIos_Tests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-khenshinClientIos_Tests.modulemap"; sourceTree = "<group>"; };
 		18BC92F90702CF7AC452AF4016A8331C /* crypto_stream_xsalsa20.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_stream_xsalsa20.h; path = Sodium/libsodium/crypto_stream_xsalsa20.h; sourceTree = "<group>"; };
-		19697139B25DB67B828BAA86EFC53F94 /* Clibsodium.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; path = Clibsodium.xcframework; sourceTree = "<group>"; };
+		19697139B25DB67B828BAA86EFC53F94 /* Clibsodium.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = wrapper.xcframework; path = Clibsodium.xcframework; sourceTree = "<group>"; };
 		1B8871C9CA86520BD0003106B4313EA8 /* crypto_core_salsa208.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_core_salsa208.h; path = Sodium/libsodium/crypto_core_salsa208.h; sourceTree = "<group>"; };
 		1E8384B4C2AAB641079B15A595AB2E83 /* Pods-khenshinClientIos_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-khenshinClientIos_Example-dummy.m"; sourceTree = "<group>"; };
 		1EE8278A0E03E972615AD5F58DACA564 /* ExitCode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExitCode.swift; path = Sodium/ExitCode.swift; sourceTree = "<group>"; };
@@ -290,7 +291,7 @@
 		277A2EE37A9683508F598F5BD3294077 /* Pods-khenshinClientIos_Tests */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-khenshinClientIos_Tests"; path = Pods_khenshinClientIos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2848CA97D9D9AC9F1E01F778C00B4884 /* crypto_scalarmult_curve25519.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_scalarmult_curve25519.h; path = Sodium/libsodium/crypto_scalarmult_curve25519.h; sourceTree = "<group>"; };
 		2862BB57FEBC32B5E887F824971E2D9F /* SocketEventHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketEventHandler.swift; path = Source/SocketIO/Client/SocketEventHandler.swift; sourceTree = "<group>"; };
-		2967A117FE19F3AEEE59B5C8F7D793A6 /* khenshinClientIos.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = khenshinClientIos.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		2967A117FE19F3AEEE59B5C8F7D793A6 /* khenshinClientIos.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = khenshinClientIos.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2D266DB3588999A538094C385C368240 /* Pods-khenshinClientIos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-khenshinClientIos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		2D7A215F107749330A230EABE1BF7BF4 /* StringHTTPHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = StringHTTPHandler.swift; path = Sources/Framer/StringHTTPHandler.swift; sourceTree = "<group>"; };
 		2E2CF0AD236652CF492C53DB5FAF267B /* WebSocket.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WebSocket.swift; path = Sources/Starscream/WebSocket.swift; sourceTree = "<group>"; };
@@ -330,7 +331,7 @@
 		54822919DA108637CD19DB5FF20C4AD6 /* KhenshinSecureMessage.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KhenshinSecureMessage.modulemap; sourceTree = "<group>"; };
 		5538B88A3E635347F451074872D02727 /* Sign.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sign.swift; path = Sodium/Sign.swift; sourceTree = "<group>"; };
 		5BEA8AB05B1D4B41D8D2B00C7C113514 /* crypto_pwhash_argon2i.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_pwhash_argon2i.h; path = Sodium/libsodium/crypto_pwhash_argon2i.h; sourceTree = "<group>"; };
-		60B718D29470D9324F7BE8D6F4B14C46 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; path = README.md; sourceTree = "<group>"; };
+		60B718D29470D9324F7BE8D6F4B14C46 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		614BA0F6F7D01355C0FB2DF5CA840D67 /* crypto_core_hsalsa20.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_core_hsalsa20.h; path = Sodium/libsodium/crypto_core_hsalsa20.h; sourceTree = "<group>"; };
 		61A9F4748CF613A7DA22F2CE1B598801 /* crypto_box_curve25519xsalsa20poly1305.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_box_curve25519xsalsa20poly1305.h; path = Sodium/libsodium/crypto_box_curve25519xsalsa20poly1305.h; sourceTree = "<group>"; };
 		63E664CD645CA16F04ED35D0AE82F5B2 /* Aead.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Aead.swift; path = Sodium/Aead.swift; sourceTree = "<group>"; };
@@ -380,7 +381,7 @@
 		9B5D31FF26F1749B9EC73106E97939EE /* Sodium-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Sodium-Info.plist"; sourceTree = "<group>"; };
 		9C580F929DB807048A9177ED4BD02194 /* Starscream-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Starscream-prefix.pch"; sourceTree = "<group>"; };
 		9CA69A4FEE26C233AC53816D308968FC /* crypto_verify_32.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_verify_32.h; path = Sodium/libsodium/crypto_verify_32.h; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9DD70ABFBA90C8106B87FA0D87747EF1 /* Pods-khenshinClientIos_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-khenshinClientIos_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9E4F7BC11501DD14D982E9299E255C23 /* crypto_core_hchacha20.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_core_hchacha20.h; path = Sodium/libsodium/crypto_core_hchacha20.h; sourceTree = "<group>"; };
 		9F71252711C75261EC0AFE3512300579 /* khenshinClientIos-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "khenshinClientIos-dummy.m"; sourceTree = "<group>"; };
@@ -419,6 +420,7 @@
 		C3C54F0A974E6D677B336A53CB567F71 /* Sodium.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sodium.swift; path = Sodium/Sodium.swift; sourceTree = "<group>"; };
 		C43399A199DBA23BA7A64242B80CE827 /* KhenshinProtocol */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KhenshinProtocol; path = KhenshinProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C56A52CE74A3F351B78A2147B3296BCE /* Socket.IO-Client-Swift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Socket.IO-Client-Swift.release.xcconfig"; sourceTree = "<group>"; };
+		C5C3CF892B85039200244DB1 /* FormMocks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormMocks.swift; sourceTree = "<group>"; };
 		C7CD1A18AA6ED4DB1649A957CDD00B62 /* Starscream.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Starscream.debug.xcconfig; sourceTree = "<group>"; };
 		C8161D5CA248FBFDC34B0ADD8469251A /* SocketIOClientOption.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SocketIOClientOption.swift; path = Source/SocketIO/Client/SocketIOClientOption.swift; sourceTree = "<group>"; };
 		C8700B7A783BD69B4DE9336E92AAF97F /* Starscream.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Starscream.release.xcconfig; sourceTree = "<group>"; };
@@ -456,7 +458,7 @@
 		F62432594465C0393F0A0E60F1D56396 /* crypto_secretbox_xsalsa20poly1305.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_secretbox_xsalsa20poly1305.h; path = Sodium/libsodium/crypto_secretbox_xsalsa20poly1305.h; sourceTree = "<group>"; };
 		F76C96AEFDEAD3787824B9E647D4AE23 /* crypto_pwhash_argon2id.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_pwhash_argon2id.h; path = Sodium/libsodium/crypto_pwhash_argon2id.h; sourceTree = "<group>"; };
 		F91AF7469973618F620863DA2A198DC5 /* sodium_lib.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = sodium_lib.h; path = Sodium/libsodium/sodium_lib.h; sourceTree = "<group>"; };
-		FD012007974958FD69D0935DA317F93A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
+		FD012007974958FD69D0935DA317F93A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		FD5EF365950F3E635AB0106C9F4E90CC /* WebSocketServer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = WebSocketServer.swift; path = Sources/Server/WebSocketServer.swift; sourceTree = "<group>"; };
 		FEDA00B9DD0B99C29F66ADDB19CA6D66 /* Socket.IO-Client-Swift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Socket.IO-Client-Swift-Info.plist"; sourceTree = "<group>"; };
 		FF946FAE1C5139F0257D9A65561F6433 /* crypto_auth_hmacsha256.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = crypto_auth_hmacsha256.h; path = Sodium/libsodium/crypto_auth_hmacsha256.h; sourceTree = "<group>"; };
@@ -547,7 +549,6 @@
 				7207B12D7F713F1C3F984B3C6C31C870 /* SecureMessage.swift */,
 				152DEB5C563EF60823F9F17ECC1FDB63 /* Support Files */,
 			);
-			name = KhenshinSecureMessage;
 			path = KhenshinSecureMessage;
 			sourceTree = "<group>";
 		};
@@ -608,7 +609,6 @@
 				B3DAD73EE2CB4882DA49E1E57FA67094 /* KhenshinProtocol.swift */,
 				3C34C643D8E64AF4C80E39E823165DB4 /* Support Files */,
 			);
-			name = KhenshinProtocol;
 			path = KhenshinProtocol;
 			sourceTree = "<group>";
 		};
@@ -637,7 +637,6 @@
 				115255E8B1DCD6C776B35A44102024F9 /* WSEngine.swift */,
 				A43373383BAAEC8F8B8B8A92C23D800F /* Support Files */,
 			);
-			name = Starscream;
 			path = Starscream;
 			sourceTree = "<group>";
 		};
@@ -693,7 +692,6 @@
 				9405E6AD07C97F0D06AC14FDAD0C96B4 /* SocketTypes.swift */,
 				EBBD29580DF714E3C6F7C8B88488E265 /* Support Files */,
 			);
-			name = "Socket.IO-Client-Swift";
 			path = "Socket.IO-Client-Swift";
 			sourceTree = "<group>";
 		};
@@ -747,6 +745,7 @@
 		C2D1687D1954E514D735B67BE7763C80 /* khenshinClientIos */ = {
 			isa = PBXGroup;
 			children = (
+				C5C3CF882B85036C00244DB1 /* mocks */,
 				871CCA97A9FF1E07732AA5DBD94AB049 /* KhenshinClient.swift */,
 				01B77433C49569FD03D42625476921F3 /* Pod */,
 				EF047EC95A50DCFB711F3F6ABFB46F0F /* Support Files */,
@@ -761,6 +760,14 @@
 				C2D1687D1954E514D735B67BE7763C80 /* khenshinClientIos */,
 			);
 			name = "Development Pods";
+			sourceTree = "<group>";
+		};
+		C5C3CF882B85036C00244DB1 /* mocks */ = {
+			isa = PBXGroup;
+			children = (
+				C5C3CF892B85039200244DB1 /* FormMocks.swift */,
+			);
+			path = mocks;
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -883,7 +890,6 @@
 				D8CC0876457CB2265F964E822B11D68D /* Frameworks */,
 				B626E0805E81A0849590805A93A62BDF /* Support Files */,
 			);
-			name = Sodium;
 			path = Sodium;
 			sourceTree = "<group>";
 		};
@@ -1345,6 +1351,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5C3CF8A2B85039200244DB1 /* FormMocks.swift in Sources */,
 				84322146C0C9B7DD93AF29A1DAB125D9 /* KhenshinClient.swift in Sources */,
 				2FD9CB0C10580E1C59969F314C84D64E /* khenshinClientIos-dummy.m in Sources */,
 			);
@@ -1873,8 +1880,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				STRIP_INSTALLED_PRODUCT = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 5.0;
 				SYMROOT = "${SRCROOT}/../build";
 			};
