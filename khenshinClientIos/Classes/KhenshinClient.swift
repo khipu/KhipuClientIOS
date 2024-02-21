@@ -97,19 +97,20 @@ public class KhenshinClient {
         }
 
         socket.on(MessageType.formRequest.rawValue) { data, ack in
-            if (self.isRepeatedMessage(data: data, type: MessageType.formRequest.rawValue)) {
-                return
-            }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            do {
-                let formRequest = try FormRequest(decryptedMessage!)
-                let formResponse = self.formMocks.createResponse(request: formRequest)
-                self.sendMessage(type: MessageType.formResponse.rawValue, message: formResponse)
-            } catch {
-                print("Error processing form message, mid \(mid)")
-            }
+                    if (self.isRepeatedMessage(data: data, type: MessageType.formRequest.rawValue)) {
+                        return
+                    }
+                    let encryptedData = data.first as! String
+                    let mid = data[1] as! String
+                    let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                    do {
+                        let formRequest = try FormRequest(decryptedMessage!)
+                        let formResponse = self.formMocks.createResponse(request: formRequest)
+                        self.khenshinView.drawOperationRequestComponent(formRequest: formRequest)
+                        self.sendMessage(type: MessageType.formResponse.rawValue, message: formResponse)
+                    } catch {
+                        print("Error processing form message, mid \(mid)")
+                    }
         }
 
         socket.on(MessageType.progressInfo.rawValue) { data, ack in

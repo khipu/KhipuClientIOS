@@ -14,12 +14,12 @@ public class FormMocks {
         let formResponse = FormResponse(answers: answers, id: request.id, type: MessageType.formResponse)
         return formResponse
     }
-    
+
     func createItemResponse(item: FormItem) -> FormItemAnswer {
         let response = FormItemAnswer(id: item.id, type: item.type, value: getResponseFromType(item: item))
         return response
     }
-    
+
     func getResponseFromType(item: FormItem) -> String {
         switch(item.type.rawValue) {
         case FormItemTypes.text.rawValue:
@@ -29,7 +29,7 @@ public class FormMocks {
                 return "1234"
             }
             break
-        case FormItemTypes.coordinates.rawValue:
+        /*case FormItemTypes.coordinates.rawValue:
             return "99|99|99"
         case FormItemTypes.list.rawValue:
             return (item.options?.first?.value)!
@@ -37,6 +37,7 @@ public class FormMocks {
             return "158388235"
         case FormItemTypes.groupedList.rawValue:
             return (item.groupedOptions?.options?.first?.value)!
+         */
         default:
             print("no puedo responder mensaje del tipo \(item.type.rawValue)")
             break
