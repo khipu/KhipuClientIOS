@@ -16,12 +16,12 @@ class BankSelectField: UIView {
     private var imageCache: [String: UIImage] = [:]
     private var isReadyToShow: Bool = false
 
-    init(frame: CGRect, item: FormItem, continueLabel: String) {
+    init(frame: CGRect, formItem: FormItem) {
         super.init(frame: frame)
         setupSegmentedControl()
         setupCollectionView()
 
-        if let groupedOptions = item.groupedOptions, let options = groupedOptions.options {
+        if let groupedOptions = formItem.groupedOptions, let options = groupedOptions.options {
             banksPersonas = options.filter { $0.tag == "Persona" }
             banksEmpresa = options.filter { $0.tag == "Empresa" }
             downloadImages(for: banksPersonas)
