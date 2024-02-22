@@ -35,9 +35,9 @@ public class KhenshinView {
             if (item.email!) {
                     return nil//EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), title: item.title ?? "")
                 }
-                return TextField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item) //questionAsText(formItem, props.bank))
+                return nil//TextField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item) //questionAsText(formItem, props.bank))
            case FormItemTypes.rut:
-               return nil//questionAsRut(formItem, props.bank)
+               return RutField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
            case FormItemTypes.list:
                return nil//questionAsRadioGroup(formItem)
            case FormItemTypes.groupedList:
