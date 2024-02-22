@@ -102,7 +102,10 @@ public class KhenshinView: UIViewController {
         khenshinClient!.setupSocketEvents()
             .subscribe(
                 onNext: { value in
-                    print("EVENTO REACTIVO \(value)")
+                    let messageType = value[0]
+                    let message = value[1]
+                    print("DIBUJANDO COMPONENTE TIPO \(messageType)")
+                    self.drawComponent(messageType: messageType, message: message)
                 }, onError: { error in
                     print("ERROR REACTIVO: \(error)")
                 }, onCompleted: {
@@ -139,10 +142,16 @@ public class KhenshinView: UIViewController {
         return label
     }()
 
-    public func drawComponent(messageType: String, message: Encodable) {
+    public func drawComponent(messageType: String, message: String) {
         switch messageType {
-        case MessageType.operationInfo.rawValue:
-            drawOperationInfoComponent(message: message as! ProgressInfo)
+        case MessageType.progressInfo.rawValue:
+            do {
+                let progressInfo = try ProgressInfo(message)
+                drawProgressInfoComponent(message: progressInfo)
+            } catch {
+                print("Error processing ProgressInfo message, \(message)")
+            }
+            
         //case MessageType.operationRequest.rawValue:
           //  drawOperationRequestComponent()
         default:
@@ -150,10 +159,10 @@ public class KhenshinView: UIViewController {
         }
     }
 
-    private func drawOperationInfoComponent(message: ProgressInfo) {
+    private func drawProgressInfoComponent(message: ProgressInfo) {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        let progressInfo = ProgressInfoView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), message: message)
+        let progressInfo = ProgressInfoField(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), progressInfo: message)
         component.addArrangedSubview(progressInfo)
         //progressInfo.center = overlayView.center
         //overlayView.addSubview(progressInfo)

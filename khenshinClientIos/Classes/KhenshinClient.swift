@@ -47,10 +47,9 @@ public class KhenshinClient {
         
     }
     
-    public func setupSocketEvents() -> Observable<String> {
+    public func setupSocketEvents() -> Observable<[String]> {
         return Observable.create { observer in
             self.socket.on(clientEvent: .connect) { data, ack in
-                observer.onNext("connected")
                 print("[id: \(self.operationId)] connected")
             }
             
@@ -72,7 +71,6 @@ public class KhenshinClient {
             }
             
             self.socket.on(MessageType.operationRequest.rawValue) { data, ack in
-                observer.onNext(MessageType.operationRequest.rawValue)
                 if (self.isRepeatedMessage(data: data, type: MessageType.operationRequest.rawValue)) {
                     return
                 }
@@ -82,13 +80,13 @@ public class KhenshinClient {
             }
             
             self.socket.on(MessageType.translation.rawValue) { data, ack in
-                observer.onNext(MessageType.translation.rawValue)
                 if (self.isRepeatedMessage(data: data, type: MessageType.translation.rawValue)) {
                     return
                 }
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.translation.rawValue, decryptedMessage!])
                 do {
                     let translations = try Translations(decryptedMessage!)
                 } catch {
@@ -97,13 +95,14 @@ public class KhenshinClient {
             }
             
             self.socket.on(MessageType.formRequest.rawValue) { data, ack in
-                observer.onNext(MessageType.formRequest.rawValue)
+                
                 if (self.isRepeatedMessage(data: data, type: MessageType.formRequest.rawValue)) {
                     return
                 }
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.formRequest.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try FormRequest(decryptedMessage!)
                     let formResponse = self.formMocks.createResponse(request: formRequest)
@@ -114,13 +113,13 @@ public class KhenshinClient {
             }
             
             self.socket.on(MessageType.progressInfo.rawValue) { data, ack in
-                observer.onNext(MessageType.progressInfo.rawValue)
                 if (self.isRepeatedMessage(data: data, type: MessageType.progressInfo.rawValue)) {
                     return
                 }
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.progressInfo.rawValue, decryptedMessage!])
                 do {
                     let progressInfo = try ProgressInfo(decryptedMessage!)
                     //self.khenshinView.drawComponent(messageType: MessageType.operationInfo.rawValue, message: progressInfo)
@@ -136,6 +135,7 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.siteInfo.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try SiteInfo(decryptedMessage!)
                 } catch {
@@ -150,6 +150,7 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.operationSuccess.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try OperationSuccess(decryptedMessage!)
                 } catch {
@@ -164,6 +165,7 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.operationWarning.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try OperationWarning(decryptedMessage!)
                 } catch {
@@ -178,7 +180,7 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-                print(decryptedMessage)
+                observer.onNext([MessageType.operationFailure.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try OperationFailure(decryptedMessage!)
                 } catch {
@@ -193,6 +195,7 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.operationDescriptorInfo.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try OperationDescriptorInfo(decryptedMessage!)
                 } catch {
@@ -207,6 +210,7 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.operationInfo.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try OperationInfo(decryptedMessage!)
                     
@@ -222,6 +226,7 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.siteOperationComplete.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try SiteOperationComplete(decryptedMessage!)
                 } catch {
@@ -236,6 +241,7 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.preAuthorizationStarted.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try PreAuthorizationStarted(decryptedMessage!)
                 } catch {
@@ -250,13 +256,14 @@ public class KhenshinClient {
                 let encryptedData = data.first as! String
                 let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+                observer.onNext([MessageType.preAuthorizationCanceled.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try PreAuthorizationCanceled(decryptedMessage!)
                 } catch {
                     print("Error processing form message, mid \(mid)")
                 }
             }
-            //self.socket.connect()
+            
             return Disposables.create {
                 self.socket.disconnect()
             }
