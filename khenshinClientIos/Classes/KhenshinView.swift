@@ -33,15 +33,15 @@ public class KhenshinView {
         switch item.type {
         case FormItemTypes.text:
             if (item.email!) {
-                    return nil//EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), title: item.title ?? "")
+                    return EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
                 }
-                return nil//TextField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item) //questionAsText(formItem, props.bank))
+                return TextField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
            case FormItemTypes.rut:
                return RutField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
            case FormItemTypes.list:
                return nil//questionAsRadioGroup(formItem)
            case FormItemTypes.groupedList:
-               return nil//BankSelectField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), item: item, continueLabel: "Continue")
+               return BankSelectField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), item: item, continueLabel: "Continue")
            case FormItemTypes.coordinates:
                return nil//questionAsCoordinates(formItem, props.errorMessage)
            case FormItemTypes.imageChallenge:
