@@ -1,4 +1,5 @@
 import UIKit
+import APNGKit
 import KhenshinProtocol
 
 class ProgressInfoField: UIView {
@@ -11,8 +12,8 @@ class ProgressInfoField: UIView {
         return label
     }()
 
-    private let progressImageView: UIImageView = {
-        let imageView = UIImageView()
+    private let progressImageView: APNGImageView = {
+        let imageView = APNGImageView()
         imageView.contentMode = .scaleAspectFit
         return imageView
     }()
@@ -51,14 +52,25 @@ class ProgressInfoField: UIView {
     private func updateUI(with progressInfo: ProgressInfo) {
         progressLabel.text = progressInfo.message
         if let url = URL(string: "https://khenshin-web.s3.amazonaws.com/img/spin.apng") {
-            URLSession.shared.dataTask(with: url) { (data, _, _) in
-                if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.progressImageView.image = image
-                        self.layoutIfNeeded()
+            URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
+                guard let self = self else { return }
+
+                do {
+                    if let data = data {
+                        let image = try APNGImage(data: data)
+                        DispatchQueue.main.async {
+                            self.progressImageView.image = image
+                            self.layoutIfNeeded()
+                        }
+                    } else {
+                        print("Image data is nil.")
                     }
+                } catch {
+                    print("Failed to load APNG image: \(error)")
                 }
             }.resume()
         }
     }
+
+
 }
