@@ -29,7 +29,7 @@ public class FormMocks {
                 return "1234"
             }
             break
-        /*case FormItemTypes.coordinates.rawValue:
+        case FormItemTypes.coordinates.rawValue:
             return "99|99|99"
         case FormItemTypes.list.rawValue:
             return (item.options?.first?.value)!
@@ -37,7 +37,6 @@ public class FormMocks {
             return "158388235"
         case FormItemTypes.groupedList.rawValue:
             return (item.groupedOptions?.options?.first?.value)!
-         */
         default:
             print("no puedo responder mensaje del tipo \(item.type.rawValue)")
             break
