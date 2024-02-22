@@ -43,5 +43,6 @@ TODO: Add long description of the pod here.
   s.dependency 'KhenshinSecureMessage'
   s.dependency 'KhenshinProtocol'
   s.dependency 'APNGKit'
-
+  s.dependency 'RxSwift'
+  s.dependency 'RxCocoa'
 end

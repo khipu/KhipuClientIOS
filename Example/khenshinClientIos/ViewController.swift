@@ -46,7 +46,10 @@ class ViewController: UIViewController {
     }()
 
     @objc func buttonAction(sender: UIButton!) {
-        print("Connecting khenshin")
+        let khenshinView = KhenshinView(operationId: sampleInput.text!)
+        present(khenshinView, animated: true, completion: nil)
+        
+        /*print("Connecting khenshin")
         let khenshinClient = KhenshinClient(
             serverUrl: "http://localhost:8000",
             publicKey: "w5tIW3Ic0JMlnYz2Ztu1giUIyhv+T4CZJuKKMrbSEF8=",
@@ -54,7 +57,8 @@ class ViewController: UIViewController {
             containerView: self.view
         )
         khenshinClient.connect()
-        print("Khenshin connected")
+        print("Khenshin connected")*/
+        
     }
 
     override func viewDidLoad() {
@@ -74,6 +78,9 @@ class ViewController: UIViewController {
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
