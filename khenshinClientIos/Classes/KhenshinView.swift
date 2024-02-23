@@ -2,61 +2,10 @@ import UIKit
 import RxSwift
 import KhenshinProtocol
 
-/*
-public class KhenshinView {
-
-    private let containerView: UIView
-
-
-    public init(containerView: UIView) {
-        self.containerView = containerView
-    }
-
-
-    public func drawProgressInfoComponent(progressInfo: ProgressInfo) {
-        let screenWidth = UIScreen.main.bounds.width
-        let screenHeight = UIScreen.main.bounds.height
-        let progressInfoField = ProgressInfoField(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), progressInfo: progressInfo)
-        progressInfoField.center = containerView.center
-        containerView.addSubview(progressInfoField)
-    }
-
-
-    public func drawOperationRequestComponent(formRequest: FormRequest) {
-        for item in formRequest.items {
-            if let itemView = createFormItemView(item: item) {
-                itemView.center = containerView.center
-                containerView.addSubview(itemView)
-            }
-        }
-    }
-
-    private func createFormItemView(item: FormItem) -> UIView? {
-        switch item.type {
-        case FormItemTypes.text:
-            if (item.email!) {
-                    return EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
-                }
-                return TextField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
-           case FormItemTypes.rut:
-               return RutField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
-           case FormItemTypes.list:
-               return nil//questionAsRadioGroup(formItem)
-           case FormItemTypes.groupedList:
-               return BankSelectField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), item: item, continueLabel: "Continue")
-           case FormItemTypes.coordinates:
-               return nil//questionAsCoordinates(formItem, props.errorMessage)
-           case FormItemTypes.imageChallenge:
-               return nil//questionAsImageChallenge(formItem)
-           default:
-               return nil
-        }
-    }*/
 public class KhenshinView: UIViewController {
     var operationId: String?
     var khenshinClient: KhenshinClient?
     let disposeBag = DisposeBag()
-    
     
     public init(operationId: String) {
         super.init(nibName: nil, bundle: nil)
@@ -66,7 +15,6 @@ public class KhenshinView: UIViewController {
             publicKey: "w5tIW3Ic0JMlnYz2Ztu1giUIyhv+T4CZJuKKMrbSEF8=",
             operationId: self.operationId!
         )
-        
     }
     
     required init?(coder aDecoder: NSCoder){
@@ -96,8 +44,6 @@ public class KhenshinView: UIViewController {
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-        
-        
         
         khenshinClient!.setupSocketEvents()
             .subscribe(
@@ -143,62 +89,29 @@ public class KhenshinView: UIViewController {
     }()
 
     public func drawComponent(messageType: String, message: String) {
+        var component: UIView!
         switch messageType {
         case MessageType.progressInfo.rawValue:
             do {
                 let progressInfo = try ProgressInfo(message)
-                drawProgressInfoComponent(message: progressInfo)
+                component = drawProgressInfoComponent(message: progressInfo)
             } catch {
                 print("Error processing ProgressInfo message, \(message)")
             }
-            
-        //case MessageType.operationRequest.rawValue:
-          //  drawOperationRequestComponent()
+            break
         default:
             print("Tipo de mensaje no reconocido: \(messageType)")
+            return
         }
+        self.component.subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+        self.component.addArrangedSubview(component)
     }
 
-    private func drawProgressInfoComponent(message: ProgressInfo) {
+    private func drawProgressInfoComponent(message: ProgressInfo) -> UIView {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        let progressInfo = ProgressInfoField(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), progressInfo: message)
-        component.addArrangedSubview(progressInfo)
-        //progressInfo.center = overlayView.center
-        //overlayView.addSubview(progressInfo)
+        return ProgressInfoField(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), progressInfo: message)
     }
-
-    /*private func drawOperationRequestComponent() {
-    let operationRequestMessage = """
-        {
-            "type": "FORM_REQUEST",
-            "id": "e0287b9a-901b-4df8-831c-6ccf36635856",
-            "title": "Enter your e-mail",
-            "progress": {},
-            "items": [
-                {
-                    "type": "TEXT",
-                    "id": "email",
-                    "label": "E-mail",
-                    "hint": "Here you will receive your payment receipt",
-                    "defaultValue": "",
-                    "secure": false,
-                    "email": true,
-                    "placeHolder": "Ex: name@mail.com"
-                }
-            ],
-            "timeout": 300,
-            "rememberValues": false
-        }
-        """
-        do {
-         let jsonData = operationRequestMessage.data(using: .utf8)!
-         let formRequest = try JSONDecoder().decode(FormRequest.self, from: jsonData)
-         let emailField = EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), title: formRequest.title ?? "")
-         emailField.center = overlayView.center
-         overlayView.addSubview(emailField)
-         } catch {
-             print("Error decoding JSON: \(error)")
-         }
-       }*/
 }
