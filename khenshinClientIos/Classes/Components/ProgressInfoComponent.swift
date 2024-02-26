@@ -2,7 +2,7 @@ import UIKit
 import APNGKit
 import KhenshinProtocol
 
-class ProgressInfoField: UIView {
+class ProgressInfoComponent: UIView {
 
     private let progressLabel: UILabel = {
         let label = UILabel()

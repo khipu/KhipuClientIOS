@@ -100,16 +100,8 @@ public class KhenshinClient {
                     return
                 }
                 let encryptedData = data.first as! String
-                let mid = data[1] as! String
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
                 observer.onNext([MessageType.formRequest.rawValue, decryptedMessage!])
-                do {
-                    let formRequest = try FormRequest(decryptedMessage!)
-                    let formResponse = self.formMocks.createResponse(request: formRequest)
-                    self.sendMessage(type: MessageType.formResponse.rawValue, message: formResponse)
-                } catch {
-                    print("Error processing form message, mid \(mid)")
-                }
             }
             
             self.socket.on(MessageType.progressInfo.rawValue) { data, ack in
@@ -122,7 +114,6 @@ public class KhenshinClient {
                 observer.onNext([MessageType.progressInfo.rawValue, decryptedMessage!])
                 do {
                     let progressInfo = try ProgressInfo(decryptedMessage!)
-                    //self.khenshinView.drawComponent(messageType: MessageType.operationInfo.rawValue, message: progressInfo)
                 } catch {
                     print("Error processing form message, mid \(mid)")
                 }

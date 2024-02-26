@@ -3,7 +3,7 @@ import KhenshinProtocol
 
 
 class EmailField: UIView, UITextFieldDelegate {
-    var formItem: FormItem
+    var formItem: FormItem?
     var validateField: ((String) -> Void)?
     var onChange: ((String) -> Void)?
     
@@ -27,45 +27,44 @@ class EmailField: UIView, UITextFieldDelegate {
 
     private let emailTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Ingresa tu email"
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.borderStyle = UITextField.BorderStyle.roundedRect
         return textField
     }()
 
     init(frame: CGRect, formItem: FormItem) {
-        self.formItem = formItem
         super.init(frame: frame)
-        setupUI()
+        self.formItem = formItem
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI() {
+    override func didMoveToSuperview() {
         addSubview(titleLabel)
         addSubview(emailTextField)
         addSubview(errorLabel)
-        titleLabel.text = self.formItem.title
-
+        titleLabel.text = self.formItem!.title
+        emailTextField.placeholder = self.formItem!.placeHolder
+/*
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            emailTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
-            emailTextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            emailTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+            emailTextField.leadingAnchor.constraint(equalTo: leadingAnchor),
+            emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor),
 
-            errorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 5),
+            errorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
             errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-        ])
+        ])*/
     }
 
     func configure(validateField: @escaping (String) -> Void, onChange: @escaping (String) -> Void) {

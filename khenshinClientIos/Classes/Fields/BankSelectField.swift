@@ -6,7 +6,7 @@ class BankSelectField: UIView {
     private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Persona", "Empresa"])
         segmentedControl.selectedSegmentIndex = 0
-        segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
+        segmentedControl.addTarget(BankSelectField.self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         return segmentedControl
     }()
 

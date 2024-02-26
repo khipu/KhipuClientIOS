@@ -23,7 +23,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "efrhuhtvjo4a"
+        sampleTextField.text = "atvjpg9iekt4"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -48,16 +48,6 @@ class ViewController: UIViewController {
     @objc func buttonAction(sender: UIButton!) {
         let khenshinView = KhenshinView(operationId: sampleInput.text!)
         present(khenshinView, animated: true, completion: nil)
-        
-        /*print("Connecting khenshin")
-        let khenshinClient = KhenshinClient(
-            serverUrl: "http://localhost:8000",
-            publicKey: "w5tIW3Ic0JMlnYz2Ztu1giUIyhv+T4CZJuKKMrbSEF8=",
-            operationId: sampleInput.text!,
-            containerView: self.view
-        )
-        khenshinClient.connect()
-        print("Khenshin connected")*/
         
     }
 
