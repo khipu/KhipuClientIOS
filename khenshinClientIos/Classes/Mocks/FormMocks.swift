@@ -22,20 +22,20 @@ public class FormMocks {
 
     func getResponseFromType(item: FormItem) -> String {
         switch(item.type.rawValue) {
-        /*case FormItemTypes.text.rawValue:
+        case FormItemTypes.text.rawValue:
             if item.email! {
                 return "asd@asd.com"
             } else if item.secure! {
                 return "1234"
             }
-            break*/
+            break
         case FormItemTypes.coordinates.rawValue:
-            return "99|99|99"
+            return "11|22|33"
         case FormItemTypes.list.rawValue:
             return (item.options?.first?.value)!
-       /* case FormItemTypes.rut.rawValue:
+        case FormItemTypes.rut.rawValue:
             return "158388235"
-        */case FormItemTypes.groupedList.rawValue:
+        case FormItemTypes.groupedList.rawValue:
             return (item.groupedOptions?.options?.first?.value)!
         default:
             print("no puedo responder mensaje del tipo \(item.type.rawValue)")
@@ -43,4 +43,5 @@ public class FormMocks {
         }
         return ""
     }
+
 }

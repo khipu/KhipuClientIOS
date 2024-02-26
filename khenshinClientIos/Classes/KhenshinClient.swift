@@ -163,6 +163,19 @@ public class KhenshinClient {
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
             do {
                 let formRequest = try OperationSuccess(decryptedMessage!)
+                    if let jsonData = decryptedMessage?.data(using: .utf8) {
+                        do {
+                            let decoder = JSONDecoder()
+                            let operationSuccess = try decoder.decode(OperationSuccess.self, from: jsonData)
+
+                            self.khenshinView.drawOperationSuccessComponent(operationSuccess: operationSuccess)
+                        } catch {
+                            print("Error al decodificar JSON: \(error)")
+                        }
+                    } else {
+                        print("Error al convertir cadena a datos.")
+                    }
+
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -177,6 +190,18 @@ public class KhenshinClient {
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
             do {
                 let formRequest = try OperationWarning(decryptedMessage!)
+                if let jsonData = decryptedMessage?.data(using: .utf8) {
+                    do {
+                        let decoder = JSONDecoder()
+                        let operationWarning = try decoder.decode(OperationWarning.self, from: jsonData)
+
+                        self.khenshinView.drawOperationWarningComponent(operationWarning: operationWarning)
+                    } catch {
+                        print("Error al decodificar JSON: \(error)")
+                    }
+                } else {
+                    print("Error al convertir cadena a datos.")
+                }
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -189,9 +214,19 @@ public class KhenshinClient {
             let encryptedData = data.first as! String
             let mid = data[1] as! String
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            print(decryptedMessage)
             do {
                 let formRequest = try OperationFailure(decryptedMessage!)
+                if let jsonData = decryptedMessage?.data(using: .utf8) {
+                do {
+                    let decoder = JSONDecoder()
+                    let operationFailure = try decoder.decode(OperationFailure.self, from: jsonData)
+                    self.khenshinView.drawOperationFailureComponent(operationFailure: operationFailure)
+                } catch {
+                    print("Error al decodificar JSON: \(error)")
+                }
+            } else {
+                print("Error al convertir cadena a datos.")
+            }
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
