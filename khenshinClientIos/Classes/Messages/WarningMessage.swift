@@ -4,6 +4,9 @@ import KhenshinProtocol
 class WarningMessage: UIView {
 
     var operationWarning: OperationWarning
+    var amount: String
+    var merchantName: String
+
     private let title: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -16,7 +19,7 @@ class WarningMessage: UIView {
     private let subTitle: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         label.textColor = UIColor.black
         return label
     }()
@@ -25,18 +28,19 @@ class WarningMessage: UIView {
     private let body: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 10, weight: .bold)
         label.textColor = UIColor.black
-        label.backgroundColor = UIColor(red: 252/255, green: 248/255, blue: 227/255, alpha: 1.0) // #fcf8e3
+        label.backgroundColor = UIColor(red: 252/255, green: 248/255, blue: 227/255, alpha: 1.0)
         label.layer.masksToBounds = true
-        label.layer.cornerRadius = 10 
+        label.layer.cornerRadius = 5
+        label.numberOfLines = 0
         return label
     }()
 
     private let monto: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = UIColor.black
         label.text = "Monto"
         return label
@@ -45,7 +49,7 @@ class WarningMessage: UIView {
     private let comercio: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = UIColor.black
         label.text = "Comercio"
         return label
@@ -54,7 +58,7 @@ class WarningMessage: UIView {
     private let operacion: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = UIColor.black
         label.text = "Operación"
         return label
@@ -63,7 +67,7 @@ class WarningMessage: UIView {
     private let montoValue: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = UIColor.gray
         return label
     }()
@@ -71,7 +75,7 @@ class WarningMessage: UIView {
     private let comercioValue: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = UIColor.gray
         return label
     }()
@@ -79,7 +83,7 @@ class WarningMessage: UIView {
     private let operacionValue: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         label.textColor = UIColor.gray
         return label
     }()
@@ -104,8 +108,10 @@ class WarningMessage: UIView {
         return imageView
     }()
 
-    init(frame: CGRect, operationWarning: OperationWarning) {
+    init(frame: CGRect, operationWarning: OperationWarning, amount:String, merchantName: String) {
         self.operationWarning = operationWarning
+        self.merchantName = merchantName
+        self.amount = amount
         super.init(frame: frame)
         setupUI()
     }
@@ -115,15 +121,11 @@ class WarningMessage: UIView {
     }
 
     private func setupUI() {
-        //valores pago
         subTitle.text = self.operationWarning.title
         operacionValue.text = self.operationWarning.operationID
         body.text = self.operationWarning.body
-
-        //valores faltantes
-        montoValue.text = "$1000"
-        comercioValue.text = "Comercio"
-
+        montoValue.text = self.amount
+        comercioValue.text = self.merchantName
         addSubview(contentContainer)
         contentContainer.addArrangedSubview(resultIconImageView)
 
@@ -159,6 +161,7 @@ class WarningMessage: UIView {
         resultIconImageView.translatesAutoresizingMaskIntoConstraints = false
         title.translatesAutoresizingMaskIntoConstraints = false
         subTitle.translatesAutoresizingMaskIntoConstraints = false
+        body.translatesAutoresizingMaskIntoConstraints = false
         contentContainer.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
@@ -171,8 +174,11 @@ class WarningMessage: UIView {
 
             subTitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 10),
             subTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            body.topAnchor.constraint(equalTo: subTitle.bottomAnchor, constant: 10),
+            body.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            contentContainer.topAnchor.constraint(equalTo: subTitle.bottomAnchor, constant: 20),
+            contentContainer.topAnchor.constraint(equalTo: body.bottomAnchor, constant: 15),
             contentContainer.centerXAnchor.constraint(equalTo: centerXAnchor),
             contentContainer.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -16),
         ])
