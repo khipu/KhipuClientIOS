@@ -23,11 +23,8 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-<<<<<<< HEAD
-        sampleTextField.text = "atvjpg9iekt4"
-=======
+
         sampleTextField.text = "iq14aayvdkgw"
->>>>>>> ea8c9f4 (add files from test)
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -52,7 +49,7 @@ class ViewController: UIViewController {
     @objc func buttonAction(sender: UIButton!) {
         let khenshinView = KhenshinView(operationId: sampleInput.text!)
         present(khenshinView, animated: true, completion: nil)
-        
+
     }
 
     override func viewDidLoad() {
