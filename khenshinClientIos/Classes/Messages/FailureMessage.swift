@@ -1,9 +1,9 @@
 import UIKit
 import KhenshinProtocol
 
-class WarningMessage: UIView {
+class FailureMessage: UIView {
 
-    var operationWarning: OperationWarning
+    var operationFailure: OperationFailure
     var amount: String
     var merchantName: String
 
@@ -12,7 +12,7 @@ class WarningMessage: UIView {
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         label.textColor = UIColor.black
-        label.text = "Pago en verificación"
+        label.text = "Pago no realizado"
         return label
     }()
 
@@ -108,8 +108,8 @@ class WarningMessage: UIView {
         return imageView
     }()
 
-    init(frame: CGRect, operationWarning: OperationWarning, amount:String, merchantName: String) {
-        self.operationWarning = operationWarning
+    init(frame: CGRect, operationFailure: OperationFailure, amount:String, merchantName: String) {
+        self.operationFailure = operationFailure
         self.merchantName = merchantName
         self.amount = amount
         super.init(frame: frame)
@@ -121,9 +121,9 @@ class WarningMessage: UIView {
     }
 
     private func setupUI() {
-        subTitle.text = self.operationWarning.title
-        operacionValue.text = self.operationWarning.operationID
-        body.text = self.operationWarning.body
+        subTitle.text = self.operationFailure.title
+        operacionValue.text = self.operationFailure.operationID
+        body.text = self.operationFailure.body
         montoValue.text = self.amount
         comercioValue.text = self.merchantName
         addSubview(contentContainer)
@@ -174,7 +174,7 @@ class WarningMessage: UIView {
 
             subTitle.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 10),
             subTitle.centerXAnchor.constraint(equalTo: centerXAnchor),
-            
+
             body.topAnchor.constraint(equalTo: subTitle.bottomAnchor, constant: 10),
             body.centerXAnchor.constraint(equalTo: centerXAnchor),
 
