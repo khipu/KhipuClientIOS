@@ -45,7 +45,7 @@ class CoordinatesField: UIView {
         configureLabel(label1, text: (self.formItem.labels?[0])!)
         configureLabel(label2, text: (self.formItem.labels?[1])!)
         configureLabel(label3, text: (self.formItem.labels?[2])!)
-        
+
         addSubview(label1)
         addSubview(label2)
         addSubview(label3)
@@ -53,7 +53,7 @@ class CoordinatesField: UIView {
         addSubview(coord2TextField)
         addSubview(coord3TextField)
 
-        label1.translatesAutoresizingMaskIntoConstraints = false
+        /*label1.translatesAutoresizingMaskIntoConstraints = false
         label2.translatesAutoresizingMaskIntoConstraints = false
         label3.translatesAutoresizingMaskIntoConstraints = false
         coord1TextField.translatesAutoresizingMaskIntoConstraints = false
@@ -75,15 +75,15 @@ class CoordinatesField: UIView {
             label3.leadingAnchor.constraint(equalTo: label2.trailingAnchor, constant: 16),
             coord3TextField.topAnchor.constraint(equalTo: label3.bottomAnchor, constant: 8),
             coord3TextField.leadingAnchor.constraint(equalTo: label2.trailingAnchor, constant: 16),
-        ])
+        ])*/
     }
-         
+
     private func configureLabel(_ label: UILabel, text: String) {
         label.text = text
         label.textAlignment = .center
         label.backgroundColor = UIColor.lightGray
     }
-        
+
 }
 
 

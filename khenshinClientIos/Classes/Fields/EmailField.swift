@@ -6,9 +6,9 @@ class EmailField: UIView, UITextFieldDelegate {
     var formItem: FormItem?
     var validateField: ((String) -> Void)?
     var onChange: ((String) -> Void)?
-    
-    
-    private var errorLabel: UILabel = {
+
+
+    lazy private var errorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red
         label.font = UIFont.systemFont(ofSize: 12)
@@ -17,7 +17,7 @@ class EmailField: UIView, UITextFieldDelegate {
     }()
 
 
-    private let titleLabel: UILabel = {
+    lazy private var titleLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 20, weight: .bold)
@@ -25,7 +25,7 @@ class EmailField: UIView, UITextFieldDelegate {
         return label
     }()
 
-    private let emailTextField: UITextField = {
+    lazy private var emailTextField: UITextField = {
         let textField = UITextField()
         textField.font = UIFont.systemFont(ofSize: 16)
         textField.borderStyle = UITextField.BorderStyle.roundedRect
@@ -40,31 +40,32 @@ class EmailField: UIView, UITextFieldDelegate {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func didMoveToSuperview() {
         addSubview(titleLabel)
         addSubview(emailTextField)
         addSubview(errorLabel)
-        titleLabel.text = self.formItem!.title
+        //titleLabel.text = self.formItem!.title
+        titleLabel.text = "lalalalala"
         emailTextField.placeholder = self.formItem!.placeHolder
-/*
+
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        //errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            titleLabel.topAnchor.constraint(equalTo: superview!.topAnchor),
+            titleLabel.widthAnchor.constraint(equalTo: superview!.widthAnchor),
 
             emailTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-            emailTextField.leadingAnchor.constraint(equalTo: leadingAnchor),
-            emailTextField.trailingAnchor.constraint(equalTo: trailingAnchor),
+            emailTextField.widthAnchor.constraint(equalTo: superview!.widthAnchor),
 
-            errorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
-            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
-        ])*/
+            //errorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
+            //errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            //errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+        ])
+        print("emailTextField.bounds.height: ",emailTextField.bounds.height )
+        print("emailTextField.frame.height: ",emailTextField.frame.height )
     }
 
     func configure(validateField: @escaping (String) -> Void, onChange: @escaping (String) -> Void) {
@@ -90,14 +91,14 @@ class EmailField: UIView, UITextFieldDelegate {
 
         onChange?(text)
     }
-    
-    
+
+
     private func validateEmail(_ email: String) -> Bool {
         let emailRegex = try! NSRegularExpression(pattern: "^(?!(^[.-].*|[^@]*[.-]@|.*\\.{2,}.*)|^.{254}.)([a-zA-Z0-9!#$%&'*+\\/=?^_`{|}~.-]+@)(?!-.*|.*-\\.)([a-zA-Z0-9-]{1,63}\\.)+[a-zA-Z]{2,15}$", options: .caseInsensitive)
-        
+
         let range = NSRange(location: 0, length: email.utf16.count)
         let matches = emailRegex.numberOfMatches(in: email, options: [], range: range)
-        
+
         return matches > 0
     }
 

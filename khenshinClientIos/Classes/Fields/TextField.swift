@@ -37,7 +37,7 @@ class TextField: UIView, UITextFieldDelegate {
         addSubview(textField)
         addSubview(errorLabel)
 
-        NSLayoutConstraint.activate([
+        /*NSLayoutConstraint.activate([
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             textField.topAnchor.constraint(equalTo: topAnchor, constant: 0),
@@ -45,7 +45,7 @@ class TextField: UIView, UITextFieldDelegate {
             errorLabel.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
             errorLabel.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
             errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 4),
-        ])
+        ])*/
     }
 
     func configure(validateField: @escaping (String) -> Void, onChange: @escaping (String) -> Void) {
