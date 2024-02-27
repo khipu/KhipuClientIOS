@@ -77,7 +77,6 @@ public class KhenshinClient {
                 if ((data.first as? String) != nil) {
                     self.sendOperationResponse()
                 }
-<<<<<<< HEAD
             }
             
             self.socket.on(MessageType.translation.rawValue) { data, ack in
@@ -93,77 +92,6 @@ public class KhenshinClient {
                 } catch {
                     print("Error processing form message, mid \(mid)")
                 }
-=======
-            } catch {
-                print("Error processing form message, mid \(mid)")
-            }
-        }
-
-        socket.on(MessageType.siteInfo.rawValue) { data, ack in
-            if (self.isRepeatedMessage(data: data, type: MessageType.siteInfo.rawValue)) {
-                return
-            }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            do {
-                let formRequest = try SiteInfo(decryptedMessage!)
-            } catch {
-                print("Error processing form message, mid \(mid)")
-            }
-        }
-
-        socket.on(MessageType.operationSuccess.rawValue) { data, ack in
-            if (self.isRepeatedMessage(data: data, type: MessageType.operationSuccess.rawValue)) {
-                return
-            }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            do {
-                let formRequest = try OperationSuccess(decryptedMessage!)
-                    if let jsonData = decryptedMessage?.data(using: .utf8) {
-                        do {
-                            let decoder = JSONDecoder()
-                            let operationSuccess = try decoder.decode(OperationSuccess.self, from: jsonData)
-
-                            self.khenshinView.drawOperationSuccessComponent(operationSuccess: operationSuccess)
-                        } catch {
-                            print("Error al decodificar JSON: \(error)")
-                        }
-                    } else {
-                        print("Error al convertir cadena a datos.")
-                    }
-
-            } catch {
-                print("Error processing form message, mid \(mid)")
-            }
-        }
-
-        socket.on(MessageType.operationWarning.rawValue) { data, ack in
-            if (self.isRepeatedMessage(data: data, type: MessageType.operationWarning.rawValue)) {
-                return
-            }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            do {
-                let formRequest = try OperationWarning(decryptedMessage!)
-                if let jsonData = decryptedMessage?.data(using: .utf8) {
-                    do {
-                        let decoder = JSONDecoder()
-                        let operationWarning = try decoder.decode(OperationWarning.self, from: jsonData)
-
-                        self.khenshinView.drawOperationWarningComponent(operationWarning: operationWarning)
-                    } catch {
-                        print("Error al decodificar JSON: \(error)")
-                    }
-                } else {
-                    print("Error al convertir cadena a datos.")
-                }
-            } catch {
-                print("Error processing form message, mid \(mid)")
->>>>>>> ea8c9f4 (add files from test)
             }
             
             self.socket.on(MessageType.formRequest.rawValue) { data, ack in
@@ -175,7 +103,6 @@ public class KhenshinClient {
                 let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
                 observer.onNext([MessageType.formRequest.rawValue, decryptedMessage!])
             }
-<<<<<<< HEAD
             
             self.socket.on(MessageType.progressInfo.rawValue) { data, ack in
                 if (self.isRepeatedMessage(data: data, type: MessageType.progressInfo.rawValue)) {
@@ -190,26 +117,6 @@ public class KhenshinClient {
                 } catch {
                     print("Error processing form message, mid \(mid)")
                 }
-=======
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            do {
-                let formRequest = try OperationFailure(decryptedMessage!)
-                if let jsonData = decryptedMessage?.data(using: .utf8) {
-                do {
-                    let decoder = JSONDecoder()
-                    let operationFailure = try decoder.decode(OperationFailure.self, from: jsonData)
-                    self.khenshinView.drawOperationFailureComponent(operationFailure: operationFailure)
-                } catch {
-                    print("Error al decodificar JSON: \(error)")
-                }
-            } else {
-                print("Error al convertir cadena a datos.")
-            }
-            } catch {
-                print("Error processing form message, mid \(mid)")
->>>>>>> ea8c9f4 (add files from test)
             }
             
             self.socket.on(MessageType.siteInfo.rawValue) { data, ack in

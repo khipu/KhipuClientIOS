@@ -4,10 +4,10 @@ import KhenshinProtocol
 
 public class KhenshinView: UIViewController {
     var operationId: String?
+    var opertionInfo: OperationInfo?
     var khenshinClient: KhenshinClient?
     let disposeBag = DisposeBag()
-
-
+    
     public init(operationId: String) {
         super.init(nibName: nil, bundle: nil)
         self.operationId = operationId
@@ -16,43 +16,13 @@ public class KhenshinView: UIViewController {
             publicKey: "w5tIW3Ic0JMlnYz2Ztu1giUIyhv+T4CZJuKKMrbSEF8=",
             operationId: self.operationId!
         )
-
-    }
-
-    required init?(coder aDecoder: NSCoder){
-        super.init(coder: aDecoder)
-    }
-
-    public override func viewDidLoad() {
-        super.viewDidLoad()
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 16
-        stackView.backgroundColor = UIColor.white
-
-        stackView.addArrangedSubview(header)
-        stackView.addArrangedSubview(component)
-        stackView.addArrangedSubview(footer)
-
-        self.view.addSubview(stackView)
-
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            stackView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-
-
-
         khenshinClient!.setupSocketEvents()
             .subscribe(
                 onNext: { value in
-                    print("EVENTO REACTIVO \(value)")
+                    let messageType = value[0]
+                    let message = value[1]
+                    print("DIBUJANDO COMPONENTE TIPO \(messageType)")
+                    self.drawComponent(messageType: messageType, message: message)
                 }, onError: { error in
                     print("ERROR REACTIVO: \(error)")
                 }, onCompleted: {
@@ -61,85 +31,175 @@ public class KhenshinView: UIViewController {
                     print("REACTIVO DISPOSED")
                 }).disposed(by: disposeBag)
         khenshinClient!.connect()
-
+    }
+    
+    required init?(coder aDecoder: NSCoder){
+        super.init(coder: aDecoder)
     }
 
-    lazy private var component: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
+    public override func viewDidLoad() {
+        super.viewDidLoad()
+        let stackView = UIView()
+        /*stackView.axis = .vertical
         stackView.alignment = .center
+        stackView.distribution = .equalCentering
+        stackView.spacing = 5*/
+        stackView.backgroundColor = UIColor.white
+
+        stackView.addSubview(header)
+        stackView.addSubview(component)
+        stackView.addSubview(footer)
+
+        self.view.addSubview(stackView)
+
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        header.translatesAutoresizingMaskIntoConstraints = false
+        component.translatesAutoresizingMaskIntoConstraints = false
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            stackView.topAnchor.constraint(equalTo: view.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            header.topAnchor.constraint(equalTo: view.topAnchor),
+            component.topAnchor.constraint(equalTo: header.bottomAnchor),
+            component.bottomAnchor.constraint(equalTo: footer.topAnchor),
+            footer.topAnchor.constraint(equalTo: component.bottomAnchor),
+            footer.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        ])
+        /*header.setContentHuggingPriority(.required, for: .vertical)
+        footer.setContentHuggingPriority(.required, for: .vertical)
+        component.setContentCompressionResistancePriority(.required, for: .vertical)*/
+    }
+    
+    lazy private var component: UIView = {
+        let stackView = UIView()
+        //stackView.axis = .vertical
+        /*stackView.alignment = .center
         stackView.distribution = .equalSpacing
         stackView.spacing = 16
+        stackView.backgroundColor = UIColor.yellow*/
         return stackView
     }()
-
+    
     lazy private var header: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Header!"
         label.textColor = UIColor.black
+        label.backgroundColor = UIColor.yellow
         return label
     }()
-
+    
     lazy private var footer: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Footer!"
         label.textColor = UIColor.black
+        label.backgroundColor = UIColor.green
         return label
     }()
 
-    public func drawComponent(messageType: String, message: Encodable) {
+    public func drawComponent(messageType: String, message: String) {
+        var component: UIView?
         switch messageType {
+        case MessageType.progressInfo.rawValue:
+            do {
+                let progressInfo = try ProgressInfo(message)
+                component = drawProgressInfoComponent(message: progressInfo)
+            } catch {
+                print("Error processing ProgressInfo message, \(message)")
+            }
+            break
         case MessageType.operationInfo.rawValue:
-            drawOperationInfoComponent(message: message as! ProgressInfo)
-        //case MessageType.operationRequest.rawValue:
-          //  drawOperationRequestComponent()
+            do {
+                let operationInfo = try OperationInfo(message)
+                self.opertionInfo = operationInfo
+                return
+            } catch {
+                print("Error processing OperationInfo message, \(message)")
+            }
+            break
+        case MessageType.operationWarning.rawValue:
+            do {
+                let operationWarning = try OperationWarning(message)
+                component = drawOperationWarningComponent(message: operationWarning)
+            } catch {
+                print("Error processing OperationWarning message, \(message)")
+            }
+            break
+        case MessageType.operationFailure.rawValue:
+            do {
+                let operationFailure = try OperationFailure(message)
+                component = drawOperationFailureComponent(message: operationFailure)
+            } catch {
+                print("Error processing OperationFailure message, \(message)")
+            }
+            break
+        case MessageType.operationSuccess.rawValue:
+            do {
+                let operationSuccess = try OperationSuccess(message)
+                component = drawOperationSuccessComponent(message: operationSuccess)
+            } catch {
+                print("Error processing OperationSuccess message, \(message)")
+            }
+            break
+        case MessageType.formRequest.rawValue:
+            do {
+                let formRequest = try FormRequest(message)
+                component = drawFormRequestComponent(message: formRequest)
+            } catch {
+                print("Error processing FormRequest message, \(message)")
+            }
+            break
         default:
             print("Tipo de mensaje no reconocido: \(messageType)")
+            return
         }
+        
+      
+        self.component.subviews.forEach { (view) in
+            view.removeFromSuperview()
+        }
+        self.component.addSubview(component!)
+        /*
+        component!.translatesAutoresizingMaskIntoConstraints = false
+        component!.setContentCompressionResistancePriority(.required, for: .vertical)
+        NSLayoutConstraint.activate([
+            component!.leadingAnchor.constraint(equalTo: self.component.leadingAnchor),
+            component!.trailingAnchor.constraint(equalTo: self.component.trailingAnchor),
+            component!.topAnchor.constraint(equalTo: self.component.topAnchor),
+            component!.bottomAnchor.constraint(equalTo: self.component.bottomAnchor),
+        ])*/
     }
 
-    private func drawOperationInfoComponent(message: ProgressInfo) {
+    private func drawProgressInfoComponent(message: ProgressInfo) -> UIView {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        let progressInfo = ProgressInfoView(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), message: message)
-        component.addArrangedSubview(progressInfo)
-        //progressInfo.center = overlayView.center
-        //overlayView.addSubview(progressInfo)
+        return ProgressInfoComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), progressInfo: message)
     }
-
-    /*private func drawOperationRequestComponent() {
-    let operationRequestMessage = """
-        {
-            "type": "FORM_REQUEST",
-            "id": "e0287b9a-901b-4df8-831c-6ccf36635856",
-            "title": "Enter your e-mail",
-            "progress": {},
-            "items": [
-                {
-                    "type": "TEXT",
-                    "id": "email",
-                    "label": "E-mail",
-                    "hint": "Here you will receive your payment receipt",
-                    "defaultValue": "",
-                    "secure": false,
-                    "email": true,
-                    "placeHolder": "Ex: name@mail.com"
-                }
-            ],
-            "timeout": 300,
-            "rememberValues": false
-        }
-        """
-        do {
-         let jsonData = operationRequestMessage.data(using: .utf8)!
-         let formRequest = try JSONDecoder().decode(FormRequest.self, from: jsonData)
-         let emailField = EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), title: formRequest.title ?? "")
-         emailField.center = overlayView.center
-         overlayView.addSubview(emailField)
-         } catch {
-             print("Error decoding JSON: \(error)")
-         }
-       }*/
+    
+    private func drawFormRequestComponent(message: FormRequest) -> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message)
+    }
+    
+    public func drawOperationWarningComponent(message: OperationWarning)-> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return WarningMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationWarning: message, operationInfo: self.opertionInfo!)
+    }
+    public func drawOperationFailureComponent(message: OperationFailure) -> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return FailureMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationFailure: message, operationInfo: self.opertionInfo!)
+    }
+    
+    public func drawOperationSuccessComponent(message: OperationSuccess) -> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return SuccessMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationSuccess:message, operationInfo: self.opertionInfo!)
+    }
 }

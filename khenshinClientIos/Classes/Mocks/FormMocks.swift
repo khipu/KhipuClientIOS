@@ -30,7 +30,7 @@ public class FormMocks {
             }
             break
         case FormItemTypes.coordinates.rawValue:
-            return "11|22|33"
+            return "99|99|99"
         case FormItemTypes.list.rawValue:
             return (item.options?.first?.value)!
         case FormItemTypes.rut.rawValue:
