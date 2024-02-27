@@ -4,8 +4,7 @@ import KhenshinProtocol
 class WarningMessage: UIView {
 
     var operationWarning: OperationWarning
-    var amount: String
-    var merchantName: String
+    var operationInfo: OperationInfo
 
     private let title: UILabel = {
         let label = UILabel()
@@ -108,10 +107,9 @@ class WarningMessage: UIView {
         return imageView
     }()
 
-    init(frame: CGRect, operationWarning: OperationWarning, amount:String, merchantName: String) {
+    init(frame: CGRect, operationWarning: OperationWarning, operationInfo: OperationInfo) {
         self.operationWarning = operationWarning
-        self.merchantName = merchantName
-        self.amount = amount
+        self.operationInfo = operationInfo
         super.init(frame: frame)
         setupUI()
     }
@@ -124,8 +122,8 @@ class WarningMessage: UIView {
         subTitle.text = self.operationWarning.title
         operacionValue.text = self.operationWarning.operationID
         body.text = self.operationWarning.body
-        montoValue.text = self.amount
-        comercioValue.text = self.merchantName
+        montoValue.text = self.operationInfo.amount
+        comercioValue.text = self.operationInfo.merchant?.name
         addSubview(contentContainer)
         contentContainer.addArrangedSubview(resultIconImageView)
 

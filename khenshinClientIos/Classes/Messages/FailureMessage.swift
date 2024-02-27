@@ -4,8 +4,7 @@ import KhenshinProtocol
 class FailureMessage: UIView {
 
     var operationFailure: OperationFailure
-    var amount: String
-    var merchantName: String
+    var operationInfo: OperationInfo
 
     private let title: UILabel = {
         let label = UILabel()
@@ -108,10 +107,9 @@ class FailureMessage: UIView {
         return imageView
     }()
 
-    init(frame: CGRect, operationFailure: OperationFailure, amount:String, merchantName: String) {
+    init(frame: CGRect, operationFailure: OperationFailure, operationInfo:OperationInfo) {
         self.operationFailure = operationFailure
-        self.merchantName = merchantName
-        self.amount = amount
+        self.operationInfo = operationInfo
         super.init(frame: frame)
         setupUI()
     }
@@ -124,8 +122,8 @@ class FailureMessage: UIView {
         subTitle.text = self.operationFailure.title
         operacionValue.text = self.operationFailure.operationID
         body.text = self.operationFailure.body
-        montoValue.text = self.amount
-        comercioValue.text = self.merchantName
+        montoValue.text = self.operationInfo.amount
+        comercioValue.text = self.operationInfo.merchant?.name
         addSubview(contentContainer)
         contentContainer.addArrangedSubview(resultIconImageView)
 
