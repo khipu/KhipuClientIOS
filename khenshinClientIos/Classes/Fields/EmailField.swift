@@ -44,13 +44,12 @@ class EmailField: UIView, UITextFieldDelegate {
         addSubview(titleLabel)
         addSubview(emailTextField)
         addSubview(errorLabel)
-        //titleLabel.text = self.formItem!.title
-        titleLabel.text = "lalalalala"
+        titleLabel.text = self.formItem!.title
         emailTextField.placeholder = self.formItem!.placeHolder
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        //errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: superview!.topAnchor),
@@ -59,12 +58,10 @@ class EmailField: UIView, UITextFieldDelegate {
             emailTextField.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             emailTextField.widthAnchor.constraint(equalTo: superview!.widthAnchor),
 
-            //errorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
-            //errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            //errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            errorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
+            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
+            errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
-        print("emailTextField.bounds.height: ",emailTextField.bounds.height )
-        print("emailTextField.frame.height: ",emailTextField.frame.height )
     }
 
     func configure(validateField: @escaping (String) -> Void, onChange: @escaping (String) -> Void) {

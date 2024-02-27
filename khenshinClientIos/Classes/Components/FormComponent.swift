@@ -68,13 +68,14 @@ class FormComponent: UIView {
     }
     
     override func didMoveToSuperview() {
+        configureView()
         backgroundColor = UIColor.orange
         addSubview(formTitle)
         addSubview(formError)
         addSubview(formComponents)
+        
         addSubview(continueButton)
-        setupForm(with: self.formRequest!)
-                
+                        
         /*axis = .vertical
         alignment = .center
         distribution = .equalSpacing
@@ -89,18 +90,21 @@ class FormComponent: UIView {
             self.topAnchor.constraint(equalTo: superview!.topAnchor),
             self.bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
             widthAnchor.constraint(equalTo: superview!.widthAnchor),
-            formTitle.topAnchor.constraint(equalTo: superview!.topAnchor),
-            formTitle.widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            formTitle.topAnchor.constraint(equalTo: topAnchor),
+            formTitle.widthAnchor.constraint(equalTo: widthAnchor),
             formError.topAnchor.constraint(equalTo: formTitle.bottomAnchor),
-            formError.widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            formError.widthAnchor.constraint(equalTo: widthAnchor),
+            continueButton.bottomAnchor.constraint(equalTo: bottomAnchor),
+            continueButton.widthAnchor.constraint(equalTo: widthAnchor),
             formComponents.topAnchor.constraint(equalTo: formError.bottomAnchor),
-            formComponents.widthAnchor.constraint(equalTo: superview!.widthAnchor),
-            continueButton.topAnchor.constraint(equalTo: formComponents.bottomAnchor),
-            continueButton.widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            formComponents.bottomAnchor.constraint(equalTo: continueButton.topAnchor),
+            formComponents.widthAnchor.constraint(equalTo: widthAnchor),
+            
         ])
-        print("formComponents.bounds.height: ",formComponents.bounds.height )
-        print("formComponents.frame.height: ",formComponents.frame.height )
         
+        print("formComponents.bottomAnchor: ",formComponents.bottomAnchor )
+        //setupForm(with: self.formRequest!)
+                
         //formComponents.setContentCompressionResistancePriority(.required, for: .vertical)
         
         /*formComponents.translatesAutoresizingMaskIntoConstraints = false
@@ -135,6 +139,10 @@ class FormComponent: UIView {
         ])
     }*/
     
+    public func configureView() {
+        self.setupForm(with: self.formRequest!)
+    }
+    
     private func setupForm(with formRequest: FormRequest) {
         formTitle.text = formRequest.title
         formError.text = formRequest.errorMessage
@@ -145,7 +153,7 @@ class FormComponent: UIView {
             switch item.type {
                 case FormItemTypes.text:
                     if (item.email!) {
-                        formComponents.addSubview(EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item))
+                        formComponents.addSubview(EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 800),formItem:item))
                     } else {
                         formComponents.addSubview(TextField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item))
                     }                    
