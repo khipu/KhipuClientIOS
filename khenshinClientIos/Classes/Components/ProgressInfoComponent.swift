@@ -34,6 +34,19 @@ class ProgressInfoComponent: UIView {
         backgroundColor = UIColor.white
         addSubview(progressLabel)
         addSubview(progressImageView)
+
+        /*progressLabel.translatesAutoresizingMaskIntoConstraints = false
+        progressImageView.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            progressImageView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            progressImageView.heightAnchor.constraint(equalToConstant: 80),
+            progressImageView.widthAnchor.constraint(equalToConstant: 80),
+
+            progressLabel.topAnchor.constraint(equalTo: progressImageView.bottomAnchor, constant: 20),
+            progressLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            progressLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+        ])*/
     }
 
     private func updateUI(with progressInfo: ProgressInfo) {

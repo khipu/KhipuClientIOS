@@ -15,6 +15,7 @@ class FormComponent: UIView {
         label.textAlignment = .center
         label.numberOfLines = 0
         label.textColor = UIColor.black
+        label.backgroundColor = UIColor.white
         return label
     }()
     
@@ -27,14 +28,21 @@ class FormComponent: UIView {
         return label
     }()
     
-    lazy private var formComponents: UIStackView = {
-        let formComponentsStack = UIStackView()
-        formComponentsStack.axis = .vertical
-        formComponentsStack.alignment = .center
-        formComponentsStack.distribution = .equalSpacing
-        formComponentsStack.spacing = 5
+    lazy private var formComponents: UIView = {
+        let formComponentsStack = UIView()
+        formComponentsStack.backgroundColor = UIColor.cyan
         return formComponentsStack
     }()
+    
+    //lazy private var formComponents: UIStackView = {
+    //    let formComponentsStack = UIStackView()
+    //    formComponentsStack.axis = .vertical
+    //    //formComponentsStack.alignment = .center
+    //    formComponentsStack.distribution = .fill
+    //    formComponentsStack.spacing = 5
+    //    formComponentsStack.backgroundColor = UIColor.cyan
+    //    return formComponentsStack
+    //}()
     
     lazy private var continueButton: UIButton = {
         let button = UIButton(type: .system)
@@ -56,34 +64,42 @@ class FormComponent: UIView {
     }
     
     override func willMove(toSuperview newSuperview: UIView?) {
-        setupForm(with: self.formRequest!)
-        backgroundColor = UIColor.yellow
+        
+    }
+    
+    override func didMoveToSuperview() {
+        backgroundColor = UIColor.orange
         addSubview(formTitle)
         addSubview(formError)
         addSubview(formComponents)
         addSubview(continueButton)
-        
+        setupForm(with: self.formRequest!)
+                
         /*axis = .vertical
         alignment = .center
         distribution = .equalSpacing
         spacing = 16*/
         
-        /*translatesAutoresizingMaskIntoConstraints = false
+        self.translatesAutoresizingMaskIntoConstraints = false
         formTitle.translatesAutoresizingMaskIntoConstraints = false
         formError.translatesAutoresizingMaskIntoConstraints = false
         formComponents.translatesAutoresizingMaskIntoConstraints = false
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            topAnchor.constraint(equalTo: newSuperview!.topAnchor),
-            bottomAnchor.constraint(equalTo: newSuperview!.bottomAnchor),
-            widthAnchor.constraint(equalTo: newSuperview!.widthAnchor),
-            centerXAnchor.constraint(equalTo: newSuperview!.centerXAnchor),
-            centerYAnchor.constraint(equalTo: newSuperview!.centerYAnchor),
-            formTitle.topAnchor.constraint(equalTo: newSuperview!.topAnchor),
-            formError.topAnchor.constraint(equalTo: formTitle.bottomAnchor, constant: 15),
-            formComponents.topAnchor.constraint(equalTo: formError.bottomAnchor, constant: 15),
-            continueButton.bottomAnchor.constraint(equalTo: newSuperview!.bottomAnchor, constant: 15),
-        ])*/
+            self.topAnchor.constraint(equalTo: superview!.topAnchor),
+            self.bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
+            widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            formTitle.topAnchor.constraint(equalTo: superview!.topAnchor),
+            formTitle.widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            formError.topAnchor.constraint(equalTo: formTitle.bottomAnchor),
+            formError.widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            formComponents.topAnchor.constraint(equalTo: formError.bottomAnchor),
+            formComponents.widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            continueButton.topAnchor.constraint(equalTo: formComponents.bottomAnchor),
+            continueButton.widthAnchor.constraint(equalTo: superview!.widthAnchor),
+        ])
+        print("formComponents.bounds.height: ",formComponents.bounds.height )
+        print("formComponents.frame.height: ",formComponents.frame.height )
         
         //formComponents.setContentCompressionResistancePriority(.required, for: .vertical)
         
@@ -125,34 +141,33 @@ class FormComponent: UIView {
         let continueLabel = formRequest.continueLabel != nil && formRequest.continueLabel != "" ? formRequest.continueLabel : "Continuar"
         continueButton.setTitle(continueLabel, for: .normal)
         formRequest.items.forEach { item in
-            var component: UIView?
+            //var component: UIView?
             switch item.type {
                 case FormItemTypes.text:
                     if (item.email!) {
-                        component = EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
-                    }
-                    component = TextField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
+                        formComponents.addSubview(EmailField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item))
+                    } else {
+                        formComponents.addSubview(TextField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item))
+                    }                    
                     break
                 case FormItemTypes.rut:
-                    component =  RutField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
+                    formComponents.addSubview(RutField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item))
                     break
                 case FormItemTypes.list:
-                    component =  RadioGroupField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
+                    formComponents.addSubview(RadioGroupField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item))
                     break
                 case FormItemTypes.groupedList:
-                    component = BankSelectField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), formItem: item)
+                    formComponents.addSubview(BankSelectField(frame: CGRect(x: 0, y: 0, width: 300, height: 400), formItem: item))
                     break
                 case FormItemTypes.coordinates:
-                    component =  CoordinatesField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item)
+                    formComponents.addSubview(CoordinatesField(frame: CGRect(x: 0, y: 0, width: 300, height: 400),formItem:item))
                     break
                 case FormItemTypes.imageChallenge:
                     break//questionAsImageChallenge(formItem)
                 default:
                     break
                 }
-            if component != nil {
-                formComponents.addArrangedSubview(component!)
-            }
+            //formComponents.addArrangedSubview(component!)
             
         }
         

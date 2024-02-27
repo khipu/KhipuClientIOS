@@ -6,8 +6,7 @@ class EmailField: UIView, UITextFieldDelegate {
     var formItem: FormItem?
     var validateField: ((String) -> Void)?
     var onChange: ((String) -> Void)?
-
-
+    
     lazy private var errorLabel: UILabel = {
         let label = UILabel()
         label.textColor = .red

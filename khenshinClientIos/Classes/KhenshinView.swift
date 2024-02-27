@@ -70,7 +70,7 @@ public class KhenshinView: UIViewController {
         footer.setContentHuggingPriority(.required, for: .vertical)
         component.setContentCompressionResistancePriority(.required, for: .vertical)*/
     }
-
+    
     lazy private var container: UIView = {
         let container = UIView()
         //stackView.axis = .vertical
@@ -79,6 +79,17 @@ public class KhenshinView: UIViewController {
         stackView.spacing = 16
         stackView.backgroundColor = UIColor.yellow*/
         return container
+    }()
+    
+    lazy private var component: UIView = {
+        let component = UIView()
+        component.backgroundColor = UIColor.cyan
+        //stackView.axis = .vertical
+        /*stackView.alignment = .center
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 16
+        stackView.backgroundColor = UIColor.yellow*/
+        return component
     }()
 
     lazy private var component: UIView = {
@@ -161,5 +172,22 @@ public class KhenshinView: UIViewController {
         let screenHeight = UIScreen.main.bounds.height
         return FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message)
         return FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message)
+    }
+    
+    public func drawOperationWarningComponent(message: OperationWarning)-> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return WarningMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationWarning: message, operationInfo: self.opertionInfo!)
+    }
+    public func drawOperationFailureComponent(message: OperationFailure) -> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return FailureMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationFailure: message, operationInfo: self.opertionInfo!)
+    }
+    
+    public func drawOperationSuccessComponent(message: OperationSuccess) -> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return SuccessMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationSuccess:message, operationInfo: self.opertionInfo!)
     }
 }
