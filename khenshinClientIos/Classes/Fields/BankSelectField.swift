@@ -1,7 +1,17 @@
 import UIKit
 import KhenshinProtocol
 
-class BankSelectField: UIView {
+class BankSelectField: UIView, KhipuField {
+    var formItem: FormItem?
+    
+    func getFormItem() -> KhenshinProtocol.FormItem {
+        return self.formItem!
+    }
+    
+    func getValue() -> String {
+        return ""
+    }
+    
 
     private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Persona", "Empresa"])
@@ -17,6 +27,7 @@ class BankSelectField: UIView {
     private var isReadyToShow: Bool = false
 
     init(frame: CGRect, formItem: FormItem) {
+        self.formItem = formItem
         super.init(frame: frame)
         setupSegmentedControl()
         setupCollectionView()

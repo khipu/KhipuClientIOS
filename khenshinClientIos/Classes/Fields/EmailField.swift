@@ -2,7 +2,7 @@ import UIKit
 import KhenshinProtocol
 
 
-class EmailField: UIView, UITextFieldDelegate {
+class EmailField: UIView, KhipuField, UITextFieldDelegate {
     var formItem: FormItem?
     var validateField: ((String) -> Void)?
     var onChange: ((String) -> Void)?
@@ -96,6 +96,14 @@ class EmailField: UIView, UITextFieldDelegate {
         let matches = emailRegex.numberOfMatches(in: email, options: [], range: range)
 
         return matches > 0
+    }
+    
+    public func getFormItem() -> FormItem {
+        return self.formItem!
+    }
+    
+    public func getValue () -> String {
+        return self.emailTextField.text!
     }
 
 }

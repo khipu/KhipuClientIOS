@@ -1,10 +1,17 @@
 import UIKit
 import KhenshinProtocol
 
-class RadioGroupField: UIView {
+class RadioGroupField: UIView, KhipuField {
 
     var formItem: FormItem
-
+    func getFormItem() -> KhenshinProtocol.FormItem {
+        return self.formItem
+    }
+    
+    func getValue() -> String {
+        return ""
+    }
+    
     private lazy var radioGroup: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical

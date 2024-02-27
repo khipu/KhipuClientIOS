@@ -1,10 +1,18 @@
 import UIKit
 import KhenshinProtocol
 
-class RutField: UIView, UITextFieldDelegate {
+class RutField: UIView, UITextFieldDelegate, KhipuField {
     var formItem: FormItem
     var validateField: ((String) -> Void)?
     var onChange: ((String) -> Void)?
+    
+    func getFormItem() -> KhenshinProtocol.FormItem {
+        return self.formItem
+    }
+    
+    func getValue() -> String {
+        return ""
+    }
 
     private lazy var textField: UITextField = {
         let textField = UITextField()

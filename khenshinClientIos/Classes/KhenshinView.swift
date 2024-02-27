@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 import KhenshinProtocol
 
 public class KhenshinView: UIViewController {
@@ -138,18 +139,7 @@ public class KhenshinView: UIViewController {
             view.removeFromSuperview()
         }
         self.component.addSubview(component!)
-        /*if(component is FormComponent) {
-            (component as! FormComponent).configureView()
-        }*/
-        /*
-        component!.translatesAutoresizingMaskIntoConstraints = false
-        component!.setContentCompressionResistancePriority(.required, for: .vertical)
-        NSLayoutConstraint.activate([
-            component!.leadingAnchor.constraint(equalTo: self.component.leadingAnchor),
-            component!.trailingAnchor.constraint(equalTo: self.component.trailingAnchor),
-            component!.topAnchor.constraint(equalTo: self.component.topAnchor),
-            component!.bottomAnchor.constraint(equalTo: self.component.bottomAnchor),
-        ])*/
+        
 
     }
 
@@ -162,6 +152,13 @@ public class KhenshinView: UIViewController {
     private func drawFormRequestComponent(message: FormRequest) -> UIView {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        return FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message)
+        let formComponent = FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message)
+        formComponent.continueButton.rx.tap
+            .bind {
+                let formResponse = formComponent.createFormResponse()
+                self.khenshinClient?.sendMessage(type: formResponse.type.rawValue, message: formResponse)
+            }
+            .disposed(by: self.disposeBag)
+        return formComponent
     }
 }

@@ -1,7 +1,14 @@
 import UIKit
 import KhenshinProtocol
 
-class CoordinatesField: UIView {
+class CoordinatesField: UIView, KhipuField {
+    func getFormItem() -> KhenshinProtocol.FormItem {
+        return self.formItem
+    }
+    
+    func getValue() -> String {
+        return ""
+    }
 
     var formItem: FormItem
     private let label1 = UILabel()

@@ -1,10 +1,18 @@
 import UIKit
 import KhenshinProtocol
 
-class TextField: UIView, UITextFieldDelegate {
+class TextField: UIView, UITextFieldDelegate, KhipuField {
     var formItem: FormItem
     var validateField: ((String) -> Void)?
     var onChange: ((String) -> Void)?
+    
+    func getFormItem() -> KhenshinProtocol.FormItem {
+        return self.formItem
+    }
+    
+    func getValue() -> String {
+        return ""
+    }
 
     private var errorLabel: UILabel = {
         let label = UILabel()

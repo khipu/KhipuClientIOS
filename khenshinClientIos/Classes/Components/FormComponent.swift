@@ -44,11 +44,10 @@ class FormComponent: UIView {
     //    return formComponentsStack
     //}()
     
-    lazy private var continueButton: UIButton = {
+    lazy public var continueButton: UIButton = {
         let button = UIButton(type: .system)
         button.backgroundColor = UIColor.black
         button.setTitleColor(UIColor.white, for: .normal)
-        button.addTarget(self, action: #selector(sendForm), for: .touchUpInside)
         return button
 
     }()
@@ -68,6 +67,9 @@ class FormComponent: UIView {
     }
     
     override func didMoveToSuperview() {
+        if(superview == nil) {
+            return
+        }
         configureView()
         backgroundColor = UIColor.orange
         addSubview(formTitle)
@@ -178,12 +180,14 @@ class FormComponent: UIView {
             //formComponents.addArrangedSubview(component!)
             
         }
-        
-        
-        
     }
     
-    @objc private func sendForm() {
-        print("SENDING FORM")
+    public func createFormResponse() -> FormResponse {
+        let answers = formComponents.subviews.map{
+            FormItemAnswer(
+                id: ($0 as! any KhipuField).getFormItem().id,
+                type: ($0 as! any KhipuField).getFormItem().type,
+                value: ($0 as! any KhipuField).getValue())}
+        return FormResponse(answers: answers, id: self.formRequest!.id, type: MessageType.formResponse)
     }
 }
