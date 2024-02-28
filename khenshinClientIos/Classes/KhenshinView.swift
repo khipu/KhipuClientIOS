@@ -64,6 +64,11 @@ public class KhenshinView: UIViewController {
             footer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ])
     }
+    
+    lazy private var header: HeaderView =  {
+        let header = HeaderView()
+        return header
+    }()
 
     lazy private var container: UIView = {
         let container = UIView()
@@ -76,14 +81,6 @@ public class KhenshinView: UIViewController {
         return component
     }()
 
-    lazy private var header: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Header!"
-        label.textColor = UIColor.black
-        label.backgroundColor = UIColor.yellow
-        return label
-    }()
 
     lazy private var footer: UILabel = {
         let label = UILabel()
@@ -116,6 +113,7 @@ public class KhenshinView: UIViewController {
         case MessageType.operationInfo.rawValue:
             do {
                 operationInfo = try OperationInfo(message)
+                refreshHeaderView()
                 return
             } catch {
                 print("Error processing OperationInfo message, \(message)")
@@ -195,4 +193,8 @@ public class KhenshinView: UIViewController {
         let screenHeight = UIScreen.main.bounds.height
         return SuccessMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationSuccess: operationSuccess, operationInfo:operationInfo!)
     }
+    
+    public func refreshHeaderView() {
+        header.updateHeaderValue(with: operationInfo!)
+     }
 }
