@@ -138,6 +138,7 @@ public class KhenshinClient {
                 observer.onNext([MessageType.operationSuccess.rawValue, decryptedMessage!])
                 do {
                     let formRequest = try OperationSuccess(decryptedMessage!)
+                    return 
                 } catch {
                     print("Error processing form message, mid \(mid)")
                 }

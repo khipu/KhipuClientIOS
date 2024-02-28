@@ -7,6 +7,7 @@ public class KhenshinView: UIViewController {
     var operationId: String?
     var khenshinClient: KhenshinClient?
     let disposeBag = DisposeBag()
+    var operationInfo: OperationInfo?
 
     public init(operationId: String) {
         super.init(nibName: nil, bundle: nil)
@@ -39,12 +40,7 @@ public class KhenshinView: UIViewController {
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        /*stackView.axis = .vertical
-        stackView.alignment = .center
-        stackView.distribution = .equalCentering
-        stackView.spacing = 5*/
         container.backgroundColor = UIColor.white
-
         container.addSubview(header)
         container.addSubview(component)
         container.addSubview(footer)
@@ -67,29 +63,16 @@ public class KhenshinView: UIViewController {
             component.bottomAnchor.constraint(equalTo: footer.topAnchor),
             footer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ])
-        /*header.setContentHuggingPriority(.required, for: .vertical)
-        footer.setContentHuggingPriority(.required, for: .vertical)
-        component.setContentCompressionResistancePriority(.required, for: .vertical)*/
     }
-    
+
     lazy private var container: UIView = {
         let container = UIView()
-        //stackView.axis = .vertical
-        /*stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 16
-        stackView.backgroundColor = UIColor.yellow*/
         return container
     }()
-    
+
     lazy private var component: UIView = {
         let component = UIView()
         component.backgroundColor = UIColor.cyan
-        //stackView.axis = .vertical
-        /*stackView.alignment = .center
-        stackView.distribution = .equalSpacing
-        stackView.spacing = 16
-        stackView.backgroundColor = UIColor.yellow*/
         return component
     }()
 
@@ -130,6 +113,38 @@ public class KhenshinView: UIViewController {
                 print("Error processing FormRequest message, \(message)")
             }
             break
+        case MessageType.operationInfo.rawValue:
+            do {
+                operationInfo = try OperationInfo(message)
+                return
+            } catch {
+                print("Error processing OperationInfo message, \(message)")
+            }
+            break
+        case MessageType.operationFailure.rawValue:
+            do {
+                let operationFailure = try OperationFailure(message)
+                component = drawFailureMessageComponent(operationFailure:operationFailure)
+            } catch {
+                print("Error processing OperationFailure message, \(message)")
+            }
+            break
+        case MessageType.operationWarning.rawValue:
+            do {
+                let operationWarning = try OperationWarning(message)
+                component = drawWarningMessageComponent(operationWarning:operationWarning)
+            } catch {
+                print("Error processing OperationWarning message, \(message)")
+            }
+            break
+        case MessageType.operationSuccess.rawValue:
+            do {
+                let operationSuccess = try OperationSuccess(message)
+                component = drawSuccessMessageComponent(operationSuccess:operationSuccess)
+            } catch {
+                print("Error processing OperationSuccess message, \(message)")
+            }
+            break
         default:
             print("Tipo de mensaje no reconocido: \(messageType)")
             return
@@ -139,7 +154,7 @@ public class KhenshinView: UIViewController {
             view.removeFromSuperview()
         }
         self.component.addSubview(component!)
-        
+
 
     }
 
@@ -160,5 +175,24 @@ public class KhenshinView: UIViewController {
             }
             .disposed(by: self.disposeBag)
         return formComponent
+    }
+
+    private func drawFailureMessageComponent(operationFailure: OperationFailure) -> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return FailureMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationFailure: operationFailure, operationInfo:operationInfo!)
+    }
+
+    private func drawWarningMessageComponent(operationWarning: OperationWarning) -> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return WarningMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationWarning: operationWarning, operationInfo:operationInfo!)
+    }
+
+
+    private func drawSuccessMessageComponent(operationSuccess: OperationSuccess) -> UIView {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+        return SuccessMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationSuccess: operationSuccess, operationInfo:operationInfo!)
     }
 }
