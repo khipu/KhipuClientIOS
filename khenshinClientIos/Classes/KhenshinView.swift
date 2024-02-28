@@ -65,7 +65,7 @@ public class KhenshinView: UIViewController {
         ])
     }
     
-    lazy private var header: UIView =  {
+    lazy private var header: HeaderView =  {
         let header = HeaderView()
         return header
     }()
@@ -113,6 +113,7 @@ public class KhenshinView: UIViewController {
         case MessageType.operationInfo.rawValue:
             do {
                 operationInfo = try OperationInfo(message)
+                refreshHeaderView()
                 return
             } catch {
                 print("Error processing OperationInfo message, \(message)")
@@ -192,4 +193,8 @@ public class KhenshinView: UIViewController {
         let screenHeight = UIScreen.main.bounds.height
         return SuccessMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationSuccess: operationSuccess, operationInfo:operationInfo!)
     }
+    
+    public func refreshHeaderView() {
+        header.updateHeaderValue(with: operationInfo!)
+     }
 }
