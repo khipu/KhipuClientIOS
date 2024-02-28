@@ -31,8 +31,8 @@ class EmailField: UIView, KhipuField, UITextFieldDelegate {
         return textField
     }()
 
-    init(frame: CGRect, formItem: FormItem) {
-        super.init(frame: frame)
+    init(formItem: FormItem) {
+        super.init(frame: .zero)
         self.formItem = formItem
     }
 

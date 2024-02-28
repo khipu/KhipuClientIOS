@@ -26,9 +26,9 @@ class BankSelectField: UIView, KhipuField {
     private var imageCache: [String: UIImage] = [:]
     private var isReadyToShow: Bool = false
 
-    init(frame: CGRect, formItem: FormItem) {
+    init(formItem: FormItem) {
         self.formItem = formItem
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupSegmentedControl()
         setupCollectionView()
 
@@ -46,13 +46,13 @@ class BankSelectField: UIView, KhipuField {
 
     private func setupSegmentedControl() {
         addSubview(segmentedControl)
-        /*segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             segmentedControl.topAnchor.constraint(equalTo: topAnchor),
             segmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor),
             segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor),
             segmentedControl.heightAnchor.constraint(equalToConstant: 30)
-        ])*/
+        ])
     }
 
     private func setupCollectionView() {
@@ -68,13 +68,13 @@ class BankSelectField: UIView, KhipuField {
         layout.minimumLineSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
-        /*collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])*/
+        ])
     }
 
     private func downloadImages(for banks: [GroupedOption]) {
@@ -193,7 +193,7 @@ class BankCell: UICollectionViewCell {
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(nameLabel)
 
-        /*containerView.translatesAutoresizingMaskIntoConstraints = false
+        containerView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -210,7 +210,7 @@ class BankCell: UICollectionViewCell {
             stackView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
 
             nameLabel.heightAnchor.constraint(equalToConstant: 30),
-        ])*/
+        ])
     }
 
     func configure(with bank: GroupedOption, imageCache: [String: UIImage]) {

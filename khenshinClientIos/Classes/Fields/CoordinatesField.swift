@@ -38,9 +38,9 @@ class CoordinatesField: UIView, KhipuField {
         return label
     }()
 
-    init(frame: CGRect, formItem: FormItem) {
+    init(formItem: FormItem) {
         self.formItem = formItem
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupUI()
     }
 
@@ -60,7 +60,7 @@ class CoordinatesField: UIView, KhipuField {
         addSubview(coord2TextField)
         addSubview(coord3TextField)
 
-        /*label1.translatesAutoresizingMaskIntoConstraints = false
+        label1.translatesAutoresizingMaskIntoConstraints = false
         label2.translatesAutoresizingMaskIntoConstraints = false
         label3.translatesAutoresizingMaskIntoConstraints = false
         coord1TextField.translatesAutoresizingMaskIntoConstraints = false
@@ -82,7 +82,7 @@ class CoordinatesField: UIView, KhipuField {
             label3.leadingAnchor.constraint(equalTo: label2.trailingAnchor, constant: 16),
             coord3TextField.topAnchor.constraint(equalTo: label3.bottomAnchor, constant: 8),
             coord3TextField.leadingAnchor.constraint(equalTo: label2.trailingAnchor, constant: 16),
-        ])*/
+        ])
     }
 
     private func configureLabel(_ label: UILabel, text: String) {

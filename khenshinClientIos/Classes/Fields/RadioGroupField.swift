@@ -20,9 +20,9 @@ class RadioGroupField: UIView, KhipuField {
         return stackView
     }()
 
-    init(frame: CGRect, formItem: FormItem) {
+    init(formItem: FormItem) {
         self.formItem = formItem
-        super.init(frame: frame)
+        super.init(frame: .zero)
         setupUI()
     }
 
@@ -33,13 +33,13 @@ class RadioGroupField: UIView, KhipuField {
     private func setupUI() {
         addSubview(radioGroup)
 
-        /*radioGroup.translatesAutoresizingMaskIntoConstraints = false
+        radioGroup.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             radioGroup.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             radioGroup.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             radioGroup.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             radioGroup.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
-        ])*/
+        ])
 
         if let options = formItem.options {
             for choice in options {
@@ -61,13 +61,13 @@ class RadioGroupField: UIView, KhipuField {
         let radio = createRadio(choice: choice)
         sheet.addSubview(radio)
 
-        /*radio.translatesAutoresizingMaskIntoConstraints = false
+        radio.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             radio.leadingAnchor.constraint(equalTo: sheet.leadingAnchor, constant: 16),
             radio.trailingAnchor.constraint(equalTo: sheet.trailingAnchor, constant: -16),
             radio.topAnchor.constraint(equalTo: sheet.topAnchor, constant: 16),
             radio.bottomAnchor.constraint(equalTo: sheet.bottomAnchor, constant: -16)
-        ])*/
+        ])
 
         return sheet
     }
