@@ -3,50 +3,32 @@ import KhenshinProtocol
 
 class FormComponent: UIView {
     private let formRequest: FormRequest?
-
-    lazy private var formTitle: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.textColor = UIColor.black
-        label.backgroundColor = UIColor.white
-        return label
-    }()
-
-    lazy private var formError: UILabel = {
-        let label = UILabel()
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.textColor = UIColor.black
-        label.backgroundColor = UIColor.red
-        return label
-    }()
-
+    
+    
+    lazy private var formTitle = ComponentBuilder.buildLabel(textColor: .black, fontSize: 10, backgroundColor: .white)
+    lazy private var formError = ComponentBuilder.buildLabel(textColor: .black, fontSize: 10, backgroundColor: .red)
+    lazy public var continueButton = ComponentBuilder.buildButton(withTitle: "Continuar", backgroundColor: .black, titleColor: .white)
+    
+    
+    
     lazy private var formComponents: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 8
         return stackView
     }()
-
-    lazy public var continueButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
-        button.setTitleColor(UIColor.white, for: .normal)
-        return button
-
-    }()
-
+    
+    
     init(frame: CGRect, formRequest: FormRequest) {
         self.formRequest = formRequest
         super.init(frame: frame)
         setupForm()
     }
-
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func didMoveToSuperview() {
         if(superview == nil) {
             return
@@ -58,19 +40,19 @@ class FormComponent: UIView {
         addSubview(continueButton)
         setupFormConstraints()
     }
-
+    
     private func setupFormConstraints() {
         guard let superview = superview else {
             print("Error: superview es nil")
             return
         }
-
+        
         self.translatesAutoresizingMaskIntoConstraints = false
         formTitle.translatesAutoresizingMaskIntoConstraints = false
         formError.translatesAutoresizingMaskIntoConstraints = false
         formComponents.translatesAutoresizingMaskIntoConstraints = false
         continueButton.translatesAutoresizingMaskIntoConstraints = false
-
+        
         NSLayoutConstraint.activate([
             self.topAnchor.constraint(equalTo: superview.topAnchor),
             self.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
@@ -87,16 +69,16 @@ class FormComponent: UIView {
             continueButton.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
         ])
     }
-
+    
     private func setupForm() {
         formTitle.text = formRequest?.title
         formError.text = formRequest?.errorMessage
         let continueLabel = formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : "Continuar"
         continueButton.setTitle(continueLabel, for: .normal)
-
+        
         formRequest?.items.forEach { item in
             var component: UIView?
-
+            
             switch item.type {
             case FormItemTypes.text:
                 if (item.email!) {
@@ -124,10 +106,10 @@ class FormComponent: UIView {
             if let component = component {
                 formComponents.addArrangedSubview(component)
             }
-
+            
         }
     }
-
+    
     public func createFormResponse() -> FormResponse {
         let answers = formComponents.subviews.map{
             FormItemAnswer(

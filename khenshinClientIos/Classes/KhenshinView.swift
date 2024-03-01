@@ -82,13 +82,9 @@ public class KhenshinView: UIViewController {
     }()
 
 
-    lazy private var footer: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Footer!"
-        label.textColor = UIColor.black
-        label.backgroundColor = UIColor.green
-        return label
+    lazy private var footer: FooterView =  {
+        let footer = FooterView()
+        return footer
     }()
 
     public func drawComponent(messageType: String, message: String) {
