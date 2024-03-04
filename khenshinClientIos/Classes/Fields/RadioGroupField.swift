@@ -1,16 +1,8 @@
 import UIKit
 import KhenshinProtocol
 
-class RadioGroupField: UIView, KhipuField {
+class RadioGroupField: BaseField {
 
-    var formItem: FormItem
-    func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem
-    }
-    
-    func getValue() -> String {
-        return ""
-    }
     
     private lazy var radioGroup: UIStackView = {
         let stackView = UIStackView()
@@ -20,17 +12,15 @@ class RadioGroupField: UIView, KhipuField {
         return stackView
     }()
 
-    init(formItem: FormItem) {
-        self.formItem = formItem
-        super.init(frame: .zero)
-        setupUI()
+    required init?(formItem: FormItem) {
+        super.init(formItem: formItem)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupUI() {
+    override func setupUI() {
         addSubview(radioGroup)
 
         radioGroup.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +31,7 @@ class RadioGroupField: UIView, KhipuField {
             radioGroup.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
         ])
 
-        if let options = formItem.options {
+        if let options = self.formItem!.options {
             for choice in options {
                 let sheet = createSheet(choice: choice)
                 radioGroup.addArrangedSubview(sheet)
@@ -78,5 +68,9 @@ class RadioGroupField: UIView, KhipuField {
         radio.setTitleColor(UIColor(red: 0.07, green: 0.38, blue: 0.87, alpha: 1.00), for: .normal)
         radio.contentHorizontalAlignment = .left
         return radio
+    }
+    
+    override func validate() -> Bool {
+        return true
     }
 }

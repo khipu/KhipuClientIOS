@@ -15,6 +15,8 @@ class BankSelectField: BaseField {
     private var banksEmpresa: [GroupedOption] = []
     private var imageCache: [String: UIImage] = [:]
     private var isReadyToShow: Bool = false
+    
+    public var selectedBank: GroupedOption?
 
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
@@ -99,6 +101,23 @@ class BankSelectField: BaseField {
     @objc private func segmentedControlValueChanged() {
         collectionView.reloadData()
     }
+    
+    override func getValue() -> String {
+        return (self.selectedBank)!.name!
+    }
+
+    override func validate() -> Bool {
+        guard let text = (self.selectedBank)!.name else { return false }
+
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            //errorLabel.text = "Campo obligatorio"
+            return false
+        } else {
+            //errorLabel.text = ""
+            return true
+        }
+    }
+
 }
 
 extension BankSelectField: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -127,9 +146,10 @@ extension BankSelectField: UICollectionViewDelegate, UICollectionViewDataSource,
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedBank = segmentedControl.selectedSegmentIndex == 0 ? banksPersonas[indexPath.item] : banksEmpresa[indexPath.item]
-        print("Celda seleccionada: \(selectedBank.name)")
+        self.selectedBank = segmentedControl.selectedSegmentIndex == 0 ? banksPersonas[indexPath.item] : banksEmpresa[indexPath.item]
+        print("Celda seleccionada: \(self.selectedBank?.name)")
     }
+    
 }
 
 class BankCell: UICollectionViewCell {
@@ -214,4 +234,7 @@ class BankCell: UICollectionViewCell {
 
         nameLabel.text = bank.name
     }
+    
+   
+    
 }

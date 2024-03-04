@@ -1,7 +1,7 @@
 import UIKit
 import KhenshinProtocol
 
-class CoordinatesField: BaseField, KhipuField {
+class CoordinatesField: BaseField {
 
     private let label1 = UILabel()
     private let label2 = UILabel()
@@ -79,6 +79,10 @@ class CoordinatesField: BaseField, KhipuField {
         label.text = text
         label.textAlignment = .center
         label.backgroundColor = UIColor.lightGray
+    }
+    
+    override func validate() -> Bool {
+        return false
     }
 
 }

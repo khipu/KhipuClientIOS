@@ -74,7 +74,21 @@ class FormComponent: UIView, UITextFieldDelegate {
             case FormItemTypes.text:
                 if (item.email!) {
                     component = EmailField.self
+                } else {
+                    component = TextField.self
                 }
+                break
+            case FormItemTypes.rut:
+                component = RutField.self
+            case FormItemTypes.list:
+                component = RadioGroupField.self
+                break
+            case FormItemTypes.groupedList:
+                component = BankSelectField.self
+                break
+            case FormItemTypes.coordinates:
+                component = CoordinatesField.self
+                break
             default:
                 break
             }
@@ -91,18 +105,19 @@ class FormComponent: UIView, UITextFieldDelegate {
     }
 
     public func createFormResponse() -> Optional<FormResponse> {
-            let isValid = formComponents.subviews.allSatisfy { ($0 as? BaseField)?.validate() ?? true }
+        let isValid = formComponents.subviews.allSatisfy { ($0 as? FormField)?.validate() ?? true }
 
-           guard isValid else { return nil }
+        guard isValid else { return nil }
 
-            let answers = formComponents.subviews.map {
-                FormItemAnswer(
-                    id: ($0 as! BaseField).getFormItem().id,
-                    type: ($0 as! BaseField).getFormItem().type,
-                    value: ($0 as! BaseField).getValue()
-                )
-            }
+        let answers = formComponents.subviews.compactMap { subview -> FormItemAnswer? in
+            guard let formField = subview as? FormField else { return nil }
+            return FormItemAnswer(
+                id: formField.getFormItem().id,
+                type: formField.getFormItem().type,
+                value: formField.getValue()
+            )
+        }
 
-            return FormResponse(answers: answers, id: self.formRequest!.id, type: MessageType.formResponse)
+        return FormResponse(answers: answers, id: self.formRequest!.id, type: MessageType.formResponse)
     }
 }

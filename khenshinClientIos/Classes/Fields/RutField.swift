@@ -1,51 +1,24 @@
 import UIKit
 import KhenshinProtocol
 
-class RutField: UIView, UITextFieldDelegate, KhipuField {
-    var formItem: FormItem
-    var validateField: ((String) -> Void)?
-    var onChange: ((String) -> Void)?
+class RutField: BaseField, UITextFieldDelegate {
     
-    func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem
-    }
+    lazy private var errorLabel = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
+    lazy private var textField = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 18), borderStyle: .roundedRect)
     
-    func getValue() -> String {
-        return ""
-    }
-
-    private lazy var textField: UITextField = {
-        let textField = UITextField()
-        textField.borderStyle = .roundedRect
-        textField.placeholder = formItem.label
-        textField.delegate = self
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
-    }()
-
-
-    private var errorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .red
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    init(formItem: FormItem) {
-        self.formItem = formItem
-        super.init(frame: .zero)
-        setupUI()
+    
+    required init?(formItem: FormItem) {
+        super.init(formItem: formItem)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupUI() {
+    override func setupUI() {
+        textField.placeholder = self.formItem!.label
         addSubview(textField)
         addSubview(errorLabel)
-
 
         NSLayoutConstraint.activate([
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -58,28 +31,19 @@ class RutField: UIView, UITextFieldDelegate, KhipuField {
         ])
     }
 
-    func configure(validateField: @escaping (String) -> Void, onChange: @escaping (String) -> Void) {
-        self.validateField = validateField
-        self.onChange = onChange
-    }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        validate()
-    }
-
-    private func validate() {
-        guard let text = textField.text else { return }
+    override func validate() -> Bool {
+        guard let text = textField.text else { return false }
 
         if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             errorLabel.text = "Campo obligatorio"
+            return false
         }else if !validateRut(text) {
             errorLabel.text = "Ingresa un RUT válido"
+            return false
         } else {
             errorLabel.text = ""
+            return true
         }
-        validateField?(text)
-
-        onChange?(text)
     }
 
     private func validateRut(_ rut: String) -> Bool {

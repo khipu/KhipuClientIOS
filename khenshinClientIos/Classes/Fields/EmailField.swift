@@ -39,6 +39,7 @@ class EmailField: BaseField,UITextFieldDelegate {
     }
 
     override func validate() -> Bool {
+        return true
         guard let text = emailTextField.text else { return false }
 
         if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
