@@ -97,6 +97,7 @@ class FormComponent: UIView, UITextFieldDelegate {
                 if let component = componentType.init(formItem: item) as? BaseField & FormField {
                     formComponents.addArrangedSubview(component)
                     component.setupUI()
+                    formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 20.0))
                 }
             }
         }
