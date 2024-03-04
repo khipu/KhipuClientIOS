@@ -33,6 +33,7 @@ class FormComponent: UIView, UITextFieldDelegate {
         addSubview(formTitle)
         addSubview(formError)
         addSubview(formComponents)
+        addSubview(continueButton)
         setupFormConstraints()
     }
 
@@ -57,6 +58,10 @@ class FormComponent: UIView, UITextFieldDelegate {
             formComponents.topAnchor.constraint(equalTo: formError.bottomAnchor, constant: 8),
             formComponents.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             formComponents.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            formComponents.heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
+            continueButton.topAnchor.constraint(equalTo: formComponents.bottomAnchor, constant: 8),
+            continueButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            continueButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
         ])
     }
 
@@ -102,7 +107,7 @@ class FormComponent: UIView, UITextFieldDelegate {
             }
         }
         formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 70.0))
-        formComponents.addArrangedSubview(continueButton)
+        //formComponents.addArrangedSubview(continueButton)
     }
 
     public func createFormResponse() -> Optional<FormResponse> {

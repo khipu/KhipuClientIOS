@@ -17,6 +17,10 @@ class TextField: BaseField, UITextFieldDelegate {
         print("shouldChangeCharactersIn: \(string)")
         return true
     }
+    
+    override func getValue() -> String {
+        return textField.text!
+    }
 
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
