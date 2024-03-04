@@ -1,17 +1,7 @@
 import UIKit
 import KhenshinProtocol
 
-class BankSelectField: UIView, KhipuField {
-    var formItem: FormItem?
-    
-    func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem!
-    }
-    
-    func getValue() -> String {
-        return ""
-    }
-    
+class BankSelectField: BaseField {
 
     private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Persona", "Empresa"])
@@ -26,22 +16,24 @@ class BankSelectField: UIView, KhipuField {
     private var imageCache: [String: UIImage] = [:]
     private var isReadyToShow: Bool = false
 
-    init(formItem: FormItem) {
-        self.formItem = formItem
-        super.init(frame: .zero)
+    required init?(formItem: FormItem) {
+        super.init(formItem: formItem)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+
+    override func setupUI() {
         setupSegmentedControl()
         setupCollectionView()
 
-        if let groupedOptions = formItem.groupedOptions, let options = groupedOptions.options {
+        if let groupedOptions = self.formItem!.groupedOptions, let options = groupedOptions.options {
             banksPersonas = options.filter { $0.tag == "Persona" }
             banksEmpresa = options.filter { $0.tag == "Empresa" }
             downloadImages(for: banksPersonas)
             downloadImages(for: banksEmpresa)
         }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 
     private func setupSegmentedControl() {

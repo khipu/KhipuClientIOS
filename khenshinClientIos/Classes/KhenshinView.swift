@@ -64,7 +64,7 @@ public class KhenshinView: UIViewController {
             footer.bottomAnchor.constraint(equalTo: container.bottomAnchor),
         ])
     }
-    
+
     lazy private var header: HeaderView =  {
         let header = HeaderView()
         return header
@@ -77,7 +77,7 @@ public class KhenshinView: UIViewController {
 
     lazy private var component: UIView = {
         let component = UIView()
-        component.backgroundColor = UIColor.cyan
+        component.backgroundColor = UIColor.white
         return component
     }()
 
@@ -164,8 +164,9 @@ public class KhenshinView: UIViewController {
         let formComponent = FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message)
         formComponent.continueButton.rx.tap
             .bind {
-                let formResponse = formComponent.createFormResponse()
-                self.khenshinClient?.sendMessage(type: formResponse.type.rawValue, message: formResponse)
+                if let formResponse = formComponent.createFormResponse() {
+                    self.khenshinClient?.sendMessage(type: formResponse.type.rawValue, message: formResponse)
+                }
             }
             .disposed(by: self.disposeBag)
         return formComponent
@@ -189,7 +190,7 @@ public class KhenshinView: UIViewController {
         let screenHeight = UIScreen.main.bounds.height
         return SuccessMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationSuccess: operationSuccess, operationInfo:operationInfo!)
     }
-    
+
     public func refreshHeaderView() {
         header.updateHeaderValue(with: operationInfo!)
      }

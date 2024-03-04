@@ -1,58 +1,53 @@
 import UIKit
 import KhenshinProtocol
 
-class FormComponent: UIView {
+class FormComponent: UIView, UITextFieldDelegate {
     private let formRequest: FormRequest?
-    
-    
-    lazy private var formTitle = ComponentBuilder.buildLabel(textColor: .black, fontSize: 10, backgroundColor: .white)
+
+    lazy private var formTitle = ComponentBuilder.buildLabel(textColor: .black, fontSize: 20, backgroundColor: .white)
     lazy private var formError = ComponentBuilder.buildLabel(textColor: .black, fontSize: 10, backgroundColor: .red)
-    lazy public var continueButton = ComponentBuilder.buildButton(withTitle: "Continuar", backgroundColor: .black, titleColor: .white)
-    
-    
-    
+    lazy public var continueButton = ComponentBuilder.buildButton(withTitle: "Continuar", backgroundColorHex: "8347ad", titleColor: .white)
+
     lazy private var formComponents: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.spacing = 8
         return stackView
     }()
-    
-    
+
     init(frame: CGRect, formRequest: FormRequest) {
         self.formRequest = formRequest
         super.init(frame: frame)
         setupForm()
     }
-    
+
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func didMoveToSuperview() {
-        if(superview == nil) {
+        if superview == nil {
             return
         }
         backgroundColor = UIColor.white
         addSubview(formTitle)
         addSubview(formError)
         addSubview(formComponents)
-        addSubview(continueButton)
         setupFormConstraints()
     }
-    
+
     private func setupFormConstraints() {
         guard let superview = superview else {
             print("Error: superview es nil")
             return
         }
-        
+
         self.translatesAutoresizingMaskIntoConstraints = false
         formTitle.translatesAutoresizingMaskIntoConstraints = false
         formError.translatesAutoresizingMaskIntoConstraints = false
         formComponents.translatesAutoresizingMaskIntoConstraints = false
         continueButton.translatesAutoresizingMaskIntoConstraints = false
-        
+
         NSLayoutConstraint.activate([
             self.topAnchor.constraint(equalTo: superview.topAnchor),
             self.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
@@ -64,58 +59,50 @@ class FormComponent: UIView {
             formComponents.topAnchor.constraint(equalTo: formError.bottomAnchor, constant: 8),
             formComponents.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             formComponents.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            continueButton.topAnchor.constraint(equalTo: formComponents.bottomAnchor),
-            continueButton.widthAnchor.constraint(equalTo: superview.widthAnchor),
-            continueButton.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
         ])
     }
-    
+
     private func setupForm() {
         formTitle.text = formRequest?.title
         formError.text = formRequest?.errorMessage
-        let continueLabel = formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : "Continuar"
-        continueButton.setTitle(continueLabel, for: .normal)
-        
+        continueButton.setTitle(formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : "Continuar", for: .normal)
+
         formRequest?.items.forEach { item in
-            var component: UIView?
-            
+            var component: FormField.Type?
+
             switch item.type {
             case FormItemTypes.text:
                 if (item.email!) {
-                    component = EmailField(formItem: item)
-                } else {
-                    component = TextField(formItem: item)
+                    component = EmailField.self
                 }
-                break
-            case FormItemTypes.rut:
-                component = RutField(formItem: item)
-                break
-            case FormItemTypes.list:
-                component = RadioGroupField(formItem: item)
-                break
-            case FormItemTypes.groupedList:
-                component = BankSelectField(formItem: item)
-                break
-            case FormItemTypes.coordinates:
-                component = CoordinatesField(formItem: item)
-                break
             default:
                 break
             }
-            
-            if let component = component {
-                formComponents.addArrangedSubview(component)
+
+            if let componentType = component {
+                if let component = componentType.init(formItem: item) as? BaseField & FormField {
+                    formComponents.addArrangedSubview(component)
+                    component.setupUI()
+                }
             }
-            
         }
+        formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 70.0))
+        formComponents.addArrangedSubview(continueButton)
     }
-    
-    public func createFormResponse() -> FormResponse {
-        let answers = formComponents.subviews.map{
-            FormItemAnswer(
-                id: ($0 as! any KhipuField).getFormItem().id,
-                type: ($0 as! any KhipuField).getFormItem().type,
-                value: ($0 as! any KhipuField).getValue())}
-        return FormResponse(answers: answers, id: self.formRequest!.id, type: MessageType.formResponse)
+
+    public func createFormResponse() -> Optional<FormResponse> {
+            let isValid = formComponents.subviews.allSatisfy { ($0 as? BaseField)?.validate() ?? true }
+
+           guard isValid else { return nil }
+
+            let answers = formComponents.subviews.map {
+                FormItemAnswer(
+                    id: ($0 as! BaseField).getFormItem().id,
+                    type: ($0 as! BaseField).getFormItem().type,
+                    value: ($0 as! BaseField).getValue()
+                )
+            }
+
+            return FormResponse(answers: answers, id: self.formRequest!.id, type: MessageType.formResponse)
     }
 }
