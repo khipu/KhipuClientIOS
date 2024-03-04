@@ -1,16 +1,8 @@
 import UIKit
 import KhenshinProtocol
 
-class CoordinatesField: UIView, KhipuField {
-    func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem
-    }
-    
-    func getValue() -> String {
-        return ""
-    }
+class CoordinatesField: BaseField {
 
-    var formItem: FormItem
     private let label1 = UILabel()
     private let label2 = UILabel()
     private let label3 = UILabel()
@@ -38,20 +30,18 @@ class CoordinatesField: UIView, KhipuField {
         return label
     }()
 
-    init(formItem: FormItem) {
-        self.formItem = formItem
-        super.init(frame: .zero)
-        setupUI()
+    required init?(formItem: FormItem) {
+        super.init(formItem: formItem)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupUI() {
-        configureLabel(label1, text: (self.formItem.labels?[0])!)
-        configureLabel(label2, text: (self.formItem.labels?[1])!)
-        configureLabel(label3, text: (self.formItem.labels?[2])!)
+    override func setupUI() {
+        configureLabel(label1, text: (self.formItem!.labels?[0])!)
+        configureLabel(label2, text: (self.formItem!.labels?[1])!)
+        configureLabel(label3, text: (self.formItem!.labels?[2])!)
 
         addSubview(label1)
         addSubview(label2)
@@ -89,6 +79,10 @@ class CoordinatesField: UIView, KhipuField {
         label.text = text
         label.textAlignment = .center
         label.backgroundColor = UIColor.lightGray
+    }
+    
+    override func validate() -> Bool {
+        return false
     }
 
 }

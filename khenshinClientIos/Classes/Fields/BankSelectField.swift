@@ -1,18 +1,8 @@
 import UIKit
+import RxSwift
 import KhenshinProtocol
 
-class BankSelectField: UIView, KhipuField {
-    var formItem: FormItem?
-    
-    func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem!
-    }
-    
-    func getValue() -> String {
-        return ""
-    }
-    
-
+class BankSelectField: BaseField {
     private let segmentedControl: UISegmentedControl = {
         let segmentedControl = UISegmentedControl(items: ["Persona", "Empresa"])
         segmentedControl.selectedSegmentIndex = 0
@@ -21,27 +11,34 @@ class BankSelectField: UIView, KhipuField {
     }()
 
     private var collectionView: UICollectionView!
+    private var collectionViewLayout: UICollectionViewFlowLayout!
     private var banksPersonas: [GroupedOption] = []
     private var banksEmpresa: [GroupedOption] = []
     private var imageCache: [String: UIImage] = [:]
     private var isReadyToShow: Bool = false
+    public var selectedBank: GroupedOption?
+    private let disposeBag = DisposeBag()
+    private var value: String!
 
-    init(formItem: FormItem) {
-        self.formItem = formItem
-        super.init(frame: .zero)
+    required init?(formItem: FormItem) {
+        super.init(formItem: formItem)
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
+    override func setupUI() {
         setupSegmentedControl()
         setupCollectionView()
+        //translatesAutoresizingMaskIntoConstraints = false
 
-        if let groupedOptions = formItem.groupedOptions, let options = groupedOptions.options {
+        if let groupedOptions = self.formItem!.groupedOptions, let options = groupedOptions.options {
             banksPersonas = options.filter { $0.tag == "Persona" }
             banksEmpresa = options.filter { $0.tag == "Empresa" }
             downloadImages(for: banksPersonas)
             downloadImages(for: banksEmpresa)
         }
-    }
-
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
     }
 
     private func setupSegmentedControl() {
@@ -57,16 +54,16 @@ class BankSelectField: UIView, KhipuField {
 
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
-        collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
+        collectionViewLayout = UICollectionViewFlowLayout()
+        collectionViewLayout.minimumInteritemSpacing = 10
+        collectionViewLayout.minimumLineSpacing = 10
+        collectionViewLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        collectionView = UICollectionView(frame: bounds, collectionViewLayout: collectionViewLayout)
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.backgroundColor = .white
         collectionView.register(BankCell.self, forCellWithReuseIdentifier: BankCell.reuseIdentifier)
         addSubview(collectionView)
-
-        layout.minimumInteritemSpacing = 10
-        layout.minimumLineSpacing = 10
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -75,6 +72,14 @@ class BankSelectField: UIView, KhipuField {
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        collectionView
+            .rx
+            .itemSelected
+                .subscribe(onNext:{ indexPath in
+                    let selectedBank = self.segmentedControl.selectedSegmentIndex == 0 ? self.banksPersonas[indexPath.item] : self.banksEmpresa[indexPath.item]
+                    print("Celda seleccionada: \(selectedBank.name)")
+                    self.value = selectedBank.value
+                }).disposed(by: disposeBag)
     }
 
     private func downloadImages(for banks: [GroupedOption]) {
@@ -107,6 +112,24 @@ class BankSelectField: UIView, KhipuField {
     @objc private func segmentedControlValueChanged() {
         collectionView.reloadData()
     }
+    
+    override func getValue() -> String {
+        return "15"//(self.selectedBank)!.name!
+    }
+
+    override func validate() -> Bool {
+        return true
+        guard let text = (self.selectedBank)!.name else { return false }
+
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            //errorLabel.text = "Campo obligatorio"
+            return false
+        } else {
+            //errorLabel.text = ""
+            return true
+        }
+    }
+
 }
 
 extension BankSelectField: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -133,11 +156,6 @@ extension BankSelectField: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.frame.width - 20, height: 40)
     }
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let selectedBank = segmentedControl.selectedSegmentIndex == 0 ? banksPersonas[indexPath.item] : banksEmpresa[indexPath.item]
-        print("Celda seleccionada: \(selectedBank.name)")
-    }
 }
 
 class BankCell: UICollectionViewCell {
@@ -156,7 +174,8 @@ class BankCell: UICollectionViewCell {
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .horizontal
-        stackView.alignment = .center
+        stackView.distribution = .fill
+        stackView.alignment = .fill
         stackView.spacing = 5
         return stackView
     }()
@@ -179,27 +198,29 @@ class BankCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupViews()
+        //setupViews()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        setupViews()
+        //setupViews()
     }
 
-    private func setupViews() {
+    override func didMoveToSuperview() {
         addSubview(containerView)
         containerView.addSubview(stackView)
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(nameLabel)
-
         containerView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            //topAnchor.constraint(equalTo: superview!.topAnchor),
+            //bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
             containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.widthAnchor.constraint(equalTo: widthAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
             containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -222,4 +243,7 @@ class BankCell: UICollectionViewCell {
 
         nameLabel.text = bank.name
     }
+    
+   
+    
 }

@@ -1,80 +1,63 @@
 import UIKit
 import KhenshinProtocol
 
-class TextField: UIView, UITextFieldDelegate, KhipuField {
-    var formItem: FormItem
-    var validateField: ((String) -> Void)?
-    var onChange: ((String) -> Void)?
-    
-    func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem
-    }
-    
-    func getValue() -> String {
-        return ""
-    }
-
-    private var errorLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .red
-        label.font = UIFont.systemFont(ofSize: 12)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+class TextField: BaseField, UITextFieldDelegate {
+    lazy private var errorLabel = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
 
     private lazy var textField: UITextField = {
         let textField = UITextField()
         textField.borderStyle = .roundedRect
-        textField.placeholder = formItem.label
-        textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.isUserInteractionEnabled = true
+        textField.delegate = self
         return textField
     }()
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        print("shouldChangeCharactersIn: \(string)")
+        return true
+    }
 
-    init(formItem: FormItem) {
-        self.formItem = formItem
-        super.init(frame: .zero)
-        setupUI()
+    required init?(formItem: FormItem) {
+        super.init(formItem: formItem)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupUI() {
+    override func setupUI() {
+        textField.placeholder = self.formItem!.label
         addSubview(textField)
         addSubview(errorLabel)
+        
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            //topAnchor.constraint(equalTo: superview!.topAnchor),
+            //bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
+            textField.topAnchor.constraint(equalTo: topAnchor),
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            textField.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            //textField.topAnchor.constraint(equalTo: topAnchor, constant: 0),
 
             errorLabel.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
             errorLabel.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
             errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 4),
         ])
+
     }
 
-    func configure(validateField: @escaping (String) -> Void, onChange: @escaping (String) -> Void) {
-        self.validateField = validateField
-        self.onChange = onChange
-    }
-
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        validate()
-    }
-
-    private func validate() {
-        guard let text = textField.text else { return }
+    override func validate() -> Bool {
+        guard let text = textField.text else { return false}
 
         if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             errorLabel.text = "Campo obligatorio"
+            return false
         } else {
             errorLabel.text = ""
+            return true
         }
-        validateField?(text)
-
-        onChange?(text)
     }
 }

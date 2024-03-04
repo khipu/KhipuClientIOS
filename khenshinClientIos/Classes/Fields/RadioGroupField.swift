@@ -1,15 +1,16 @@
 import UIKit
+import RxSwift
 import KhenshinProtocol
 
-class RadioGroupField: UIView, KhipuField {
+class RadioGroupField: BaseField {
 
-    var formItem: FormItem
-    func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem
+    var value: String
+    override func getFormItem() -> KhenshinProtocol.FormItem {
+        return self.formItem!
     }
     
-    func getValue() -> String {
-        return ""
+    override func getValue() -> String {
+        return self.value
     }
     
     private lazy var radioGroup: UIStackView = {
@@ -19,18 +20,18 @@ class RadioGroupField: UIView, KhipuField {
         stackView.distribution = .fillEqually
         return stackView
     }()
+    private let disposeBag = DisposeBag()
 
-    init(formItem: FormItem) {
-        self.formItem = formItem
-        super.init(frame: .zero)
-        setupUI()
+    required init?(formItem: FormItem) {
+        self.value = ""
+        super.init(formItem: formItem)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    private func setupUI() {
+    override func setupUI() {
         addSubview(radioGroup)
 
         radioGroup.translatesAutoresizingMaskIntoConstraints = false
@@ -41,7 +42,7 @@ class RadioGroupField: UIView, KhipuField {
             radioGroup.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
         ])
 
-        if let options = formItem.options {
+        if let options = self.formItem!.options {
             for choice in options {
                 let sheet = createSheet(choice: choice)
                 radioGroup.addArrangedSubview(sheet)
@@ -59,14 +60,24 @@ class RadioGroupField: UIView, KhipuField {
         sheet.layer.shadowRadius = 4
 
         let radio = createRadio(choice: choice)
+        
         sheet.addSubview(radio)
+        let tapGesture = UITapGestureRecognizer()
+        radio.addGestureRecognizer(tapGesture)
+        tapGesture
+            .rx
+            .event
+            .bind(onNext:{ indexPath in
+                print("APARECE ESTO: \((indexPath.view as! UIButton).currentTitle)")
+                self.value = (self.formItem?.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
+                }).disposed(by: disposeBag)
 
         radio.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            radio.leadingAnchor.constraint(equalTo: sheet.leadingAnchor, constant: 16),
-            radio.trailingAnchor.constraint(equalTo: sheet.trailingAnchor, constant: -16),
-            radio.topAnchor.constraint(equalTo: sheet.topAnchor, constant: 16),
-            radio.bottomAnchor.constraint(equalTo: sheet.bottomAnchor, constant: -16)
+            radio.leadingAnchor.constraint(equalTo: sheet.leadingAnchor),
+            radio.trailingAnchor.constraint(equalTo: sheet.trailingAnchor),
+            radio.topAnchor.constraint(equalTo: sheet.topAnchor),
+            radio.bottomAnchor.constraint(equalTo: sheet.bottomAnchor)
         ])
 
         return sheet
@@ -78,5 +89,9 @@ class RadioGroupField: UIView, KhipuField {
         radio.setTitleColor(UIColor(red: 0.07, green: 0.38, blue: 0.87, alpha: 1.00), for: .normal)
         radio.contentHorizontalAlignment = .left
         return radio
+    }
+    
+    override func validate() -> Bool {
+        return true
     }
 }
