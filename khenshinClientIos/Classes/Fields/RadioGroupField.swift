@@ -4,13 +4,12 @@ import KhenshinProtocol
 
 class RadioGroupField: BaseField {
 
-    var formItem: FormItem
     var value: String
-    func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem
+    override func getFormItem() -> KhenshinProtocol.FormItem {
+        return self.formItem!
     }
     
-    func getValue() -> String {
+    override func getValue() -> String {
         return self.value
     }
     
@@ -24,6 +23,7 @@ class RadioGroupField: BaseField {
     private let disposeBag = DisposeBag()
 
     required init?(formItem: FormItem) {
+        self.value = ""
         super.init(formItem: formItem)
     }
 
@@ -69,7 +69,7 @@ class RadioGroupField: BaseField {
             .event
             .bind(onNext:{ indexPath in
                 print("APARECE ESTO: \((indexPath.view as! UIButton).currentTitle)")
-                self.value = (self.formItem.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
+                self.value = (self.formItem?.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
                 }).disposed(by: disposeBag)
 
         radio.translatesAutoresizingMaskIntoConstraints = false
