@@ -35,9 +35,12 @@ class TextField: BaseField, UITextFieldDelegate {
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            //topAnchor.constraint(equalTo: superview!.topAnchor),
+            //bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
+            textField.topAnchor.constraint(equalTo: topAnchor),
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            textField.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            //textField.topAnchor.constraint(equalTo: topAnchor, constant: 0),
 
             errorLabel.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
             errorLabel.trailingAnchor.constraint(equalTo: textField.trailingAnchor),

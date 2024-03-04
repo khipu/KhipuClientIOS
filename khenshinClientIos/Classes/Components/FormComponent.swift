@@ -18,7 +18,6 @@ class FormComponent: UIView, UITextFieldDelegate {
     init(frame: CGRect, formRequest: FormRequest) {
         self.formRequest = formRequest
         super.init(frame: frame)
-        setupForm()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -29,7 +28,8 @@ class FormComponent: UIView, UITextFieldDelegate {
         if superview == nil {
             return
         }
-        backgroundColor = UIColor.white
+        backgroundColor = UIColor.orange
+        configureView()
         addSubview(formTitle)
         addSubview(formError)
         addSubview(formComponents)
@@ -41,19 +41,17 @@ class FormComponent: UIView, UITextFieldDelegate {
             print("Error: superview es nil")
             return
         }
-
-        self.translatesAutoresizingMaskIntoConstraints = false
         formTitle.translatesAutoresizingMaskIntoConstraints = false
         formError.translatesAutoresizingMaskIntoConstraints = false
         formComponents.translatesAutoresizingMaskIntoConstraints = false
         continueButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            self.topAnchor.constraint(equalTo: superview.topAnchor),
-            self.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
-            widthAnchor.constraint(equalTo: superview.widthAnchor),
-            formTitle.topAnchor.constraint(equalTo: superview.topAnchor),
-            formTitle.widthAnchor.constraint(equalTo: superview.widthAnchor),
+            //self.topAnchor.constraint(equalTo: superview!.topAnchor),
+            //self.bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
+            //widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            formTitle.topAnchor.constraint(equalTo: topAnchor),
+            formTitle.widthAnchor.constraint(equalTo: widthAnchor),
             formError.topAnchor.constraint(equalTo: formTitle.bottomAnchor),
             formError.widthAnchor.constraint(equalTo: superview.widthAnchor),
             formComponents.topAnchor.constraint(equalTo: formError.bottomAnchor, constant: 8),

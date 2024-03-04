@@ -18,14 +18,12 @@ class EmailField: BaseField,UITextFieldDelegate {
 
         addSubview(emailTextField)
         addSubview(errorLabel)
-
         emailTextField.translatesAutoresizingMaskIntoConstraints = false
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             emailTextField.topAnchor.constraint(equalTo: self.topAnchor),
             emailTextField.widthAnchor.constraint(equalTo: self.widthAnchor),
-
             errorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
             errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
             errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),

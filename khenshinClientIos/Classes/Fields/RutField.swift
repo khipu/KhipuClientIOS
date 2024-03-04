@@ -6,7 +6,6 @@ class RutField: BaseField, UITextFieldDelegate {
     lazy private var errorLabel = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
     lazy private var textField = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 18), borderStyle: .roundedRect)
     
-    
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
     }
@@ -19,11 +18,14 @@ class RutField: BaseField, UITextFieldDelegate {
         textField.placeholder = self.formItem!.label
         addSubview(textField)
         addSubview(errorLabel)
+        //translatesAutoresizingMaskIntoConstraints = false
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            textField.topAnchor.constraint(equalTo: topAnchor, constant: 0),
+            textField.topAnchor.constraint(equalTo: topAnchor),
 
             errorLabel.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
             errorLabel.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
