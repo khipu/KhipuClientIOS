@@ -53,6 +53,7 @@ class BankSelectField: BaseField {
     }
 
     private func setupCollectionView() {
+        let layout = UICollectionViewFlowLayout()
         collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.minimumInteritemSpacing = 10
         collectionViewLayout.minimumLineSpacing = 10

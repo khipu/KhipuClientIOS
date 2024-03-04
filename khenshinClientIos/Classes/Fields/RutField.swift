@@ -9,6 +9,11 @@ class RutField: BaseField, UITextFieldDelegate {
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
     }
+    
+    override func getValue() -> String {
+        return textField.text!
+    }
+
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

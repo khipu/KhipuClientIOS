@@ -1,8 +1,18 @@
 import UIKit
+import RxSwift
 import KhenshinProtocol
 
 class RadioGroupField: BaseField {
 
+    var formItem: FormItem
+    var value: String
+    func getFormItem() -> KhenshinProtocol.FormItem {
+        return self.formItem
+    }
+    
+    func getValue() -> String {
+        return self.value
+    }
     
     private lazy var radioGroup: UIStackView = {
         let stackView = UIStackView()
@@ -11,6 +21,7 @@ class RadioGroupField: BaseField {
         stackView.distribution = .fillEqually
         return stackView
     }()
+    private let disposeBag = DisposeBag()
 
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
@@ -49,14 +60,24 @@ class RadioGroupField: BaseField {
         sheet.layer.shadowRadius = 4
 
         let radio = createRadio(choice: choice)
+        
         sheet.addSubview(radio)
+        let tapGesture = UITapGestureRecognizer()
+        radio.addGestureRecognizer(tapGesture)
+        tapGesture
+            .rx
+            .event
+            .bind(onNext:{ indexPath in
+                print("APARECE ESTO: \((indexPath.view as! UIButton).currentTitle)")
+                self.value = (self.formItem.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
+                }).disposed(by: disposeBag)
 
         radio.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            radio.leadingAnchor.constraint(equalTo: sheet.leadingAnchor, constant: 16),
-            radio.trailingAnchor.constraint(equalTo: sheet.trailingAnchor, constant: -16),
-            radio.topAnchor.constraint(equalTo: sheet.topAnchor, constant: 16),
-            radio.bottomAnchor.constraint(equalTo: sheet.bottomAnchor, constant: -16)
+            radio.leadingAnchor.constraint(equalTo: sheet.leadingAnchor),
+            radio.trailingAnchor.constraint(equalTo: sheet.trailingAnchor),
+            radio.topAnchor.constraint(equalTo: sheet.topAnchor),
+            radio.bottomAnchor.constraint(equalTo: sheet.bottomAnchor)
         ])
 
         return sheet

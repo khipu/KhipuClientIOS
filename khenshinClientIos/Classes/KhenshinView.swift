@@ -147,7 +147,8 @@ public class KhenshinView: UIViewController {
         self.component.subviews.forEach { (view) in
             view.removeFromSuperview()
         }
-        self.component.addSubview(component!)        component!.translatesAutoresizingMaskIntoConstraints = false
+        self.component.addSubview(component!)
+        component!.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             component!.widthAnchor.constraint(equalTo: self.component.widthAnchor),
             component!.topAnchor.constraint(equalTo: self.component.topAnchor),

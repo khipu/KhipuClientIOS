@@ -14,10 +14,11 @@ class FormComponent: UIView, UITextFieldDelegate {
         stackView.spacing = 8
         return stackView
     }()
-
+    
     init(frame: CGRect, formRequest: FormRequest) {
         self.formRequest = formRequest
         super.init(frame: frame)
+        setupForm()
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -29,7 +30,6 @@ class FormComponent: UIView, UITextFieldDelegate {
             return
         }
         backgroundColor = UIColor.orange
-        configureView()
         addSubview(formTitle)
         addSubview(formError)
         addSubview(formComponents)
@@ -47,9 +47,9 @@ class FormComponent: UIView, UITextFieldDelegate {
         continueButton.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            //self.topAnchor.constraint(equalTo: superview!.topAnchor),
-            //self.bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
-            //widthAnchor.constraint(equalTo: superview!.widthAnchor),
+            self.topAnchor.constraint(equalTo: superview.topAnchor),
+            self.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
+            widthAnchor.constraint(equalTo: superview.widthAnchor),
             formTitle.topAnchor.constraint(equalTo: topAnchor),
             formTitle.widthAnchor.constraint(equalTo: widthAnchor),
             formError.topAnchor.constraint(equalTo: formTitle.bottomAnchor),
@@ -63,8 +63,10 @@ class FormComponent: UIView, UITextFieldDelegate {
     private func setupForm() {
         formTitle.text = formRequest?.title
         formError.text = formRequest?.errorMessage
-        continueButton.setTitle(formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : "Continuar", for: .normal)
-
+        let continueLabel = formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : "Continuar"
+        continueButton.setTitle(continueLabel, for: .normal)
+        var previousComponent: UIView? = nil
+        
         formRequest?.items.forEach { item in
             var component: FormField.Type?
 
