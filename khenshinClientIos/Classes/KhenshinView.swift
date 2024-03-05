@@ -13,8 +13,8 @@ public class KhenshinView: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.operationId = operationId
         self.khenshinClient = KhenshinClient(
-            serverUrl: "http://localhost:8000",
-            publicKey: "w5tIW3Ic0JMlnYz2Ztu1giUIyhv+T4CZJuKKMrbSEF8=",
+            serverUrl: "https://khenshin-ws-oci-scl.khipu.com",
+            publicKey: "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw=",
             operationId: self.operationId!
         )
         khenshinClient!.setupSocketEvents()
