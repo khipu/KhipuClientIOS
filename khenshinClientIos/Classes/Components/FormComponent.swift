@@ -11,6 +11,9 @@ class FormComponent: UIView, UITextFieldDelegate {
     lazy private var formComponents: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        stackView.spacing = 5
         return stackView
     }()
     
@@ -103,7 +106,7 @@ class FormComponent: UIView, UITextFieldDelegate {
                 if let component = componentType.init(formItem: item) as? BaseField & FormField {
                     formComponents.addArrangedSubview(component)
                     component.setupUI()
-                    formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 55.0))
+                    //formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 55.0))
                 }
             }
         }
