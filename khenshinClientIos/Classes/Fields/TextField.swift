@@ -22,11 +22,12 @@ class TextField: BaseField, UITextFieldDelegate {
         input.placeholder = self.formItem!.label
         addSubview(input)
         addSubview(error)
-        
+        translatesAutoresizingMaskIntoConstraints = false
         input.translatesAutoresizingMaskIntoConstraints = false
         error.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            heightAnchor.constraint(greaterThanOrEqualToConstant: 70),
             input.topAnchor.constraint(equalTo: self.topAnchor),
             input.widthAnchor.constraint(equalTo: self.widthAnchor),
             error.topAnchor.constraint(equalTo: input.bottomAnchor),

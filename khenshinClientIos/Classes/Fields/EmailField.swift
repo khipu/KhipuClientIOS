@@ -19,8 +19,10 @@ class EmailField: BaseField,UITextFieldDelegate {
         addSubview(error)
         input.translatesAutoresizingMaskIntoConstraints = false
         error.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
+            heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
             input.topAnchor.constraint(equalTo: self.topAnchor),
             input.widthAnchor.constraint(equalTo: self.widthAnchor),
             error.topAnchor.constraint(equalTo: input.bottomAnchor),

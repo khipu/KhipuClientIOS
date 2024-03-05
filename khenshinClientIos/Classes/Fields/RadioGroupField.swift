@@ -27,10 +27,10 @@ class RadioGroupField: BaseField {
             error.topAnchor.constraint(equalTo: self.topAnchor),
             error.leadingAnchor.constraint(equalTo: leadingAnchor),
             error.trailingAnchor.constraint(equalTo: trailingAnchor),
-            radio.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            radio.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            //radio.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            //radio.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             radio.topAnchor.constraint(equalTo: error.bottomAnchor),
-            radio.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
+            radio.heightAnchor.constraint(greaterThanOrEqualToConstant: 200)
         ])
 
         if let options = self.formItem!.options {
@@ -60,6 +60,7 @@ class RadioGroupField: BaseField {
             .event
             .bind(onNext:{ indexPath in
                 self.value = (self.formItem?.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
+                print("Elemento seleccionado \(self.value)")
                 }).disposed(by: disposeBag)
 
         radio.translatesAutoresizingMaskIntoConstraints = false

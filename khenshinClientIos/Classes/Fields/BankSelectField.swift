@@ -70,7 +70,8 @@ class BankSelectField: BaseField {
             collectionView.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor),
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 200)
         ])
         collectionView
             .rx
