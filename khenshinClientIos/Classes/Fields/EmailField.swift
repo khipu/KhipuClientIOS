@@ -1,7 +1,7 @@
 import UIKit
 import KhenshinProtocol
 
-class EmailField: BaseField,UITextFieldDelegate {
+class EmailField: BaseField, UITextFieldDelegate {
     lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
     lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
 
@@ -17,11 +17,14 @@ class EmailField: BaseField,UITextFieldDelegate {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.addGestureRecognizer(tapGesture)
         input.placeholder = self.formItem!.placeHolder
+        input.keyboardType = .emailAddress
         addSubview(input)
         addSubview(error)
         input.translatesAutoresizingMaskIntoConstraints = false
         error.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
+
+        configureLengthConstraints()
 
         NSLayoutConstraint.activate([
             heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
@@ -62,5 +65,20 @@ class EmailField: BaseField,UITextFieldDelegate {
 
     @objc private func handleTap() {
         self.endEditing(true)
+    }
+
+    private func configureLengthConstraints() {
+        if let maxLength = self.formItem?.maxLength, maxLength > 0 {
+            input.addTarget(self, action: #selector(limitLength), for: .editingChanged)
+        }
+    }
+
+    @objc private func limitLength() {
+        guard let text = input.text else { return }
+
+        if let maxLength = self.formItem?.maxLength, text.count > Int(maxLength) {
+            let index = text.index(text.startIndex, offsetBy: min(text.count, Int(maxLength)))
+            input.text = String(text.prefix(upTo: index))
+        }
     }
 }

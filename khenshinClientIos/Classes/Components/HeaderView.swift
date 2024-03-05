@@ -38,7 +38,7 @@ class HeaderView: UIView {
         let upperRectangle = UIView()
         upperRectangle.backgroundColor = UIColor.white
         stackView.addArrangedSubview(upperRectangle)
-        upperRectangle.layer.borderWidth = 1
+        upperRectangle.layer.borderWidth = 0.6
         upperRectangle.layer.borderColor = UIColor.lightGray.cgColor
         upperRectangle.layer.cornerRadius = 1 
 
@@ -49,7 +49,7 @@ class HeaderView: UIView {
         horizontalStackView.axis = .horizontal
         horizontalStackView.distribution = .fill
 
-        let percentages: [CGFloat] = [0.2, 0.6, 0.2]
+        let percentages: [CGFloat] = [0.3, 0.5, 0.2]
 
         for percentage in percentages {
             let square = UIView()
@@ -79,12 +79,14 @@ class HeaderView: UIView {
         let lowerRectangle = UIView()
         lowerRectangle.backgroundColor = UIColor.white
         stackView.addArrangedSubview(lowerRectangle)
-
         let lowerRectangleHeight: CGFloat = 20
         lowerRectangle.heightAnchor.constraint(equalToConstant: lowerRectangleHeight).isActive = true
+        let borderThickness: CGFloat = 0.5
+        lowerRectangle.layer.borderWidth = borderThickness
 
-        lowerRectangle.layer.borderWidth = 1
-        lowerRectangle.layer.borderColor = UIColor.lightGray.cgColor
+        let borderColor = UIColor.lightGray.cgColor
+        lowerRectangle.layer.borderColor = borderColor
+        lowerRectangle.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
 
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
