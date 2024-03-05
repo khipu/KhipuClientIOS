@@ -48,12 +48,11 @@ class BankSelectField: BaseField {
             segmentedControl.topAnchor.constraint(equalTo: topAnchor),
             segmentedControl.leadingAnchor.constraint(equalTo: leadingAnchor),
             segmentedControl.trailingAnchor.constraint(equalTo: trailingAnchor),
-            segmentedControl.heightAnchor.constraint(equalToConstant: 30)
+            segmentedControl.heightAnchor.constraint(greaterThanOrEqualToConstant: 10)
         ])
     }
 
     private func setupCollectionView() {
-        let layout = UICollectionViewFlowLayout()
         collectionViewLayout = UICollectionViewFlowLayout()
         collectionViewLayout.minimumInteritemSpacing = 10
         collectionViewLayout.minimumLineSpacing = 10
@@ -61,7 +60,7 @@ class BankSelectField: BaseField {
         collectionView = UICollectionView(frame: bounds, collectionViewLayout: collectionViewLayout)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.backgroundColor = .white
+        collectionView.backgroundColor = UIColor(white: 1, alpha: 0.0)
         collectionView.register(BankCell.self, forCellWithReuseIdentifier: BankCell.reuseIdentifier)
         addSubview(collectionView)
 
@@ -71,7 +70,7 @@ class BankSelectField: BaseField {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
+            collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 200)
         ])
         collectionView
             .rx
@@ -211,6 +210,7 @@ class BankCell: UICollectionViewCell {
         containerView.addSubview(stackView)
         stackView.addArrangedSubview(imageView)
         stackView.addArrangedSubview(nameLabel)
+        //translatesAutoresizingMaskIntoConstraints = false
         containerView.translatesAutoresizingMaskIntoConstraints = false
         stackView.translatesAutoresizingMaskIntoConstraints = false
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -220,10 +220,11 @@ class BankCell: UICollectionViewCell {
             //topAnchor.constraint(equalTo: superview!.topAnchor),
             //bottomAnchor.constraint(equalTo: superview!.bottomAnchor),
             containerView.topAnchor.constraint(equalTo: topAnchor),
+            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
             containerView.widthAnchor.constraint(equalTo: widthAnchor),
             containerView.leadingAnchor.constraint(equalTo: leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            containerView.bottomAnchor.constraint(equalTo: bottomAnchor),
+            containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100),
 
             stackView.topAnchor.constraint(equalTo: containerView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),

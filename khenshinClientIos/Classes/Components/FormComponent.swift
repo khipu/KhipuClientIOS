@@ -3,6 +3,7 @@ import KhenshinProtocol
 
 class FormComponent: UIView, UITextFieldDelegate {
     private let formRequest: FormRequest?
+    private let color: UIColor?
 
     lazy private var title = ComponentBuilder.buildLabel(textColor: .black, fontSize: 16, backgroundColor: .white)
     lazy private var error = ComponentBuilder.buildLabel(textColor: .black, fontSize: 12, backgroundColor: .red)
@@ -17,8 +18,9 @@ class FormComponent: UIView, UITextFieldDelegate {
         return stackView
     }()
     
-    init(frame: CGRect, formRequest: FormRequest) {
+    init(frame: CGRect, formRequest: FormRequest, color: UIColor?) {
         self.formRequest = formRequest
+        self.color = color ?? UIColor.white
         super.init(frame: frame)
         setupForm()
     }
@@ -31,7 +33,7 @@ class FormComponent: UIView, UITextFieldDelegate {
         if superview == nil {
             return
         }
-        backgroundColor = UIColor.white
+        backgroundColor = self.color
         addSubview(title)
         addSubview(error)
         addSubview(formComponents)
