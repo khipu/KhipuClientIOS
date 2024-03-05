@@ -3,52 +3,53 @@ import KhenshinProtocol
 
 class RutField: BaseField, UITextFieldDelegate {
     
-    lazy private var errorLabel = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
-    lazy private var textField = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 18), borderStyle: .roundedRect)
+    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
+    lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
+
     
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
     }
     
     override func getValue() -> String {
-        return textField.text!
+        return input.text!
     }
-
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     override func setupUI() {
-        textField.placeholder = self.formItem!.label
-        addSubview(textField)
-        addSubview(errorLabel)
-        //translatesAutoresizingMaskIntoConstraints = false
-        textField.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        input.placeholder = self.formItem!.label
+        addSubview(input)
+        addSubview(error)
+        translatesAutoresizingMaskIntoConstraints = false
+        input.translatesAutoresizingMaskIntoConstraints = false
+        error.translatesAutoresizingMaskIntoConstraints = false
+
+        input.translatesAutoresizingMaskIntoConstraints = false
+        error.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            textField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            textField.topAnchor.constraint(equalTo: topAnchor),
-
-            errorLabel.leadingAnchor.constraint(equalTo: textField.leadingAnchor),
-            errorLabel.trailingAnchor.constraint(equalTo: textField.trailingAnchor),
-            errorLabel.topAnchor.constraint(equalTo: textField.bottomAnchor, constant: 4),
+            input.topAnchor.constraint(equalTo: self.topAnchor),
+            input.widthAnchor.constraint(equalTo: self.widthAnchor),
+            error.topAnchor.constraint(equalTo: input.bottomAnchor),
+            error.leadingAnchor.constraint(equalTo: leadingAnchor),
+            error.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
     }
 
     override func validate() -> Bool {
-        guard let text = textField.text else { return false }
+        guard let text = input.text else { return false }
 
         if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            errorLabel.text = "Campo obligatorio"
+            error.text = "Campo obligatorio"
             return false
         }else if !validateRut(text) {
-            errorLabel.text = "Ingresa un RUT válido"
+            error.text = "Ingresa un RUT válido"
             return false
         } else {
-            errorLabel.text = ""
+            error.text = ""
             return true
         }
     }

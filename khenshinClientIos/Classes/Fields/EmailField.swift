@@ -2,8 +2,8 @@ import UIKit
 import KhenshinProtocol
 
 class EmailField: BaseField,UITextFieldDelegate {
-    lazy private var errorLabel = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
-    lazy private var emailTextField = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 18), borderStyle: .roundedRect)
+    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
+    lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
     
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
@@ -14,40 +14,36 @@ class EmailField: BaseField,UITextFieldDelegate {
     }
 
     override func setupUI() {
-        emailTextField.placeholder = self.formItem!.placeHolder
-
-        addSubview(emailTextField)
-        addSubview(errorLabel)
-        emailTextField.translatesAutoresizingMaskIntoConstraints = false
-        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        input.placeholder = self.formItem!.placeHolder
+        addSubview(input)
+        addSubview(error)
+        input.translatesAutoresizingMaskIntoConstraints = false
+        error.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            emailTextField.topAnchor.constraint(equalTo: self.topAnchor),
-            emailTextField.widthAnchor.constraint(equalTo: self.widthAnchor),
-            errorLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
-            errorLabel.leadingAnchor.constraint(equalTo: leadingAnchor),
-            errorLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
+            input.topAnchor.constraint(equalTo: self.topAnchor),
+            input.widthAnchor.constraint(equalTo: self.widthAnchor),
+            error.topAnchor.constraint(equalTo: input.bottomAnchor),
+            error.leadingAnchor.constraint(equalTo: leadingAnchor),
+            error.trailingAnchor.constraint(equalTo: trailingAnchor),
         ])
-        
     }
 
-
     override func getValue() -> String {
-        return self.emailTextField.text!
+        return self.input.text!
     }
 
     override func validate() -> Bool {
-        return true
-        guard let text = emailTextField.text else { return false }
+        guard let text = input.text else { return false }
 
         if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            errorLabel.text = "Campo obligatorio"
+            error.text = "Campo obligatorio"
             return false
         } else if !validateEmail(text) {
-            errorLabel.text = "La dirección de correo electrónico no es válida."
+            error.text = "La dirección de correo electrónico no es válida."
             return false
         } else {
-            errorLabel.text = ""
+            error.text = ""
             return true
         }
     }

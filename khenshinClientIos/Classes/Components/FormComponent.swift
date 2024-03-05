@@ -4,14 +4,13 @@ import KhenshinProtocol
 class FormComponent: UIView, UITextFieldDelegate {
     private let formRequest: FormRequest?
 
-    lazy private var formTitle = ComponentBuilder.buildLabel(textColor: .black, fontSize: 20, backgroundColor: .white)
-    lazy private var formError = ComponentBuilder.buildLabel(textColor: .black, fontSize: 10, backgroundColor: .red)
-    lazy public var continueButton = ComponentBuilder.buildButton(withTitle: "Continuar", backgroundColorHex: "8347ad", titleColor: .white)
+    lazy private var title = ComponentBuilder.buildLabel(textColor: .black, fontSize: 16, backgroundColor: .white)
+    lazy private var error = ComponentBuilder.buildLabel(textColor: .black, fontSize: 12, backgroundColor: .red)
+    lazy public var button = ComponentBuilder.buildButton(withTitle: "Continuar", backgroundColorHex: "8347ad", titleColor: .white)
 
     lazy private var formComponents: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.spacing = 8
         return stackView
     }()
     
@@ -29,11 +28,11 @@ class FormComponent: UIView, UITextFieldDelegate {
         if superview == nil {
             return
         }
-        backgroundColor = UIColor.orange
-        addSubview(formTitle)
-        addSubview(formError)
+        backgroundColor = UIColor.white
+        addSubview(title)
+        addSubview(error)
         addSubview(formComponents)
-        addSubview(continueButton)
+        addSubview(button)
         setupFormConstraints()
     }
 
@@ -42,34 +41,36 @@ class FormComponent: UIView, UITextFieldDelegate {
             print("Error: superview es nil")
             return
         }
-        formTitle.translatesAutoresizingMaskIntoConstraints = false
-        formError.translatesAutoresizingMaskIntoConstraints = false
+        title.translatesAutoresizingMaskIntoConstraints = false
+        error.translatesAutoresizingMaskIntoConstraints = false
         formComponents.translatesAutoresizingMaskIntoConstraints = false
-        continueButton.translatesAutoresizingMaskIntoConstraints = false
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
+
 
         NSLayoutConstraint.activate([
             self.topAnchor.constraint(equalTo: superview.topAnchor),
             self.bottomAnchor.constraint(equalTo: superview.bottomAnchor),
             widthAnchor.constraint(equalTo: superview.widthAnchor),
-            formTitle.topAnchor.constraint(equalTo: topAnchor),
-            formTitle.widthAnchor.constraint(equalTo: widthAnchor),
-            formError.topAnchor.constraint(equalTo: formTitle.bottomAnchor),
-            formError.widthAnchor.constraint(equalTo: superview.widthAnchor),
-            formComponents.topAnchor.constraint(equalTo: formError.bottomAnchor, constant: 8),
+            title.topAnchor.constraint(equalTo: topAnchor),
+            title.widthAnchor.constraint(equalTo: widthAnchor),
+            error.topAnchor.constraint(equalTo: title.bottomAnchor),
+            error.widthAnchor.constraint(equalTo: superview.widthAnchor),
+            formComponents.topAnchor.constraint(equalTo: error.bottomAnchor, constant: 8),
             formComponents.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             formComponents.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            formComponents.heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
-            continueButton.topAnchor.constraint(equalTo: formComponents.bottomAnchor, constant: 8),
-            continueButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
-            continueButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
+            formComponents.heightAnchor.constraint(greaterThanOrEqualToConstant: 300),
+            button.topAnchor.constraint(equalTo: formComponents.bottomAnchor, constant: 8),
+            button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
+            button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
         ])
     }
 
     private func setupForm() {
-        formTitle.text = formRequest?.title
-        formError.text = formRequest?.errorMessage
+        title.text = formRequest?.title
+        error.text = formRequest?.errorMessage
         let continueLabel = formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : "Continuar"
-        continueButton.setTitle(continueLabel, for: .normal)
+        button.setTitle(continueLabel, for: .normal)
         var previousComponent: UIView? = nil
         
         formRequest?.items.forEach { item in
@@ -102,13 +103,16 @@ class FormComponent: UIView, UITextFieldDelegate {
                 if let component = componentType.init(formItem: item) as? BaseField & FormField {
                     formComponents.addArrangedSubview(component)
                     component.setupUI()
-                    formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 20.0))
+                    formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 55.0))
                 }
             }
         }
-        formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 70.0))
-        //formComponents.addArrangedSubview(continueButton)
+        
+        if let firstTextField = formComponents.subviews.compactMap({ $0 as? UITextField }).first {
+            firstTextField.becomeFirstResponder()
+        }
     }
+
 
     public func createFormResponse() -> Optional<FormResponse> {
         let isValid = formComponents.subviews.allSatisfy { ($0 as? FormField)?.validate() ?? true }

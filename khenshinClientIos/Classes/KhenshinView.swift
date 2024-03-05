@@ -166,7 +166,7 @@ public class KhenshinView: UIViewController {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
         let formComponent = FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message)
-        formComponent.continueButton.rx.tap
+        formComponent.button.rx.tap
             .bind {
                 if let formResponse = formComponent.createFormResponse() {
                     self.khenshinClient?.sendMessage(type: formResponse.type.rawValue, message: formResponse)

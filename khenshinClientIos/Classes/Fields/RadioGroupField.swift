@@ -4,22 +4,9 @@ import KhenshinProtocol
 
 class RadioGroupField: BaseField {
 
-    var value: String
-    override func getFormItem() -> KhenshinProtocol.FormItem {
-        return self.formItem!
-    }
-    
-    override func getValue() -> String {
-        return self.value
-    }
-    
-    private lazy var radioGroup: UIStackView = {
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.spacing = 5
-        stackView.distribution = .fillEqually
-        return stackView
-    }()
+    private var value: String
+    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
+    private lazy var radio = ComponentBuilder.buildStackView(axis: .vertical, spacing: 3, distribution: .fillEqually)
     private let disposeBag = DisposeBag()
 
     required init?(formItem: FormItem) {
@@ -32,20 +19,24 @@ class RadioGroupField: BaseField {
     }
 
     override func setupUI() {
-        addSubview(radioGroup)
-
-        radioGroup.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(error)
+        addSubview(radio)
+        error.translatesAutoresizingMaskIntoConstraints = false
+        radio.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            radioGroup.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            radioGroup.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            radioGroup.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            radioGroup.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
+            error.topAnchor.constraint(equalTo: self.topAnchor),
+            error.leadingAnchor.constraint(equalTo: leadingAnchor),
+            error.trailingAnchor.constraint(equalTo: trailingAnchor),
+            radio.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            radio.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            radio.topAnchor.constraint(equalTo: error.bottomAnchor),
+            radio.heightAnchor.constraint(lessThanOrEqualToConstant: 200)
         ])
 
         if let options = self.formItem!.options {
             for choice in options {
                 let sheet = createSheet(choice: choice)
-                radioGroup.addArrangedSubview(sheet)
+                radio.addArrangedSubview(sheet)
             }
         }
     }
@@ -68,7 +59,6 @@ class RadioGroupField: BaseField {
             .rx
             .event
             .bind(onNext:{ indexPath in
-                print("APARECE ESTO: \((indexPath.view as! UIButton).currentTitle)")
                 self.value = (self.formItem?.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
                 }).disposed(by: disposeBag)
 
@@ -88,10 +78,25 @@ class RadioGroupField: BaseField {
         radio.setTitle(choice.value, for: .normal)
         radio.setTitleColor(UIColor(red: 0.07, green: 0.38, blue: 0.87, alpha: 1.00), for: .normal)
         radio.contentHorizontalAlignment = .left
+        radio.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        radio.titleLabel?.adjustsFontSizeToFitWidth = true
+        radio.titleLabel?.minimumScaleFactor = 0.5
         return radio
     }
     
-    override func validate() -> Bool {
-        return true
+    override func getValue() -> String {
+        return self.value
     }
+
+    override func validate() -> Bool {
+
+        if self.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            error.text = "Campo obligatorio"
+            return false
+        } else {
+            error.text = ""
+            return true
+        }
+    }
+    
 }

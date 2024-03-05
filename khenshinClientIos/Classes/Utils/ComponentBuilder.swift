@@ -69,6 +69,14 @@ class ComponentBuilder {
         button.layer.masksToBounds = true
         return button
     }
+    
+    static func buildStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat = 5.0, distribution: UIStackView.Distribution = .fillEqually) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = axis
+        stackView.spacing = spacing
+        stackView.distribution = distribution
+        return stackView
+    }
 
     static func buildAPNGImageView(fromURL url: URL) -> APNGImageView {
            let apngImageView = APNGImageView()
