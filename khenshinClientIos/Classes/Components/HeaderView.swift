@@ -13,8 +13,10 @@ extension UIView {
 
 class HeaderView: UIView {
     private var operationInfo: OperationInfo?
+    private var headerColor: UIColor?
 
-    init() {
+    init(headerColor: UIColor) {
+        self.headerColor = headerColor
         super.init(frame: .zero)
         setupUI()
     }
@@ -34,9 +36,9 @@ class HeaderView: UIView {
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
+        stackView.backgroundColor = self.headerColor
 
         let upperRectangle = UIView()
-        upperRectangle.backgroundColor = UIColor.white
         stackView.addArrangedSubview(upperRectangle)
         upperRectangle.layer.borderWidth = 0.6
         upperRectangle.layer.borderColor = UIColor.lightGray.cgColor
@@ -53,7 +55,6 @@ class HeaderView: UIView {
 
         for percentage in percentages {
             let square = UIView()
-            square.backgroundColor = .white
             horizontalStackView.addArrangedSubview(square)
             square.widthAnchor.constraint(equalTo: horizontalStackView.widthAnchor, multiplier: percentage).isActive = true
         }
@@ -77,7 +78,6 @@ class HeaderView: UIView {
         }
 
         let lowerRectangle = UIView()
-        lowerRectangle.backgroundColor = UIColor.white
         stackView.addArrangedSubview(lowerRectangle)
         let lowerRectangleHeight: CGFloat = 20
         lowerRectangle.heightAnchor.constraint(equalToConstant: lowerRectangleHeight).isActive = true
@@ -103,33 +103,37 @@ class HeaderView: UIView {
         ])
 
         if let operationInfo = operationInfo {
-            let codeLabel = ComponentBuilder.buildLabel(withText: "Código: \(operationInfo.operationID)", textColor: .black, fontSize: 10, backgroundColor: .clear)
+            let codeLabel = ComponentBuilder.buildLabel(withText: "Código: \(operationInfo.operationID ?? "")", textColor: .black, fontSize: 10, backgroundColor: .clear)
             lowerRectangle.addSubview(codeLabel)
             codeLabel.center(in: lowerRectangle)
 
             stackView.setNeedsLayout()
 
             if horizontalStackView.arrangedSubviews.count > 0 {
-                let firstSquare = horizontalStackView.arrangedSubviews[0] as? UIView
+                let firstSquare = horizontalStackView.arrangedSubviews[0] as UIView
                 let imageView = ComponentBuilder.buildImageView(fromURL: URL(string: operationInfo.merchant?.logo ?? "")!)
-                firstSquare?.addSubview(imageView)
-                imageView.center(in: firstSquare!)
+                firstSquare.addSubview(imageView)
+                imageView.center(in: firstSquare)
+                imageView.translatesAutoresizingMaskIntoConstraints = false
+                imageView.widthAnchor.constraint(equalTo: firstSquare.widthAnchor).isActive = true
+                imageView.topAnchor.constraint(equalTo: firstSquare.topAnchor).isActive = true
+                imageView.bottomAnchor.constraint(equalTo: firstSquare.bottomAnchor).isActive = true
                 stackView.setNeedsLayout()
             }
 
             if horizontalStackView.arrangedSubviews.count > 1 {
-                let secondSquare = horizontalStackView.arrangedSubviews[1] as? UIView
+                let secondSquare = horizontalStackView.arrangedSubviews[1] as UIView
                 let label = ComponentBuilder.buildLabel(withText: operationInfo.merchant?.name, textColor: .black, fontSize: 10, backgroundColor: .clear)
-                secondSquare?.addSubview(label)
-                label.center(in: secondSquare!)
+                secondSquare.addSubview(label)
+                label.center(in: secondSquare)
                 stackView.setNeedsLayout()
             }
 
             if horizontalStackView.arrangedSubviews.count > 2 {
-                let thirdSquare = horizontalStackView.arrangedSubviews[2] as? UIView
+                let thirdSquare = horizontalStackView.arrangedSubviews[2] as UIView
                 let label = ComponentBuilder.buildLabel(withText: operationInfo.amount, textColor: .black, fontSize: 10, backgroundColor: .clear)
-                thirdSquare?.addSubview(label)
-                label.center(in: thirdSquare!)
+                thirdSquare.addSubview(label)
+                label.center(in: thirdSquare)
                 stackView.setNeedsLayout()
             }
         }

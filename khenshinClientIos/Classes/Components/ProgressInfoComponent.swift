@@ -10,7 +10,6 @@ class ProgressInfoComponent: UIView {
 
     init(frame: CGRect, progressInfo: ProgressInfo) {
         super.init(frame: frame)
-        backgroundColor = .white
         setupViews()
         updateUI(with: progressInfo)
     }

@@ -47,8 +47,10 @@ class ViewController: UIViewController {
     }()
 
     @objc func buttonAction(sender: UIButton!) {
-        let khenshinView = KhenshinView(operationId: sampleInput.text!)
-        present(khenshinView, animated: true, completion: nil)
+        let builder = KhenshinBuilder(headerColor: .white)
+        let khenshinInterface = KhenshinInterface()
+        khenshinInterface.initWithBuilderBlock(builder: builder)
+        present(khenshinInterface.createView(operationId: sampleInput.text!), animated: true, completion: nil)
 
     }
 
