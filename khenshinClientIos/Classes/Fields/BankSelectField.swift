@@ -71,7 +71,7 @@ class BankSelectField: BaseField {
             collectionView.leadingAnchor.constraint(equalTo: leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 200)
+            collectionView.heightAnchor.constraint(greaterThanOrEqualToConstant: 100)
         ])
         collectionView
             .rx
@@ -115,7 +115,7 @@ class BankSelectField: BaseField {
     }
     
     override func getValue() -> String {
-        return "15"//(self.selectedBank)!.name!
+        return self.value
     }
 
     override func validate() -> Bool {

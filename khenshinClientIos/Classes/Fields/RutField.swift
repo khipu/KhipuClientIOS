@@ -31,12 +31,12 @@ class RutField: BaseField, UITextFieldDelegate {
         error.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(greaterThanOrEqualToConstant: 70),
             input.topAnchor.constraint(equalTo: self.topAnchor),
             input.widthAnchor.constraint(equalTo: self.widthAnchor),
             error.topAnchor.constraint(equalTo: input.bottomAnchor),
             error.leadingAnchor.constraint(equalTo: leadingAnchor),
             error.trailingAnchor.constraint(equalTo: trailingAnchor),
+            error.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
