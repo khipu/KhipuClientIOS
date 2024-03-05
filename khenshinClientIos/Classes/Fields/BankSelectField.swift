@@ -119,8 +119,7 @@ class BankSelectField: BaseField {
     }
 
     override func validate() -> Bool {
-        return true
-        guard let text = (self.selectedBank)!.name else { return false }
+        guard let text = self.value else { return false }
 
         if text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             //errorLabel.text = "Campo obligatorio"

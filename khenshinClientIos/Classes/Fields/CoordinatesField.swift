@@ -3,25 +3,15 @@ import KhenshinProtocol
 
 class CoordinatesField: BaseField {
 
-    private let label1 = UILabel()
-    private let label2 = UILabel()
-    private let label3 = UILabel()
+    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
+    lazy private var label1 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray)
+    lazy private var label2 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray)
+    lazy private var label3 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray)
+    lazy private var input1 = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
+    lazy private var input2 = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
+    lazy private var input3 = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
+    
 
-
-    private let coord1TextField: UITextField = {
-        let textField = UITextField()
-        return textField
-    }()
-
-    private let coord2TextField: UITextField = {
-        let textField = UITextField()
-        return textField
-    }()
-
-    private let coord3TextField: UITextField = {
-        let textField = UITextField()
-        return textField
-    }()
 
     private let hintLabel: UILabel = {
         let label = UILabel()
@@ -39,50 +29,58 @@ class CoordinatesField: BaseField {
     }
 
     override func setupUI() {
-        configureLabel(label1, text: (self.formItem!.labels?[0])!)
-        configureLabel(label2, text: (self.formItem!.labels?[1])!)
-        configureLabel(label3, text: (self.formItem!.labels?[2])!)
+        label1.text = (self.formItem!.labels?[0])
+        label2.text = (self.formItem!.labels?[1])
+        label3.text = (self.formItem!.labels?[2])
+        
+        addSubview(error)
+        error.translatesAutoresizingMaskIntoConstraints = false
+        
+        let labelStackView = UIStackView(arrangedSubviews: [label1, label2, label3])
+        labelStackView.axis = .horizontal
+        labelStackView.spacing = 10
+        labelStackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(labelStackView)
 
-        addSubview(label1)
-        addSubview(label2)
-        addSubview(label3)
-        addSubview(coord1TextField)
-        addSubview(coord2TextField)
-        addSubview(coord3TextField)
-
-        label1.translatesAutoresizingMaskIntoConstraints = false
-        label2.translatesAutoresizingMaskIntoConstraints = false
-        label3.translatesAutoresizingMaskIntoConstraints = false
-        coord1TextField.translatesAutoresizingMaskIntoConstraints = false
-        coord2TextField.translatesAutoresizingMaskIntoConstraints = false
-        coord3TextField.translatesAutoresizingMaskIntoConstraints = false
+        let inputStackView = UIStackView(arrangedSubviews: [input1, input2, input3])
+        inputStackView.axis = .horizontal
+        inputStackView.spacing = 5
+        inputStackView.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(inputStackView)
 
         NSLayoutConstraint.activate([
-            label1.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            label1.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            coord1TextField.topAnchor.constraint(equalTo: label1.bottomAnchor, constant: 8),
-            coord1TextField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            error.bottomAnchor.constraint(equalTo: labelStackView.topAnchor, constant: -16),
+            error.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            error.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            
+            labelStackView.topAnchor.constraint(equalTo: error.bottomAnchor, constant: 16),
+            labelStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
 
-            label2.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            label2.leadingAnchor.constraint(equalTo: label1.trailingAnchor, constant: 16),
-            coord2TextField.topAnchor.constraint(equalTo: label2.bottomAnchor, constant: 8),
-            coord2TextField.leadingAnchor.constraint(equalTo: label1.trailingAnchor, constant: 16),
-
-            label3.topAnchor.constraint(equalTo: topAnchor, constant: 16),
-            label3.leadingAnchor.constraint(equalTo: label2.trailingAnchor, constant: 16),
-            coord3TextField.topAnchor.constraint(equalTo: label3.bottomAnchor, constant: 8),
-            coord3TextField.leadingAnchor.constraint(equalTo: label2.trailingAnchor, constant: 16),
+            inputStackView.topAnchor.constraint(equalTo: labelStackView.bottomAnchor, constant: 5),
+            inputStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
+            inputStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 
-    private func configureLabel(_ label: UILabel, text: String) {
-        label.text = text
-        label.textAlignment = .center
-        label.backgroundColor = UIColor.lightGray
-    }
     
+    override func getValue() -> String {
+        let values = [input1, input2, input3].compactMap { $0.text }
+        return values.joined(separator: "|")
+    }
+
+
     override func validate() -> Bool {
-        return false
+        let inputs = [input1, input2, input3]
+        
+        for input in inputs {
+            if input.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
+                error.text = "Todos los campos son obligatorios"
+                return false
+            }
+        }
+
+        error.text = ""
+        return true
     }
 
 }
