@@ -8,13 +8,25 @@ public class KhenshinView: UIViewController {
     var khenshinClient: KhenshinClient?
     let disposeBag = DisposeBag()
     var operationInfo: OperationInfo?
+    let allowCredentialsSaving: Bool
+    let principalColor: UIColor
+    let headerColor: UIColor
 
-    public init(operationId: String) {
+    public init(operationId: String,
+                backendUrl: String,
+                backendPublicKey: String,
+                allowCredentialsSaving: Bool,
+                principalColor: UIColor,
+                headerColor: UIColor
+    ) {
+        self.allowCredentialsSaving = allowCredentialsSaving
+        self.principalColor = principalColor
+        self.headerColor = headerColor
         super.init(nibName: nil, bundle: nil)
         self.operationId = operationId
         self.khenshinClient = KhenshinClient(
-            serverUrl: "https://khenshin-ws-oci-scl.khipu.com",
-            publicKey: "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw=",
+            serverUrl: backendUrl,
+            publicKey: backendPublicKey,
             operationId: self.operationId!
         )
         khenshinClient!.setupSocketEvents()
@@ -35,12 +47,12 @@ public class KhenshinView: UIViewController {
     }
 
     required init?(coder aDecoder: NSCoder){
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
 
     public override func viewDidLoad() {
         super.viewDidLoad()
-        container.backgroundColor = UIColor.white
+        container.backgroundColor = self.principalColor
         container.addSubview(header)
         container.addSubview(component)
         container.addSubview(footer)
@@ -66,7 +78,7 @@ public class KhenshinView: UIViewController {
     }
 
     lazy private var header: HeaderView =  {
-        let header = HeaderView()
+        let header = HeaderView(headerColor: self.headerColor)
         return header
     }()
 
@@ -77,7 +89,6 @@ public class KhenshinView: UIViewController {
 
     lazy private var component: UIView = {
         let component = UIView()
-        component.backgroundColor = UIColor.white
         return component
     }()
 
@@ -165,7 +176,7 @@ public class KhenshinView: UIViewController {
     private func drawFormRequestComponent(message: FormRequest) -> UIView {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        let formComponent = FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message)
+        let formComponent = FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message, color: self.principalColor)
         formComponent.button.rx.tap
             .bind {
                 if let formResponse = formComponent.createFormResponse() {
@@ -192,7 +203,7 @@ public class KhenshinView: UIViewController {
     private func drawSuccessMessageComponent(operationSuccess: OperationSuccess) -> UIView {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        return SuccessMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationSuccess: operationSuccess, operationInfo:operationInfo!)
+        return SuccessMessage(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), operationSuccess: operationSuccess, operationInfo:operationInfo)
     }
 
     public func refreshHeaderView() {

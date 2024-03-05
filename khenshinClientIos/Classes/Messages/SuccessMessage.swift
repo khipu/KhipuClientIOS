@@ -4,7 +4,7 @@ import KhenshinProtocol
 class SuccessMessage: UIView {
 
     var operationSuccess: OperationSuccess
-    var operationInfo: OperationInfo
+    var operationInfo: OperationInfo?
 
 
     private let title: UILabel = {
@@ -96,7 +96,7 @@ class SuccessMessage: UIView {
         return imageView
     }()
 
-    init(frame: CGRect, operationSuccess: OperationSuccess,operationInfo: OperationInfo) {
+    init(frame: CGRect, operationSuccess: OperationSuccess,operationInfo: OperationInfo?) {
         self.operationSuccess = operationSuccess
         self.operationInfo = operationInfo
         super.init(frame: frame)
@@ -110,8 +110,8 @@ class SuccessMessage: UIView {
     private func setupUI() {
         operacionValue.text = self.operationSuccess.operationID
         body.text = self.operationSuccess.body
-        montoValue.text = self.operationInfo.amount
-        comercioValue.text = self.operationInfo.merchant?.name
+        montoValue.text = self.operationInfo?.amount
+        comercioValue.text = self.operationInfo?.merchant?.name
         addSubview(contentContainer)
         contentContainer.addArrangedSubview(resultIconImageView)
 
