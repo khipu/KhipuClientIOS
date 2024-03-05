@@ -29,6 +29,8 @@ class CoordinatesField: BaseField {
     }
 
     override func setupUI() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapGesture)
         label1.text = (self.formItem!.labels?[0])
         label2.text = (self.formItem!.labels?[1])
         label3.text = (self.formItem!.labels?[2])
@@ -81,6 +83,10 @@ class CoordinatesField: BaseField {
 
         error.text = ""
         return true
+    }
+    
+    @objc private func handleTap() {
+        self.endEditing(true)
     }
 
 }
