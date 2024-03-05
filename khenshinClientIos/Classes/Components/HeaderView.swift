@@ -40,8 +40,7 @@ class HeaderView: UIView {
         stackView.addArrangedSubview(upperRectangle)
         upperRectangle.layer.borderWidth = 1
         upperRectangle.layer.borderColor = UIColor.lightGray.cgColor
-        upperRectangle.layer.cornerRadius = 1 // Ajusta el valor según tus preferencias
-
+        upperRectangle.layer.cornerRadius = 1 
 
         let upperRectangleHeight: CGFloat = 30
         upperRectangle.heightAnchor.constraint(equalToConstant: upperRectangleHeight).isActive = true
