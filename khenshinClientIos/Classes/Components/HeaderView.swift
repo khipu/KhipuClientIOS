@@ -34,13 +34,13 @@ class HeaderView: UIView {
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
-        stackView.backgroundColor = UIColor.yellow
 
         let upperRectangle = UIView()
         upperRectangle.backgroundColor = UIColor.white
         stackView.addArrangedSubview(upperRectangle)
-        upperRectangle.layer.borderWidth = 0
-        upperRectangle.layer.borderColor = UIColor.black.cgColor
+        upperRectangle.layer.borderWidth = 1
+        upperRectangle.layer.borderColor = UIColor.lightGray.cgColor
+        upperRectangle.layer.cornerRadius = 1 
 
         let upperRectangleHeight: CGFloat = 30
         upperRectangle.heightAnchor.constraint(equalToConstant: upperRectangleHeight).isActive = true
@@ -84,7 +84,7 @@ class HeaderView: UIView {
         lowerRectangle.heightAnchor.constraint(equalToConstant: lowerRectangleHeight).isActive = true
 
         lowerRectangle.layer.borderWidth = 1
-        lowerRectangle.layer.borderColor = UIColor.black.cgColor
+        lowerRectangle.layer.borderColor = UIColor.lightGray.cgColor
 
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false

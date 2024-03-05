@@ -20,6 +20,8 @@ class RutField: BaseField, UITextFieldDelegate {
     }
 
     override func setupUI() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapGesture)
         input.placeholder = self.formItem!.label
         addSubview(input)
         addSubview(error)
@@ -78,5 +80,9 @@ class RutField: BaseField, UITextFieldDelegate {
         }
 
         return S != 0 ? "\(S - 1)" : "k"
+    }
+    
+    @objc private func handleTap() {
+        self.endEditing(true)
     }
 }

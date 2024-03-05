@@ -4,7 +4,7 @@ import KhenshinProtocol
 class EmailField: BaseField,UITextFieldDelegate {
     lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
     lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
-    
+
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
     }
@@ -14,6 +14,8 @@ class EmailField: BaseField,UITextFieldDelegate {
     }
 
     override func setupUI() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapGesture)
         input.placeholder = self.formItem!.placeHolder
         addSubview(input)
         addSubview(error)
@@ -56,5 +58,9 @@ class EmailField: BaseField,UITextFieldDelegate {
         let matches = emailRegex.numberOfMatches(in: email, options: [], range: range)
 
         return matches > 0
+    }
+
+    @objc private func handleTap() {
+        self.endEditing(true)
     }
 }

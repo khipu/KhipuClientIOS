@@ -19,6 +19,8 @@ class TextField: BaseField, UITextFieldDelegate {
     }
 
     override func setupUI() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapGesture)
         input.placeholder = self.formItem!.label
         addSubview(input)
         addSubview(error)
@@ -27,7 +29,6 @@ class TextField: BaseField, UITextFieldDelegate {
         error.translatesAutoresizingMaskIntoConstraints = false
 
         NSLayoutConstraint.activate([
-            //heightAnchor.constraint(greaterThanOrEqualToConstant: 70),
             input.topAnchor.constraint(equalTo: self.topAnchor),
             input.widthAnchor.constraint(equalTo: self.widthAnchor),
             error.topAnchor.constraint(equalTo: input.bottomAnchor),
@@ -47,5 +48,9 @@ class TextField: BaseField, UITextFieldDelegate {
             error.text = ""
             return true
         }
+    }
+    
+    @objc private func handleTap() {
+        self.endEditing(true)
     }
 }
