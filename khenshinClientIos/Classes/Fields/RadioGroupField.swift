@@ -6,7 +6,7 @@ class RadioGroupField: BaseField {
 
     private var value: String
     lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
-    private lazy var radio = ComponentBuilder.buildStackView(axis: .vertical, spacing: 3, distribution: .fillEqually)
+    private lazy var radio = ComponentBuilder.buildStackView(axis: .vertical, spacing: 3, distribution: .fill)
     private let disposeBag = DisposeBag()
 
     required init?(formItem: FormItem) {
@@ -20,25 +20,29 @@ class RadioGroupField: BaseField {
 
     override func setupUI() {
         addSubview(error)
-        addSubview(radio)
-        error.translatesAutoresizingMaskIntoConstraints = false
-        radio.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            error.topAnchor.constraint(equalTo: self.topAnchor),
-            error.leadingAnchor.constraint(equalTo: leadingAnchor),
-            error.trailingAnchor.constraint(equalTo: trailingAnchor),
-            //radio.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            //radio.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            radio.topAnchor.constraint(equalTo: error.bottomAnchor),
-            radio.heightAnchor.constraint(greaterThanOrEqualToConstant: 200)
-        ])
-
+                
         if let options = self.formItem!.options {
             for choice in options {
                 let sheet = createSheet(choice: choice)
                 radio.addArrangedSubview(sheet)
             }
         }
+        
+        addSubview(radio)
+        
+        translatesAutoresizingMaskIntoConstraints = false
+        error.translatesAutoresizingMaskIntoConstraints = false
+        radio.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
+            error.topAnchor.constraint(equalTo: topAnchor),
+            error.leadingAnchor.constraint(equalTo: leadingAnchor),
+            error.trailingAnchor.constraint(equalTo: trailingAnchor),
+            radio.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            radio.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            radio.topAnchor.constraint(equalTo: error.bottomAnchor),
+            radio.bottomAnchor.constraint(equalTo: bottomAnchor),
+        ])
     }
 
     private func createSheet(choice: ListOption) -> UIView {
@@ -64,7 +68,9 @@ class RadioGroupField: BaseField {
                 }).disposed(by: disposeBag)
 
         radio.translatesAutoresizingMaskIntoConstraints = false
+        sheet.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            sheet.heightAnchor.constraint(greaterThanOrEqualToConstant: 30),
             radio.leadingAnchor.constraint(equalTo: sheet.leadingAnchor),
             radio.trailingAnchor.constraint(equalTo: sheet.trailingAnchor),
             radio.topAnchor.constraint(equalTo: sheet.topAnchor),

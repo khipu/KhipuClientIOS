@@ -62,7 +62,7 @@ class FormComponent: UIView, UITextFieldDelegate {
             formComponents.topAnchor.constraint(equalTo: error.bottomAnchor, constant: 8),
             formComponents.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             formComponents.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
-            formComponents.heightAnchor.constraint(greaterThanOrEqualToConstant: 300),
+            formComponents.heightAnchor.constraint(greaterThanOrEqualToConstant: 50),
             button.topAnchor.constraint(equalTo: formComponents.bottomAnchor, constant: 8),
             button.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
             button.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8),
@@ -106,7 +106,6 @@ class FormComponent: UIView, UITextFieldDelegate {
                 if let component = componentType.init(formItem: item) as? BaseField & FormField {
                     formComponents.addArrangedSubview(component)
                     component.setupUI()
-                    //formComponents.addArrangedSubview(ComponentBuilder.buildSpacingView(spacingHeight: 55.0))
                 }
             }
         }
