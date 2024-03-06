@@ -6,6 +6,13 @@ class TextField: BaseField, UITextFieldDelegate {
     lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
     lazy private var hint  = ComponentBuilder.buildLabel(textColor: .lightGray, fontSize: 9, backgroundColor: UIColor.white)
 
+    override func getValue() -> String {
+        return input.text!
+    }
+    
+    override func setValue(value: String) -> Void {
+        input.text = value
+    }
 
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)

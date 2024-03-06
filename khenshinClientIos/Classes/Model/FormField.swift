@@ -5,5 +5,6 @@ protocol FormField {
     func setupUI()
     func getFormItem() -> FormItem
     func getValue() -> String
+    func setValue(value: String) -> Void
     func validate() -> Bool
 }

@@ -83,7 +83,7 @@ class ComponentBuilder {
         button.layer.masksToBounds = true
         return button
     }
-    
+
     static func buildStackView(axis: NSLayoutConstraint.Axis, spacing: CGFloat = 5.0, distribution: UIStackView.Distribution = .fillEqually) -> UIStackView {
         let stackView = UIStackView()
         stackView.axis = axis
@@ -93,24 +93,50 @@ class ComponentBuilder {
     }
 
     static func buildAPNGImageView(fromURL url: URL) -> APNGImageView {
-           let apngImageView = APNGImageView()
-           apngImageView.contentMode = .scaleAspectFit
-           apngImageView.translatesAutoresizingMaskIntoConstraints = false
+       let apngImageView = APNGImageView()
+       apngImageView.contentMode = .scaleAspectFit
+       apngImageView.translatesAutoresizingMaskIntoConstraints = false
 
-           URLSession.shared.dataTask(with: url) { data, _, error in
-               DispatchQueue.main.async {
-                   if let error = error {
-                       print("Failed to load APNG image: \(error)")
-                   } else if let data = data, let image = try? APNGImage(data: data) {
-                       apngImageView.image = image
-                   } else {
-                       print("Failed to load APNG image: Data is nil.")
-                   }
+       URLSession.shared.dataTask(with: url) { data, _, error in
+           DispatchQueue.main.async {
+               if let error = error {
+                   print("Failed to load APNG image: \(error)")
+               } else if let data = data, let image = try? APNGImage(data: data) {
+                   apngImageView.image = image
+               } else {
+                   print("Failed to load APNG image: Data is nil.")
                }
-           }.resume()
+           }
+       }.resume()
 
-           return apngImageView
-       }
+       return apngImageView
+    }
     
+    static func buildCheckbox(withLabel labelText: String) -> UIView {
+        let container = UIView()
+        let checkbox = CheckBox.init()
+        let label = buildLabel(textColor: .black, fontSize: 12, backgroundColor: .red)
+        label.text = labelText
+        checkbox.frame = CGRect(x: 15, y: 15, width: 10, height: 10)
+        checkbox.style = .tick
+        checkbox.borderStyle = .roundedSquare(radius: 5)
+        container.addSubview(checkbox)
+        container.addSubview(label)
+        checkbox.translatesAutoresizingMaskIntoConstraints = false
+        label.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            //checkbox.topAnchor.constraint(equalTo: container.topAnchor),
+            //checkbox.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            checkbox.centerYAnchor.constraint(equalTo: container.centerYAnchor),
+            checkbox.leadingAnchor.constraint(equalTo: container.leadingAnchor),
+            checkbox.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -4),
+            checkbox.heightAnchor.constraint(equalToConstant: 15),
+            checkbox.widthAnchor.constraint(equalToConstant: 15),
+            label.topAnchor.constraint(equalTo: container.topAnchor),
+            label.bottomAnchor.constraint(equalTo: container.bottomAnchor),
+            //label.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+        ])
+        return container
+    }
 }
 

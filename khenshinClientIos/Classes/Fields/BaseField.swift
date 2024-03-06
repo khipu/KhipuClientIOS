@@ -23,6 +23,10 @@ class BaseField: UIView, FormField {
     func getValue() -> String {
         fatalError("getValue() must be implemented by subclasses")
     }
+    
+    func setValue(value: String) -> Void {
+        fatalError("getValue() must be implemented by subclasses")
+    }
 
     func validate() -> Bool {
         fatalError("validate() must be implemented by subclasses")
