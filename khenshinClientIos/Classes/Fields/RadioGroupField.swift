@@ -5,7 +5,6 @@ import KhenshinProtocol
 class RadioGroupField: BaseField {
 
     private var value: String
-    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
     private lazy var radio = ComponentBuilder.buildStackView(axis: .vertical, spacing: 3, distribution: .fill)
     private let disposeBag = DisposeBag()
 
@@ -19,7 +18,6 @@ class RadioGroupField: BaseField {
     }
 
     override func setupUI() {
-        addSubview(error)
                 
         if let options = self.formItem!.options {
             for choice in options {
@@ -31,23 +29,19 @@ class RadioGroupField: BaseField {
         addSubview(radio)
         
         translatesAutoresizingMaskIntoConstraints = false
-        error.translatesAutoresizingMaskIntoConstraints = false
         radio.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             heightAnchor.constraint(greaterThanOrEqualToConstant: 20),
-            error.topAnchor.constraint(equalTo: topAnchor),
-            error.leadingAnchor.constraint(equalTo: leadingAnchor),
-            error.trailingAnchor.constraint(equalTo: trailingAnchor),
-            radio.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            radio.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            radio.topAnchor.constraint(equalTo: error.bottomAnchor),
+            radio.topAnchor.constraint(equalTo: topAnchor),
+            radio.leadingAnchor.constraint(equalTo: leadingAnchor),
+            radio.trailingAnchor.constraint(equalTo: trailingAnchor),
             radio.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
 
     private func createSheet(choice: ListOption) -> UIView {
         let sheet = UIView()
-        sheet.backgroundColor = UIColor(red: 0.94, green: 0.94, blue: 0.96, alpha: 1.00)
+        sheet.backgroundColor = .white
         sheet.layer.cornerRadius = 8
         sheet.layer.shadowColor = UIColor.black.cgColor
         sheet.layer.shadowOffset = CGSize(width: 0, height: 2)
@@ -65,7 +59,9 @@ class RadioGroupField: BaseField {
             .bind(onNext:{ indexPath in
                 self.value = (self.formItem?.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
                 print("Elemento seleccionado \(self.value)")
-                }).disposed(by: disposeBag)
+                self.updateRadioColors()
+            })
+            .disposed(by: disposeBag)
 
         radio.translatesAutoresizingMaskIntoConstraints = false
         sheet.translatesAutoresizingMaskIntoConstraints = false
@@ -84,11 +80,24 @@ class RadioGroupField: BaseField {
         let radio = UIButton()
         radio.setTitle(choice.value, for: .normal)
         radio.setTitleColor(UIColor(red: 0.07, green: 0.38, blue: 0.87, alpha: 1.00), for: .normal)
-        radio.contentHorizontalAlignment = .left
-        radio.titleLabel?.font = UIFont.systemFont(ofSize: 10)
+        radio.contentHorizontalAlignment = .center
+        radio.titleLabel?.font = UIFont.systemFont(ofSize: 15)
         radio.titleLabel?.adjustsFontSizeToFitWidth = true
         radio.titleLabel?.minimumScaleFactor = 0.5
         return radio
+    }
+
+    private func updateRadioColors() {
+        for (index, subview) in radio.arrangedSubviews.enumerated() {
+            guard let sheet = subview as? UIView,
+                  let radio = sheet.subviews.first as? UIButton else {
+                continue
+            }
+
+            let isSelected = radio.currentTitle == value
+            sheet.layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.lightGray.cgColor
+            sheet.layer.backgroundColor = isSelected ? UIColor(red: 0.592, green: 0.764, blue: 0.941, alpha: 1.0).cgColor : UIColor.white.cgColor
+        }
     }
     
     override func getValue() -> String {
@@ -96,14 +105,6 @@ class RadioGroupField: BaseField {
     }
 
     override func validate() -> Bool {
-
-        if self.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            error.text = "Campo obligatorio"
-            return false
-        } else {
-            error.text = ""
-            return true
-        }
+        return !self.value.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
     }
-    
 }

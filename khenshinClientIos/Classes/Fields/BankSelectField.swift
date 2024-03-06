@@ -268,6 +268,7 @@ class BankCell: UICollectionViewCell {
         }
 
         nameLabel.text = bank.name
-        containerView.layer.borderColor = isSelected ? UIColor.purple.cgColor : UIColor.lightGray.cgColor
+        containerView.layer.borderColor = isSelected ? UIColor.blue.cgColor : UIColor.lightGray.cgColor
+        containerView.layer.backgroundColor =  isSelected ? UIColor(red: 0.592, green: 0.764, blue: 0.941, alpha: 1.0).cgColor : UIColor.white.cgColor
     }
 }
