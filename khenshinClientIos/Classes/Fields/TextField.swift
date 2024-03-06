@@ -2,12 +2,10 @@ import UIKit
 import KhenshinProtocol
 
 class TextField: BaseField, UITextFieldDelegate {
-    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
+    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 9, backgroundColor: .black)
     lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
+    lazy private var hint  = ComponentBuilder.buildLabel(textColor: .lightGray, fontSize: 9, backgroundColor: UIColor.white)
 
-    override func getValue() -> String {
-        return input.text!
-    }
 
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
@@ -18,26 +16,42 @@ class TextField: BaseField, UITextFieldDelegate {
     }
 
     override func setupUI() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        self.addGestureRecognizer(tapGesture)
-        input.placeholder = self.formItem!.label
-        self.formItem?.id == "password" ? (input.isSecureTextEntry = true) : ()
-        addSubview(input)
-        addSubview(error)
-        translatesAutoresizingMaskIntoConstraints = false
-        input.translatesAutoresizingMaskIntoConstraints = false
-        error.translatesAutoresizingMaskIntoConstraints = false
+        configureGestures()
+        configureInputField()
         
+        addSubview(input)
+        addSubview(hint)
+        addSubview(error)
+        input.translatesAutoresizingMaskIntoConstraints = false
+        hint.translatesAutoresizingMaskIntoConstraints = false
+        error.translatesAutoresizingMaskIntoConstraints = false
+        translatesAutoresizingMaskIntoConstraints = false
+
         configureLengthConstraints()
         
         NSLayoutConstraint.activate([
             input.topAnchor.constraint(equalTo: self.topAnchor),
             input.widthAnchor.constraint(equalTo: self.widthAnchor),
-            error.topAnchor.constraint(equalTo: input.bottomAnchor),
+            
+            hint.topAnchor.constraint(equalTo: input.bottomAnchor),
+            hint.trailingAnchor.constraint(equalTo: input.trailingAnchor),
+             
+            error.topAnchor.constraint(equalTo: hint.bottomAnchor),
+            error.trailingAnchor.constraint(equalTo: input.trailingAnchor),
             error.bottomAnchor.constraint(equalTo: bottomAnchor),
-            error.leadingAnchor.constraint(equalTo: leadingAnchor),
-            error.trailingAnchor.constraint(equalTo: trailingAnchor),
+
         ])
+    }
+    
+    private func configureGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapGesture)
+    }
+
+    private func configureInputField() {
+        input.placeholder = self.formItem!.label
+        self.formItem?.id == "password" ? (input.isSecureTextEntry = true) : ()
+        hint.text = self.formItem?.hint
     }
 
     override func validate() -> Bool {
@@ -71,11 +85,14 @@ class TextField: BaseField, UITextFieldDelegate {
         }
     }
 
-
     func textField(_ input: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         let currentText = input.text ?? ""
         let prospectiveText = (currentText as NSString).replacingCharacters(in: range, with: string)
 
         return (self.formItem?.maxLength.map { prospectiveText.count <= Int($0) } ?? true)
+    }
+    
+    override func getValue() -> String {
+        return input.text!
     }
 }

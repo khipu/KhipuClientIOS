@@ -18,7 +18,6 @@ class HeaderView: UIView {
     init(headerColor: UIColor) {
         self.headerColor = headerColor
         super.init(frame: .zero)
-        setupUI()
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -30,36 +29,60 @@ class HeaderView: UIView {
         setupUI()
     }
 
+    private func createRectangle(height: CGFloat) -> UIView {
+        let rectangle = UIView()
+        rectangle.layer.borderWidth = 0.6
+        rectangle.layer.borderColor = UIColor.lightGray.cgColor
+        rectangle.layer.cornerRadius = 1
+        rectangle.heightAnchor.constraint(equalToConstant: height).isActive = true
+        return rectangle
+    }
+
+    private func createHorizontalStackView(withPercentages percentages: [CGFloat]) -> UIStackView {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        for percentage in percentages {
+            let square = UIView()
+            stackView.addArrangedSubview(square)
+            square.widthAnchor.constraint(equalTo: stackView.widthAnchor, multiplier: percentage).isActive = true
+        }
+
+        return stackView
+    }
+
+    private func createLowerRectangle() -> UIView {
+        let rectangle = UIView()
+        rectangle.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        let borderThickness: CGFloat = 0.5
+        rectangle.layer.borderWidth = borderThickness
+        let borderColor = UIColor.lightGray.cgColor
+        rectangle.layer.borderColor = borderColor
+        rectangle.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+        return rectangle
+    }
+
     private func setupUI() {
+        subviews.forEach { $0.removeFromSuperview() }
+
+        guard let operationInfo = operationInfo else {
+            return
+        }
+
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
         stackView.distribution = .fillProportionally
         stackView.alignment = .fill
-        stackView.backgroundColor = self.headerColor
+        stackView.backgroundColor = headerColor
 
-        let upperRectangle = UIView()
+        let upperRectangle = createRectangle(height: 30)
         stackView.addArrangedSubview(upperRectangle)
-        upperRectangle.layer.borderWidth = 0.6
-        upperRectangle.layer.borderColor = UIColor.lightGray.cgColor
-        upperRectangle.layer.cornerRadius = 1 
-
-        let upperRectangleHeight: CGFloat = 30
-        upperRectangle.heightAnchor.constraint(equalToConstant: upperRectangleHeight).isActive = true
-
-        let horizontalStackView = UIStackView()
-        horizontalStackView.axis = .horizontal
-        horizontalStackView.distribution = .fill
 
         let percentages: [CGFloat] = [0.3, 0.5, 0.2]
-
-        for percentage in percentages {
-            let square = UIView()
-            horizontalStackView.addArrangedSubview(square)
-            square.widthAnchor.constraint(equalTo: horizontalStackView.widthAnchor, multiplier: percentage).isActive = true
-        }
-
-        horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
+        let horizontalStackView = createHorizontalStackView(withPercentages: percentages)
         upperRectangle.addSubview(horizontalStackView)
 
         NSLayoutConstraint.activate([
@@ -77,16 +100,8 @@ class HeaderView: UIView {
             ])
         }
 
-        let lowerRectangle = UIView()
+        let lowerRectangle = createLowerRectangle()
         stackView.addArrangedSubview(lowerRectangle)
-        let lowerRectangleHeight: CGFloat = 20
-        lowerRectangle.heightAnchor.constraint(equalToConstant: lowerRectangleHeight).isActive = true
-        let borderThickness: CGFloat = 0.5
-        lowerRectangle.layer.borderWidth = borderThickness
-
-        let borderColor = UIColor.lightGray.cgColor
-        lowerRectangle.layer.borderColor = borderColor
-        lowerRectangle.layer.maskedCorners = [.layerMaxXMaxYCorner, .layerMinXMaxYCorner]
 
         addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -102,39 +117,34 @@ class HeaderView: UIView {
             stackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
 
-        if let operationInfo = operationInfo {
-            let codeLabel = ComponentBuilder.buildLabel(withText: "Código: \(operationInfo.operationID ?? "")", textColor: .black, fontSize: 10, backgroundColor: .clear)
-            lowerRectangle.addSubview(codeLabel)
-            codeLabel.center(in: lowerRectangle)
+        let codeLabelText = "Código: \(operationInfo.operationID ?? "")"
+        let codeLabel = ComponentBuilder.buildLabel(withText: codeLabelText, textColor: .black, fontSize: 9, backgroundColor: .clear)
+        lowerRectangle.addSubview(codeLabel)
+        codeLabel.center(in: lowerRectangle)
 
-            stackView.setNeedsLayout()
+        stackView.setNeedsLayout()
 
-            if horizontalStackView.arrangedSubviews.count > 0 {
-                let firstSquare = horizontalStackView.arrangedSubviews[0] as UIView
+        for (index, subview) in horizontalStackView.arrangedSubviews.enumerated() {
+            guard index < 3 else { break }
+            switch index {
+            case 0:
                 let imageView = ComponentBuilder.buildImageView(fromURL: URL(string: operationInfo.merchant?.logo ?? "")!)
-                firstSquare.addSubview(imageView)
-                imageView.center(in: firstSquare)
+                subview.addSubview(imageView)
+                imageView.center(in: subview)
                 imageView.translatesAutoresizingMaskIntoConstraints = false
-                imageView.widthAnchor.constraint(equalTo: firstSquare.widthAnchor).isActive = true
-                imageView.topAnchor.constraint(equalTo: firstSquare.topAnchor).isActive = true
-                imageView.bottomAnchor.constraint(equalTo: firstSquare.bottomAnchor).isActive = true
-                stackView.setNeedsLayout()
-            }
-
-            if horizontalStackView.arrangedSubviews.count > 1 {
-                let secondSquare = horizontalStackView.arrangedSubviews[1] as UIView
+                imageView.widthAnchor.constraint(equalTo: subview.widthAnchor).isActive = true
+                imageView.topAnchor.constraint(equalTo: subview.topAnchor).isActive = true
+                imageView.bottomAnchor.constraint(equalTo: subview.bottomAnchor).isActive = true
+            case 1:
                 let label = ComponentBuilder.buildLabel(withText: operationInfo.merchant?.name, textColor: .black, fontSize: 10, backgroundColor: .clear)
-                secondSquare.addSubview(label)
-                label.center(in: secondSquare)
-                stackView.setNeedsLayout()
-            }
-
-            if horizontalStackView.arrangedSubviews.count > 2 {
-                let thirdSquare = horizontalStackView.arrangedSubviews[2] as UIView
+                subview.addSubview(label)
+                label.center(in: subview)
+            case 2:
                 let label = ComponentBuilder.buildLabel(withText: operationInfo.amount, textColor: .black, fontSize: 10, backgroundColor: .clear)
-                thirdSquare.addSubview(label)
-                label.center(in: thirdSquare)
-                stackView.setNeedsLayout()
+                subview.addSubview(label)
+                label.center(in: subview)
+            default:
+                break
             }
         }
     }

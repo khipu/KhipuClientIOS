@@ -2,8 +2,9 @@ import UIKit
 import KhenshinProtocol
 
 class EmailField: BaseField, UITextFieldDelegate {
-    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
+    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 9, backgroundColor: .black)
     lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
+    lazy private var hint  = ComponentBuilder.buildLabel(textColor: .lightGray, fontSize: 9, backgroundColor: UIColor.white)
 
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
@@ -14,13 +15,14 @@ class EmailField: BaseField, UITextFieldDelegate {
     }
 
     override func setupUI() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-        self.addGestureRecognizer(tapGesture)
-        input.placeholder = self.formItem!.placeHolder
-        input.keyboardType = .emailAddress
+        configureGestures()
+        configureInputField()
+
         addSubview(input)
+        addSubview(hint)
         addSubview(error)
         input.translatesAutoresizingMaskIntoConstraints = false
+        hint.translatesAutoresizingMaskIntoConstraints = false
         error.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 
@@ -30,10 +32,25 @@ class EmailField: BaseField, UITextFieldDelegate {
             heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
             input.topAnchor.constraint(equalTo: self.topAnchor),
             input.widthAnchor.constraint(equalTo: self.widthAnchor),
-            error.topAnchor.constraint(equalTo: input.bottomAnchor),
-            error.leadingAnchor.constraint(equalTo: leadingAnchor),
-            error.trailingAnchor.constraint(equalTo: trailingAnchor),
+            
+            hint.topAnchor.constraint(equalTo: input.bottomAnchor),
+            hint.trailingAnchor.constraint(equalTo: input.trailingAnchor),
+             
+            error.topAnchor.constraint(equalTo: hint.bottomAnchor),
+            error.trailingAnchor.constraint(equalTo: input.trailingAnchor),
+            
         ])
+    }
+
+    private func configureGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.addGestureRecognizer(tapGesture)
+    }
+
+    private func configureInputField() {
+        input.placeholder = self.formItem!.placeHolder
+        input.keyboardType = .emailAddress
+        hint.text = self.formItem?.hint
     }
 
     override func getValue() -> String {
