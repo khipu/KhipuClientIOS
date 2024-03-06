@@ -29,7 +29,7 @@ public class KhenshinInterface {
     private var headerColor: UIColor
     
     public init() {
-        self.backendUrl = "https://khenshin-ws-oci-scl.khipu.com"
+        self.backendUrl = "https://khenshin-ws.khipu.com"
         self.backendPublicKey = "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw="
         self.allowCredentialsSaving = true
         self.principalColor = UIColor.white

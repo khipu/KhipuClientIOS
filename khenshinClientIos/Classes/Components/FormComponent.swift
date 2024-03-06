@@ -1,13 +1,17 @@
 import UIKit
+import RxSwift
 import KhenshinProtocol
 
 class FormComponent: UIView, UITextFieldDelegate {
     private let formRequest: FormRequest?
+    private var selectedBank: String = OperationState.instance.bank
     private let color: UIColor?
+    private let disposeBag = DisposeBag()
 
     lazy private var title = ComponentBuilder.buildLabel(textColor: .black, fontSize: 16, backgroundColor: .white)
     lazy private var error = ComponentBuilder.buildLabel(textColor: .black, fontSize: 12, backgroundColor: .red)
     lazy public var button = ComponentBuilder.buildButton(withTitle: "Continuar", backgroundColorHex: "8347ad", titleColor: .white)
+    lazy public var checkboxSaveCrendentials = ComponentBuilder.buildCheckbox(withLabel: "Recordar credenciales")
 
     lazy private var formComponents: UIStackView = {
         let stackView = UIStackView()
@@ -76,7 +80,6 @@ class FormComponent: UIView, UITextFieldDelegate {
         error.text = formRequest?.errorMessage
         let continueLabel = formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : "Continuar"
         button.setTitle(continueLabel, for: .normal)
-        var previousComponent: UIView? = nil
         
         formRequest?.items.forEach { item in
             var component: FormField.Type?
@@ -112,6 +115,22 @@ class FormComponent: UIView, UITextFieldDelegate {
             }
         }
         
+        if (formRequest!.rememberValues!) {
+            formComponents.addArrangedSubview(checkboxSaveCrendentials)
+            do {
+                guard let storedCredentials = try CredentialsStorageUtil.searchCredentials(server: self.selectedBank) else {
+                    throw KeychainError.noPassword
+                }
+                
+                (formComponents.subviews[0] as! BaseField).setValue(value: storedCredentials.username)
+                (formComponents.subviews[1] as! BaseField).setValue(value: storedCredentials.password)
+                (checkboxSaveCrendentials.subviews[0] as! CheckBox).isChecked = true
+            } catch {
+                print("No credentials found for \(self.selectedBank)")
+            }
+            
+        }
+        
         if let firstTextField = formComponents.subviews.compactMap({ $0 as? UITextField }).first {
             firstTextField.becomeFirstResponder()
         }
@@ -125,11 +144,24 @@ class FormComponent: UIView, UITextFieldDelegate {
 
         let answers = formComponents.subviews.compactMap { subview -> FormItemAnswer? in
             guard let formField = subview as? FormField else { return nil }
+            if (formField is BankSelectField) {
+                let bankName = (formField.getFormItem().groupedOptions?.options)?.filter {option in
+                    option.value == formField.getValue()
+                }.first?.name
+                OperationState.instance.setBank(nextBank: bankName ?? "")
+            }
             return FormItemAnswer(
                 id: formField.getFormItem().id,
                 type: formField.getFormItem().type,
                 value: formField.getValue()
             )
+        }
+        
+        if(self.formRequest!.rememberValues! && (checkboxSaveCrendentials.subviews[0] as! CheckBox).isChecked) {
+            let credentials = Credentials(username: answers[0].value, password: answers[1].value)
+            try! CredentialsStorageUtil.storeCredentials(credentials: credentials, server: self.selectedBank)
+        } else if(self.formRequest!.rememberValues! && !(checkboxSaveCrendentials.subviews[0] as! CheckBox).isChecked) {
+            try! CredentialsStorageUtil.deleteCredentials(server: self.selectedBank)
         }
 
         return FormResponse(answers: answers, id: self.formRequest!.id, type: MessageType.formResponse)
