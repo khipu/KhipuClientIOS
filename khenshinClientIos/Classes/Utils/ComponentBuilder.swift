@@ -19,12 +19,26 @@ extension UIColor {
 }
 
 class ComponentBuilder {
+    
     static func buildImageView(fromURL url: URL) -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        let imageData = try? Data(contentsOf: url)
-        let image = UIImage(data: imageData!)
-        imageView.image = image
+
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            if let error = error {
+                print("Error al cargar la imagen desde la URL: \(url), Error: \(error)")
+                return
+            }
+
+            if let data = data, let image = UIImage(data: data) {
+                DispatchQueue.main.async {
+                    imageView.image = image
+                }
+            } else {
+                print("Error al cargar la imagen desde la URL: \(url)")
+            }
+        }.resume()
+
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }
