@@ -75,10 +75,6 @@ class RutField: BaseField, UITextFieldDelegate {
             return true
         }
     }
-    
-    override func getValue() -> String {
-        return input.text!
-    }
 
     private func validateRut(_ rut: String) -> Bool {
         let dv = String(rut.last ?? Character(""))

@@ -99,7 +99,4 @@ class TextField: BaseField, UITextFieldDelegate {
         return (self.formItem?.maxLength.map { prospectiveText.count <= Int($0) } ?? true)
     }
     
-    override func getValue() -> String {
-        return input.text!
-    }
 }
