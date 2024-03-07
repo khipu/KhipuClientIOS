@@ -4,6 +4,7 @@ import KhenshinProtocol
 class RutField: BaseField, UITextFieldDelegate {
     
     lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 9, backgroundColor: .black)
+    lazy private var label = ComponentBuilder.buildLabel(textColor: .black, fontSize: 12, backgroundColor: UIColor.white, isBold: true)
     lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
     lazy private var hint  = ComponentBuilder.buildLabel(textColor: .lightGray, fontSize: 9, backgroundColor: UIColor.white)
 
@@ -27,9 +28,11 @@ class RutField: BaseField, UITextFieldDelegate {
         configureGestures()
         configureInputField()
         
+        addSubview(label)
         addSubview(input)
         addSubview(hint)
         addSubview(error)
+        label.translatesAutoresizingMaskIntoConstraints = false
         input.translatesAutoresizingMaskIntoConstraints = false
         hint.translatesAutoresizingMaskIntoConstraints = false
         error.translatesAutoresizingMaskIntoConstraints = false
@@ -38,7 +41,10 @@ class RutField: BaseField, UITextFieldDelegate {
         configureLengthConstraints()
         
         NSLayoutConstraint.activate([
-            input.topAnchor.constraint(equalTo: self.topAnchor),
+            label.topAnchor.constraint(equalTo: self.topAnchor),
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            
+            input.topAnchor.constraint(equalTo: label.bottomAnchor),
             input.widthAnchor.constraint(equalTo: self.widthAnchor),
             
             hint.topAnchor.constraint(equalTo: input.bottomAnchor),
@@ -57,7 +63,8 @@ class RutField: BaseField, UITextFieldDelegate {
     }
 
     private func configureInputField() {
-        input.placeholder = self.formItem!.label
+        label.text = self.formItem!.label
+        input.placeholder = self.formItem!.placeHolder
         hint.text = self.formItem?.hint
     }
 
