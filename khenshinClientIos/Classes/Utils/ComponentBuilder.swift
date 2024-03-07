@@ -43,16 +43,16 @@ class ComponentBuilder {
         return imageView
     }
 
-    static func buildLabel(withText text: String? = nil, textColor: UIColor, fontSize: CGFloat, backgroundColor: UIColor) -> UILabel {
+    static func buildLabel(withText text: String? = nil, textColor: UIColor, fontSize: CGFloat, backgroundColor: UIColor, isBold: Bool = false) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = textColor
-        label.font = UIFont.systemFont(ofSize: fontSize)
+        label.font = isBold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }
-
+    
     static func buildCustomTextField(
         font: UIFont? = UIFont.systemFont(ofSize: 16),
         borderStyle: UITextField.BorderStyle? = .roundedRect,

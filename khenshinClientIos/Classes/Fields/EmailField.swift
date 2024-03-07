@@ -3,6 +3,7 @@ import KhenshinProtocol
 
 class EmailField: BaseField, UITextFieldDelegate {
     lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 9, backgroundColor: .black)
+    lazy private var label = ComponentBuilder.buildLabel(textColor: .black, fontSize: 12, backgroundColor: UIColor.white, isBold: true)
     lazy private var input = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
     lazy private var hint  = ComponentBuilder.buildLabel(textColor: .lightGray, fontSize: 9, backgroundColor: UIColor.white)
 
@@ -18,19 +19,23 @@ class EmailField: BaseField, UITextFieldDelegate {
         configureGestures()
         configureInputField()
 
+        addSubview(label)
         addSubview(input)
         addSubview(hint)
         addSubview(error)
+        label.translatesAutoresizingMaskIntoConstraints = false
         input.translatesAutoresizingMaskIntoConstraints = false
         hint.translatesAutoresizingMaskIntoConstraints = false
         error.translatesAutoresizingMaskIntoConstraints = false
         translatesAutoresizingMaskIntoConstraints = false
 
         configureLengthConstraints()
-
+        
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(greaterThanOrEqualToConstant: 200),
-            input.topAnchor.constraint(equalTo: self.topAnchor),
+            label.topAnchor.constraint(equalTo: self.topAnchor),
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            
+            input.topAnchor.constraint(equalTo: label.bottomAnchor),
             input.widthAnchor.constraint(equalTo: self.widthAnchor),
             
             hint.topAnchor.constraint(equalTo: input.bottomAnchor),
@@ -38,7 +43,8 @@ class EmailField: BaseField, UITextFieldDelegate {
              
             error.topAnchor.constraint(equalTo: hint.bottomAnchor),
             error.trailingAnchor.constraint(equalTo: input.trailingAnchor),
-            
+            error.bottomAnchor.constraint(equalTo: bottomAnchor),
+
         ])
     }
 
@@ -48,6 +54,7 @@ class EmailField: BaseField, UITextFieldDelegate {
     }
 
     private func configureInputField() {
+        label.text = self.formItem!.label
         input.placeholder = self.formItem!.placeHolder
         input.keyboardType = .emailAddress
         hint.text = self.formItem?.hint
