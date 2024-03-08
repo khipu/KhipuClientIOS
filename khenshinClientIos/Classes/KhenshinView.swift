@@ -11,17 +11,26 @@ public class KhenshinView: UIViewController {
     let allowCredentialsSaving: Bool
     let principalColor: UIColor
     let headerColor: UIColor
+    let operationSuccessCallback: () -> Any?
+    let operationWarningCallback: () -> Any?
+    let operationFailureCallback: () -> Any?
 
     public init(operationId: String,
                 backendUrl: String,
                 backendPublicKey: String,
                 allowCredentialsSaving: Bool,
                 principalColor: UIColor,
-                headerColor: UIColor
+                headerColor: UIColor,
+                using operationSuccessCallback: @escaping () -> Any?,
+                using operationWarningCallback: @escaping () -> Any?,
+                using operationFailureCallback: @escaping () -> Any?
     ) {
         self.allowCredentialsSaving = allowCredentialsSaving
         self.principalColor = principalColor
         self.headerColor = headerColor
+        self.operationSuccessCallback = operationSuccessCallback
+        self.operationWarningCallback = operationWarningCallback
+        self.operationFailureCallback = operationFailureCallback
         super.init(nibName: nil, bundle: nil)
         self.operationId = operationId
         self.khenshinClient = KhenshinClient(
@@ -128,24 +137,42 @@ public class KhenshinView: UIViewController {
             break
         case MessageType.operationFailure.rawValue:
             do {
+                OperationState.instance.setFinalState(state: MessageType.operationFailure)
+                if(OperationState.instance.getSkipResultPage()){
+                    self.failureAndDismiss()
+                    return
+                }
                 let operationFailure = try OperationFailure(message)
                 component = drawFailureMessageComponent(operationFailure:operationFailure)
+                Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.failureAndDismiss), userInfo: nil, repeats: false)
             } catch {
                 print("Error processing OperationFailure message, \(message)")
             }
             break
         case MessageType.operationWarning.rawValue:
             do {
+                OperationState.instance.setFinalState(state: MessageType.operationWarning)
+                if(OperationState.instance.getSkipResultPage()){
+                    self.warningAndDismiss()
+                    return
+                }
                 let operationWarning = try OperationWarning(message)
                 component = drawWarningMessageComponent(operationWarning:operationWarning)
+                Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.warningAndDismiss), userInfo: nil, repeats: false)
             } catch {
                 print("Error processing OperationWarning message, \(message)")
             }
             break
         case MessageType.operationSuccess.rawValue:
             do {
+                OperationState.instance.setFinalState(state: MessageType.operationSuccess)
+                if(OperationState.instance.getSkipResultPage()){
+                    self.successAndDismiss()
+                    return
+                }
                 let operationSuccess = try OperationSuccess(message)
                 component = drawSuccessMessageComponent(operationSuccess:operationSuccess)
+                Timer.scheduledTimer(timeInterval: 30.0, target: self, selector: #selector(self.successAndDismiss), userInfo: nil, repeats: false)
             } catch {
                 print("Error processing OperationSuccess message, \(message)")
             }
@@ -209,4 +236,19 @@ public class KhenshinView: UIViewController {
     public func refreshHeaderView() {
         header.updateHeaderValue(with: operationInfo!)
      }
+    
+    @objc private func successAndDismiss() {
+        dismiss(animated: true)
+        self.operationSuccessCallback()
+    }
+    
+    @objc private func warningAndDismiss() {
+        dismiss(animated: true)
+        self.operationWarningCallback()
+    }
+    
+    @objc private func failureAndDismiss() {
+        dismiss(animated: true)
+        self.operationFailureCallback()
+    }
 }
