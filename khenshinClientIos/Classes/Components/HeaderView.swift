@@ -118,7 +118,7 @@ class HeaderView: UIView {
         ])
 
         let codeLabelText = "Código: \(operationInfo.operationID ?? "")"
-        let codeLabel = ComponentBuilder.buildLabel(withText: codeLabelText, textColor: .black, fontSize: 9, backgroundColor: .clear)
+        let codeLabel = ComponentBuilder.buildLabel(withText: codeLabelText, textColor: .black, fontSize: 9, backgroundColor: .clear, fontName: Styles.DEFAULT_FONT)
         lowerRectangle.addSubview(codeLabel)
         codeLabel.center(in: lowerRectangle)
 
@@ -132,15 +132,18 @@ class HeaderView: UIView {
                 subview.addSubview(imageView)
                 imageView.center(in: subview)
                 imageView.translatesAutoresizingMaskIntoConstraints = false
-                imageView.widthAnchor.constraint(equalTo: subview.widthAnchor).isActive = true
-                imageView.topAnchor.constraint(equalTo: subview.topAnchor).isActive = true
-                imageView.bottomAnchor.constraint(equalTo: subview.bottomAnchor).isActive = true
+                let widthConstraint = imageView.widthAnchor.constraint(equalToConstant: 70)
+                let heightConstraint = imageView.heightAnchor.constraint(equalToConstant: 70)
+                NSLayoutConstraint.activate([widthConstraint, heightConstraint])
+                imageView.centerXAnchor.constraint(equalTo: subview.centerXAnchor).isActive = true
+                imageView.centerYAnchor.constraint(equalTo: subview.centerYAnchor).isActive = true
+                
             case 1:
-                let label = ComponentBuilder.buildLabel(withText: operationInfo.merchant?.name, textColor: .black, fontSize: 10, backgroundColor: .clear)
+                let label = ComponentBuilder.buildLabel(withText: operationInfo.merchant?.name, textColor: .black, fontSize: 10, backgroundColor: .clear, fontName: Styles.DEFAULT_FONT)
                 subview.addSubview(label)
                 label.center(in: subview)
             case 2:
-                let label = ComponentBuilder.buildLabel(withText: operationInfo.amount, textColor: .black, fontSize: 10, backgroundColor: .clear)
+                let label = ComponentBuilder.buildLabel(withText: operationInfo.amount, textColor: .black, fontSize: 10, backgroundColor: .clear,fontName: Styles.DEFAULT_FONT)
                 subview.addSubview(label)
                 label.center(in: subview)
             default:

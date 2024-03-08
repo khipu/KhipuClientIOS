@@ -2,7 +2,7 @@ import UIKit
 
 class FooterView: UIView {
     
-    lazy private var label = ComponentBuilder.buildLabel(withText: "Impulsado por", textColor: .black, fontSize: 10, backgroundColor: .white)
+    lazy private var label = ComponentBuilder.buildLabel(withText: "Impulsado por", textColor: .black, fontSize: 10, backgroundColor: .white, fontName: Styles.DEFAULT_FONT)
     lazy private var imageView = ComponentBuilder.buildImageView(fromURL:  URL(string: "https://s3.amazonaws.com/static.khipu.com/buttons/2015/50x25-white.png")!)
     
     init() {

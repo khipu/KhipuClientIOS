@@ -4,7 +4,7 @@ import KhenshinProtocol
 
 class ProgressInfoComponent: UIView {
 
-    private let progressLabel: UILabel = ComponentBuilder.buildLabel(textColor: .black, fontSize: 14, backgroundColor: .clear)
+    private let progressLabel: UILabel = ComponentBuilder.buildLabel(textColor: .black, fontSize: 14, backgroundColor: .clear, fontName: Styles.DEFAULT_FONT)
 
     private let progressImageView: APNGImageView = ComponentBuilder.buildAPNGImageView(fromURL: URL(string: "https://khenshin-web.s3.amazonaws.com/img/spin.apng")!)
 

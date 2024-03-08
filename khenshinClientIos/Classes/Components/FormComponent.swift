@@ -8,10 +8,10 @@ class FormComponent: UIView, UITextFieldDelegate {
     private let color: UIColor?
     private let disposeBag = DisposeBag()
 
-    lazy private var title = ComponentBuilder.buildLabel(textColor: .black, fontSize: 16, backgroundColor: .white, isBold: true)
-    lazy private var bank = ComponentBuilder.buildLabel(textColor: .gray, fontSize: 14, backgroundColor: .white, isBold: true)
-    lazy private var error = ComponentBuilder.buildLabel(textColor: .black, fontSize: 12, backgroundColor: .red)
-    lazy public var button = ComponentBuilder.buildButton(backgroundColorHex: Messages.BUTTON_COLOR_HEX, titleColor: .white)
+    lazy private var title = ComponentBuilder.buildLabel(textColor: .black, fontSize: 16, backgroundColor: .white, fontName: Styles.DEFAULT_FONT)
+    lazy private var bank = ComponentBuilder.buildLabel(textColor: .gray, fontSize: 14, backgroundColor: .white, fontName: Styles.DEFAULT_FONT)
+    lazy private var error = ComponentBuilder.buildLabel(textColor: .black, fontSize: 12, backgroundColor: .red, fontName: Styles.DEFAULT_FONT)
+    lazy public var button = ComponentBuilder.buildButton()
     lazy public var checkboxSaveCrendentials = ComponentBuilder.buildCheckbox(withLabel: Messages.REMEMBER_CREDENTIALS)
 
     lazy private var formComponents: UIStackView = {

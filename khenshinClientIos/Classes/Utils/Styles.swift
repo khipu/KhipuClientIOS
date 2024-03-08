@@ -1,5 +1,7 @@
 class Styles {
-
+    
+    static let DEFAULT_FONT: String = "PublicSans-Regular"
+    
     class Titles {
         static let FONT_SIZE: CGFloat = 12
         static let TEXT_COLOR: UIColor = .black
@@ -13,13 +15,16 @@ class Styles {
     }
     
     class Input {
-        static let FONT: UIFont = UIFont.systemFont(ofSize: 14)
+        static let TITLE_SIZE: CGFloat = 14
         static let BORDER_STYLE: UITextField.BorderStyle = .roundedRect
     }
 
     class Buttons {
-        static let BUTTON_TITLE_SIZE: Int = 16
-        static let ACTIVE_BUTTON_COLOR_HEX: String = "8347ad"
-        static let INACTIVE_BUTTON_COLOR_HEX: String = "8347ad"
+        static let TITLE_SIZE: CGFloat = 18
+        static let CORNER_RADIUS: CGFloat = 6.0
+        static let ACTIVE_BUTTON_COLOR_HEX: String = "3CB4E5"
+        static let INACTIVE_BUTTON_COLOR_HEX: String = "F2F1F4"
+        static let TEXT_COLOR_ACTIVE_BUTTON: String = "FFFFFF"
+        static let TEXT_COLOR_INACTIVE_BUTTON: String = "9797A5"
     }
 }

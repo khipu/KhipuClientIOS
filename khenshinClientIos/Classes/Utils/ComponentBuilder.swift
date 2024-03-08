@@ -43,24 +43,22 @@ class ComponentBuilder {
         return imageView
     }
 
-    static func buildLabel(withText text: String? = nil, textColor: UIColor, fontSize: CGFloat, backgroundColor: UIColor, isBold: Bool = false) -> UILabel {
+    static func buildLabel(withText text: String? = nil, textColor: UIColor, fontSize: CGFloat, backgroundColor: UIColor, fontName: String) -> UILabel {
         let label = UILabel()
         label.text = text
         label.textColor = textColor
-        label.font = isBold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
+        label.font = UIFont.systemFont(ofSize: fontSize)
         label.textAlignment = .center
         label.numberOfLines = 0
         return label
     }
 
-    static func buildCustomTextField(
-        font: UIFont? = UIFont.systemFont(ofSize: 16),
-        borderStyle: UITextField.BorderStyle? = .roundedRect,
+    static func buildTextField(
         delegate: UITextFieldDelegate? = nil
     ) -> UITextField {
         let textField = UITextField()
-        textField.font = font
-        textField.borderStyle = borderStyle ?? .none
+        textField.font = UIFont(name: Styles.DEFAULT_FONT, size: Styles.Input.TITLE_SIZE)
+        textField.borderStyle = Styles.Input.BORDER_STYLE
         textField.delegate = delegate
         textField.isUserInteractionEnabled = true
         return textField
@@ -72,15 +70,16 @@ class ComponentBuilder {
         return spacingView
     }
 
-    static func buildButton(withTitle title: String? = nil, backgroundColorHex: String, titleColor: UIColor, cornerRadius: CGFloat = 8.0) -> UIButton {
+    static func buildButton(withTitle title: String? = nil) -> UIButton {
         let button = UIButton(type: .system)
         button.setTitle(title, for: .normal)
-        if let backgroundColor = UIColor(hexString: backgroundColorHex) {
-            button.backgroundColor = backgroundColor
-        }
-        button.setTitleColor(titleColor, for: .normal)
-        button.layer.cornerRadius = cornerRadius
+        button.backgroundColor = UIColor(hexString: Styles.Buttons.ACTIVE_BUTTON_COLOR_HEX)
+        button.layer.cornerRadius = Styles.Buttons.CORNER_RADIUS
         button.layer.masksToBounds = true
+        button.titleLabel?.font = UIFont(name: Styles.DEFAULT_FONT, size: Styles.Buttons.TITLE_SIZE)
+        button.setTitleColor(UIColor(hexString: Styles.Buttons.TEXT_COLOR_INACTIVE_BUTTON), for: .disabled)
+        button.setTitleColor(UIColor(hexString: Styles.Buttons.TEXT_COLOR_ACTIVE_BUTTON), for: .normal)
+        button.isEnabled = true
         return button
     }
 
@@ -115,7 +114,7 @@ class ComponentBuilder {
     static func buildCheckbox(withLabel labelText: String) -> UIView {
         let container = UIView()
         let checkbox = CheckBox.init()
-        let label = buildLabel(textColor: .black, fontSize: 12, backgroundColor: .red)
+        let label = buildLabel(textColor: Styles.Error.TEXT_COLOR, fontSize: Styles.Error.FONT_SIZE, backgroundColor: Styles.Error.BACKGROUND_COLOR, fontName: Styles.DEFAULT_FONT)
         label.text = labelText
         checkbox.frame = CGRect(x: 15, y: 15, width: 10, height: 10)
         checkbox.style = .tick

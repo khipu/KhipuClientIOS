@@ -31,6 +31,8 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '12.0'
 
   s.source_files = 'khenshinClientIos/Classes/**/*'
+  s.resources = 'khenshinClientIos/Assets/Fonts/*.ttf'
+
 
   # s.resource_bundles = {
   #   'khenshinClientIos' => ['khenshinClientIos/Assets/*.png']
