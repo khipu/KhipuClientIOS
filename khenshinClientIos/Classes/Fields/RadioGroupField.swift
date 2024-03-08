@@ -58,7 +58,6 @@ class RadioGroupField: BaseField {
             .event
             .bind(onNext:{ indexPath in
                 self.value = (self.formItem?.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
-                print("Elemento seleccionado \(self.value)")
                 self.updateRadioColors()
             })
             .disposed(by: disposeBag)

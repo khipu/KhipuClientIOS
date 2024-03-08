@@ -5,21 +5,21 @@ extension UIColor {
     convenience init?(hexString: String) {
         var hexSanitized = hexString.trimmingCharacters(in: .whitespacesAndNewlines)
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
-        
+
         var rgb: UInt64 = 0
-        
+
         Scanner(string: hexSanitized).scanHexInt64(&rgb)
-        
+
         let red = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
         let green = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
         let blue = CGFloat(rgb & 0x0000FF) / 255.0
-        
+
         self.init(red: red, green: green, blue: blue, alpha: 1.0)
     }
 }
 
 class ComponentBuilder {
-    
+
     static func buildImageView(fromURL url: URL) -> UIImageView {
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
@@ -52,7 +52,7 @@ class ComponentBuilder {
         label.numberOfLines = 0
         return label
     }
-    
+
     static func buildCustomTextField(
         font: UIFont? = UIFont.systemFont(ofSize: 16),
         borderStyle: UITextField.BorderStyle? = .roundedRect,
@@ -111,7 +111,7 @@ class ComponentBuilder {
 
        return apngImageView
     }
-    
+
     static func buildCheckbox(withLabel labelText: String) -> UIView {
         let container = UIView()
         let checkbox = CheckBox.init()
@@ -125,8 +125,6 @@ class ComponentBuilder {
         checkbox.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            //checkbox.topAnchor.constraint(equalTo: container.topAnchor),
-            //checkbox.bottomAnchor.constraint(equalTo: container.bottomAnchor),
             checkbox.centerYAnchor.constraint(equalTo: container.centerYAnchor),
             checkbox.leadingAnchor.constraint(equalTo: container.leadingAnchor),
             checkbox.trailingAnchor.constraint(equalTo: label.leadingAnchor, constant: -4),
@@ -134,7 +132,6 @@ class ComponentBuilder {
             checkbox.widthAnchor.constraint(equalToConstant: 15),
             label.topAnchor.constraint(equalTo: container.topAnchor),
             label.bottomAnchor.constraint(equalTo: container.bottomAnchor),
-            //label.trailingAnchor.constraint(equalTo: container.trailingAnchor),
         ])
         return container
     }
