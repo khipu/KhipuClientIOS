@@ -3,13 +3,13 @@ import KhenshinProtocol
 
 class CoordinatesField: BaseField {
     
-    lazy private var error = ComponentBuilder.buildLabel(textColor: .red, fontSize: 12, backgroundColor: .black)
-    lazy private var label1 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray)
-    lazy private var label2 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray)
-    lazy private var label3 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray)
-    lazy private var input1 = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
-    lazy private var input2 = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
-    lazy private var input3 = ComponentBuilder.buildCustomTextField(font: UIFont.systemFont(ofSize: 14), borderStyle: .roundedRect)
+    lazy private var error = ComponentBuilder.buildLabel(textColor: Styles.Error.TEXT_COLOR, fontSize: Styles.Error.FONT_SIZE, backgroundColor: Styles.Error.BACKGROUND_COLOR, fontName: Styles.DEFAULT_FONT)
+    lazy private var label1 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray, fontName: Styles.DEFAULT_FONT)
+    lazy private var label2 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray, fontName: Styles.DEFAULT_FONT)
+    lazy private var label3 = ComponentBuilder.buildLabel(textColor: UIColor.black, fontSize: 10, backgroundColor: UIColor.lightGray, fontName: Styles.DEFAULT_FONT)
+    lazy private var input1 = ComponentBuilder.buildTextField()
+    lazy private var input2 = ComponentBuilder.buildTextField()
+    lazy private var input3 = ComponentBuilder.buildTextField()
     private var maxLength: Int = 2
 
     

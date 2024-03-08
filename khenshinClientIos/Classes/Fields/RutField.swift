@@ -3,9 +3,9 @@ import KhenshinProtocol
 
 class RutField: BaseField, UITextFieldDelegate {
     
-    lazy private var error = ComponentBuilder.buildLabel(textColor: Styles.Error.TEXT_COLOR, fontSize: Styles.Error.FONT_SIZE, backgroundColor: Styles.Error.BACKGROUND_COLOR)
-    lazy private var label = ComponentBuilder.buildLabel(textColor: Styles.Titles.TEXT_COLOR, fontSize: Styles.Titles.FONT_SIZE, backgroundColor: Styles.Titles.BACKGROUND_COLOR, isBold: true)
-    lazy private var input = ComponentBuilder.buildCustomTextField(font: Styles.Input.FONT, borderStyle: Styles.Input.BORDER_STYLE)
+    lazy private var error = ComponentBuilder.buildLabel(textColor: Styles.Error.TEXT_COLOR, fontSize: Styles.Error.FONT_SIZE, backgroundColor: Styles.Error.BACKGROUND_COLOR, fontName: Styles.DEFAULT_FONT)
+    lazy private var label = ComponentBuilder.buildLabel(textColor: Styles.Titles.TEXT_COLOR, fontSize: Styles.Titles.FONT_SIZE, backgroundColor: Styles.Titles.BACKGROUND_COLOR, fontName: Styles.DEFAULT_FONT)
+    lazy private var input = ComponentBuilder.buildTextField()
     
     required init?(formItem: FormItem) {
         super.init(formItem: formItem)
