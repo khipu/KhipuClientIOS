@@ -47,20 +47,19 @@ class ViewController: UIViewController {
     }()
 
     @objc func buttonAction(sender: UIButton!) {
-        let builder = KhenshinBuilder(headerColor: .white)
+        let builder = KhenshinBuilder(headerColor: .white, fullscreen: false)
         let khenshinInterface = KhenshinInterface()
         khenshinInterface.initWithBuilderBlock(builder: builder)
-        present(khenshinInterface.createView(operationId: sampleInput.text!), animated: true, completion: nil)
+        khenshinInterface.createView(operationId: sampleInput.text!)
 
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .equalSpacing
+        stackView.distribution = .fill
         stackView.spacing = 16
 
         stackView.addArrangedSubview(sampleLabel)
@@ -70,9 +69,11 @@ class ViewController: UIViewController {
         self.view.addSubview(stackView)
 
         stackView.translatesAutoresizingMaskIntoConstraints = false
+        let guide = view.safeAreaLayoutGuide
         NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: view.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            stackView.topAnchor.constraint(equalTo: guide.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
+            stackView.heightAnchor.constraint(equalTo: guide.heightAnchor),
             stackView.widthAnchor.constraint(equalTo: view.widthAnchor),
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
