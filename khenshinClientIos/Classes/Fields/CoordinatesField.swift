@@ -84,7 +84,7 @@ class CoordinatesField: BaseField {
         
         for input in inputs {
             if input.text?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true {
-                error.text = "Todos los campos son obligatorios"
+                error.text = Messages.ALL_FIELDS_REQUIRED
                 return false
             }
         }

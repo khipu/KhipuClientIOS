@@ -8,10 +8,11 @@ class FormComponent: UIView, UITextFieldDelegate {
     private let color: UIColor?
     private let disposeBag = DisposeBag()
 
-    lazy private var title = ComponentBuilder.buildLabel(textColor: .black, fontSize: 16, backgroundColor: .white)
+    lazy private var title = ComponentBuilder.buildLabel(textColor: .black, fontSize: 16, backgroundColor: .white, isBold: true)
+    lazy private var bank = ComponentBuilder.buildLabel(textColor: .gray, fontSize: 14, backgroundColor: .white, isBold: true)
     lazy private var error = ComponentBuilder.buildLabel(textColor: .black, fontSize: 12, backgroundColor: .red)
-    lazy public var button = ComponentBuilder.buildButton(withTitle: "Continuar", backgroundColorHex: "8347ad", titleColor: .white)
-    lazy public var checkboxSaveCrendentials = ComponentBuilder.buildCheckbox(withLabel: "Recordar credenciales")
+    lazy public var button = ComponentBuilder.buildButton(backgroundColorHex: Messages.BUTTON_COLOR_HEX, titleColor: .white)
+    lazy public var checkboxSaveCrendentials = ComponentBuilder.buildCheckbox(withLabel: Messages.REMEMBER_CREDENTIALS)
 
     lazy private var formComponents: UIStackView = {
         let stackView = UIStackView()
@@ -39,6 +40,7 @@ class FormComponent: UIView, UITextFieldDelegate {
         }
         backgroundColor = self.color
         addSubview(title)
+        addSubview(bank)
         addSubview(error)
         addSubview(formComponents)
         addSubview(button)
@@ -47,10 +49,10 @@ class FormComponent: UIView, UITextFieldDelegate {
 
     private func setupFormConstraints() {
         guard let superview = superview else {
-            print("Error: superview es nil")
             return
         }
         title.translatesAutoresizingMaskIntoConstraints = false
+        bank.translatesAutoresizingMaskIntoConstraints = false
         error.translatesAutoresizingMaskIntoConstraints = false
         formComponents.translatesAutoresizingMaskIntoConstraints = false
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -63,7 +65,9 @@ class FormComponent: UIView, UITextFieldDelegate {
             widthAnchor.constraint(equalTo: superview.widthAnchor),
             title.topAnchor.constraint(equalTo: topAnchor),
             title.widthAnchor.constraint(equalTo: widthAnchor),
-            error.topAnchor.constraint(equalTo: title.bottomAnchor),
+            bank.topAnchor.constraint(equalTo: title.bottomAnchor),
+            bank.widthAnchor.constraint(equalTo: superview.widthAnchor),
+            error.topAnchor.constraint(equalTo: bank.bottomAnchor),
             error.widthAnchor.constraint(equalTo: superview.widthAnchor),
             formComponents.topAnchor.constraint(equalTo: error.bottomAnchor, constant: 8),
             formComponents.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 8),
@@ -78,7 +82,7 @@ class FormComponent: UIView, UITextFieldDelegate {
     private func setupForm() {
         title.text = formRequest?.title
         error.text = formRequest?.errorMessage
-        let continueLabel = formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : "Continuar"
+        let continueLabel = formRequest?.continueLabel != nil && formRequest?.continueLabel != "" ? formRequest?.continueLabel : Messages.CONTINUE_BUTTON_TEXT
         button.setTitle(continueLabel, for: .normal)
         
         formRequest?.items.forEach { item in
@@ -115,7 +119,7 @@ class FormComponent: UIView, UITextFieldDelegate {
             }
         }
         
-        if (formRequest!.rememberValues!) {
+        /*if (formRequest!.rememberValues!) {
             formComponents.addArrangedSubview(checkboxSaveCrendentials)
             do {
                 guard let storedCredentials = try CredentialsStorageUtil.searchCredentials(server: self.selectedBank) else {
@@ -129,10 +133,14 @@ class FormComponent: UIView, UITextFieldDelegate {
                 print("No credentials found for \(self.selectedBank)")
             }
             
-        }
+        }*/
         
         if let firstTextField = formComponents.subviews.compactMap({ $0 as? UITextField }).first {
             firstTextField.becomeFirstResponder()
+        }
+        
+        if !selectedBank.isEmpty {
+            bank.text = selectedBank
         }
     }
 

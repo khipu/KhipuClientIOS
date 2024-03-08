@@ -5,7 +5,7 @@ import KhenshinProtocol
 class BankSelectField: BaseField {
     
     private let segmentedControl: UISegmentedControl = {
-        let segmentedControl = UISegmentedControl(items: ["Persona", "Empresa"])
+        let segmentedControl = UISegmentedControl(items: [Messages.PERSON, Messages.COMPANY])
         segmentedControl.selectedSegmentIndex = 0
         segmentedControl.addTarget(self, action: #selector(segmentedControlValueChanged), for: .valueChanged)
         return segmentedControl
@@ -36,8 +36,8 @@ class BankSelectField: BaseField {
         setupCollectionView()
 
         if let groupedOptions = self.formItem?.groupedOptions, let options = groupedOptions.options {
-            banksPersonas = options.filter { $0.tag == "Persona" }
-            banksEmpresa = options.filter { $0.tag == "Empresa" }
+            banksPersonas = options.filter { $0.tag == Messages.PERSON }
+            banksEmpresa = options.filter { $0.tag == Messages.COMPANY }
             downloadImages(for: banksPersonas)
             downloadImages(for: banksEmpresa)
         }
@@ -110,7 +110,6 @@ class BankSelectField: BaseField {
                             group.leave()
                         }
                     } else {
-                        print("Error al cargar la imagen desde la URL: \(url)")
                         group.leave()
                     }
                 }
@@ -263,8 +262,6 @@ class BankCell: UICollectionViewCell {
     func configure(with bank: GroupedOption, imageCache: [String: UIImage], isSelected: Bool) {
         if let cachedImage = imageCache[bank.image ?? ""] {
             imageView.image = cachedImage
-        } else {
-            print("Error: La imagen no está en la caché")
         }
 
         nameLabel.text = bank.name
