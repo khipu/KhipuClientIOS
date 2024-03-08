@@ -47,7 +47,13 @@ class ViewController: UIViewController {
     }()
 
     @objc func buttonAction(sender: UIButton!) {
-        let builder = KhenshinBuilder(headerColor: .white, fullscreen: false)
+        let builder = KhenshinBuilder(
+            headerColor: .white,
+            fullscreen: false,
+            skipFinalPage: false,
+            operationSuccessCallback: operationSuccessCallback,
+            operationWarningCallback: operationWarningCallback,
+            operationFailureCallback: operationFailureCallback)
         let khenshinInterface = KhenshinInterface()
         khenshinInterface.initWithBuilderBlock(builder: builder)
         khenshinInterface.createView(operationId: sampleInput.text!)
@@ -83,6 +89,10 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+    
+    func operationSuccessCallback() {print("operation success callback")}
+    func operationWarningCallback() {print("operation warning callback")}
+    func operationFailureCallback() {print("operation failure callback")}
 
 }
 

@@ -4,7 +4,7 @@ import KhenshinProtocol
 
 class FormComponent: UIView, UITextFieldDelegate {
     private let formRequest: FormRequest?
-    private var selectedBank: String = OperationState.instance.bank
+    private var selectedBank: String = OperationState.instance.getBank()
     private let color: UIColor?
     private let disposeBag = DisposeBag()
 
