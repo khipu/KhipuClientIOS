@@ -6,7 +6,9 @@
 //
 
 import Foundation
-
+import APNGKit
+import SwiftUI
+/*
 public struct KhenshinBuilder {
     public init(backendUrl: String? = nil,
                 allowCredentialsSaving: Bool? = nil,
@@ -37,10 +39,12 @@ public struct KhenshinBuilder {
     public let operationSuccessCallback: () -> Any?
     public let operationWarningCallback: () -> Any?
     public let operationFailureCallback: () -> Any?
-}
+}*/
 
 public class KhenshinInterface {
-    private var backendUrl: String
+    public init() {
+    }
+/*    private var backendUrl: String
     private var backendPublicKey: String
     private var allowCredentialsSaving: Bool
     private var principalColor: UIColor
@@ -75,30 +79,56 @@ public class KhenshinInterface {
         self.operationSuccessCallback = builder.operationSuccessCallback
         self.operationWarningCallback = builder.operationWarningCallback
         self.operationFailureCallback = builder.operationFailureCallback
+    }*/
+    
+    public func getKhenshinViewController(operationId: String, options: KhenshinOptions) -> UIViewController {
+        if #available(iOS 15.0.0, *) {
+            return UIHostingController(rootView: KhenshinView(operationId: operationId, options: options))
+        }
+        else {
+            return KhenshinWebView(operationId: operationId)
+        }
+        
     }
     
-    public func createView(operationId: String) -> Void {
-        OperationState.instance.setSkipResultPage(skip: self.skipFinalPage)
-        self.mainController = KhenshinView(operationId: operationId,
-                                            backendUrl: self.backendUrl,
-                                            backendPublicKey: self.backendPublicKey,
-                                            allowCredentialsSaving: self.allowCredentialsSaving,
-                                            principalColor: self.principalColor,
-                                            headerColor: self.headerColor,
-                                           using: self.operationSuccessCallback!,
-                                           using: self.operationWarningCallback!,
-                                           using: self.operationFailureCallback!
-        )
-        if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController,
-           let visibleViewController = navigationController.visibleViewController {
-            if(self.fullscreen){
-                self.mainController?.modalPresentationStyle = .overFullScreen
-            }
-            visibleViewController.present(self.mainController!, animated: true, completion: {
-                print("Terminando el flujo, ejecutando callback")
-            })
+//    public func createView(operationId: String) -> Void {
+//
+//
+//
+//            if let navigationController = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController,
+//               let visibleViewController = navigationController.visibleViewController {
+//                if #available(iOS 15.0.0, *) {
+//                    self.mainController = UIHostingController(rootView: KhenshinView(operationId: operationId))
+//                    visibleViewController.present(self.mainController!, animated: true, completion: {
+//                        print("Terminando el flujo, ejecutando callback")
+//                    })
+//                } else {
+//                    self.mainController = KhenshinWebView(operationId: operationId)
+//
+//                    if(self.fullscreen){
+//                        self.mainController?.modalPresentationStyle = .overFullScreen
+//                    }
+//                    visibleViewController.present(self.mainController!, animated: true, completion: {
+//                        print("Terminando el flujo, ejecutando callback")
+//                    })
+//                }
+//
+//
+//            }
+//            /*OperationState.instance.setSkipResultPage(skip: self.skipFinalPage)
+//            self.mainController = KhenshinView(operationId: operationId,
+//                                                backendUrl: self.backendUrl,
+//                                                backendPublicKey: self.backendPublicKey,
+//                                                allowCredentialsSaving: self.allowCredentialsSaving,
+//                                                principalColor: self.principalColor,
+//                                                headerColor: self.headerColor,
+//                                               using: self.operationSuccessCallback!,
+//                                               using: self.operationWarningCallback!,
+//                                               using: self.operationFailureCallback!
+//            )*/
             
-        }
-    }
+        
+        
+   // }
     
 }

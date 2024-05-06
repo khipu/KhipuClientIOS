@@ -78,7 +78,7 @@ class BankSelectField: BaseField {
             collectionView.heightAnchor.constraint(equalToConstant: 200)
         ])
 
-        collectionView
+        /*collectionView
             .rx
             .itemSelected
             .subscribe(onNext: { [weak self] indexPath in
@@ -93,7 +93,7 @@ class BankSelectField: BaseField {
 
                 self.collectionView.reloadData()
             })
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag)*/
     }
 
     private func downloadImages(for banks: [GroupedOption]) {

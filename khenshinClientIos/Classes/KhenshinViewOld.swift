@@ -3,7 +3,7 @@ import RxSwift
 import RxCocoa
 import KhenshinProtocol
 
-public class KhenshinView: UIViewController {
+public class KhenshinViewOld: UIViewController {
     var operationId: String?
     var khenshinClient: KhenshinClient?
     let disposeBag = DisposeBag()
