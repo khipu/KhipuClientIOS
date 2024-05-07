@@ -53,14 +53,14 @@ class RadioGroupField: BaseField {
         sheet.addSubview(radio)
         let tapGesture = UITapGestureRecognizer()
         radio.addGestureRecognizer(tapGesture)
-        tapGesture
+        /*tapGesture
             .rx
             .event
             .bind(onNext:{ indexPath in
                 self.value = (self.formItem?.options?.filter{$0.value == (indexPath.view as! UIButton).currentTitle}.first!.value!)!
                 self.updateRadioColors()
             })
-            .disposed(by: disposeBag)
+            .disposed(by: disposeBag)*/
 
         radio.translatesAutoresizingMaskIntoConstraints = false
         sheet.translatesAutoresizingMaskIntoConstraints = false

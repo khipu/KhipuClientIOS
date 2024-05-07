@@ -47,16 +47,22 @@ class ViewController: UIViewController {
     }()
 
     @objc func buttonAction(sender: UIButton!) {
-        let builder = KhenshinBuilder(
-            headerColor: .white,
-            fullscreen: false,
-            skipFinalPage: false,
-            operationSuccessCallback: operationSuccessCallback,
-            operationWarningCallback: operationWarningCallback,
-            operationFailureCallback: operationFailureCallback)
+        let options = KhenshinOptions.Builder()
+            .topBarTitle("Khipu")
+            .build()
+            
+        //let builder = KhenshinBuilder(
+        //    headerColor: .white,
+        //    fullscreen: false,
+        //    skipFinalPage: false,
+        //    operationSuccessCallback: operationSuccessCallback,
+        //    operationWarningCallback: operationWarningCallback,
+        //    operationFailureCallback: operationFailureCallback)
         let khenshinInterface = KhenshinInterface()
-        khenshinInterface.initWithBuilderBlock(builder: builder)
-        khenshinInterface.createView(operationId: sampleInput.text!)
+        //khenshinInterface.initWithBuilderBlock(builder: builder)
+        //khenshinInterface.createView(operationId: sampleInput.text!)
+        let khenshinViewController = khenshinInterface.getKhenshinViewController(operationId: sampleInput.text!, options: options)
+        self.present(khenshinViewController, animated: true)
 
     }
 

@@ -5,7 +5,7 @@ import KhenshinSecureMessage
 import KhenshinProtocol
 import RxSwift
 
-public class KhenshinClient {
+public class KhenshinClientOld {
     private let socketManager: SocketManager
     private let socket: SocketIOClient
     private let secureMessage: SecureMessage
