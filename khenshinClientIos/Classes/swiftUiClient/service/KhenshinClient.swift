@@ -173,6 +173,7 @@ public class KhenshinClient {
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
             print("[id: \(self.viewModel.uiState.operationId)] disconnected, reason \(String(describing: decryptedMessage))")
             self.viewModel.uiState.currentMessageType = MessageType.operationFailure.rawValue
+            self.viewModel.uiState.returnToApp = true
             do {
                 let formRequest = try OperationFailure(decryptedMessage!)
             } catch {
