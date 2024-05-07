@@ -50,19 +50,14 @@ class ViewController: UIViewController {
         let options = KhenshinOptions.Builder()
             .topBarTitle("Khipu")
             .build()
-            
-        //let builder = KhenshinBuilder(
-        //    headerColor: .white,
-        //    fullscreen: false,
-        //    skipFinalPage: false,
-        //    operationSuccessCallback: operationSuccessCallback,
-        //    operationWarningCallback: operationWarningCallback,
-        //    operationFailureCallback: operationFailureCallback)
         let khenshinInterface = KhenshinInterface()
-        //khenshinInterface.initWithBuilderBlock(builder: builder)
-        //khenshinInterface.createView(operationId: sampleInput.text!)
-        let khenshinViewController = khenshinInterface.getKhenshinViewController(operationId: sampleInput.text!, options: options)
-        self.present(khenshinViewController, animated: true)
+        let khenshinViewController = khenshinInterface.getKhenshinViewController(
+            context: self.navigationController!,
+            operationId: sampleInput.text!,
+            options: options) { result in
+            print("Operation result \(result.asJson())")
+        }
+        self.present(UINavigationController(rootViewController: khenshinViewController), animated: true)
 
     }
 
