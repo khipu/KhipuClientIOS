@@ -9,35 +9,32 @@ import Foundation
 import KhenshinProtocol
 
 struct KhenshinUiState {
-    //static func == (lhs: KhenshinUiState, rhs: KhenshinUiState) -> Bool {
-    //    return lhs.operationId == rhs.operationId
-    //}
     
     var connected: Bool = false
     var operationFinished: Bool = false
     var operationId: String = ""
-    var bank: String
+    var bank: String = ""
     var currentMessageType: String = ""
-    var currentForm: FormRequest
-    var currentAuthorizationRequest: AuthorizationRequest
-    var validatedFormItems: [String : Bool]
-    //var savedForm: Map
-    var progressInfoMessage: String
+    var currentForm: FormRequest? = nil
+    var currentAuthorizationRequest: AuthorizationRequest? = nil
+    var validatedFormItems: [String : Bool] = [:]
+    var savedForm: [String : String] = [:]
+    var progressInfoMessage: String = ""
     var translator: KhenshinTranslator = KhenshinTranslator(translations: [:])
-    var operationInfo: OperationInfo
-    var operationSuccess: OperationSuccess
-    var operationFailure: OperationFailure
-    var operationMustContinue: OperationMustContinue
-    var operationWarning: OperationWarning
+    var operationInfo: OperationInfo? = nil
+    var operationSuccess: OperationSuccess? = nil
+    var operationFailure: OperationFailure? = nil
+    var operationMustContinue: OperationMustContinue? = nil
+    var operationWarning: OperationWarning? = nil
     var returnToApp: Bool = false
     var openManualUrl: Bool = false
     var isRutKeyboardVisible: Bool = false
-    //var rutFieldUpdater: FieldUpdater
-    //var fieldUpdaters: MutableMap
-    //var doNotLoadForm: MutableMap
+    var rutFieldUpdater: FieldUpdater = FieldUpdater()
+    var fieldUpdaters: [String: FieldUpdater] = [:]
+    var doNotLoadForm: [String: Bool] = [:]
     var hasAskedAuthentication: Bool = false
     var skipExitPage: Bool = false
-    //var currentProgress: Float
-    var bankAccountNumber: String
-    var personalIdentifier: String
+    var currentProgress: Float = 0
+    var bankAccountNumber: String = ""
+    var personalIdentifier: String = ""
 }

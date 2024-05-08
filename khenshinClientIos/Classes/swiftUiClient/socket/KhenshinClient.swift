@@ -62,7 +62,7 @@ public class KhenshinClient {
             }
             self.viewModel.uiState.currentMessageType = MessageType.operationRequest.rawValue
             let decryptedMessage = self.secureMessage.decrypt(cipherText: data.first as! String, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            if(!decryptedMessage?.isEmpty) {
+            if(!decryptedMessage!.isEmpty) {
                 self.sendOperationResponse()
             }
         }
@@ -123,8 +123,8 @@ public class KhenshinClient {
             do {
                 let openAuthorizationApp = try OpenAuthorizationApp(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.authorizationRequest.rawValue
-                if(!openAuthorizationApp.data.ios?.schema.isEmpty){
-                    let appUrl = URL(string: openAuthorizationApp.data.ios?.schema)!
+                if(!(openAuthorizationApp.data.ios?.schema.isEmpty)!){
+                    let appUrl = URL(string: openAuthorizationApp.data.ios!.schema)!
                     if UIApplication.shared.canOpenURL(appUrl)
                     {
                         UIApplication.shared.open(appUrl)
@@ -263,7 +263,7 @@ public class KhenshinClient {
             do {
                 let progressInfo = try ProgressInfo(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.progressInfo.rawValue
-                self.viewModel.uiState.progressInfoMessage = progressInfo.message
+                self.viewModel.uiState.progressInfoMessage = progressInfo.message!
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -280,7 +280,7 @@ public class KhenshinClient {
             do {
                 let translation = try Translations(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.translation.rawValue
-                self.viewModel.uiState.translator = translation.data
+                self.viewModel.uiState.translator = KhenshinTranslator(translations: translation.data!)
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -301,7 +301,7 @@ public class KhenshinClient {
             do {
                 let siteOperationComplete = try SiteOperationComplete(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.siteOperationComplete.rawValue
-                self.viewModel.setSiteOperationComplete(siteOperationComplete.type, siteOperationComplete.value)
+                self.viewModel.setSiteOperationComplete(type: siteOperationComplete.operationType, value: siteOperationComplete.value)
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -341,7 +341,7 @@ public class KhenshinClient {
                     sessionCookie: nil,
                     type: MessageType.operationResponse
                 )
-                self.sendMessage(type: operationResponse.type.rawValue as String, message: try operationResponse.jsonString())
+                self.sendMessage(type: operationResponse.type.rawValue as String, message: try operationResponse.jsonString()!)
             } else {
                 let operationResponse = OperationResponse(
                     fingerprint: nil,
@@ -350,7 +350,7 @@ public class KhenshinClient {
                     sessionCookie: nil,
                     type: MessageType.operationResponse
                 )
-                self.sendMessage(type: operationResponse.type.rawValue as String, message: try operationResponse.jsonString())
+                self.sendMessage(type: operationResponse.type.rawValue as String, message: try operationResponse.jsonString()!)
             }
         } catch {
             print("Error sending operation response")
@@ -358,17 +358,9 @@ public class KhenshinClient {
 
     }
 
-    public func sendMessage(type: String, message: Encodable) {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
-            do {
-                let jsonData = try encoder.encode(message)
-                if let jsonString = String(data: jsonData, encoding: .utf8){
-                    let encryptedMessage = self.secureMessage.encrypt(plainText: jsonString, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
-                    socket.emit(type, encryptedMessage!)
-                }
-            } catch {
-                print("Error sending message")
-            }
+    public func sendMessage(type: String, message: String) {
+        print("SENDING MESSAGE \(message)")
+        let encryptedMessage = self.secureMessage.encrypt(plainText: message, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
+        socket.emit(type, encryptedMessage!)
     }
 }

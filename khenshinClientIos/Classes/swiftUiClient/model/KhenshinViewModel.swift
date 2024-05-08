@@ -16,7 +16,6 @@ public class KhenshinViewModel: ObservableObject {
     func setKhenshinSocketClient(serverUrl: String, publicKey: String) {
         if(khenshinSocketClient == nil) {
             khenshinSocketClient = KhenshinClient(serverUrl: serverUrl, publicKey: publicKey, viewModel: self)
-            //khenshinSocketClient = KhenshinClient(serverUrl: "https://khenshin-ws.khipu.com", publicKey: "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw=", viewModel: self)
         }
     }
     
@@ -31,7 +30,17 @@ public class KhenshinViewModel: ObservableObject {
         case OperationType.accountNumberSelected:
             uiState.bankAccountNumber = value
         case OperationType.amountUpdated:
-            uiState.operationInfo.amount = value
+            let operationInfo = OperationInfo(acceptManualTransfer: uiState.operationInfo?.acceptManualTransfer,
+                                              amount: value,
+                                              body: uiState.operationInfo?.body,
+                                              email: uiState.operationInfo?.email,
+                                              merchant: uiState.operationInfo?.merchant,
+                                              operationID: uiState.operationInfo?.operationID,
+                                              subject: uiState.operationInfo?.subject,
+                                              type: MessageType.operationInfo,
+                                              urls: uiState.operationInfo?.urls,
+                                              welcomeScreen: uiState.operationInfo?.welcomeScreen)
+            uiState.operationInfo = operationInfo
         case OperationType.personalIdentifier:
             uiState.personalIdentifier = value
         default:

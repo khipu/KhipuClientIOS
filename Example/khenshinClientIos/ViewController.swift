@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
 
-        sampleTextField.text = "4z8terfczuwu"
+        sampleTextField.text = "wyfonicgspfg"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -49,6 +49,7 @@ class ViewController: UIViewController {
     @objc func buttonAction(sender: UIButton!) {
         let options = KhenshinOptions.Builder()
             .topBarTitle("Khipu")
+            .serverUrl("http://localhost:8000")
             .build()
         let khenshinInterface = KhenshinInterface()
         let khenshinViewController = khenshinInterface.getKhenshinViewController(
