@@ -43,7 +43,7 @@ TODO: Add long description of the pod here.
   # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'Socket.IO-Client-Swift'
   s.dependency 'KhenshinSecureMessage'
-  s.dependency 'KhenshinProtocol'
+  s.dependency 'KhenshinProtocol', '1.0.41'
   s.dependency 'APNGKit'
   s.dependency 'RxSwift'
   s.dependency 'RxCocoa'
