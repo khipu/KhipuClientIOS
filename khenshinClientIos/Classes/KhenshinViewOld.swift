@@ -5,7 +5,7 @@ import KhenshinProtocol
 
 public class KhenshinViewOld: UIViewController {
     var operationId: String?
-    var khenshinClient: KhenshinClient?
+    var khenshinClient: KhenshinClientOld?
     let disposeBag = DisposeBag()
     var operationInfo: OperationInfo?
     let allowCredentialsSaving: Bool
@@ -33,7 +33,7 @@ public class KhenshinViewOld: UIViewController {
         self.operationFailureCallback = operationFailureCallback
         super.init(nibName: nil, bundle: nil)
         self.operationId = operationId
-        self.khenshinClient = KhenshinClient(
+        self.khenshinClient = KhenshinClientOld(
             serverUrl: backendUrl,
             publicKey: backendPublicKey,
             operationId: self.operationId!

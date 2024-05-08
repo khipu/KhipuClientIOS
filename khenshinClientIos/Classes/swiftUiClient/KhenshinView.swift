@@ -28,14 +28,15 @@ public struct KhenshinView: View {
     public var body: some View {
         VStack {
             Text("Mensaje recibido \(viewModel.uiState.currentMessageType)")
-            Text(viewModel.uiState.connected ? "Connected" : "Disconnected")            
+            Text(viewModel.uiState.connected ? "Connected" : "Disconnected")
         }.onAppear(perform: {
+            viewModel.uiState.operationId = self.operationId
             viewModel.setKhenshinSocketClient(
                 serverUrl: options.serverUrl,
                 publicKey: options.serverPublicKey)
             viewModel.connectClient()
         })
-        if(viewModel.uiState.returnToApp) {
+        if(viewModel.uiState.operationFinished) {
             Button("Done") {
                 completitionHandler!(buildResult(viewModel.uiState))
                 dismiss()
