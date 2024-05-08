@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KhenshinProtocol
 
 @available(iOS 13.0, *)
 public class KhenshinViewModel: ObservableObject {
@@ -21,6 +22,21 @@ public class KhenshinViewModel: ObservableObject {
     
     func connectClient() {
         khenshinSocketClient?.connect()
+    }
+    
+    public func setSiteOperationComplete(type: OperationType, value: String) {
+        switch type{
+        case OperationType.bankSelected:
+            uiState.bank = value
+        case OperationType.accountNumberSelected:
+            uiState.bankAccountNumber = value
+        case OperationType.amountUpdated:
+            uiState.operationInfo.amount = value
+        case OperationType.personalIdentifier:
+            uiState.personalIdentifier = value
+        default:
+            return
+        }
     }
     
 }
