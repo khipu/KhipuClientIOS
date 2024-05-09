@@ -2,7 +2,7 @@ import UIKit
 import RxSwift
 import KhenshinProtocol
 
-class FormComponent: UIView, UITextFieldDelegate {
+class FormComponentOld: UIView, UITextFieldDelegate {
     private let formRequest: FormRequest?
     private var selectedBank: String = OperationState.instance.getBank()
     private let color: UIColor?
@@ -93,7 +93,7 @@ class FormComponent: UIView, UITextFieldDelegate {
                 if (item.email!) {
                     component = EmailField.self
                 } else {
-                    component = TextField.self
+                    component = TextFieldOld.self
                 }
                 break
             case FormItemTypes.rut:

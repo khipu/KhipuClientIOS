@@ -49,7 +49,6 @@ class ViewController: UIViewController {
     @objc func buttonAction(sender: UIButton!) {
         let options = KhenshinOptions.Builder()
             .topBarTitle("Khipu")
-            .serverUrl("http://localhost:8000")
             .build()
         let khenshinInterface = KhenshinInterface()
         let khenshinViewController = khenshinInterface.getKhenshinViewController(

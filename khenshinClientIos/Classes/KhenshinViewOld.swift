@@ -203,7 +203,7 @@ public class KhenshinViewOld: UIViewController {
     private func drawFormRequestComponent(message: FormRequest) -> UIView {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        let formComponent = FormComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message, color: self.principalColor)
+        let formComponent = FormComponentOld(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), formRequest: message, color: self.principalColor)
         formComponent.button.rx.tap
             .bind {
                 if let formResponse = formComponent.createFormResponse() {

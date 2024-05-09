@@ -53,7 +53,7 @@ public class KhenshinOptions: Codable {
         var _skipExitPage: Bool = false
         var _theme: Theme = .system
         var _colors: KhenshinColors?
-        var _locale: String?
+        var _locale: String = "es_CL"
         
         public init() {
             
