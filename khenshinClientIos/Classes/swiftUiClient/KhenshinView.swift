@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
 public struct KhenshinView: View {
@@ -36,6 +37,12 @@ public struct KhenshinView: View {
                 publicKey: options.serverPublicKey)
             viewModel.connectClient()
         })
+        switch(viewModel.uiState.currentMessageType) {
+        case MessageType.formRequest.rawValue:
+            FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+        default:
+            Text("default")
+        }
         if(viewModel.uiState.operationFinished) {
             Button("Done") {
                 completitionHandler!(buildResult(viewModel.uiState))
