@@ -13,7 +13,6 @@ struct MerchantDialogComponent: View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 4) {
-                    // Título
                     Text(translator.t("modal.merchant.info.title"))
                         .font(.subheadline)
                         .foregroundColor(.primary)
