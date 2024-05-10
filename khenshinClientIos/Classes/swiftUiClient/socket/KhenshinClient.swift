@@ -3,7 +3,6 @@ import Foundation
 import SocketIO
 import KhenshinSecureMessage
 import KhenshinProtocol
-import RxSwift
 
 @available(iOS 13.0, *)
 public class KhenshinClient {
@@ -15,24 +14,21 @@ public class KhenshinClient {
     private var formMocks: FormMocks
     private var viewModel: KhenshinViewModel
 
-    public init(serverUrl url: String, publicKey: String, viewModel: KhenshinViewModel) {
+    public init(serverUrl url: String, publicKey: String, locale: String?, viewModel: KhenshinViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
             .log(true),
             .compress,
-            //.secure(true),
-            //.selfSigned(true),
-            .forceWebsockets(true),
             .forceNew(true),
+            .secure(true),
             .connectParams([
                 "clientId": UUID().uuidString,
                 "clientPublicKey":secureMessage.publicKeyBase64,
-                "locale":"ES",
+                "locale": locale ?? "es",
                 "userAgent":"ios",
                 "uiType":"payment",
                 "browserId":UUID().uuidString,
-                "transports":["websocket"]
             ])
         ])
         self.receivedMessages = []

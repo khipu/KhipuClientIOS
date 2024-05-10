@@ -49,6 +49,7 @@ class ViewController: UIViewController {
     @objc func buttonAction(sender: UIButton!) {
         let options = KhenshinOptions.Builder()
             .topBarTitle("Khipu")
+            .locale("es_CL")
             .build()
         let khenshinInterface = KhenshinInterface()
         let khenshinViewController = khenshinInterface.getKhenshinViewController(

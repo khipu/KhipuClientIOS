@@ -37,7 +37,9 @@ public struct KhenshinView: View {
             viewModel.uiState.operationId = self.operationId
             viewModel.setKhenshinSocketClient(
                 serverUrl: options.serverUrl,
-                publicKey: options.serverPublicKey)
+                publicKey: options.serverPublicKey,
+                locale: options.locale
+            )
             viewModel.connectClient()
         })
         switch(viewModel.uiState.currentMessageType) {
