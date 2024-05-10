@@ -28,6 +28,9 @@ public struct KhenshinView: View {
     
     public var body: some View {
         VStack {
+            if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
+                HeaderComponent(viewModel: viewModel)
+            }
             Text("Mensaje recibido \(viewModel.uiState.currentMessageType)")
             Text(viewModel.uiState.connected ? "Connected" : "Disconnected")
         }.onAppear(perform: {
@@ -62,7 +65,20 @@ public struct KhenshinView: View {
             failureReason: "Failure reason"
         )
     }
+    
+    func shouldShowHeader(currentMessageType: String) -> Bool {
+        let excludedTypes = [
+            MessageType.operationSuccess.rawValue,
+            MessageType.operationFailure.rawValue,
+            MessageType.operationMustContinue.rawValue,
+            MessageType.operationWarning.rawValue
+        ]
+
+        return !excludedTypes.contains(currentMessageType)
+    }
 }
+
+
 
 @available(iOS 15.0.0, *)
 struct KhenshinView_Previews: PreviewProvider {
