@@ -22,6 +22,7 @@ struct KhipuTextField: View {
         TextField(formItem.label ?? "", text: $textFieldValue)
             .onChange(of: textFieldValue) { newValue in
                 isValid(true)
+                returnValue(newValue)
             }
     }
 }
