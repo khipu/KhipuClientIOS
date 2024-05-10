@@ -33,16 +33,16 @@ public struct FormComponent: View {
         if(formRequest.info != nil && !formRequest.info!.isEmpty) {
             FormInfo(text: formRequest.info!)
         }
-        
         ForEach(formRequest.items.indices, id: \.self) { index in
             DrawComponent(
                 khenshinViewModel: viewModel,
                 item: formRequest.items[index],
                 hasNextField: index < formRequest.items.count - 1,
-                formValues: formValues,
+                formValues: $formValues,
                 submitFunction: submitFunction
             )
         }
+        
         var validForm = viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter {!$0.value}.isEmpty
         MainButton(text: getMainButtonText(formRequest: formRequest, khenshinUiState: viewModel.uiState),
                    enabled: validForm,
@@ -99,7 +99,7 @@ struct DrawComponent: View {
     var khenshinViewModel: KhenshinViewModel
     var item: FormItem
     var hasNextField: Bool
-    @State var formValues: [String: String]
+    @Binding var formValues: [String: String]
     var submitFunction: () -> Void
 
     
