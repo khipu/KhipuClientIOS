@@ -58,12 +58,13 @@ class ViewController: UIViewController {
             options: options) { result in
             print("Operation result \(result.asJson())")
         }
-        self.present(UINavigationController(rootViewController: khenshinViewController), animated: true)
+        present(UINavigationController(rootViewController: khenshinViewController), animated: true)
 
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .center

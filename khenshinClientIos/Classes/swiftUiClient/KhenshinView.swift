@@ -27,33 +27,33 @@ public struct KhenshinView: View {
     }
     
     public var body: some View {
-        VStack {
-            if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
-                HeaderComponent(viewModel: viewModel)
+            VStack {
+                if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
+                    HeaderComponent(viewModel: viewModel)
+                }
+                Text("Mensaje recibido \(viewModel.uiState.currentMessageType)")
+                Text(viewModel.uiState.connected ? "Connected" : "Disconnected")
+            }.onAppear(perform: {
+                viewModel.uiState.operationId = self.operationId
+                viewModel.setKhenshinSocketClient(
+                    serverUrl: options.serverUrl,
+                    publicKey: options.serverPublicKey,
+                    locale: options.locale
+                )
+                viewModel.connectClient()
+            })
+            switch(viewModel.uiState.currentMessageType) {
+            case MessageType.formRequest.rawValue:
+                FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+            default:
+                Text("default")
             }
-            Text("Mensaje recibido \(viewModel.uiState.currentMessageType)")
-            Text(viewModel.uiState.connected ? "Connected" : "Disconnected")
-        }.onAppear(perform: {
-            viewModel.uiState.operationId = self.operationId
-            viewModel.setKhenshinSocketClient(
-                serverUrl: options.serverUrl,
-                publicKey: options.serverPublicKey,
-                locale: options.locale
-            )
-            viewModel.connectClient()
-        })
-        switch(viewModel.uiState.currentMessageType) {
-        case MessageType.formRequest.rawValue:
-            FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
-        default:
-            Text("default")
-        }
-        if(viewModel.uiState.operationFinished) {
-            Button("Done") {
-                completitionHandler!(buildResult(viewModel.uiState))
-                dismiss()
+            if(viewModel.uiState.operationFinished) {
+                Button("Done") {
+                    completitionHandler!(buildResult(viewModel.uiState))
+                    dismiss()
+                }
             }
-        }
     }
     
     func buildResult(_ state: KhenshinUiState) -> KhenshinResult {
