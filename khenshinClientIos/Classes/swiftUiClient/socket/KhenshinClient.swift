@@ -14,7 +14,7 @@ public class KhenshinClient {
     private var formMocks: FormMocks
     private var viewModel: KhenshinViewModel
 
-    public init(serverUrl url: String, publicKey: String, locale: String?, viewModel: KhenshinViewModel) {
+    public init(serverUrl url: String, publicKey: String, appName: String, appVersion: String, locale: String, viewModel: KhenshinViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
@@ -24,11 +24,14 @@ public class KhenshinClient {
             .secure(true),
             .connectParams([
                 "clientId": UUID().uuidString,
-                "clientPublicKey":secureMessage.publicKeyBase64,
-                "locale": locale ?? "es",
-                "userAgent":"ios",
-                "uiType":"payment",
-                "browserId":UUID().uuidString,
+                "clientPublicKey": secureMessage.publicKeyBase64,
+                "locale": locale,
+                "userAgent": UAString(),
+                "uiType": "payment",
+                "browserId": UUID().uuidString,
+                "appName": appName,
+                "appVersion": appVersion,
+                "appOS": "iOS"
             ])
         ])
         self.receivedMessages = []
@@ -50,6 +53,17 @@ public class KhenshinClient {
             print("[id: \(self.viewModel.uiState.operationId)] disconnected, reason \(reason)")
             self.viewModel.uiState.connected = false
         }
+        
+        self.socket.on(clientEvent: .reconnect) { data, ack in
+            let reason = data.first as! String
+            print("[id: \(self.viewModel.uiState.operationId)] reconnect")
+        }
+        
+        self.socket.on(clientEvent: .reconnectAttempt) { data, ack in
+            let reason = data.first as! String
+            print("[id: \(self.viewModel.uiState.operationId)] reconnectAttempt")
+        }
+        
         
         self.socket.on(MessageType.operationRequest.rawValue) { data, ack in
             print("Received message \(MessageType.operationRequest.rawValue)")

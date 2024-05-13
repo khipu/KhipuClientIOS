@@ -38,7 +38,9 @@ public struct KhenshinView: View {
                 viewModel.setKhenshinSocketClient(
                     serverUrl: options.serverUrl,
                     publicKey: options.serverPublicKey,
-                    locale: options.locale
+                    appName: appName(),
+                    appVersion: appVersion(),
+                    locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
                 )
                 viewModel.connectClient()
             }).navigationTitle(options.topBarTitle ?? "<APPNAME>")
@@ -80,8 +82,6 @@ public struct KhenshinView: View {
         return !excludedTypes.contains(currentMessageType)
     }
 }
-
-
 
 @available(iOS 15.0.0, *)
 struct KhenshinView_Previews: PreviewProvider {

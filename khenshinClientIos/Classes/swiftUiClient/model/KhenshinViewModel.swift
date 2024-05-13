@@ -13,9 +13,9 @@ public class KhenshinViewModel: ObservableObject {
     var khenshinSocketClient: KhenshinClient? = nil
     @Published var uiState = KhenshinUiState()
     
-    func setKhenshinSocketClient(serverUrl: String, publicKey: String, locale: String?) {
+    func setKhenshinSocketClient(serverUrl: String, publicKey: String, appName: String, appVersion: String, locale: String) {
         if(khenshinSocketClient == nil) {
-            khenshinSocketClient = KhenshinClient(serverUrl: serverUrl, publicKey: publicKey, locale: locale, viewModel: self)
+            khenshinSocketClient = KhenshinClient(serverUrl: serverUrl, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, viewModel: self)
         }
     }
     
