@@ -58,7 +58,7 @@ class ViewController: UIViewController {
             options: options) { result in
             print("Operation result \(result.asJson())")
         }
-        present(UINavigationController(rootViewController: khenshinViewController), animated: true)
+        navigationController!.show(khenshinViewController, sender: self)
 
     }
 

@@ -41,7 +41,8 @@ public struct KhenshinView: View {
                     locale: options.locale
                 )
                 viewModel.connectClient()
-            })
+            }).navigationTitle(options.topBarTitle ?? "<APPNAME>")
+        
             switch(viewModel.uiState.currentMessageType) {
             case MessageType.formRequest.rawValue:
                 FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
