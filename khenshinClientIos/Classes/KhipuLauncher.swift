@@ -1,10 +1,3 @@
-//
-//  KhenshinInterface.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 05-03-24.
-//
-
 import Foundation
 import SwiftUI
 
