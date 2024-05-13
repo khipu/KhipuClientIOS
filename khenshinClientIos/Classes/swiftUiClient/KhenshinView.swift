@@ -38,8 +38,8 @@ public struct KhenshinView: View {
                 viewModel.setKhenshinSocketClient(
                     serverUrl: options.serverUrl,
                     publicKey: options.serverPublicKey,
-                    appName: Bundle.main.applicationName,
-                    appVersion: Bundle.main.versionNumber,
+                    appName: appName(),
+                    appVersion: appVersion(),
                     locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
                 )
                 viewModel.connectClient()
@@ -80,19 +80,6 @@ public struct KhenshinView: View {
         ]
 
         return !excludedTypes.contains(currentMessageType)
-    }
-}
-
-extension Bundle {
-    /// Application name shown under the application icon.
-    var applicationName: String {
-        object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ??
-            object(forInfoDictionaryKey: "CFBundleName") as? String ?? "NoAppName"
-    }
-    
-    var versionNumber: String {
-        object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ??
-            object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "NoAppVersion"
     }
 }
 

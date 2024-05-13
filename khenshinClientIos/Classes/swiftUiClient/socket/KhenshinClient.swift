@@ -26,7 +26,7 @@ public class KhenshinClient {
                 "clientId": UUID().uuidString,
                 "clientPublicKey": secureMessage.publicKeyBase64,
                 "locale": locale,
-                "userAgent": "ios",
+                "userAgent": UAString(),
                 "uiType": "payment",
                 "browserId": UUID().uuidString,
                 "appName": appName,
