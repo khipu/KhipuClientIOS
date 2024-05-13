@@ -38,7 +38,9 @@ public struct KhenshinView: View {
                 viewModel.setKhenshinSocketClient(
                     serverUrl: options.serverUrl,
                     publicKey: options.serverPublicKey,
-                    locale: options.locale
+                    appName: Bundle.main.applicationName,
+                    appVersion: Bundle.main.versionNumber,
+                    locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
                 )
                 viewModel.connectClient()
             }).navigationTitle(options.topBarTitle ?? "<APPNAME>")
@@ -81,7 +83,18 @@ public struct KhenshinView: View {
     }
 }
 
-
+extension Bundle {
+    /// Application name shown under the application icon.
+    var applicationName: String {
+        object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ??
+            object(forInfoDictionaryKey: "CFBundleName") as? String ?? "NoAppName"
+    }
+    
+    var versionNumber: String {
+        object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ??
+            object(forInfoDictionaryKey: "CFBundleVersion") as? String ?? "NoAppVersion"
+    }
+}
 
 @available(iOS 15.0.0, *)
 struct KhenshinView_Previews: PreviewProvider {
