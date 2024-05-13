@@ -75,7 +75,7 @@ struct HeaderComponent: View {
 
     private var footerContent: some View {
         HStack {
-            Text(viewModel.uiState.translator.t("header.code.label", default: "")+" • \(viewModel.uiState.operationInfo?.operationID)")
+            Text(viewModel.uiState.translator.t("header.code.label", default: "")+" • \(viewModel.uiState.operationInfo?.operationID ?? "")")
                 .font(.caption)
                 .foregroundColor(Color.gray)
 

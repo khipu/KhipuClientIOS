@@ -27,6 +27,7 @@ public struct KhenshinView: View {
     }
     
     public var body: some View {
+        VStack(alignment: .leading, content: {
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     HeaderComponent(viewModel: viewModel)
@@ -43,8 +44,8 @@ public struct KhenshinView: View {
                     locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
                 )
                 viewModel.connectClient()
-            }).navigationTitle(options.topBarTitle ?? "<APPNAME>")
-        
+            })
+            
             switch(viewModel.uiState.currentMessageType) {
             case MessageType.formRequest.rawValue:
                 FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
@@ -52,11 +53,28 @@ public struct KhenshinView: View {
                 Text("default")
             }
             if(viewModel.uiState.operationFinished) {
-                Button("Done") {
+                ExecuteCode{
                     completitionHandler!(buildResult(viewModel.uiState))
                     dismiss()
                 }
             }
+        })
+        .navigationTitle(options.topBarTitle ?? appName())
+        .navigationBarBackButtonHidden(true)
+        .frame(
+          maxWidth: .infinity,
+          maxHeight: .infinity,
+          alignment: .topLeading
+        )
+        .toolbar {
+            ToolbarItem(placement: .topBarLeading) {
+                Button {
+                    viewModel.uiState.operationFinished = true
+                } label: {
+                    Image(systemName: "xmark").tint(Color.red)
+                }
+            }
+        }
     }
     
     func buildResult(_ state: KhenshinUiState) -> KhenshinResult {

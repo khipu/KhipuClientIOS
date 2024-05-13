@@ -47,18 +47,15 @@ class ViewController: UIViewController {
     }()
 
     @objc func buttonAction(sender: UIButton!) {
-        let options = KhenshinOptions.Builder()
-            .topBarTitle("Khipu")
-            .locale("es_CL")
-            .build()
-        let khenshinInterface = KhenshinInterface()
-        let khenshinViewController = khenshinInterface.getKhenshinViewController(
-            context: self.navigationController!,
+        KhipuLauncher.launch(
+            navigationController: self.navigationController!,
             operationId: sampleInput.text!,
-            options: options) { result in
-            print("Operation result \(result.asJson())")
-        }
-        navigationController!.show(khenshinViewController, sender: self)
+            options: KhenshinOptions.Builder()
+                .topBarTitle("Mi Khipu")
+                .locale("es_CL")
+                .build()) { result in
+                    print("Operation result \(result.asJson())")
+                }
 
     }
 
