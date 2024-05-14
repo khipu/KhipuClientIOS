@@ -55,7 +55,7 @@ public struct KhenshinView: View {
             alignment: .topLeading
         )
         .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
+            ToolbarItem(placement: .primaryAction) {
                 Button {
                     viewModel.uiState.returnToApp = true
                 } label: {
