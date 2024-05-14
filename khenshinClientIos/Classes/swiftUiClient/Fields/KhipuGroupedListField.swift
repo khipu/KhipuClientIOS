@@ -1,64 +1,97 @@
-//
-//  TextField.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 09-05-24.
-//
-
 import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
 public struct KhipuGroupedListField: View {
     var formItem: FormItem
-    var hasNextField: Bool
     var isValid: (Bool) -> Void
     var returnValue: (String) -> Void
-    @State private var selectedTab: String = ""
-    //@State private var selectedOptions: [GroupedOption] = []
-    @State private var selectedOption: String = ""
-    @State private var optionsFilter: String = ""
-    //var tags: [String] = []
+    var submitFunction: () -> Void
+    @State private var selectedTabIndex = 0
+    @State private var selectedOption: GroupedOption? = nil
+    @State private var textFieldValue = ""
     
-    //public init(formItem: FormItem, hasNextField: Bool, isValid: @escaping (Bool) -> Void, returnValue: @escaping (String) -> Void) {
-    //    self.formItem = formItem
-    //    self.hasNextField = hasNextField
-    //    self.isValid = isValid
-    //    self.returnValue = returnValue
-    //    self.tags = formItem.groupedOptions?.tagsOrder?.split(separator: ",") as? [String] ?? []
-    //
-    //}
+    var tabs: [String] {
+        formItem.groupedOptions?.tagsOrder?.components(separatedBy: ",") ?? []
+    }
+    
+    var allOptions: [GroupedOption] {
+        formItem.groupedOptions?.options ?? []
+    }
+    
+    var filteredList: [GroupedOption] {
+        filterBankByText(currentList: allOptions, textFieldValue: textFieldValue)
+    }
     
     public var body: some View {
-        let tags = formItem.groupedOptions?.tagsOrder?.components(separatedBy: ",") ?? []
-        let options = formItem.groupedOptions?.options?.filter {
-            $0.tag == selectedTab && (optionsFilter.isEmpty || (($0.name!.lowercased().contains(optionsFilter.lowercased()))))
-        } ?? []
-        Picker("", selection: $selectedTab) {
-            ForEach(tags, id: \.self) { tag in
-                Text(tag).tag(tag)
+        VStack {
+            Picker("Tabs", selection: $selectedTabIndex) {
+                ForEach(0..<tabs.count, id: \.self) { index in
+                    Text(tabs[index]).tag(index)
+                }
+            }
+            .pickerStyle(SegmentedPickerStyle())
+            .padding()
+            
+            TextField(formItem.placeHolder ?? "", text: $textFieldValue)
+                .padding()
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                )
+                .padding(.horizontal)
+            
+            ScrollView {
+                VStack(spacing: 16) {
+                    ForEach(filteredList, id: \.value) { option in
+                        Button(action: {
+                            selectedOption = option
+                            isValid(true)
+                            returnValue(option.value ?? "")
+                            submitFunction()
+                        }) {
+                            HStack {
+                                AsyncImage(url: URL(string: option.image ?? "")) { phase in
+                                    if let image = phase.image {
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 40, height: 40)
+                                            .clipShape(Circle())
+                                    } else if phase.error != nil {
+                                        Color.red
+                                            .frame(width: 40, height: 40)
+                                            .clipShape(Circle())
+                                    } else {
+                                        Color.gray
+                                            .frame(width: 40, height: 40)
+                                            .clipShape(Circle())
+                                    }
+                                }
+                                Text(option.name ?? "")
+                                    .foregroundColor(.primary)
+                                Spacer()
+                            }
+                            .padding()
+                            .background(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                            )
+                        }
+                    }
+                }
+                .padding()
             }
         }
-        .pickerStyle(SegmentedPickerStyle())
-        .onAppear(perform: {
-            selectedTab = String(tags.first ?? "")
-        })
-        TextField("Buscar", text: $optionsFilter)
-        Form {
-            Picker("", selection: $selectedOption) {
-                ForEach(options, id: \.value) { option in
-                    HStack {
-                        AsyncImage(url: URL(string: option.image ?? ""))
-                        Text(option.name ?? "")
-                    }.tag(option.value ?? "")
-                    
-                }
-            }.pickerStyle(.inline)
-                .onChange(of: selectedOption) { newValue in
-                    isValid(true)
-                    returnValue(newValue)
-                }
+    }
+    
+    func filterBankByText(currentList: [GroupedOption], textFieldValue: String) -> [GroupedOption] {
+        if textFieldValue.isEmpty {
+            return currentList
+        } else {
+            return currentList.filter {
+                $0.name?.localizedCaseInsensitiveContains(textFieldValue) == true
+            }
         }
-        
     }
 }

@@ -10,6 +10,7 @@ import Foundation
 import SwiftUI
 import KhenshinProtocol
 
+
 @available(iOS 15.0.0, *)
 public struct FormComponent: View {
     
@@ -17,7 +18,9 @@ public struct FormComponent: View {
     @State private var formValues: [String: String] = [:]
     public var formRequest: FormRequest
     @ObservedObject public var viewModel: KhenshinViewModel
-    var submitFunction: () -> Void = {}
+    @State private var submitFunction: () -> Void = {}
+    
+    
     
     //init(formRequest: FormRequest,
     //     viewModel: KhenshinViewModel) {
@@ -26,33 +29,49 @@ public struct FormComponent: View {
     //}
     
     public var body: some View {
-        FormTitle(text: formRequest.title!)
-        if(!viewModel.uiState.bank.isEmpty) {
-            FormPill(text: viewModel.uiState.bank)
-        }
-        if(formRequest.info != nil && !formRequest.info!.isEmpty) {
-            FormInfo(text: formRequest.info!)
-        }
-        ForEach(formRequest.items.indices, id: \.self) { index in
-            DrawComponent(
-                khenshinViewModel: viewModel,
-                item: formRequest.items[index],
-                hasNextField: index < formRequest.items.count - 1,
-                formValues: $formValues,
-                submitFunction: submitFunction,
-                viewModel: viewModel
+        VStack {
+            
+            FormTitle(text: formRequest.title!)
+            if(!viewModel.uiState.bank.isEmpty) {
+                FormPill(text: viewModel.uiState.bank)
+            }
+            if(formRequest.info != nil && !formRequest.info!.isEmpty) {
+                FormInfo(text: formRequest.info!)
+            }
+            ForEach(formRequest.items.indices, id: \.self) { index in
+                DrawComponent(
+                    khenshinViewModel: viewModel,
+                    item: formRequest.items[index],
+                    hasNextField: index < formRequest.items.count - 1,
+                    formValues: $formValues,
+                    submitFunction: submitFunction,
+                    viewModel: viewModel
+                )
+            }
+            
+            var validForm = viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter {!$0.value}.isEmpty
+            MainButton(text: getMainButtonText(formRequest: formRequest, khenshinUiState: viewModel.uiState),
+                       enabled: validForm,
+                       onClick: {
+                submittedForm = true
+                submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
+                
+            }
             )
         }
-        
-        var validForm = viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter {!$0.value}.isEmpty
-        MainButton(text: getMainButtonText(formRequest: formRequest, khenshinUiState: viewModel.uiState),
-                   enabled: validForm,
-                   onClick: {
-                        submittedForm = true
-            submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
-            
-                    }
-        )
+        .onAppear {
+            setupSubmitFunction()
+        }
+    }
+    
+    private func setupSubmitFunction() {
+        let shouldShowContinueButton = getShouldShowContinueButton(formRequest: formRequest)
+        if !shouldShowContinueButton {
+            submitFunction = {
+                let validForm = viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter { !$0.value }.isEmpty
+                submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
+            }
+        }
     }
     
     private func getMainButtonText(formRequest: FormRequest, khenshinUiState: KhenshinUiState) -> String {
@@ -63,13 +82,26 @@ public struct FormComponent: View {
         }
     }
     
+    
+    
+    private func submitFunction(validForm: Bool, formRequest: FormRequest, viewModel: KhenshinViewModel) -> Void {
+        
+        let shouldShowContinueButton = getShouldShowContinueButton(formRequest: formRequest)
+        
+        if !shouldShowContinueButton {
+            submitFunction = {
+                submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
+            }
+        }
+    }
+    
     private func submitForm(validForm: Bool, formRequest: FormRequest, viewModel: KhenshinViewModel) -> Void {
         if(validForm) {
             submitNovalidate(formRequest: formRequest, viewModel: viewModel)
         }
     }
     
-    private func submitNovalidate(formRequest: FormRequest, viewModel: KhenshinViewModel) -> Void {
+    func submitNovalidate(formRequest: FormRequest, viewModel: KhenshinViewModel) -> Void {
         var answers = formRequest.items.map {
             FormItemAnswer(
                 id: $0.id,
@@ -91,7 +123,11 @@ public struct FormComponent: View {
         
         
     }
-
+    
+    private func getShouldShowContinueButton(formRequest: FormRequest) -> Bool {
+        return !(formRequest.items.count == 1 && (formRequest.items.first?.type == FormItemTypes.groupedList || formRequest.items.first?.type == FormItemTypes.list))
+    }
+    
 }
 
 @available(iOS 15.0, *)
@@ -103,8 +139,8 @@ struct DrawComponent: View {
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
     @ObservedObject var viewModel: KhenshinViewModel
-
-
+    
+    
     
     public var body: some View {
         let validationFun: (Bool) -> Void = { valid in
@@ -138,9 +174,9 @@ struct DrawComponent: View {
         case FormItemTypes.groupedList:
             KhipuGroupedListField(
                 formItem: item,
-                hasNextField: hasNextField,
                 isValid: validationFun,
-                returnValue: getValueFun
+                returnValue: getValueFun,
+                submitFunction: submitFunction
             )
         case FormItemTypes.headerCheckbox:
             KhipuHeaderCheckboxField(
@@ -196,7 +232,7 @@ struct DrawComponent: View {
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
-                returnValue: getValueFun, 
+                returnValue: getValueFun,
                 viewModel: viewModel
             )
         }
