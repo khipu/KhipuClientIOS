@@ -39,7 +39,8 @@ public struct FormComponent: View {
                 item: formRequest.items[index],
                 hasNextField: index < formRequest.items.count - 1,
                 formValues: $formValues,
-                submitFunction: submitFunction
+                submitFunction: submitFunction,
+                viewModel: viewModel
             )
         }
         
@@ -101,6 +102,8 @@ struct DrawComponent: View {
     var hasNextField: Bool
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
+    @ObservedObject var viewModel: KhenshinViewModel
+
 
     
     public var body: some View {
@@ -193,7 +196,8 @@ struct DrawComponent: View {
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
-                returnValue: getValueFun
+                returnValue: getValueFun, 
+                viewModel: viewModel
             )
         }
     }

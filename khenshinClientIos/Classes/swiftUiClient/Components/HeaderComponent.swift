@@ -9,7 +9,7 @@ struct HeaderComponent: View {
     @State private var showMerchantDialog = false
 
     var body: some View {
-        if let merchant = viewModel.uiState.operationInfo?.merchant {
+        if (viewModel.uiState.operationInfo?.merchant) != nil {
             VStack(spacing: 8) {
                 headerContent
                 Divider()

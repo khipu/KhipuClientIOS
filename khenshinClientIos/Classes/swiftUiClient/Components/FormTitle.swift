@@ -17,6 +17,10 @@ struct FormTitle: View {
     
     var body: some View {
         Text(text)
+            .font(.title)
+            .foregroundColor(.primary)
+            .multilineTextAlignment(.center)
+            .padding()
     }
 }
 
