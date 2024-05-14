@@ -7,7 +7,7 @@ import KhenshinProtocol
 @available(iOS 13.0, *)
 public class KhenshinClient {
     private let socketManager: SocketManager
-    private let socket: SocketIOClient
+    private var socket: SocketIOClient
     private let secureMessage: SecureMessage
     private let KHENSHIN_PUBLIC_KEY: String
     private var receivedMessages: [String]
@@ -45,13 +45,11 @@ public class KhenshinClient {
     private func addListeners() {
         self.socket.on(clientEvent: .connect) { data, ack in
             print("[id: \(self.viewModel.uiState.operationId)] connected")
-            self.viewModel.uiState.connected = true
         }
         
         self.socket.on(clientEvent: .disconnect) { data, ack in
             let reason = data.first as! String
             print("[id: \(self.viewModel.uiState.operationId)] disconnected, reason \(reason)")
-            self.viewModel.uiState.connected = false
         }
         
         self.socket.on(clientEvent: .reconnect) { data, ack in
@@ -165,8 +163,7 @@ public class KhenshinClient {
                 let operationFailure = try OperationFailure(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.operationFailure.rawValue
                 self.viewModel.uiState.operationFailure = operationFailure
-                self.viewModel.uiState.operationFinished = true
-                self.disconnect()
+                self.viewModel.disconnectClient()
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -209,8 +206,7 @@ public class KhenshinClient {
                 let operationSuccess = try OperationSuccess(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.operationSuccess.rawValue
                 self.viewModel.uiState.operationSuccess = operationSuccess
-                self.viewModel.uiState.operationFinished = true
-                self.disconnect()
+                self.viewModel.disconnectClient()
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -228,8 +224,7 @@ public class KhenshinClient {
                 let operationWarning = try OperationWarning(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.operationWarning.rawValue
                 self.viewModel.uiState.operationWarning = operationWarning
-                self.viewModel.uiState.operationFinished = true
-                self.disconnect()
+                self.viewModel.disconnectClient()
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -247,8 +242,7 @@ public class KhenshinClient {
                 let operationMustContinue = try OperationMustContinue(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.operationMustContinue.rawValue
                 self.viewModel.uiState.operationMustContinue = operationMustContinue
-                self.viewModel.uiState.operationFinished = true
-                self.disconnect()
+                self.viewModel.disconnectClient()
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -339,6 +333,8 @@ public class KhenshinClient {
 
     func disconnect() {
         socket.disconnect()
+        socket.removeAllHandlers()
+        socketManager.reconnects = false
     }
 
     func sendOperationResponse() {

@@ -23,6 +23,11 @@ public class KhenshinViewModel: ObservableObject {
         khenshinSocketClient?.connect()
     }
     
+    func disconnectClient() {
+        khenshinSocketClient?.disconnect()
+        khenshinSocketClient = nil
+    }
+ 
     public func setSiteOperationComplete(type: OperationType, value: String) {
         switch type{
         case OperationType.bankSelected:
