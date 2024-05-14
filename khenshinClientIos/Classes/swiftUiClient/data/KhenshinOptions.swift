@@ -12,7 +12,7 @@ public class KhenshinOptions: Codable {
     let serverPublicKey: String
     let header: KhenshinHeader?
     let topBarTitle: String?
-    let topBarImageResourceId: Int?
+    let topBarImageResourceName: String?
     let skipExitPage: Bool
     let theme: Theme
     let colors: KhenshinColors?
@@ -23,7 +23,7 @@ public class KhenshinOptions: Codable {
         serverPublicKey: String,
         header: KhenshinHeader?,
         topBarTitle: String?,
-        topBarImageResourceId: Int?,
+        topBarImageResourceName: String?,
         skipExitPage: Bool,
         theme: Theme,
         colors: KhenshinColors?,
@@ -33,7 +33,7 @@ public class KhenshinOptions: Codable {
         self.serverPublicKey = serverPublicKey
         self.header = header
         self.topBarTitle = topBarTitle
-        self.topBarImageResourceId = topBarImageResourceId
+        self.topBarImageResourceName = topBarImageResourceName
         self.skipExitPage = skipExitPage
         self.theme = theme
         self.colors = colors
@@ -49,7 +49,7 @@ public class KhenshinOptions: Codable {
         var _serverPublicKey: String = "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw="
         var _header: KhenshinHeader?
         var _topBarTitle: String?
-        var _topBarImageResourceId: Int?
+        var _topBarImageResourceName: String?
         var _skipExitPage: Bool = false
         var _theme: Theme = .system
         var _colors: KhenshinColors?
@@ -79,8 +79,8 @@ public class KhenshinOptions: Codable {
             return self
         }
 
-        public func topBarImageResourceId(_ topBarImageResourceId: Int) -> Builder {
-            self._topBarImageResourceId = topBarImageResourceId
+        public func topBarImageResourceName(_ topBarImageResourceName: String) -> Builder {
+            self._topBarImageResourceName = topBarImageResourceName
             return self
         }
 
@@ -110,7 +110,7 @@ public class KhenshinOptions: Codable {
                 serverPublicKey: _serverPublicKey,
                 header: _header,
                 topBarTitle: _topBarTitle,
-                topBarImageResourceId: _topBarImageResourceId,
+                topBarImageResourceName: _topBarImageResourceName,
                 skipExitPage: _skipExitPage,
                 theme: _theme,
                 colors: _colors,

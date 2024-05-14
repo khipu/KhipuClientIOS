@@ -10,8 +10,8 @@ import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
 public struct KhenshinView: View {
-    var dismiss: (() -> Void)
     @StateObject var viewModel = KhenshinViewModel()
+    var dismiss: (() -> Void)
     let operationId: String
     let options: KhenshinOptions
     let completitionHandler: ((KhenshinResult) -> Void)?
@@ -33,48 +33,56 @@ public struct KhenshinView: View {
                     HeaderComponent(viewModel: viewModel)
                 }
                 Text("Mensaje recibido \(viewModel.uiState.currentMessageType)")
-                Text(viewModel.uiState.connected ? "Connected" : "Disconnected")
-            }.onAppear(perform: {
-                viewModel.uiState.operationId = self.operationId
-                viewModel.setKhenshinSocketClient(
-                    serverUrl: options.serverUrl,
-                    publicKey: options.serverPublicKey,
-                    appName: appName(),
-                    appVersion: appVersion(),
-                    locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
-                )
-                viewModel.connectClient()
-            })
-            
+            }
             switch(viewModel.uiState.currentMessageType) {
             case MessageType.formRequest.rawValue:
                 FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
             default:
                 Text("default")
             }
-            if(viewModel.uiState.operationFinished) {
-                ExecuteCode{
+            if(viewModel.uiState.returnToApp) {
+                ExecuteCode {
+                    viewModel.disconnectClient()
                     completitionHandler!(buildResult(viewModel.uiState))
                     dismiss()
                 }
             }
         })
-        .navigationTitle(options.topBarTitle ?? appName())
         .navigationBarBackButtonHidden(true)
         .frame(
-          maxWidth: .infinity,
-          maxHeight: .infinity,
-          alignment: .topLeading
+            maxWidth: .infinity,
+            maxHeight: .infinity,
+            alignment: .topLeading
         )
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 Button {
-                    viewModel.uiState.operationFinished = true
+                    viewModel.uiState.returnToApp = true
                 } label: {
                     Image(systemName: "xmark").tint(Color.red)
                 }
             }
-        }
+            ToolbarItem(placement: .principal) {
+                if (options.topBarImageResourceName == nil) {
+                    Text(options.topBarTitle ?? appName()).foregroundStyle(Color.red)
+                } else {
+                    Image(options.topBarImageResourceName!)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                }
+            }
+        }.onAppear(perform: {
+            viewModel.uiState.operationId = self.operationId
+            viewModel.setKhenshinSocketClient(
+                serverUrl: options.serverUrl,
+                publicKey: options.serverPublicKey,
+                appName: appName(),
+                appVersion: appVersion(),
+                locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
+            )
+            viewModel.connectClient()
+        })
+        
     }
     
     func buildResult(_ state: KhenshinUiState) -> KhenshinResult {
@@ -96,7 +104,7 @@ public struct KhenshinView: View {
             MessageType.operationMustContinue.rawValue,
             MessageType.operationWarning.rawValue
         ]
-
+        
         return !excludedTypes.contains(currentMessageType)
     }
 }

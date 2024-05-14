@@ -52,6 +52,7 @@ class ViewController: UIViewController {
             operationId: sampleInput.text!,
             options: KhenshinOptions.Builder()
                 .topBarTitle("Mi Khipu")
+                .topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
                 .build()) { result in
                     print("Operation result \(result.asJson())")

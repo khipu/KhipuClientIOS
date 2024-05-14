@@ -9,9 +9,6 @@ import Foundation
 import KhenshinProtocol
 
 struct KhenshinUiState {
-    
-    var connected: Bool = false
-    var operationFinished: Bool = false
     var operationId: String = ""
     var bank: String = ""
     var currentMessageType: String = ""
