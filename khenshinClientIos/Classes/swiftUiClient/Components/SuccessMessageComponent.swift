@@ -4,7 +4,7 @@ import KhenshinProtocol
 @available(iOS 15.0, *)
 struct SuccessMessageComponent: View {
     let operationSuccess: OperationSuccess
-    @StateObject private var khenshinViewModel = KhenshinViewModel()
+    @ObservedObject public var viewModel: KhenshinViewModel
     
     var body: some View {
         ZStack {
@@ -25,7 +25,7 @@ struct SuccessMessageComponent: View {
                     .foregroundColor(Color(uiColor: .label))
                     .multilineTextAlignment(.center)
                 
-                Text(khenshinViewModel.uiState.translator.t("default.operation.code.label"))
+                Text(viewModel.uiState.translator.t("default.operation.code.label"))
                     .font(.footnote)
                     .foregroundColor(Color(uiColor: .label))
                 
@@ -42,10 +42,10 @@ struct SuccessMessageComponent: View {
                 
                 Spacer()
                 MainButton(
-                    text: khenshinViewModel.uiState.translator.t("default.end.and.go.back"),
+                    text: viewModel.uiState.translator.t("default.end.and.go.back"),
                     enabled: true,
                     onClick: {
-                        khenshinViewModel.uiState.returnToApp = true
+                        viewModel.uiState.returnToApp = true
                     }
                 )
             }
