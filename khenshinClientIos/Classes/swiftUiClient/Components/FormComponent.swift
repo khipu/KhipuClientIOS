@@ -21,13 +21,6 @@ public struct FormComponent: View {
     @State private var submitFunction: () -> Void = {}
     
     
-    
-    //init(formRequest: FormRequest,
-    //     viewModel: KhenshinViewModel) {
-    //    self.formRequest = formRequest
-    //    self.viewModel = viewModel
-    //}
-    
     public var body: some View {
         VStack {
             
