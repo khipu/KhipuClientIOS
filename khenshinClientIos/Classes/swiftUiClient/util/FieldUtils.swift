@@ -1,3 +1,4 @@
+import KhenshinProtocol
 
 class FieldUtils {
     
@@ -15,5 +16,15 @@ class FieldUtils {
                return false
            }
        }
+    
+    static func getMaxDataTableCells(_ dataTable: DataTable) -> Int {
+        if (dataTable.rows.isEmpty) {
+            return 0
+        }
+        if (dataTable.rows.filter { $0.cells.isEmpty }.isEmpty) {
+            return 0
+        }
+        return dataTable.rows.reduce(0) {max($0, $1.cells.count)}
+    }
 
 }
