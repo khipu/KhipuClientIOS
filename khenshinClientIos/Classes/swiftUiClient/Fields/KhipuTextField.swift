@@ -65,9 +65,13 @@ struct KhipuTextField: View {
             }
             
             if !(formItem.hint?.isEmpty ?? true) {
+                HStack {
+                    Spacer()
                 Text(formItem.hint ?? "")
                     .font(.caption)
+                    .padding(.horizontal, 16)
                     .foregroundColor(.gray)
+                }
             }
             if shouldDisplayError() {
                 HStack {
@@ -75,7 +79,8 @@ struct KhipuTextField: View {
                     Text(error)
                         .font(.footnote)
                         .foregroundColor(.red)
-                        .multilineTextAlignment(.trailing)
+                        .padding(.horizontal, 16)
+
                 }
             }
         }

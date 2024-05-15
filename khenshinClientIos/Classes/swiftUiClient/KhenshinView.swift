@@ -32,13 +32,13 @@ public struct KhenshinView: View {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     HeaderComponent(viewModel: viewModel)
                 }
-                Text("Mensaje recibido \(viewModel.uiState.currentMessageType)")
+                EmptyView()
             }
             switch(viewModel.uiState.currentMessageType) {
             case MessageType.formRequest.rawValue:
                 FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
             default:
-                Text("default")
+                EmptyView()
             }
             if(viewModel.uiState.returnToApp) {
                 ExecuteCode {

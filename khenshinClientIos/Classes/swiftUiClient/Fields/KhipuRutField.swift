@@ -48,7 +48,8 @@ struct KhipuRutField: View {
                     Text(error)
                         .font(.footnote)
                         .foregroundColor(.red)
-                        .multilineTextAlignment(.trailing)
+                        .padding(.horizontal, 16)
+
                 }
             }
         }
