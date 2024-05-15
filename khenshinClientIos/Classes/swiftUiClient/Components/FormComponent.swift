@@ -49,16 +49,21 @@ public struct FormComponent: View {
                 )
             }
             
-            var validForm = viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter {!$0.value}.isEmpty
-            MainButton(text: getMainButtonText(formRequest: formRequest, khenshinUiState: viewModel.uiState),
-                       enabled: validForm,
-                       onClick: {
-                submittedForm = true
-                submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
+            if(getShouldShowContinueButton(formRequest: formRequest)) {
+                var validForm = viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter {!$0.value}.isEmpty
+                MainButton(text: getMainButtonText(formRequest: formRequest, khenshinUiState: viewModel.uiState),
+                           enabled: validForm,
+                           onClick: {
+                                submittedForm = true
+                                submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
+                                
+                            }
+                )
                 
             }
-            )
+            
         }
+        .padding([.leading, .trailing], 20)
         .onAppear {
             setupSubmitFunction()
         }
@@ -195,9 +200,9 @@ struct DrawComponent: View {
         case FormItemTypes.list:
             KhipuListField(
                 formItem: item,
-                hasNextField: hasNextField,
                 isValid: validationFun,
-                returnValue: getValueFun
+                returnValue: getValueFun,
+                submitFunction: submitFunction
             )
         case FormItemTypes.otp:
             KhipuOtpField(
