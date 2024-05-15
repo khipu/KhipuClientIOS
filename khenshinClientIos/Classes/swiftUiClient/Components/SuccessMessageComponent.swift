@@ -1,10 +1,3 @@
-//
-//  SuccessMessageComponent.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 15-05-24.
-//
-
 import SwiftUI
 import KhenshinProtocol
 
@@ -18,9 +11,9 @@ struct SuccessMessageComponent: View {
             Color(uiColor: .systemBackground)
                 .ignoresSafeArea()
             
-            VStack(spacing: Dimensions.large) {
+            VStack(spacing: Dimens.moderatelyLarge) {
                 Image(systemName: "checkmark.circle.fill")
-                    .font(.system(size: Dimensions.extraLarge))
+                    .font(.system(size: Dimens.extraLarge))
                     .foregroundColor(CustomColorPalette.success)
                 
                 Text(operationSuccess.title ?? "")
@@ -39,12 +32,12 @@ struct SuccessMessageComponent: View {
                 Text(formatOperationId(operationSuccess.operationID ?? ""))
                     .font(.body)
                     .foregroundColor(Color(uiColor: .systemBlue))
-                    .padding(.horizontal, Dimensions.medium)
-                    .padding(.vertical, Dimensions.small)
+                    .padding(.horizontal, Dimens.extraMedium)
+                    .padding(.vertical, Dimens.extraSmall)
                     .background(
                         Color(uiColor: .lightGray)
                             .opacity(0.3)
-                            .cornerRadius(Dimensions.small)
+                            .cornerRadius(Dimens.extraSmall)
                     )
                 
                 Spacer()
@@ -58,14 +51,6 @@ struct SuccessMessageComponent: View {
             }
         }
     }
-}
-
-struct Dimensions {
-    static let small: CGFloat = 8
-    static let medium: CGFloat = 16
-    static let large: CGFloat = 24
-    static let extraLarge: CGFloat = 48
-    static let veryLarge: CGFloat = 64
 }
 
 @available(iOS 15.0, *)

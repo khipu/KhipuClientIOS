@@ -2,50 +2,45 @@ import SwiftUI
 import KhenshinProtocol
 import SwiftUI
 
-// Define the dimension values based on the provided Kotlin dimensions.
-struct Dimensions {
-    static let dpExtraSmall: CGFloat = 8
-    static let dpExtraMedium: CGFloat = 16
-    static let dpModeratelyLarge: CGFloat = 24
-    static let dpExtraLarge: CGFloat = 54
-    static let dpVerySmall: CGFloat = 4
-    static let dpNone: CGFloat = 0
-}
+
 @available(iOS 15.0.0, *)
 struct FailureMessageComponent: View {
-    @ObservedObject public var viewModel: KhenshinViewModel
+    let operationFailure: OperationFailure
+    @StateObject private var khenshinViewModel = KhenshinViewModel()
 
     var body: some View {
-        VStack(alignment: .center, spacing: Dimensions.dpVerySmall) {
-            Image(systemName: "exclamationmark.triangle.fill")
+        VStack(alignment: .center, spacing: Dimens.verySmall) {
+            Image(systemName: "info.circle.fill")
                 .resizable()
                 .scaledToFit()
-                .frame(width: Dimensions.dpExtraLarge, height: Dimensions.dpExtraLarge)
-                .foregroundColor(Color(.systemTeal))
-            Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
+                .frame(width: Dimens.larger, height: Dimens.larger)
+                .foregroundColor(Color(red: 234/255, green: 197/255, blue: 79/255))
+            Text(khenshinViewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
                 .foregroundColor(Color(.label))
-                .font(.headline)
+                .font(.title2)
                 .multilineTextAlignment(.center)
-
-            Text((viewModel.uiState.operationFailure?.title)!)
+            
+            Text((operationFailure.title)!)
                 .foregroundColor(Color(.label))
                 .font(.title3)
                 .multilineTextAlignment(.center)
-
-
-            Spacer().frame(height: Dimensions.dpModeratelyLarge)
-            DetailSection(operationFailure: viewModel.uiState.operationFailure!, viewModel: viewModel)
-            Spacer().frame(height: Dimensions.dpModeratelyLarge)
-
-            /*
-            Button(action: viewModel.uiState.returnToApp) {
-                Text(viewModel.uiState.translator.t("default.end.and.go.back"))
-            }
-            .buttonStyle(.filled)
-            .tint(Color(.systemTertiary))
-            .enabled(true)*/
+            
+            FormWarning(text: operationFailure.body ?? "")
+            
+            Spacer().frame(height: Dimens.moderatelyLarge)
+            DetailSection(operationFailure: operationFailure,operationInfo: khenshinViewModel.uiState.operationInfo!,khenshinViewModel: khenshinViewModel)
+            Spacer().frame(height: Dimens.moderatelyLarge)
+            
+            Spacer()
+            MainButton(
+                text: khenshinViewModel.uiState.translator.t("default.end.and.go.back"),
+                enabled: true,
+                onClick: {
+                    khenshinViewModel.uiState.returnToApp = true
+                }
+            )
         }
-        .padding(.all, Dimensions.dpExtraMedium)
+        .padding(.all, Dimens.extraMedium)
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }
@@ -53,18 +48,18 @@ struct FailureMessageComponent: View {
 @available(iOS 15.0.0, *)
 struct DetailSection: View {
     var operationFailure: OperationFailure
-    @ObservedObject public var viewModel: KhenshinViewModel
-
+    var operationInfo: OperationInfo
+    @ObservedObject public var khenshinViewModel: KhenshinViewModel
+    
     var body: some View {
-        VStack(alignment: .center, spacing: Dimensions.dpVerySmall) {
-            Text(viewModel.uiState.translator.t("default.detail.label"))
+        VStack(alignment: .center, spacing: Dimens.verySmall) {
+            Text(khenshinViewModel.uiState.translator.t("default.detail.label"))
                 .foregroundColor(Color(.label))
                 .font(.headline)
                 .fontWeight(.bold)
-
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.amount.label"), value: viewModel.uiState.operationInfo?.amount ?? "")
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.merchant.label"), value: viewModel.uiState.operationInfo?.merchant?.name ?? "")
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: viewModel.uiState.operationFailure?.operationID))
+            DetailItemFailure(label: khenshinViewModel.uiState.translator.t("default.amount.label"), value: operationInfo.amount ?? "")
+            DetailItemFailure(label: khenshinViewModel.uiState.translator.t("default.merchant.label"), value:operationInfo.merchant?.name ?? "")
+            DetailItemFailure(label: khenshinViewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationFailure.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationFailure.reason),shouldCopyValue: true)
         }
     }
 }
@@ -74,7 +69,7 @@ struct DetailItemFailure: View {
     var label: String
     var value: String
     var shouldCopyValue: Bool = false
-
+    
     var body: some View {
         HStack {
             Text(label)
@@ -85,12 +80,11 @@ struct DetailItemFailure: View {
                 Text(value)
                     .foregroundColor(Color(.label))
                     .font(.body)
-            } /*else {
-                CopyToClipboardOperationId(text: value, textToCopy: formatOperationId(value))
-                    .background(Color(.systemGray5))
-            }*/
+            } else {
+                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:Color(red: 60/255, green: 180/255, blue: 229/255))
+            }
         }
-        .padding(.vertical, Dimensions.dpVerySmall)
+        .padding(.vertical, Dimens.verySmall)
     }
 }
 

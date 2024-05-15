@@ -37,7 +37,7 @@ class FieldUtils {
         return replaceValue?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
     }
     
-    static func getFailureReasonCode(reason: FailureReasonType) -> String {
+    static func getFailureReasonCode(reason: FailureReasonType?) -> String {
            switch reason {
            case .acquirePageError:
                return "ap"
@@ -67,6 +67,8 @@ class FieldUtils {
                return "tne"
            case .userCanceled:
                return "uc"
+           case .none:
+               return ""
            }
        }
 

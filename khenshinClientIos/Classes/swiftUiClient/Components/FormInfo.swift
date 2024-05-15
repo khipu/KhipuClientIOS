@@ -24,6 +24,8 @@ struct FormInfo: View {
                 .stroke(Color.blue, lineWidth: 1)
         )
         .padding(.horizontal, 16)
+        
+        Spacer().frame(height: Dimens.moderatelyLarge)
     }
 }
 
