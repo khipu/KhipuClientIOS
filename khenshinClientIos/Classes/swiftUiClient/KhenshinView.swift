@@ -37,6 +37,8 @@ public struct KhenshinView: View {
             switch(viewModel.uiState.currentMessageType) {
             case MessageType.formRequest.rawValue:
                 FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+            case MessageType.operationFailure.rawValue:
+                FailureMessageComponent(viewModel: viewModel)
             default:
                 EmptyView()
             }
