@@ -19,18 +19,18 @@ struct FailureMessageComponent: View {
                 .foregroundColor(Color(.label))
                 .font(.title2)
                 .multilineTextAlignment(.center)
-            
+
             Text((operationFailure.title)!)
                 .foregroundColor(Color(.label))
                 .font(.title3)
                 .multilineTextAlignment(.center)
-            
+
             FormWarning(text: operationFailure.body ?? "")
-            
+
             Spacer().frame(height: Dimens.moderatelyLarge)
             DetailSection(operationFailure: operationFailure,operationInfo: khenshinViewModel.uiState.operationInfo!,khenshinViewModel: khenshinViewModel)
             Spacer().frame(height: Dimens.moderatelyLarge)
-            
+
             Spacer()
             MainButton(
                 text: khenshinViewModel.uiState.translator.t("default.end.and.go.back"),
@@ -50,7 +50,7 @@ struct DetailSection: View {
     var operationFailure: OperationFailure
     var operationInfo: OperationInfo
     @ObservedObject public var khenshinViewModel: KhenshinViewModel
-    
+
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.verySmall) {
             Text(khenshinViewModel.uiState.translator.t("default.detail.label"))
@@ -69,7 +69,7 @@ struct DetailItemFailure: View {
     var label: String
     var value: String
     var shouldCopyValue: Bool = false
-    
+
     var body: some View {
         HStack {
             Text(label)
