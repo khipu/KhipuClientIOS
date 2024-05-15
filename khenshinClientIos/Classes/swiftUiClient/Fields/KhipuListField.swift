@@ -28,11 +28,9 @@ struct KhipuListField: View {
                 }) {
                     VStack(alignment: .leading, spacing: Dimensions.small) {
                         Text(option.name ?? "")
-                            //.font(.bodyMedium)
                             .font(.system(size: 16))
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
-                            //.foregroundColor(MaterialTheme.colorScheme.onSurface)
                         
                         if let dataTable = option.dataTable, !dataTable.rows.isEmpty {
                             KhipuDataTable(dataTable: dataTable)
