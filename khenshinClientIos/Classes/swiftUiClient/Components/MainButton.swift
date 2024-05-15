@@ -12,13 +12,20 @@ struct MainButton: View {
     let text: String
     let enabled: Bool
     let onClick: () -> Void
-
+    
     var body: some View {
         Button(action: onClick) {
             Text(text)
-                .font(.body)
+                .fontWeight(.bold)
+                .foregroundColor(enabled ? Color.white : Color.gray)
+                .padding()
+                .frame(minWidth: 0, maxWidth: .infinity)
+                .background(enabled ? Color(red: 60/255, green: 180/255, blue: 229/255) : Color.gray.opacity(0.5))
+                .cornerRadius(10)
         }
         .disabled(!enabled)
-        .frame(maxWidth: .infinity, minHeight: 56)
+        .padding(.horizontal, 20)
+        
+        
     }
 }
