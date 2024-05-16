@@ -27,6 +27,10 @@ public class KhenshinViewModel: ObservableObject {
         khenshinSocketClient?.disconnect()
         khenshinSocketClient = nil
     }
+    
+    public func setCurrentProgress(currentProgress: Float){
+        uiState.currentProgress=currentProgress
+    }
  
     public func setSiteOperationComplete(type: OperationType, value: String) {
         switch type{

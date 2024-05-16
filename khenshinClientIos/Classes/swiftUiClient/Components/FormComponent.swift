@@ -49,6 +49,16 @@ public struct FormComponent: View {
             }
         }
         .padding([.leading, .trailing], 20)
+        .onAppear {
+            
+            if let progress = viewModel.uiState.currentForm!.progress,
+               let current = progress.current,
+               let total = progress.total {
+                
+                let currentProgress = Float(current) / Float(total)
+                viewModel.setCurrentProgress(currentProgress: currentProgress)
+            }
+        }
     }
     
     private func getMainButtonText(formRequest: FormRequest, khenshinUiState: KhenshinUiState) -> String {
