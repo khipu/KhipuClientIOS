@@ -18,12 +18,9 @@ public struct FormComponent: View {
     @State private var formValues: [String: String] = [:]
     public var formRequest: FormRequest
     @ObservedObject public var viewModel: KhenshinViewModel
-    @State private var submitFunction: () -> Void = {}
-    
     
     public var body: some View {
         VStack {
-            
             FormTitle(text: formRequest.title!)
             if(!viewModel.uiState.bank.isEmpty) {
                 FormPill(text: viewModel.uiState.bank)
@@ -37,39 +34,21 @@ public struct FormComponent: View {
                     item: formRequest.items[index],
                     hasNextField: index < formRequest.items.count - 1,
                     formValues: $formValues,
-                    submitFunction: submitFunction,
+                    submitFunction: submitForm,
                     viewModel: viewModel
                 )
             }
-            
             if(getShouldShowContinueButton(formRequest: formRequest)) {
-                var validForm = viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter {!$0.value}.isEmpty
                 MainButton(text: getMainButtonText(formRequest: formRequest, khenshinUiState: viewModel.uiState),
-                           enabled: validForm,
+                           enabled: validForm(),
                            onClick: {
                                 submittedForm = true
-                                submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
-                                
+                                submitForm()
                             }
                 )
-                
             }
-            
         }
         .padding([.leading, .trailing], 20)
-        .onAppear {
-            setupSubmitFunction()
-        }
-    }
-    
-    private func setupSubmitFunction() {
-        let shouldShowContinueButton = getShouldShowContinueButton(formRequest: formRequest)
-        if !shouldShowContinueButton {
-            submitFunction = {
-                let validForm = viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter { !$0.value }.isEmpty
-                submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
-            }
-        }
     }
     
     private func getMainButtonText(formRequest: FormRequest, khenshinUiState: KhenshinUiState) -> String {
@@ -80,35 +59,25 @@ public struct FormComponent: View {
         }
     }
     
-    
-    
-    private func submitFunction(validForm: Bool, formRequest: FormRequest, viewModel: KhenshinViewModel) -> Void {
-        
-        let shouldShowContinueButton = getShouldShowContinueButton(formRequest: formRequest)
-        
-        if !shouldShowContinueButton {
-            submitFunction = {
-                submitForm(validForm: validForm, formRequest: formRequest, viewModel: viewModel)
-            }
-        }
+    private func validForm() -> Bool {
+        return viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter { !$0.value }.isEmpty
     }
     
-    private func submitForm(validForm: Bool, formRequest: FormRequest, viewModel: KhenshinViewModel) -> Void {
-        if(validForm) {
+    private func submitForm() -> Void {
+        if(validForm()) {
             submitNovalidate(formRequest: formRequest, viewModel: viewModel)
         }
     }
     
     func submitNovalidate(formRequest: FormRequest, viewModel: KhenshinViewModel) -> Void {
-        var answers = formRequest.items.map {
+        let answers = formRequest.items.map {
             FormItemAnswer(
                 id: $0.id,
                 type: $0.type,
                 value: formValues[$0.id] ?? ""
-                
             )
         }
-        var response = FormResponse(
+        let response = FormResponse(
             answers: answers,
             id: formRequest.id,
             type: MessageType.formResponse
@@ -118,8 +87,6 @@ public struct FormComponent: View {
         } catch {
             print("Error sending form")
         }
-        
-        
     }
     
     private func getShouldShowContinueButton(formRequest: FormRequest) -> Bool {
@@ -137,8 +104,6 @@ struct DrawComponent: View {
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
     @ObservedObject var viewModel: KhenshinViewModel
-    
-    
     
     public var body: some View {
         let validationFun: (Bool) -> Void = { valid in
@@ -158,9 +123,9 @@ struct DrawComponent: View {
         case FormItemTypes.coordinates:
             KhipuCoordinatesField(
                 formItem: item,
-                hasNextField: hasNextField,
                 isValid: validationFun,
-                returnValue: getValueFun
+                returnValue: getValueFun,
+                submitFunction: submitFunction
             )
         case FormItemTypes.dataTable:
             KhipuDataTableField(
