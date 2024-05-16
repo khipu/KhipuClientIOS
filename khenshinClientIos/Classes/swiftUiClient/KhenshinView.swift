@@ -15,7 +15,7 @@ public struct KhenshinView: View {
     let operationId: String
     let options: KhenshinOptions
     let completitionHandler: ((KhenshinResult) -> Void)?
-
+    
     init(operationId: String,
          options: KhenshinOptions,
          onComplete: ((KhenshinResult) -> Void)?,
@@ -25,7 +25,7 @@ public struct KhenshinView: View {
         self.completitionHandler = onComplete
         self.dismiss = dismiss
     }
-
+    
     public var body: some View {
         VStack(alignment: .leading, content: {
             VStack {
@@ -38,7 +38,11 @@ public struct KhenshinView: View {
             case MessageType.formRequest.rawValue:
                 FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
             case MessageType.operationFailure.rawValue:
-                FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
+                    TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                }else {
+                    FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                }
             case MessageType.operationWarning.rawValue:
                 WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
             case MessageType.operationSuccess.rawValue:
@@ -90,9 +94,9 @@ public struct KhenshinView: View {
             )
             viewModel.connectClient()
         })
-
+        
     }
-
+    
     func buildResult(_ state: KhenshinUiState) -> KhenshinResult {
         return KhenshinResult(
             operationId: operationId,
@@ -104,7 +108,7 @@ public struct KhenshinView: View {
             failureReason: "Failure reason"
         )
     }
-
+    
     func shouldShowHeader(currentMessageType: String) -> Bool {
         let excludedTypes = [
             MessageType.operationSuccess.rawValue,
@@ -112,7 +116,7 @@ public struct KhenshinView: View {
             MessageType.operationMustContinue.rawValue,
             MessageType.operationWarning.rawValue
         ]
-
+        
         return !excludedTypes.contains(currentMessageType)
     }
 }
