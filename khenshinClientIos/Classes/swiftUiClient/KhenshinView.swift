@@ -36,6 +36,7 @@ public struct KhenshinView: View {
             }
             switch(viewModel.uiState.currentMessageType) {
             case MessageType.formRequest.rawValue:
+                ProgressComponent(khenshinViewModel: viewModel)
                 FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
             case MessageType.operationFailure.rawValue:
                 if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
@@ -48,7 +49,10 @@ public struct KhenshinView: View {
             case MessageType.operationSuccess.rawValue:
                 SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
             case MessageType.progressInfo.rawValue:
+                ProgressComponent(khenshinViewModel: viewModel)
                 ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
+            case MessageType.authorizationRequest.rawValue:
+                ProgressComponent(khenshinViewModel: viewModel)
             default:
                 EmptyView()
             }
