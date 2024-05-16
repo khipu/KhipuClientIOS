@@ -197,7 +197,7 @@ public class KhenshinViewOld: UIViewController {
     private func drawProgressInfoComponent(message: ProgressInfo) -> UIView {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-        return ProgressInfoComponent(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), progressInfo: message)
+        return ProgressInfoComponentOld(frame: CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight), progressInfo: message)
     }
 
     private func drawFormRequestComponent(message: FormRequest) -> UIView {
