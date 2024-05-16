@@ -5,7 +5,7 @@ public class KhipuLauncher {
     public init() {
     }
     
-    public static func launch(navigationController: UINavigationController, operationId: String, options: KhenshinOptions, onComplete: ((KhenshinResult) -> Void)? = nil) -> Void {
+    public static func launch(navigationController: UINavigationController, operationId: String, options: KhenshinOptions, onComplete: ((KhipuResult) -> Void)? = nil) -> Void {
         var view: UIViewController
         if #available(iOS 15.0.0, *) {
             view = UIHostingController(rootView: KhenshinView(
