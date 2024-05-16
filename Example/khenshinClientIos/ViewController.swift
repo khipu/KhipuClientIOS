@@ -16,15 +16,14 @@ class ViewController: UIViewController {
     lazy private var sampleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Khenshin test!"
-        label.textColor = UIColor.white
+        label.text = "Khipu's Client for iOS Example App"
         return label
     }()
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
 
-        sampleTextField.text = "oxsfqodtv9iv"
+        sampleTextField.text = "jzp1igdcprx1"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -37,9 +36,7 @@ class ViewController: UIViewController {
     }()
 
     lazy private var sampleButton: UIButton = {
-        let button = UIButton(type: .system)
-        button.backgroundColor = UIColor.black
-        button.setTitleColor(UIColor.white, for: .normal)
+        let button = UIButton(type: .roundedRect)
         button.setTitle("Start payment", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         return button
@@ -59,6 +56,16 @@ class ViewController: UIViewController {
                 }
 
     }
+    
+    lazy private var spacer: UIView = {
+        let spacer = UIView()
+        // maximum width constraint
+        let spacerWidthConstraint = spacer.heightAnchor.constraint(equalToConstant: .greatestFiniteMagnitude) // or some very high constant
+        spacerWidthConstraint.priority = .defaultLow
+        spacerWidthConstraint.isActive = true
+        return spacer
+
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +79,7 @@ class ViewController: UIViewController {
         stackView.addArrangedSubview(sampleLabel)
         stackView.addArrangedSubview(sampleInput)
         stackView.addArrangedSubview(sampleButton)
+        stackView.addArrangedSubview(spacer)
 
         self.view.addSubview(stackView)
 
@@ -81,19 +89,13 @@ class ViewController: UIViewController {
             stackView.topAnchor.constraint(equalTo: guide.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: guide.bottomAnchor),
             stackView.heightAnchor.constraint(equalTo: guide.heightAnchor),
-            stackView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            stackView.widthAnchor.constraint(equalTo: view.widthAnchor)
         ])
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-    
-    func operationSuccessCallback() {print("operation success callback")}
-    func operationWarningCallback() {print("operation warning callback")}
-    func operationFailureCallback() {print("operation failure callback")}
 
 }
 
