@@ -4,7 +4,6 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct ProgressInfoComponent: View {
     var message: String
-    var modifier: EdgeInsets = EdgeInsets()
     
     var body: some View {
         VStack {
