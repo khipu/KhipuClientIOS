@@ -2,7 +2,7 @@ import UIKit
 import APNGKit
 import KhenshinProtocol
 
-class ProgressInfoComponent: UIView {
+class ProgressInfoComponentOld: UIView {
 
     private let progressLabel: UILabel = ComponentBuilder.buildLabel(textColor: .black, fontSize: 14, backgroundColor: .clear, fontName: Styles.DEFAULT_FONT)
 

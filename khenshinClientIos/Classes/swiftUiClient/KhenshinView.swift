@@ -41,6 +41,8 @@ public struct KhenshinView: View {
                 FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
             case MessageType.operationSuccess.rawValue:
                 SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
+            case MessageType.progressInfo.rawValue:
+                ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
             default:
                 EmptyView()
             }
