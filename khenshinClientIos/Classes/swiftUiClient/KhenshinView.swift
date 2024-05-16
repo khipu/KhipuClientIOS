@@ -39,6 +39,8 @@ public struct KhenshinView: View {
                 FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
             case MessageType.operationFailure.rawValue:
                 FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+            case MessageType.operationWarning.rawValue:
+                WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
             case MessageType.operationSuccess.rawValue:
                 SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
             case MessageType.progressInfo.rawValue:

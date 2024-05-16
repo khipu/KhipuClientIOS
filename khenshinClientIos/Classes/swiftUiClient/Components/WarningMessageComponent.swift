@@ -4,31 +4,31 @@ import SwiftUI
 
 
 @available(iOS 15.0.0, *)
-struct FailureMessageComponent: View {
-    let operationFailure: OperationFailure
+struct WarningMessageComponent: View {
+    let operationWarning: OperationWarning
     @ObservedObject public var viewModel: KhenshinViewModel
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.verySmall) {
-            Image(systemName: "info.circle.fill")
+            Image(systemName: "clock.circle.fill")
                 .resizable()
                 .scaledToFit()
                 .frame(width: Dimens.larger, height: Dimens.larger)
                 .foregroundColor(Color(red: 234/255, green: 197/255, blue: 79/255))
-            Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
+            Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
                 .foregroundColor(Color(.label))
                 .font(.title2)
                 .multilineTextAlignment(.center)
             
-            Text((operationFailure.title)!)
+            Text((operationWarning.title)!)
                 .foregroundColor(Color(.label))
                 .font(.title3)
                 .multilineTextAlignment(.center)
             
-            FormWarning(text: operationFailure.body ?? "")
+            FormWarning(text: operationWarning.body ?? "")
             
             Spacer().frame(height: Dimens.moderatelyLarge)
-            DetailSectionFailure(operationFailure: operationFailure,operationInfo: viewModel.uiState.operationInfo!,viewModel: viewModel)
+            DetailSectionWarning(operationWarning: operationWarning,operationInfo: viewModel.uiState.operationInfo!,viewModel: viewModel)
             Spacer().frame(height: Dimens.moderatelyLarge)
             
             Spacer()
@@ -46,8 +46,8 @@ struct FailureMessageComponent: View {
 }
 
 @available(iOS 15.0.0, *)
-struct DetailSectionFailure: View {
-    var operationFailure: OperationFailure
+struct DetailSectionWarning: View {
+    var operationWarning: OperationWarning
     var operationInfo: OperationInfo
     @ObservedObject public var viewModel: KhenshinViewModel
     
@@ -57,15 +57,15 @@ struct DetailSectionFailure: View {
                 .foregroundColor(Color(.label))
                 .font(.headline)
                 .fontWeight(.bold)
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo.amount ?? "")
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo.merchant?.name ?? "")
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationFailure.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationFailure.reason),shouldCopyValue: true)
+            DetailItemWarning(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo.amount ?? "")
+            DetailItemWarning(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo.merchant?.name ?? "")
+            DetailItemWarning(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationWarning.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationWarning.reason),shouldCopyValue: true)
         }
     }
 }
 
 @available(iOS 15.0.0, *)
-struct DetailItemFailure: View {
+struct DetailItemWarning: View {
     var label: String
     var value: String
     var shouldCopyValue: Bool = false
