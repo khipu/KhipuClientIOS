@@ -12,12 +12,15 @@ struct MainButton: View {
     let text: String
     let enabled: Bool
     let onClick: () -> Void
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         Button(action: onClick) {
             Text(text)
                 .fontWeight(.bold)
-                .foregroundColor(enabled ? Color.white : Color.gray)
+                //.foregroundColor(enabled ? themeManager.selectedTheme.foregroundButtonActive : themeManager.selectedTheme.foregroundButtonInactive)
+                .foregroundColor(enabled ? Color("ForegroundButtonActive") : Color("ForegroundButtonInactive"))
+                //.foregroundColor(enabled ? Color.white : Color.gray)
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .background(enabled ? Color(red: 60/255, green: 180/255, blue: 229/255) : Color.gray.opacity(0.5))
@@ -25,7 +28,8 @@ struct MainButton: View {
         }
         .disabled(!enabled)
         .padding(.horizontal, 20)
-        
-        
+        .onAppear(perform: {
+            print("**************foregroundButtonActive en MAIN BUTTON \(themeManager.selectedTheme.foregroundButtonActive)")
+        })
     }
 }

@@ -10,6 +10,7 @@ import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
 public struct KhenshinView: View {
+    @StateObject var themeManager = ThemeManager()
     @StateObject var viewModel = KhenshinViewModel()
     var dismiss: (() -> Void)
     let operationId: String
@@ -97,8 +98,9 @@ public struct KhenshinView: View {
                 locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
             )
             viewModel.connectClient()
+            print("**************foregroundButtonActive en KHENSHIN VIEW \(themeManager.selectedTheme.foregroundButtonActive)")
         })
-        
+        .environmentObject(themeManager)
     }
 
     func buildResult(_ state: KhenshinUiState) -> KhipuResult {
