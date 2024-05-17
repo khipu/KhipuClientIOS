@@ -1,6 +1,5 @@
 import SwiftUI
 import KhenshinProtocol
-import SwiftUI
 
 
 @available(iOS 15.0.0, *)
@@ -39,6 +38,7 @@ struct TimeoutMessageComponent: View {
             CopyToClipboardOperationId(text: operationFailure.operationID ?? "", textToCopy: FieldUtils.formatOperationId(operationId: operationFailure.operationID ?? ""), background:Color(red: 60/255, green: 180/255, blue: 229/255))
             
             Spacer()
+            
             MainButton(
                 text: viewModel.uiState.translator.t("page.redirectManual.redirecting"),
                 enabled: true,

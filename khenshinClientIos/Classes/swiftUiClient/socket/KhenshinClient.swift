@@ -11,7 +11,6 @@ public class KhenshinClient {
     private let secureMessage: SecureMessage
     private let KHENSHIN_PUBLIC_KEY: String
     private var receivedMessages: [String]
-    private var formMocks: FormMocks
     private var viewModel: KhenshinViewModel
 
     public init(serverUrl url: String, publicKey: String, appName: String, appVersion: String, locale: String, viewModel: KhenshinViewModel) {
@@ -36,7 +35,6 @@ public class KhenshinClient {
         ])
         self.receivedMessages = []
         self.socket = socketManager.defaultSocket
-        self.formMocks = FormMocks()
         self.viewModel = viewModel
         self.addListeners()
         
