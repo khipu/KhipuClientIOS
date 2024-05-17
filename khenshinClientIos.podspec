@@ -33,18 +33,15 @@ TODO: Add long description of the pod here.
   s.source_files = 'khenshinClientIos/Classes/**/*'
   s.resources = 'khenshinClientIos/Assets/Fonts/*.ttf'
 
+  s.resource_bundles = {
+      'khenshinClientIos' => ['khenshinClientIos/Assets/**/*.{xcassets,json}']
+  }
 
   # s.resource_bundles = {
   #   'khenshinClientIos' => ['khenshinClientIos/Assets/*.png']
   # }
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
   s.dependency 'Socket.IO-Client-Swift'
   s.dependency 'KhenshinSecureMessage'
   s.dependency 'KhenshinProtocol', '1.0.42'
-  s.dependency 'APNGKit'
-  s.dependency 'RxSwift'
-  s.dependency 'RxCocoa'
 end

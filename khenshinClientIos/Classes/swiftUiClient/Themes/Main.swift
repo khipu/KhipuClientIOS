@@ -11,10 +11,10 @@ import SwiftUI
  */
 @available(iOS 13.0, *)
 struct Main: ThemeProtocol {
-    var backgroundButtonDisabled: Color { return Color("backgroundButtonDisabled") }
-    var backgroundButtonEnabled: Color { return Color("backgroundButtonEnabled") }
-    var boxBorder: Color { return Color("boxBorder") }
-    var closeButton: Color { return Color("closeButton") }
-    var foregroundButtonActive: Color { return Color("foregroundButtonActive") }
-    var foregroundButtonInactive: Color { return Color("foregroundButtonInactive") }
+    var backgroundButtonDisabled: Color { return Color("backgroundButtonDisabled", bundle: Bundle.module) }
+    var backgroundButtonEnabled: Color { return Color("backgroundButtonEnabled", bundle: Bundle(path: "khenshinClientIos/Assets/Resources/KhipuColors.xcassets")) }
+    var boxBorder: Color { return Color("boxBorder", bundle: Bundle(path: "khenshinClientIos/Assets/Resources/KhipuColors.xcassets")) }
+    var closeButton: Color { return Color("closeButton", bundle: Bundle(path: "khenshinClientIos/Assets/Resources/KhipuColors.xcassets")) }
+    var foregroundButtonActive: Color { return Color("foregroundButtonActive", bundle: Bundle(path: "khenshinClientIos/Assets/Resources/KhipuColors.xcassets")) }
+    var foregroundButtonInactive: Color { return Color("foregroundButtonInactive", bundle: Bundle(path: "khenshinClientIos/Assets/Resources/KhipuColors.xcassets")) }
 }
