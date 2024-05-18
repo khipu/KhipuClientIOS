@@ -16,10 +16,8 @@ struct HeaderComponent: View {
                 footerContent
                 Divider()
             }
-            .background(Color(.systemBackground))
             .padding(8)
             .onAppear {}
-            
             .sheet(isPresented: $showMerchantDialog) {
                 MerchantDialogComponent(
                     onDismissRequest: { showMerchantDialog = false },

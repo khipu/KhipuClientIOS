@@ -12,6 +12,7 @@ import KhenshinProtocol
 public struct KhenshinView: View {
     @StateObject var themeManager = ThemeManager()
     @StateObject var viewModel = KhenshinViewModel()
+    @Environment(\.colorScheme) var colorScheme
     var dismiss: (() -> Void)
     let operationId: String
     let options: KhenshinOptions
@@ -36,26 +37,26 @@ public struct KhenshinView: View {
                 EmptyView()
             }
             switch(viewModel.uiState.currentMessageType) {
-            case MessageType.formRequest.rawValue:
-                ProgressComponent(khenshinViewModel: viewModel)
-                FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
-            case MessageType.operationFailure.rawValue:
-                if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
-                    TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
-                }else {
-                    FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
-                }
-            case MessageType.operationWarning.rawValue:
-                WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
-            case MessageType.operationSuccess.rawValue:
-                SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
-            case MessageType.progressInfo.rawValue:
-                ProgressComponent(khenshinViewModel: viewModel)
-                ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
-            case MessageType.authorizationRequest.rawValue:
-                ProgressComponent(khenshinViewModel: viewModel)
-            default:
-                EmptyView()
+                case MessageType.formRequest.rawValue:
+                    ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
+                    FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+                case MessageType.operationFailure.rawValue:
+                    if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
+                        TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                    }else {
+                        FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                    }
+                case MessageType.operationWarning.rawValue:
+                    WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
+                case MessageType.operationSuccess.rawValue:
+                    SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
+                case MessageType.progressInfo.rawValue:
+                    ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
+                    ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
+                case MessageType.authorizationRequest.rawValue:
+                    ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
+                default:
+                    EmptyView()
             }
             if(viewModel.uiState.returnToApp) {
                 ExecuteCode {
@@ -64,7 +65,9 @@ public struct KhenshinView: View {
                     dismiss()
                 }
             }
+            Spacer()
         })
+        .background(themeManager.selectedTheme.background)
         .navigationBarBackButtonHidden(true)
         .frame(
             maxWidth: .infinity,
@@ -76,12 +79,12 @@ public struct KhenshinView: View {
                 Button {
                     viewModel.uiState.returnToApp = true
                 } label: {
-                    Image(systemName: "xmark").tint(Color.red)
+                    Image(systemName: "xmark").tint(themeManager.selectedTheme.onTopBarContainer)
                 }
             }
             ToolbarItem(placement: .principal) {
                 if (options.topBarImageResourceName == nil) {
-                    Text(options.topBarTitle ?? appName()).foregroundStyle(Color.red)
+                    Text(options.topBarTitle ?? appName()).foregroundStyle(themeManager.selectedTheme.onTopBarContainer)
                 } else {
                     Image(options.topBarImageResourceName!)
                         .resizable()
@@ -98,7 +101,7 @@ public struct KhenshinView: View {
                 locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
             )
             viewModel.connectClient()
-            print("**************foregroundButtonActive en KHENSHIN VIEW \(themeManager.selectedTheme.foregroundButtonActive)")
+            themeManager.selectedTheme.setColorSchemeAndCustomColors(colorScheme: colorScheme, colors: options.colors)
         })
         .environmentObject(themeManager)
     }

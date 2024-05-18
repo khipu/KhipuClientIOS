@@ -27,7 +27,7 @@ public class KhenshinClient {
                 "locale": locale,
                 "userAgent": UAString(),
                 "uiType": "payment",
-                "browserId": UUID().uuidString,
+                "browserId": UUID().uuidString, //TODO: make this permanent
                 "appName": appName,
                 "appVersion": appVersion,
                 "appOS": "iOS"
@@ -51,12 +51,10 @@ public class KhenshinClient {
         }
         
         self.socket.on(clientEvent: .reconnect) { data, ack in
-            let reason = data.first as! String
             print("[id: \(self.viewModel.uiState.operationId)] reconnect")
         }
         
         self.socket.on(clientEvent: .reconnectAttempt) { data, ack in
-            let reason = data.first as! String
             print("[id: \(self.viewModel.uiState.operationId)] reconnectAttempt")
         }
         

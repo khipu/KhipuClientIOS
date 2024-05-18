@@ -18,18 +18,13 @@ struct MainButton: View {
         Button(action: onClick) {
             Text(text)
                 .fontWeight(.bold)
-                //.foregroundColor(enabled ? themeManager.selectedTheme.foregroundButtonActive : themeManager.selectedTheme.foregroundButtonInactive)
-                .foregroundColor(enabled ? Color("ForegroundButtonActive") : Color("ForegroundButtonInactive"))
-                //.foregroundColor(enabled ? Color.white : Color.gray)
+                .foregroundColor(enabled ? themeManager.selectedTheme.onPrimary : themeManager.selectedTheme.onPrimary)
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .background(enabled ? Color(red: 60/255, green: 180/255, blue: 229/255) : Color.gray.opacity(0.5))
+                .background(enabled ? themeManager.selectedTheme.primary : Color.gray.opacity(0.5))
                 .cornerRadius(10)
         }
         .disabled(!enabled)
         .padding(.horizontal, 20)
-        .onAppear(perform: {
-            print("**************foregroundButtonActive en MAIN BUTTON \(themeManager.selectedTheme.foregroundButtonActive)")
-        })
     }
 }

@@ -22,8 +22,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-
-        sampleTextField.text = "jzp1igdcprx1"
+        sampleTextField.text = "crwaatzp0bqh"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -51,10 +50,16 @@ class ViewController: UIViewController {
                 .topBarTitle("Mi Khipu")
                 .topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
+                .theme(.dark)
+                .colors(KhenshinColors.Builder()
+//                    .darkPrimary("#00FF00")
+//                    .lightPrimary("#0000FF")
+//                    .lightBackground("#FF0000")
+//                    .darkBackground("#FF00FF")
+                    .build())
                 .build()) { result in
                     print("Operation result \(result.asJson())")
                 }
-
     }
     
     lazy private var spacer: UIView = {

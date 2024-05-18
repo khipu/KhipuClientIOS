@@ -48,6 +48,9 @@ public struct KhenshinColors: Codable {
     }
     
     public class Builder {
+        
+        public init(){}
+        
         var _lightBackground: String?
         var _lightOnBackground: String?
         var _lightPrimary: String?
