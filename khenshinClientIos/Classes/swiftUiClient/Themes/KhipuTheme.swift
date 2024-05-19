@@ -9,19 +9,20 @@ import SwiftUI
 
 
 @available(iOS 13.0, *)
-class MainTheme: ThemeProtocol {
+class KhipuTheme: ThemeProtocol {
     
-    private var colorScheme: ColorScheme = .light
     private var localColors: LocalColors = LocalColors()
+    var bundle = Bundle(identifier: "org.cocoapods.khenshinClientIos")
+    private var colorScheme: ColorScheme = .light
     
-    public func setColorSchemeAndCustomColors(colorScheme: ColorScheme, colors: KhenshinColors?) {
+    public func setColorSchemeAndCustomColors(colorScheme: ColorScheme, colors: KhipuColors?) {
         self.colorScheme = colorScheme
         if(colors != nil) {
             self.localColors = LocalColors(colors: colors!)
         }
     }
     
-    var bundle = Bundle(identifier: "org.cocoapods.khenshinClientIos")
+    
 
     var primary: Color {
         if(colorScheme == .dark) {

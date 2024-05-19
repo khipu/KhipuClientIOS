@@ -25,7 +25,7 @@ class LocalColors {
     
     init(){}
     
-    init(colors: KhenshinColors) {
+    init(colors: KhipuColors) {
         if(colors.lightBackground != nil) {
             self.lightBackground = Color(hexString: colors.lightBackground!)
         }

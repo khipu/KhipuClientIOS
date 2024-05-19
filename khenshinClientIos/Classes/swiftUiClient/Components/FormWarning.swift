@@ -3,6 +3,7 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct FormWarning: View {
     var text: String
+    @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
         HStack(alignment: .center) {
@@ -12,16 +13,19 @@ struct FormWarning: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: Dimens.large, height: Dimens.large)
-                .foregroundColor(Color(red: 237/255, green: 108/255, blue: 2/255))
+                .foregroundColor(themeManager.selectedTheme.tertiary)
             Text(text)
                 .padding(.all, Dimens.medium)
-                .foregroundColor(Color.black)
+                .foregroundColor(themeManager.selectedTheme.onTertiary)
                 .font(.system(size: 16, weight: .regular))
             Spacer()
         }
-        .frame(maxWidth: .infinity)
-        .background(Color.white)
-        .border(Color(red: 237/255, green: 108/255, blue: 2/255), width: 1)
-        .cornerRadius(8)
+        .padding(.all, Dimens.verySmall)
+        .background(themeManager.selectedTheme.surface)
+        .overlay(
+            RoundedRectangle(cornerRadius: Dimens.extraSmall)
+                .stroke(themeManager.selectedTheme.tertiary, lineWidth: 1)
+                )
+        
     }
 }

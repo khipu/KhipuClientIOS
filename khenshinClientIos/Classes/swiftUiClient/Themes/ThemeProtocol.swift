@@ -12,7 +12,7 @@ import SwiftUI
 @available(iOS 13.0, *)
 protocol ThemeProtocol {
     
-    func setColorSchemeAndCustomColors(colorScheme: ColorScheme, colors: KhenshinColors?)
+    func setColorSchemeAndCustomColors(colorScheme: ColorScheme, colors: KhipuColors?)
     
     var primary: Color { get }
     

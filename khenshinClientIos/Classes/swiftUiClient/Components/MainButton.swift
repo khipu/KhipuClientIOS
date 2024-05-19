@@ -13,18 +13,18 @@ struct MainButton: View {
     let enabled: Bool
     let onClick: () -> Void
     @EnvironmentObject private var themeManager: ThemeManager
+    let foregroundColor: Color
+    let backgroundColor: Color
     
     var body: some View {
         Button(action: onClick) {
             Text(text)
-                .fontWeight(.bold)
-                .foregroundColor(enabled ? themeManager.selectedTheme.onPrimary : themeManager.selectedTheme.onPrimary)
+                .foregroundColor(foregroundColor)
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .background(enabled ? themeManager.selectedTheme.primary : Color.gray.opacity(0.5))
-                .cornerRadius(10)
+                .background(backgroundColor)
+                .cornerRadius(Dimens.extraSmall)
         }
         .disabled(!enabled)
-        .padding(.horizontal, 20)
     }
 }

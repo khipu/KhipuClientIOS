@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct KhenshinColors: Codable {
+public struct KhipuColors: Codable {
     let lightBackground: String?
     let lightOnBackground: String?
     let lightPrimary: String?
@@ -113,8 +113,8 @@ public struct KhenshinColors: Codable {
             return self
         }
         
-        public func build() -> KhenshinColors {
-            return KhenshinColors(
+        public func build() -> KhipuColors {
+            return KhipuColors(
                 lightBackground: self._lightBackground,
                 lightOnBackground: self._lightOnBackground,
                 lightPrimary: self._lightPrimary,

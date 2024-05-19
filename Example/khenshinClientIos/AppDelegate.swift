@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationController.navigationBar.isTranslucent = true
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-
         return true
     }
 

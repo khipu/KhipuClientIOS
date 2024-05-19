@@ -18,9 +18,8 @@ func formatOperationId(_ operationId: String?) -> String {
     
     let start = operationId?.index(operationId!.startIndex, offsetBy: 4)
     let middle = operationId?.index(operationId!.startIndex, offsetBy: 8)
-    let end = operationId?.index(operationId!.endIndex, offsetBy: -4)
     
-    return "\(operationId?[..<start!] ?? "")-\(operationId?[start!..<middle!] ?? "")-\(operationId?[middle!..<end!] ?? "")"
+    return "\(operationId?[..<start!] ?? "")-\(operationId?[start!..<middle!] ?? "")-\(operationId?[middle!...] ?? "")"
 }
 
 func cleanString(_ replaceValue: String?) -> String {

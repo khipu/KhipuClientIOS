@@ -206,12 +206,12 @@
 				TargetAttributes = {
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = C2S54H9C3Q;
+						DevelopmentTeam = 2X63E3W773;
 						LastSwiftMigration = 1540;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
-						DevelopmentTeam = C2S54H9C3Q;
+						DevelopmentTeam = 2X63E3W773;
 						LastSwiftMigration = 1540;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
@@ -463,7 +463,7 @@
 			baseConfigurationReference = F905B1ABBB8B1C04198D905F /* Pods-khenshinClientIos_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = C2S54H9C3Q;
+				DEVELOPMENT_TEAM = 2X63E3W773;
 				INFOPLIST_FILE = khenshinClientIos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -480,7 +480,7 @@
 			baseConfigurationReference = EE99C62A2E7BAF2AE1696066 /* Pods-khenshinClientIos_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = C2S54H9C3Q;
+				DEVELOPMENT_TEAM = 2X63E3W773;
 				INFOPLIST_FILE = khenshinClientIos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -496,7 +496,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = F01BC78BFB92596F08FAE0C8 /* Pods-khenshinClientIos_Tests.debug.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = C2S54H9C3Q;
+				DEVELOPMENT_TEAM = 2X63E3W773;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -520,7 +520,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 168CDDDD49015F1B2707B251 /* Pods-khenshinClientIos_Tests.release.xcconfig */;
 			buildSettings = {
-				DEVELOPMENT_TEAM = C2S54H9C3Q;
+				DEVELOPMENT_TEAM = 2X63E3W773;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
 					"$(inherited)",

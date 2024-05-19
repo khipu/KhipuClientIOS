@@ -15,11 +15,11 @@ public struct KhenshinView: View {
     @Environment(\.colorScheme) var colorScheme
     var dismiss: (() -> Void)
     let operationId: String
-    let options: KhenshinOptions
+    let options: KhipuOptions
     let completitionHandler: ((KhipuResult) -> Void)?
 
     init(operationId: String,
-         options: KhenshinOptions,
+         options: KhipuOptions,
          onComplete: ((KhipuResult) -> Void)?,
          dismiss: @escaping (() -> Void)) {
         self.operationId = operationId
@@ -39,20 +39,20 @@ public struct KhenshinView: View {
             switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
                     ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
-                    FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+                    FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel, themeManager: themeManager)
                 case MessageType.operationFailure.rawValue:
                     if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
-                        TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
-                    }else {
-                        FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                        TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel, themeManager: themeManager)
+                    } else {
+                        FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel, themeManager: themeManager)
                     }
                 case MessageType.operationWarning.rawValue:
-                    WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
+                    WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel, themeManager: themeManager)
                 case MessageType.operationSuccess.rawValue:
-                    SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
+                    SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel, themeManager: themeManager)
                 case MessageType.progressInfo.rawValue:
                     ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
-                    ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
+                    ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage, themeManager: themeManager)
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
                 default:
@@ -199,6 +199,6 @@ public struct KhenshinView: View {
 @available(iOS 15.0.0, *)
 struct KhenshinView_Previews: PreviewProvider {
     static var previews: some View {
-        KhenshinView(operationId: "OPERATION ID", options: KhenshinOptions.Builder().build(), onComplete: nil, dismiss: {})
+        KhenshinView(operationId: "OPERATION ID", options: KhipuOptions.Builder().build(), onComplete: nil, dismiss: {})
     }
 }

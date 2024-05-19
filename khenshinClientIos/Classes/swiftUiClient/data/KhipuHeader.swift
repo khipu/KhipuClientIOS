@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct KhenshinHeader: Codable {
+public struct KhipuHeader: Codable {
     let headerLayoutId: Int?
     let merchantNameId: Int?
     let paymentMethodId: Int?
@@ -50,8 +50,8 @@ public struct KhenshinHeader: Codable {
             return self
         }
         
-        public func build() -> KhenshinHeader {
-            return KhenshinHeader(
+        public func build() -> KhipuHeader {
+            return KhipuHeader(
                 headerLayoutId: _headerLayoutId,
                 merchantNameId: _merchantNameId,
                 paymentMethodId: _paymentMethodId,

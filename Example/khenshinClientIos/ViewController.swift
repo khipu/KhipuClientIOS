@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "crwaatzp0bqh"
+        sampleTextField.text = "m0ono7y625he"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -46,16 +46,20 @@ class ViewController: UIViewController {
         KhipuLauncher.launch(
             navigationController: self.navigationController!,
             operationId: sampleInput.text!,
-            options: KhenshinOptions.Builder()
+            options: KhipuOptions.Builder()
                 .topBarTitle("Mi Khipu")
                 .topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
-                .theme(.dark)
-                .colors(KhenshinColors.Builder()
+                .theme(.system)
+                .colors(KhipuColors.Builder()
 //                    .darkPrimary("#00FF00")
 //                    .lightPrimary("#0000FF")
 //                    .lightBackground("#FF0000")
 //                    .darkBackground("#FF00FF")
+//                    .lightTopBarContainer("#ff0000")
+//                    .lightOnTopBarContainer("#00ff00")
+//                    .darkTopBarContainer("#00ff00")
+//                    .darkOnTopBarContainer("#0000ff")
                     .build())
                 .build()) { result in
                     print("Operation result \(result.asJson())")

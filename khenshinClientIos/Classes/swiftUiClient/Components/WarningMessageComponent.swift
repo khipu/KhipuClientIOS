@@ -7,6 +7,7 @@ import SwiftUI
 struct WarningMessageComponent: View {
     let operationWarning: OperationWarning
     @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.verySmall) {
@@ -25,23 +26,21 @@ struct WarningMessageComponent: View {
                 .font(.title3)
                 .multilineTextAlignment(.center)
             
-            FormWarning(text: operationWarning.body ?? "")
-            
+            FormWarning(text: operationWarning.body ?? "", themeManager: themeManager)
             Spacer().frame(height: Dimens.moderatelyLarge)
             DetailSectionWarning(operationWarning: operationWarning,operationInfo: viewModel.uiState.operationInfo!,viewModel: viewModel)
             Spacer().frame(height: Dimens.moderatelyLarge)
-            
-            Spacer()
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
                 onClick: {
                     viewModel.uiState.returnToApp = true
-                }
+                },
+                foregroundColor: themeManager.selectedTheme.onTertiary,
+                backgroundColor: themeManager.selectedTheme.tertiary
             )
         }
         .padding(.all, Dimens.extraMedium)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }
 

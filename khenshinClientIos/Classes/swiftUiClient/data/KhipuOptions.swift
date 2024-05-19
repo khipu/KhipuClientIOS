@@ -7,26 +7,26 @@
 
 import Foundation
 
-public class KhenshinOptions: Codable {
+public class KhipuOptions: Codable {
     let serverUrl: String
     let serverPublicKey: String
-    let header: KhenshinHeader?
+    let header: KhipuHeader?
     let topBarTitle: String?
     let topBarImageResourceName: String?
     let skipExitPage: Bool
     let theme: Theme
-    let colors: KhenshinColors?
+    let colors: KhipuColors?
     let locale: String?
 
     private init(
         serverUrl: String,
         serverPublicKey: String,
-        header: KhenshinHeader?,
+        header: KhipuHeader?,
         topBarTitle: String?,
         topBarImageResourceName: String?,
         skipExitPage: Bool,
         theme: Theme,
-        colors: KhenshinColors?,
+        colors: KhipuColors?,
         locale: String?
     ) {
         self.serverUrl = serverUrl
@@ -47,12 +47,12 @@ public class KhenshinOptions: Codable {
     public class Builder {
         var _serverUrl: String = "https://khenshin-ws.khipu.com"
         var _serverPublicKey: String = "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw="
-        var _header: KhenshinHeader?
+        var _header: KhipuHeader?
         var _topBarTitle: String?
         var _topBarImageResourceName: String?
         var _skipExitPage: Bool = false
         var _theme: Theme = .system
-        var _colors: KhenshinColors?
+        var _colors: KhipuColors?
         var _locale: String = "es_CL"
         
         public init() {
@@ -89,12 +89,12 @@ public class KhenshinOptions: Codable {
             return self
         }
 
-        public func colors(_ colors: KhenshinColors) -> Builder {
+        public func colors(_ colors: KhipuColors) -> Builder {
             self._colors = colors
             return self
         }
 
-        public func header(_ header: KhenshinHeader) -> Builder {
+        public func header(_ header: KhipuHeader) -> Builder {
             self._header = header
             return self
         }
@@ -104,8 +104,8 @@ public class KhenshinOptions: Codable {
             return self
         }
 
-        public func build() -> KhenshinOptions {
-            return KhenshinOptions(
+        public func build() -> KhipuOptions {
+            return KhipuOptions(
                 serverUrl: _serverUrl,
                 serverPublicKey: _serverPublicKey,
                 header: _header,

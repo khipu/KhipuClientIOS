@@ -7,6 +7,7 @@ import SwiftUI
 struct FailureMessageComponent: View {
     let operationFailure: OperationFailure
     @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.verySmall) {
@@ -14,52 +15,52 @@ struct FailureMessageComponent: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: Dimens.larger, height: Dimens.larger)
-                .foregroundColor(Color(red: 234/255, green: 197/255, blue: 79/255))
+                .foregroundColor(themeManager.selectedTheme.tertiary)
             Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
-                .foregroundColor(Color(.label))
+                .foregroundColor(themeManager.selectedTheme.onSurface)
                 .font(.title2)
                 .multilineTextAlignment(.center)
             
             Text((operationFailure.title)!)
-                .foregroundColor(Color(.label))
+                .foregroundColor(themeManager.selectedTheme.onSurface)
                 .font(.title3)
                 .multilineTextAlignment(.center)
             
-            FormWarning(text: operationFailure.body ?? "")
+            FormWarning(text: operationFailure.body ?? "", themeManager: themeManager)
             
             Spacer().frame(height: Dimens.moderatelyLarge)
-            DetailSectionFailure(operationFailure: operationFailure,operationInfo: viewModel.uiState.operationInfo!,viewModel: viewModel)
+            DetailSectionFailure(operationFailure: operationFailure, operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel, themeManager: themeManager)
             Spacer().frame(height: Dimens.moderatelyLarge)
-            
-            Spacer()
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
                 onClick: {
                     viewModel.uiState.returnToApp = true
-                }
+                },
+                foregroundColor: themeManager.selectedTheme.onTertiary,
+                backgroundColor: themeManager.selectedTheme.tertiary
             )
         }
         .padding(.all, Dimens.extraMedium)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }
 
 @available(iOS 15.0.0, *)
 struct DetailSectionFailure: View {
     var operationFailure: OperationFailure
-    var operationInfo: OperationInfo
+    var operationInfo: OperationInfo?
     @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.verySmall) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
-                .foregroundColor(Color(.label))
+                .foregroundColor(themeManager.selectedTheme.onSurface)
                 .font(.headline)
                 .fontWeight(.bold)
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo.amount ?? "")
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo.merchant?.name ?? "")
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationFailure.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationFailure.reason),shouldCopyValue: true)
+            DetailItemFailure(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "", themeManager: themeManager)
+            DetailItemFailure(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "", themeManager: themeManager)
+            DetailItemFailure(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationFailure.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationFailure.reason),shouldCopyValue: true, themeManager: themeManager)
         }
     }
 }
@@ -69,19 +70,20 @@ struct DetailItemFailure: View {
     var label: String
     var value: String
     var shouldCopyValue: Bool = false
+    @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
         HStack {
             Text(label)
-                .foregroundColor(Color(.label))
+                .foregroundColor(themeManager.selectedTheme.onSurfaceVariant)
                 .font(.body)
             Spacer()
             if !shouldCopyValue {
                 Text(value)
-                    .foregroundColor(Color(.label))
+                    .foregroundColor(themeManager.selectedTheme.onSurface)
                     .font(.body)
             } else {
-                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:Color(red: 60/255, green: 180/255, blue: 229/255))
+                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background: themeManager.selectedTheme.secondaryContainer)
             }
         }
         .padding(.vertical, Dimens.verySmall)
