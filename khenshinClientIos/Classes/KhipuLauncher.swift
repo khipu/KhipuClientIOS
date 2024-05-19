@@ -33,6 +33,8 @@ public class KhipuLauncher {
 
             let appearance = UINavigationBarAppearance()
             appearance.configureWithOpaqueBackground()
+            
+            //We can not use the automatic color choosing of swiftui at this point, so we have to use the darkTopBarContainer and lightTopBarContainer colors
             if (view.traitCollection.userInterfaceStyle == UIUserInterfaceStyle.dark) {
                 if(options.colors?.darkTopBarContainer != nil) {
                     appearance.backgroundColor = UIColor(hexString: options.colors!.darkTopBarContainer!)
