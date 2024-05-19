@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  khenshinClientIos
-//
-//  Created by mauriciocastillo on 02/19/2024.
-//  Copyright (c) 2024 mauriciocastillo. All rights reserved.
-//
 
 import UIKit
 

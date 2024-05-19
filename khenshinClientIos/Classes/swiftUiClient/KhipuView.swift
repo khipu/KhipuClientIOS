@@ -9,7 +9,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
-public struct KhenshinView: View {
+public struct KhipuView: View {
     @StateObject var themeManager = ThemeManager()
     @StateObject var viewModel = KhenshinViewModel()
     @Environment(\.colorScheme) var colorScheme
@@ -199,6 +199,6 @@ public struct KhenshinView: View {
 @available(iOS 15.0.0, *)
 struct KhenshinView_Previews: PreviewProvider {
     static var previews: some View {
-        KhenshinView(operationId: "OPERATION ID", options: KhipuOptions.Builder().build(), onComplete: nil, dismiss: {})
+        KhipuView(operationId: "OPERATION ID", options: KhipuOptions.Builder().build(), onComplete: nil, dismiss: {})
     }
 }

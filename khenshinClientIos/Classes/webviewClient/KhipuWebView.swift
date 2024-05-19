@@ -2,7 +2,7 @@ import UIKit
 import WebKit
 
 
-public class KhenshinWebView: UIViewController, WKUIDelegate {
+public class KhipuWebView: UIViewController, WKUIDelegate {
     
     var webView: WKWebView!
     var operationId: String

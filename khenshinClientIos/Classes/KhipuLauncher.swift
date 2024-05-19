@@ -13,7 +13,7 @@ public class KhipuLauncher {
         if #available(iOS 15.0.0, *) {
             let prevAppearance = navigationController.navigationBar.standardAppearance
             let prevScrollEdgeAppearance = navigationController.navigationBar.scrollEdgeAppearance
-            let khenshinView = KhenshinView(
+            let khipuView = KhipuView(
                 operationId: operationId,
                 options: options,
                 onComplete: onComplete,
@@ -22,7 +22,7 @@ public class KhipuLauncher {
                     navigationController.navigationBar.standardAppearance = prevAppearance
                     navigationController.navigationBar.scrollEdgeAppearance = prevScrollEdgeAppearance
                 })
-            view = UIHostingController(rootView: khenshinView)
+            view = UIHostingController(rootView: khipuView)
             view.navigationItem.setHidesBackButton(true, animated: false)
             
             if(options.theme == .dark) {
@@ -53,7 +53,7 @@ public class KhipuLauncher {
             navigationController.navigationBar.scrollEdgeAppearance = navigationController.navigationBar.standardAppearance
 
         } else {
-            view = KhenshinWebView(operationId: operationId)
+            view = KhipuWebView(operationId: operationId)
             
         }
         navigationController.show(view, sender: self)
