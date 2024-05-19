@@ -17,7 +17,7 @@ struct KhipuRutField: View {
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
             FieldLabel(text: formItem.label, themeManager: themeManager)
-            TextField(formItem.label ?? "", text: $rutValue)
+            TextField(formItem.placeHolder ?? "", text: $rutValue)
                 .textFieldStyle(.roundedBorder)
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)

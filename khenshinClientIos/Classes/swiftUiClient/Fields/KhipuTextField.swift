@@ -21,7 +21,7 @@ struct KhipuTextField: View {
             HStack {
                 if formItem.secure == true {
                     if passwordVisible {
-                        TextField(formItem.label ?? "", text: $textFieldValue)
+                        TextField(formItem.placeHolder ?? "", text: $textFieldValue)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
@@ -37,7 +37,7 @@ struct KhipuTextField: View {
                                 alignment: .trailing
                             )
                     } else {
-                        SecureField(formItem.label ?? "", text: $textFieldValue)
+                        SecureField(formItem.placeHolder ?? "", text: $textFieldValue)
                             .textFieldStyle(.roundedBorder)
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
@@ -54,7 +54,7 @@ struct KhipuTextField: View {
                             )
                     }
                 } else {
-                    TextField(formItem.label ?? "", text: $textFieldValue)
+                    TextField(formItem.placeHolder ?? "", text: $textFieldValue)
                         .textFieldStyle(.roundedBorder)
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)

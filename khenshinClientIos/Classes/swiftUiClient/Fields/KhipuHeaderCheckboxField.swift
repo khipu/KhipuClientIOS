@@ -12,6 +12,6 @@ struct KhipuHeaderCheckboxField: View {
     
     var body: some View {
         Text(formItem.label ?? "")
-        TextField(formItem.label ?? "", text: $textFieldValue)
+        TextField(formItem.placeHolder ?? "", text: $textFieldValue)
     }
 }
