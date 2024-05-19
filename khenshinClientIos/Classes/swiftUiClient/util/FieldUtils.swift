@@ -81,5 +81,20 @@ class FieldUtils {
                return ""
            }
        }
+    
+    static func getKeyboardType(formItem: FormItem) -> UIKeyboardType {
+        if (formItem.number ?? false) {
+            if (formItem.decimal ?? false) {
+                return UIKeyboardType.numbersAndPunctuation
+            } else {
+                return UIKeyboardType.numberPad
+            }
+        }
+        if (formItem.email ?? false) {
+            return UIKeyboardType.emailAddress
+        }
+        return UIKeyboardType.default
+
+    }
 
 }

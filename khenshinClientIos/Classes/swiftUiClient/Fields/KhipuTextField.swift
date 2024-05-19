@@ -22,7 +22,10 @@ struct KhipuTextField: View {
                 if formItem.secure == true {
                     if passwordVisible {
                         TextField(formItem.label ?? "", text: $textFieldValue)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .textFieldStyle(.roundedBorder)
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                             .overlay(
                                 Button(action: {
                                     passwordVisible.toggle()
@@ -35,7 +38,10 @@ struct KhipuTextField: View {
                             )
                     } else {
                         SecureField(formItem.label ?? "", text: $textFieldValue)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .textFieldStyle(.roundedBorder)
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                             .overlay(
                                 Button(action: {
                                     passwordVisible.toggle()
@@ -49,8 +55,11 @@ struct KhipuTextField: View {
                     }
                 } else {
                     TextField(formItem.label ?? "", text: $textFieldValue)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .textFieldStyle(.roundedBorder)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.leading)
+                        .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                 }
             }
             .onChange(of: textFieldValue) { newValue in

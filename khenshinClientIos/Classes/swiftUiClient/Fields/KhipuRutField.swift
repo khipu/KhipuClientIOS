@@ -14,7 +14,6 @@ struct KhipuRutField: View {
     var hasNextField: Bool
     var isValid: (Bool) -> Void
     var returnValue: (String) -> Void
-    @State var passwordVisible: Bool = false
     @State var rutValue: String = ""
     @State var error: String = ""
     @State var lastModificationTime: TimeInterval = 0
@@ -26,7 +25,10 @@ struct KhipuRutField: View {
         VStack(alignment: .leading, spacing:0) {
             FieldLabel(text: formItem.label, themeManager: themeManager)
             TextField(formItem.label ?? "", text: $rutValue)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(.roundedBorder)
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
+                .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                 .multilineTextAlignment(.leading)
                 .onChange(of: rutValue) { newValue in
                     onChange(newValue: newValue)

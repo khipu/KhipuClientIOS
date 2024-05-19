@@ -45,6 +45,9 @@ struct KhipuCoordinatesField: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .focused($focusedField, equals: FocusableField.coord1)
                         .multilineTextAlignment(.center)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                 }
                 
                 VStack(alignment: .center) {
@@ -64,6 +67,9 @@ struct KhipuCoordinatesField: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .focused($focusedField, equals: FocusableField.coord2)
                         .multilineTextAlignment(.center)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                 }
                 
                 VStack(alignment: .center) {
@@ -79,6 +85,9 @@ struct KhipuCoordinatesField: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .focused($focusedField, equals: FocusableField.coord3)
                         .multilineTextAlignment(.center)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                     }
                     
                 }

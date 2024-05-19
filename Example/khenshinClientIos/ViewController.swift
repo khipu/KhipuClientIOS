@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "m0ono7y625he"
+        sampleTextField.text = "9cl3gb4o5qsb"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
