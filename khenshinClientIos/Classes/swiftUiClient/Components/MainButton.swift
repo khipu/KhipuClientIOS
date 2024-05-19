@@ -19,10 +19,10 @@ struct MainButton: View {
     var body: some View {
         Button(action: onClick) {
             Text(text)
-                .foregroundColor(foregroundColor)
+                .foregroundColor(enabled ? foregroundColor : .secondary.opacity(0.3))
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .background(backgroundColor)
+                .background(enabled ? backgroundColor : .gray.opacity(0.5))
                 .cornerRadius(Dimens.extraSmall)
         }
         .disabled(!enabled)
