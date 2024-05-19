@@ -6,7 +6,7 @@ import SwiftUI
 @available(iOS 15.0.0, *)
 struct WarningMessageComponent: View {
     let operationWarning: OperationWarning
-    @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject public var viewModel: KhipuViewModel
     @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
@@ -48,7 +48,7 @@ struct WarningMessageComponent: View {
 struct DetailSectionWarning: View {
     var operationWarning: OperationWarning
     var operationInfo: OperationInfo
-    @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject public var viewModel: KhipuViewModel
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.verySmall) {

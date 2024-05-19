@@ -3,7 +3,7 @@ import SwiftUI
 @available(iOS 15.0.0, *)
 struct MerchantDialogComponent: View {
     var onDismissRequest: () -> Void
-    var translator: KhenshinTranslator
+    var translator: KhipuTranslator
     var merchant: String
     var subject: String
     var description: String

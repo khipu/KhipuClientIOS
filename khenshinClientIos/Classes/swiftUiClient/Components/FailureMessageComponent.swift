@@ -6,7 +6,7 @@ import SwiftUI
 @available(iOS 15.0.0, *)
 struct FailureMessageComponent: View {
     let operationFailure: OperationFailure
-    @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject public var viewModel: KhipuViewModel
     @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
@@ -49,7 +49,7 @@ struct FailureMessageComponent: View {
 struct DetailSectionFailure: View {
     var operationFailure: OperationFailure
     var operationInfo: OperationInfo?
-    @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject public var viewModel: KhipuViewModel
     @ObservedObject var themeManager: ThemeManager
     
     var body: some View {

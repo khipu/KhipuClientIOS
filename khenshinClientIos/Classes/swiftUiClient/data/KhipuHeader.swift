@@ -1,10 +1,3 @@
-//
-//  KhenshinHeader.swift
-//  APNGKit
-//
-//  Created by Mauricio Castillo on 06-05-24.
-//
-
 import Foundation
 
 public struct KhipuHeader: Codable {

@@ -1,10 +1,3 @@
-//
-//  TextUtils.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 15-05-24.
-//
-
 import Foundation
 
 func formatOperationId(_ operationId: String?) -> String {

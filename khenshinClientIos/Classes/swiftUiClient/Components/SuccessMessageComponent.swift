@@ -4,7 +4,7 @@ import KhenshinProtocol
 @available(iOS 15.0, *)
 struct SuccessMessageComponent: View {
     let operationSuccess: OperationSuccess
-    @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject public var viewModel: KhipuViewModel
     @ObservedObject var themeManager: ThemeManager
     
     var body: some View {

@@ -11,7 +11,7 @@ import KhenshinProtocol
 @available(iOS 15.0.0, *)
 public struct KhipuView: View {
     @StateObject var themeManager = ThemeManager()
-    @StateObject var viewModel = KhenshinViewModel()
+    @StateObject var viewModel = KhipuViewModel()
     @Environment(\.colorScheme) var colorScheme
     var dismiss: (() -> Void)
     let operationId: String
@@ -38,7 +38,7 @@ public struct KhipuView: View {
             }
             switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
-                    ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
+                    ProgressComponent(viewModel: viewModel, themeManager: themeManager)
                     FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel, themeManager: themeManager)
                 case MessageType.operationFailure.rawValue:
                     if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
@@ -51,10 +51,10 @@ public struct KhipuView: View {
                 case MessageType.operationSuccess.rawValue:
                     SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel, themeManager: themeManager)
                 case MessageType.progressInfo.rawValue:
-                    ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
+                    ProgressComponent(viewModel: viewModel, themeManager: themeManager)
                     ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage, themeManager: themeManager)
                 case MessageType.authorizationRequest.rawValue:
-                    ProgressComponent(khenshinViewModel: viewModel, themeManager: themeManager)
+                    ProgressComponent(viewModel: viewModel, themeManager: themeManager)
                 default:
                     EmptyView()
             }
@@ -93,7 +93,7 @@ public struct KhipuView: View {
             }
         }.onAppear(perform: {
             viewModel.uiState.operationId = self.operationId
-            viewModel.setKhenshinSocketClient(
+            viewModel.setKhipuSocketIOClient(
                 serverUrl: options.serverUrl,
                 publicKey: options.serverPublicKey,
                 appName: appName(),
@@ -106,7 +106,7 @@ public struct KhipuView: View {
         .environmentObject(themeManager)
     }
 
-    func buildResult(_ state: KhenshinUiState) -> KhipuResult {
+    func buildResult(_ state: KhipuUiState) -> KhipuResult {
         if (viewModel.uiState.operationSuccess != nil) {
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationSuccess?.operationID),
@@ -165,7 +165,7 @@ public struct KhipuView: View {
         )
     }
     
-    func getOperationId(_ uiState: KhenshinUiState) -> String? {
+    func getOperationId(_ uiState: KhipuUiState) -> String? {
         if (uiState.operationInfo?.operationID == nil || uiState.operationInfo!.operationID!.isEmpty) {
             return uiState.operationId
         } else {
@@ -197,7 +197,7 @@ public struct KhipuView: View {
 }
 
 @available(iOS 15.0.0, *)
-struct KhenshinView_Previews: PreviewProvider {
+struct KhipuView_Previews: PreviewProvider {
     static var previews: some View {
         KhipuView(operationId: "OPERATION ID", options: KhipuOptions.Builder().build(), onComplete: nil, dismiss: {})
     }

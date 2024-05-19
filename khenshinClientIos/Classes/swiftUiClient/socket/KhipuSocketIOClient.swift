@@ -5,15 +5,15 @@ import KhenshinSecureMessage
 import KhenshinProtocol
 
 @available(iOS 13.0, *)
-public class KhenshinClient {
+public class KhipuSocketIOClient {
     private let socketManager: SocketManager
     private var socket: SocketIOClient
     private let secureMessage: SecureMessage
     private let KHENSHIN_PUBLIC_KEY: String
     private var receivedMessages: [String]
-    private var viewModel: KhenshinViewModel
+    private var viewModel: KhipuViewModel
 
-    public init(serverUrl url: String, publicKey: String, appName: String, appVersion: String, locale: String, viewModel: KhenshinViewModel) {
+    public init(serverUrl url: String, publicKey: String, appName: String, appVersion: String, locale: String, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
@@ -280,7 +280,7 @@ public class KhenshinClient {
             do {
                 let translation = try Translations(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.translation.rawValue
-                self.viewModel.uiState.translator = KhenshinTranslator(translations: translation.data!)
+                self.viewModel.uiState.translator = KhipuTranslator(translations: translation.data!)
             } catch {
                 print("Error processing form message, mid \(mid)")
             }

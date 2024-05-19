@@ -1,13 +1,6 @@
-//
-//  KhenshinTranslator.swift
-//  APNGKit
-//
-//  Created by Mauricio Castillo on 08-05-24.
-//
-
 import Foundation
 
-public class KhenshinTranslator {
+public class KhipuTranslator {
     private let translations: [String: String]
     
     public init(translations: [String: String]) {

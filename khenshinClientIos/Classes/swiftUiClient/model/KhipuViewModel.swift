@@ -1,31 +1,24 @@
-//
-//  KhenshinViewModel.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 02-05-24.
-//
-
 import Foundation
 import KhenshinProtocol
 
 @available(iOS 13.0, *)
-public class KhenshinViewModel: ObservableObject {
-    var khenshinSocketClient: KhenshinClient? = nil
-    @Published var uiState = KhenshinUiState()
+public class KhipuViewModel: ObservableObject {
+    var khipuSocketIOClient: KhipuSocketIOClient? = nil
+    @Published var uiState = KhipuUiState()
     
-    func setKhenshinSocketClient(serverUrl: String, publicKey: String, appName: String, appVersion: String, locale: String) {
-        if(khenshinSocketClient == nil) {
-            khenshinSocketClient = KhenshinClient(serverUrl: serverUrl, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, viewModel: self)
+    func setKhipuSocketIOClient(serverUrl: String, publicKey: String, appName: String, appVersion: String, locale: String) {
+        if(khipuSocketIOClient == nil) {
+            khipuSocketIOClient = KhipuSocketIOClient(serverUrl: serverUrl, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, viewModel: self)
         }
     }
     
     func connectClient() {
-        khenshinSocketClient?.connect()
+        khipuSocketIOClient?.connect()
     }
     
     func disconnectClient() {
-        khenshinSocketClient?.disconnect()
-        khenshinSocketClient = nil
+        khipuSocketIOClient?.disconnect()
+        khipuSocketIOClient = nil
     }
     
     public func setCurrentProgress(currentProgress: Float){

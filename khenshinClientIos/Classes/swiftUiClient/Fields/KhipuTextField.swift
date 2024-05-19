@@ -12,7 +12,7 @@ struct KhipuTextField: View {
     @State var error: String = ""
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     @State var lastModificationTime: TimeInterval = 0
-    @ObservedObject var viewModel: KhenshinViewModel
+    @ObservedObject var viewModel: KhipuViewModel
     @ObservedObject var themeManager: ThemeManager
     
     var body: some View {

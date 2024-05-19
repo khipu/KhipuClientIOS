@@ -1,14 +1,7 @@
-//
-//  KhenshinUiState.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 02-05-24.
-//
-
 import Foundation
 import KhenshinProtocol
 
-struct KhenshinUiState {
+struct KhipuUiState {
     var operationId: String = ""
     var bank: String = ""
     var currentMessageType: String = ""
@@ -17,7 +10,7 @@ struct KhenshinUiState {
     var validatedFormItems: [String : Bool] = [:]
     var savedForm: [String : String] = [:]
     var progressInfoMessage: String = ""
-    var translator: KhenshinTranslator = KhenshinTranslator(translations: [:])
+    var translator: KhipuTranslator = KhipuTranslator(translations: [:])
     var operationInfo: OperationInfo? = nil
     var operationSuccess: OperationSuccess? = nil
     var operationFailure: OperationFailure? = nil

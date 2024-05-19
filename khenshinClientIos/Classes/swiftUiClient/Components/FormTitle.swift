@@ -1,10 +1,3 @@
-//
-//  FormTitle.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 08-05-24.
-//
-
 import SwiftUI
 
 @available(iOS 13.0, *)

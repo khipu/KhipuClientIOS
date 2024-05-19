@@ -1,21 +1,4 @@
-//
-//  KhenshinResult.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 07-05-24.
-//
-
 import Foundation
-
-public struct KhipuEvent: Codable {
-    let name: String
-    let timestamp: String
-    let type: String
-    
-    var description: String {
-        return String(format: "{name: %@, timestamp: %@, type: %@}", name, timestamp, type)
-    }
-}
 
 public struct KhipuResult: Codable {
     let operationId: String
@@ -39,6 +22,16 @@ public struct KhipuResult: Codable {
         } catch {
             return ""
         }
+    }
+}
+
+public struct KhipuEvent: Codable {
+    let name: String
+    let timestamp: String
+    let type: String
+    
+    var description: String {
+        return String(format: "{name: %@, timestamp: %@, type: %@}", name, timestamp, type)
     }
 }
 

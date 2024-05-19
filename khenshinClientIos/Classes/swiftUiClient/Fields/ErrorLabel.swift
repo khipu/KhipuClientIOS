@@ -1,10 +1,3 @@
-//
-//  ErrorLabel.swift
-//  khenshinClientIos
-//
-//  Created by Emilio Davis on 18-05-24.
-//
-
 import SwiftUI
 
 @available(iOS 13.0, *)

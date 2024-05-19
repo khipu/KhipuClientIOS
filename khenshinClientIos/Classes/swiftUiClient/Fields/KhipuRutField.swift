@@ -1,10 +1,3 @@
-//
-//  TextField.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 09-05-24.
-//
-
 import SwiftUI
 import KhenshinProtocol
 
@@ -17,7 +10,7 @@ struct KhipuRutField: View {
     @State var rutValue: String = ""
     @State var error: String = ""
     @State var lastModificationTime: TimeInterval = 0
-    @ObservedObject var viewModel: KhenshinViewModel
+    @ObservedObject var viewModel: KhipuViewModel
     @ObservedObject var themeManager: ThemeManager
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     

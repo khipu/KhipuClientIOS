@@ -4,7 +4,7 @@ import SwiftUI
 
 @available(iOS 15.0.0, *)
 struct HeaderComponent: View {
-    @ObservedObject var viewModel: KhenshinViewModel
+    @ObservedObject var viewModel: KhipuViewModel
 
     @State private var showMerchantDialog = false
 

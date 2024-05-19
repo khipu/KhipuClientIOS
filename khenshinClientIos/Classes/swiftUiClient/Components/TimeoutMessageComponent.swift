@@ -5,7 +5,7 @@ import KhenshinProtocol
 @available(iOS 15.0.0, *)
 struct TimeoutMessageComponent: View {
     let operationFailure: OperationFailure
-    @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject public var viewModel: KhipuViewModel
     @ObservedObject var themeManager: ThemeManager
     
     var body: some View {

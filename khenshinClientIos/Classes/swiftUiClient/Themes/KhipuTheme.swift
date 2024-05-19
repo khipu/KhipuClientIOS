@@ -1,10 +1,3 @@
-//
-//  Main.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 16-05-24.
-//
-
 import SwiftUI
 
 
