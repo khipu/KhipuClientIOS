@@ -7,14 +7,14 @@ import SwiftUI
 struct WarningMessageComponent: View {
     let operationWarning: OperationWarning
     @ObservedObject public var viewModel: KhipuViewModel
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: Dimens.verySmall) {
+        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
             Image(systemName: "clock.circle.fill")
                 .resizable()
                 .scaledToFit()
-                .frame(width: Dimens.larger, height: Dimens.larger)
+                .frame(width: themeManager.selectedTheme.dimens.larger, height: themeManager.selectedTheme.dimens.larger)
                 .foregroundColor(Color(red: 234/255, green: 197/255, blue: 79/255))
             Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
                 .foregroundColor(Color(.label))
@@ -26,21 +26,21 @@ struct WarningMessageComponent: View {
                 .font(.title3)
                 .multilineTextAlignment(.center)
             
-            FormWarning(text: operationWarning.body ?? "", themeManager: themeManager)
-            Spacer().frame(height: Dimens.moderatelyLarge)
+            FormWarning(text: operationWarning.body ?? "")
+            Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
             DetailSectionWarning(operationWarning: operationWarning,operationInfo: viewModel.uiState.operationInfo!,viewModel: viewModel)
-            Spacer().frame(height: Dimens.moderatelyLarge)
+            Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
                 onClick: {
                     viewModel.uiState.returnToApp = true
                 },
-                foregroundColor: themeManager.selectedTheme.onTertiary,
-                backgroundColor: themeManager.selectedTheme.tertiary
+                foregroundColor: themeManager.selectedTheme.colors.onTertiary,
+                backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(.all, Dimens.extraMedium)
+        .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
     }
 }
 
@@ -49,9 +49,10 @@ struct DetailSectionWarning: View {
     var operationWarning: OperationWarning
     var operationInfo: OperationInfo
     @ObservedObject public var viewModel: KhipuViewModel
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: Dimens.verySmall) {
+        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
                 .foregroundColor(Color(.label))
                 .font(.headline)
@@ -68,6 +69,7 @@ struct DetailItemWarning: View {
     var label: String
     var value: String
     var shouldCopyValue: Bool = false
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         HStack {
@@ -83,7 +85,7 @@ struct DetailItemWarning: View {
                 CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:Color(red: 60/255, green: 180/255, blue: 229/255))
             }
         }
-        .padding(.vertical, Dimens.verySmall)
+        .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
     }
 }
 

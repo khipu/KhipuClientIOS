@@ -42,29 +42,29 @@ public struct KhipuView: View {
             }
             switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
-                    ProgressComponent(viewModel: viewModel, themeManager: themeManager)
-                    FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel, themeManager: themeManager)
+                    ProgressComponent(viewModel: viewModel)
+                    FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
                 case MessageType.operationFailure.rawValue:
                     if (!options.skipExitPage) {
                         if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
-                            TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel, themeManager: themeManager)
+                            TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
                         } else {
-                            FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel, themeManager: themeManager)
+                            FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
                         }
                     }
                 case MessageType.operationWarning.rawValue:
                     if (!options.skipExitPage) {
-                        WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel, themeManager: themeManager)
+                        WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
                     }
                 case MessageType.operationSuccess.rawValue:
                     if (!options.skipExitPage){
-                        SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel, themeManager: themeManager)
+                        SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
                     }
                 case MessageType.progressInfo.rawValue:
-                    ProgressComponent(viewModel: viewModel, themeManager: themeManager)
-                    ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage, themeManager: themeManager)
+                    ProgressComponent(viewModel: viewModel)
+                    ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
                 case MessageType.authorizationRequest.rawValue:
-                    ProgressComponent(viewModel: viewModel, themeManager: themeManager)
+                    ProgressComponent(viewModel: viewModel)
                 default:
                     EmptyView()
             }
@@ -77,7 +77,7 @@ public struct KhipuView: View {
             }
             Spacer()
         }
-        .background(themeManager.selectedTheme.background)
+        .background(themeManager.selectedTheme.colors.background)
         .navigationBarBackButtonHidden(true)
         .frame(
             maxWidth: .infinity,
@@ -89,12 +89,12 @@ public struct KhipuView: View {
                 Button {
                     viewModel.uiState.returnToApp = true
                 } label: {
-                    Image(systemName: "xmark").tint(themeManager.selectedTheme.onTopBarContainer)
+                    Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
                 }
             }
             ToolbarItem(placement: .principal) {
                 if (options.topBarImageResourceName == nil) {
-                    Text(options.topBarTitle ?? appName()).foregroundStyle(themeManager.selectedTheme.onTopBarContainer)
+                    Text(options.topBarTitle ?? appName()).foregroundStyle(themeManager.selectedTheme.colors.onTopBarContainer)
                 } else {
                     Image(options.topBarImageResourceName!)
                         .resizable()

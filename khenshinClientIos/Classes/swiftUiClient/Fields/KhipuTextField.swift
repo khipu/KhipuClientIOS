@@ -13,11 +13,11 @@ struct KhipuTextField: View {
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     @State var lastModificationTime: TimeInterval = 0
     @ObservedObject var viewModel: KhipuViewModel
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label, themeManager: themeManager)
+            FieldLabel(text: formItem.label)
             HStack {
                 if formItem.secure == true {
                     if passwordVisible {
@@ -67,13 +67,13 @@ struct KhipuTextField: View {
             }
             
             if !(formItem.hint?.isEmpty ?? true) {
-                HintLabel(text: formItem.hint, themeManager: themeManager)
+                HintLabel(text: formItem.hint)
             }
             if shouldDisplayError() {
-                ErrorLabel(text: error, themeManager: themeManager)
+                ErrorLabel(text: error)
             }
         }
-        .padding(.vertical, Dimens.verySmall)
+        .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
         .onAppear {
             startTimer()
         }

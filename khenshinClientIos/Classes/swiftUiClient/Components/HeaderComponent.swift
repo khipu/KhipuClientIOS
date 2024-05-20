@@ -5,22 +5,22 @@ import SwiftUI
 @available(iOS 15.0.0, *)
 struct HeaderComponent: View {
     @ObservedObject var viewModel: KhipuViewModel
-
+    @EnvironmentObject private var themeManager: ThemeManager
     @State private var showMerchantDialog = false
 
     var body: some View {
         if (viewModel.uiState.operationInfo?.merchant) != nil {
             VStack(spacing: 0) {
-                Spacer().frame(height: Dimens.extraSmall)
+                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
                 headerContent
-                Spacer().frame(height: Dimens.extraSmall)
+                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
                 Divider()
-                Spacer().frame(height: Dimens.extraSmall)
+                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
                 footerContent
-                Spacer().frame(height: Dimens.extraSmall)
+                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
                 Divider()
             }
-            .padding(.horizontal,  Dimens.extraSmall)
+            .padding(.horizontal,  themeManager.selectedTheme.dimens.extraSmall)
             .sheet(isPresented: $showMerchantDialog) {
                 MerchantDialogComponent(
                     onDismissRequest: { showMerchantDialog = false },

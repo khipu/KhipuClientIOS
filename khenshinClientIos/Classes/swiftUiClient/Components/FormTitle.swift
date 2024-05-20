@@ -3,12 +3,12 @@ import SwiftUI
 @available(iOS 13.0, *)
 struct FormTitle: View {
     var text: String
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         Text(text)
             .font(.title)
-            .foregroundColor(themeManager.selectedTheme.onSurface)
+            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
             .multilineTextAlignment(.center)
             .padding()
     }
@@ -17,6 +17,6 @@ struct FormTitle: View {
 @available(iOS 13.0, *)
 struct FormTitle_Previews: PreviewProvider {
     static var previews: some View {
-        FormTitle(text: "Título", themeManager: ThemeManager())
+        FormTitle(text: "Título")
     }
 }

@@ -5,6 +5,7 @@ struct CopyToClipboardOperationId: View {
     var text: String
     var textToCopy: String
     var background: Color
+    @EnvironmentObject private var themeManager: ThemeManager
 
     var body: some View {
         Button(action: {
@@ -12,14 +13,14 @@ struct CopyToClipboardOperationId: View {
         }) {
             HStack {
                 Text(text)
-                    .font(.system(size: Dimens.veryMedium))
+                    .font(.system(size: themeManager.selectedTheme.dimens.veryMedium))
                 Image(systemName: "doc.on.doc")
                     .resizable()
-                    .frame(width: Dimens.large, height: Dimens.large)
+                    .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
             }
             .padding(.all, 8)
             .background(background)
-            .cornerRadius(Dimens.extraSmall)
+            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
         }
         .buttonStyle(PlainButtonStyle())
     }
@@ -30,6 +31,7 @@ struct CopyToClipboardLink: View {
     var text: String
     var textToCopy: String
     var background: Color
+    @EnvironmentObject private var themeManager: ThemeManager
 
     var body: some View {
         Button(action: {
@@ -37,14 +39,14 @@ struct CopyToClipboardLink: View {
         }) {
             HStack {
                 Text(text)
-                    .font(.system(size: Dimens.extraMedium))
+                    .font(.system(size: themeManager.selectedTheme.dimens.extraMedium))
                 Image(systemName: "doc.on.doc")
                     .resizable()
-                    .frame(width: Dimens.large, height: Dimens.large)
+                    .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
             }
             .padding()
             .background(background)
-            .cornerRadius(Dimens.extraSmall)
+            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
         }
         .buttonStyle(PlainButtonStyle())
     }

@@ -6,26 +6,26 @@ import KhenshinProtocol
 struct TimeoutMessageComponent: View {
     let operationFailure: OperationFailure
     @ObservedObject public var viewModel: KhipuViewModel
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: Dimens.verySmall) {
+        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
             Group {
                 Text(viewModel.uiState.translator.t("page.timeout.session.closed"))
                     .foregroundColor(Color(.label))
                     .font(.title2)
                     .multilineTextAlignment(.center)
                 Spacer()
-                    .frame(height: Dimens.extraSmall)
+                    .frame(height: themeManager.selectedTheme.dimens.extraSmall)
             }
             Group {
-                FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"), themeManager: themeManager)
+                FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"))
                 Spacer()
-                    .frame(height: Dimens.extraLarge)
+                    .frame(height: themeManager.selectedTheme.dimens.extraLarge)
             }
             Group {
                 Image(systemName: "clock.arrow.circlepath")
-                    .font(.system(size: Dimens.huge))
+                    .font(.system(size: themeManager.selectedTheme.dimens.huge))
                     .foregroundColor(Color.gray.opacity(0.7))
                 
                 Text(viewModel.uiState.translator.t("page.timeout.end"))
@@ -34,7 +34,7 @@ struct TimeoutMessageComponent: View {
                     .multilineTextAlignment(.center)
                 
                 Spacer()
-                    .frame(height: Dimens.extraLarge)
+                    .frame(height: themeManager.selectedTheme.dimens.extraLarge)
             }
             
             Group {
@@ -55,10 +55,10 @@ struct TimeoutMessageComponent: View {
                 onClick: {
                     viewModel.uiState.returnToApp = true
                 },
-                foregroundColor: themeManager.selectedTheme.onTertiary,
-                backgroundColor: themeManager.selectedTheme.tertiary
+                foregroundColor: themeManager.selectedTheme.colors.onTertiary,
+                backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(.all, Dimens.extraMedium)
+        .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
     }
 }
