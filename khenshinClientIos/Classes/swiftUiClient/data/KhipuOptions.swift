@@ -1,6 +1,6 @@
 import Foundation
 
-public class KhipuOptions: Codable {
+public class KhipuOptions {
     let serverUrl: String
     let serverPublicKey: String
     let header: KhipuHeader?
