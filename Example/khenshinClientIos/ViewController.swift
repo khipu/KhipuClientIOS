@@ -51,7 +51,7 @@ class ViewController: UIViewController {
                 .topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
                 .theme(.light)
-                .skipExitPage(true)
+                .skipExitPage(false)
                 .colors(KhipuColors.Builder()
 //                    .darkPrimary("#00FF00")
 //                    .lightPrimary("#0000FF")
