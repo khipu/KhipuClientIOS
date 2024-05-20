@@ -10,14 +10,17 @@ struct HeaderComponent: View {
 
     var body: some View {
         if (viewModel.uiState.operationInfo?.merchant) != nil {
-            VStack(spacing: 8) {
+            VStack(spacing: 0) {
+                Spacer().frame(height: Dimens.extraSmall)
                 headerContent
+                Spacer().frame(height: Dimens.extraSmall)
                 Divider()
+                Spacer().frame(height: Dimens.extraSmall)
                 footerContent
+                Spacer().frame(height: Dimens.extraSmall)
                 Divider()
             }
-            .padding(8)
-            .onAppear {}
+            .padding(.horizontal,  Dimens.extraSmall)
             .sheet(isPresented: $showMerchantDialog) {
                 MerchantDialogComponent(
                     onDismissRequest: { showMerchantDialog = false },

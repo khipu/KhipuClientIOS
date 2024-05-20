@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "iokquy5cfeip"
+        sampleTextField.text = "2xzcxlawhved"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -51,6 +51,7 @@ class ViewController: UIViewController {
                 .topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
                 .theme(.light)
+                .skipExitPage(true)
                 .colors(KhipuColors.Builder()
 //                    .darkPrimary("#00FF00")
 //                    .lightPrimary("#0000FF")

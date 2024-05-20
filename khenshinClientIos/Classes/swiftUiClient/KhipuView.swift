@@ -29,27 +29,32 @@ public struct KhipuView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, content: {
+        VStack(alignment: .leading, spacing: 0) {
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     HeaderComponent(viewModel: viewModel)
                 }
-                EmptyView()
             }
             switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
                     ProgressComponent(viewModel: viewModel, themeManager: themeManager)
                     FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel, themeManager: themeManager)
                 case MessageType.operationFailure.rawValue:
-                    if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
-                        TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel, themeManager: themeManager)
-                    } else {
-                        FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel, themeManager: themeManager)
+                    if (!options.skipExitPage) {
+                        if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
+                            TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel, themeManager: themeManager)
+                        } else {
+                            FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel, themeManager: themeManager)
+                        }
                     }
                 case MessageType.operationWarning.rawValue:
-                    WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel, themeManager: themeManager)
+                    if (!options.skipExitPage) {
+                        WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel, themeManager: themeManager)
+                    }
                 case MessageType.operationSuccess.rawValue:
-                    SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel, themeManager: themeManager)
+                    if (!options.skipExitPage){
+                        SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel, themeManager: themeManager)
+                    }
                 case MessageType.progressInfo.rawValue:
                     ProgressComponent(viewModel: viewModel, themeManager: themeManager)
                     ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage, themeManager: themeManager)
@@ -66,7 +71,7 @@ public struct KhipuView: View {
                 }
             }
             Spacer()
-        })
+        }
         .background(themeManager.selectedTheme.background)
         .navigationBarBackButtonHidden(true)
         .frame(
@@ -98,7 +103,8 @@ public struct KhipuView: View {
                 publicKey: options.serverPublicKey,
                 appName: appName(),
                 appVersion: appVersion(),
-                locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")"
+                locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")",
+                skipExitPage: options.skipExitPage
             )
             viewModel.connectClient()
             themeManager.selectedTheme.setColorSchemeAndCustomColors(colorScheme: colorScheme, colors: options.colors)

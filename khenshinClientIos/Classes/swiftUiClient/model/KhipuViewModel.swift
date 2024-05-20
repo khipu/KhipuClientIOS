@@ -6,9 +6,9 @@ public class KhipuViewModel: ObservableObject {
     var khipuSocketIOClient: KhipuSocketIOClient? = nil
     @Published var uiState = KhipuUiState()
     
-    func setKhipuSocketIOClient(serverUrl: String, publicKey: String, appName: String, appVersion: String, locale: String) {
+    func setKhipuSocketIOClient(serverUrl: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool) {
         if(khipuSocketIOClient == nil) {
-            khipuSocketIOClient = KhipuSocketIOClient(serverUrl: serverUrl, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, viewModel: self)
+            khipuSocketIOClient = KhipuSocketIOClient(serverUrl: serverUrl, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, skipExitPage: skipExitPage, viewModel: self)
         }
     }
     

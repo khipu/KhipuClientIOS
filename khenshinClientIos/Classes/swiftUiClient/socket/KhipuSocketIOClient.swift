@@ -12,8 +12,9 @@ public class KhipuSocketIOClient {
     private let KHENSHIN_PUBLIC_KEY: String
     private var receivedMessages: [String]
     private var viewModel: KhipuViewModel
+    private var skipExitPage: Bool
 
-    public init(serverUrl url: String, publicKey: String, appName: String, appVersion: String, locale: String, viewModel: KhipuViewModel) {
+    public init(serverUrl url: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
@@ -36,6 +37,7 @@ public class KhipuSocketIOClient {
         self.receivedMessages = []
         self.socket = socketManager.defaultSocket
         self.viewModel = viewModel
+        self.skipExitPage = skipExitPage
         self.addListeners()
         
     }
@@ -160,6 +162,9 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.currentMessageType = MessageType.operationFailure.rawValue
                 self.viewModel.uiState.operationFailure = operationFailure
                 self.viewModel.disconnectClient()
+                if(self.skipExitPage) {
+                    self.viewModel.uiState.returnToApp = true
+                }
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -203,6 +208,9 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.currentMessageType = MessageType.operationSuccess.rawValue
                 self.viewModel.uiState.operationSuccess = operationSuccess
                 self.viewModel.disconnectClient()
+                if(self.skipExitPage) {
+                    self.viewModel.uiState.returnToApp = true
+                }
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -221,6 +229,9 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.currentMessageType = MessageType.operationWarning.rawValue
                 self.viewModel.uiState.operationWarning = operationWarning
                 self.viewModel.disconnectClient()
+                if(self.skipExitPage) {
+                    self.viewModel.uiState.returnToApp = true
+                }
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -239,6 +250,9 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.currentMessageType = MessageType.operationMustContinue.rawValue
                 self.viewModel.uiState.operationMustContinue = operationMustContinue
                 self.viewModel.disconnectClient()
+                if(self.skipExitPage) {
+                    self.viewModel.uiState.returnToApp = true
+                }
             } catch {
                 print("Error processing form message, mid \(mid)")
             }

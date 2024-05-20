@@ -7,8 +7,10 @@ struct ProgressComponent: View {
 
     var body: some View {
         ProgressView(value: Double(viewModel.uiState.currentProgress))
-            .progressViewStyle(LinearProgressViewStyle(tint: themeManager.selectedTheme.primary))
-            .background(themeManager.selectedTheme.background)
+            .progressViewStyle(.linear)
+            .tint(themeManager.selectedTheme.primary)
+            .background(themeManager.selectedTheme.surface)
             .accessibility(identifier: "linearProgressIndicator")
+            .padding(.all, 0)
     }
 }
