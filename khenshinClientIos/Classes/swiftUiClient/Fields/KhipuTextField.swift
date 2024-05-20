@@ -12,78 +12,68 @@ struct KhipuTextField: View {
     @State var error: String = ""
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     @State var lastModificationTime: TimeInterval = 0
-    @ObservedObject var viewModel: KhenshinViewModel
+    @ObservedObject var viewModel: KhipuViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
-            Text(formItem.label ?? "")
-                .font(.subheadline)
-                .padding(.horizontal, 16)
+            FieldLabel(text: formItem.label, themeManager: themeManager)
             HStack {
                 if formItem.secure == true {
-                    VStack {
-                        if passwordVisible {
-                            TextField(formItem.label ?? "", text: $textFieldValue)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .padding()
-                                .overlay(
-                                    Button(action: {
-                                        passwordVisible.toggle()
-                                    }) {
-                                        Image(systemName: passwordVisible ? "eye" : "eye.slash")
-                                            .foregroundColor(.gray)
-                                    }
-                                        .padding(),
-                                    alignment: .trailing
-                                )
-                        } else {
-                            SecureField(formItem.label ?? "", text: $textFieldValue)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
-                                .padding()
-                                .overlay(
-                                    Button(action: {
-                                        passwordVisible.toggle()
-                                    }) {
-                                        Image(systemName: passwordVisible ? "eye" : "eye.slash")
-                                            .foregroundColor(.gray)
-                                    }
-                                        .padding(),
-                                    alignment: .trailing
-                                )
-                        }
+                    if passwordVisible {
+                        TextField(formItem.placeHolder ?? "", text: $textFieldValue)
+                            .textFieldStyle(.roundedBorder)
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
+                            .overlay(
+                                Button(action: {
+                                    passwordVisible.toggle()
+                                }) {
+                                    Image(systemName: passwordVisible ? "eye" : "eye.slash")
+                                        .foregroundColor(.gray)
+                                }
+                                    .padding(),
+                                alignment: .trailing
+                            )
+                    } else {
+                        SecureField(formItem.placeHolder ?? "", text: $textFieldValue)
+                            .textFieldStyle(.roundedBorder)
+                            .autocorrectionDisabled(true)
+                            .textInputAutocapitalization(.never)
+                            .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
+                            .overlay(
+                                Button(action: {
+                                    passwordVisible.toggle()
+                                }) {
+                                    Image(systemName: passwordVisible ? "eye" : "eye.slash")
+                                        .foregroundColor(.gray)
+                                }
+                                    .padding(),
+                                alignment: .trailing
+                            )
                     }
                 } else {
-                    TextField(formItem.label ?? "", text: $textFieldValue)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
+                    TextField(formItem.placeHolder ?? "", text: $textFieldValue)
+                        .textFieldStyle(.roundedBorder)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.leading)
+                        .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                 }
             }
-            .padding(.horizontal, 0)
             .onChange(of: textFieldValue) { newValue in
                 onChange(newValue: newValue)
             }
             
             if !(formItem.hint?.isEmpty ?? true) {
-                HStack {
-                    Spacer()
-                Text(formItem.hint ?? "")
-                    .font(.caption)
-                    .padding(.horizontal, 16)
-                    .foregroundColor(.gray)
-                }
+                HintLabel(text: formItem.hint, themeManager: themeManager)
             }
             if shouldDisplayError() {
-                HStack {
-                    Spacer()
-                    Text(error)
-                        .font(.footnote)
-                        .foregroundColor(.red)
-                        .padding(.horizontal, 16)
-
-                }
+                ErrorLabel(text: error, themeManager: themeManager)
             }
         }
+        .padding(.vertical, Dimens.verySmall)
         .onAppear {
             startTimer()
         }

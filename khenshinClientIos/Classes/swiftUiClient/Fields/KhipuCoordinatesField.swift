@@ -1,10 +1,3 @@
-//
-//  TextField.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 09-05-24.
-//
-
 import SwiftUI
 import KhenshinProtocol
 
@@ -18,6 +11,7 @@ struct KhipuCoordinatesField: View {
     let isValid: (Bool) -> Void
     let returnValue: (String) -> Void
     let submitFunction: () -> Void
+    @ObservedObject var themeManager: ThemeManager
     
     enum FocusableField: Hashable, CaseIterable {
         case coord1, coord2, coord3
@@ -29,7 +23,7 @@ struct KhipuCoordinatesField: View {
         VStack {
             HStack(spacing: 16) {
                 VStack(alignment: .center) {
-                    FieldLabel(text: formItem.labels?[0] ?? "")
+                    FieldLabel(text: formItem.labels?[0], themeManager: themeManager)
                     SecureField("", text: $coord1)
                         .frame(minWidth: 30, maxWidth: 80)
                         .padding(.trailing, 8)
@@ -44,10 +38,13 @@ struct KhipuCoordinatesField: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .focused($focusedField, equals: FocusableField.coord1)
                         .multilineTextAlignment(.center)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                 }
                 
                 VStack(alignment: .center) {
-                    FieldLabel(text: formItem.labels?[1] ?? "")
+                    FieldLabel(text: formItem.labels?[1], themeManager: themeManager)
                     SecureField("", text: $coord2)
                         .frame(minWidth: 30, maxWidth: 90)
                         .padding(.horizontal, 8)
@@ -63,10 +60,13 @@ struct KhipuCoordinatesField: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .focused($focusedField, equals: FocusableField.coord2)
                         .multilineTextAlignment(.center)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                 }
                 
                 VStack(alignment: .center) {
-                    FieldLabel(text: formItem.labels?[2] ?? "")
+                    FieldLabel(text: formItem.labels?[2], themeManager: themeManager)
                     SecureField("", text: $coord3)
                         .frame(minWidth: 30, maxWidth: 80)
                         .padding(.leading, 8)
@@ -78,6 +78,9 @@ struct KhipuCoordinatesField: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .focused($focusedField, equals: FocusableField.coord3)
                         .multilineTextAlignment(.center)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
+                        .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                     }
                     
                 }
@@ -89,17 +92,6 @@ struct KhipuCoordinatesField: View {
                 returnValue("\(coord1)|\(coord2)|\(coord3)")
                 submitFunction()
             }
-    }
-}
-
-@available(iOS 15.0.0, *)
-struct FieldLabel: View {
-    let text: String
-    
-    var body: some View {
-        Text(text)
-            .font(.caption)
-            .foregroundColor(.secondary)
     }
 }
 

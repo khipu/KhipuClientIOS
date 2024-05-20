@@ -5,7 +5,8 @@ import KhenshinProtocol
 @available(iOS 15.0.0, *)
 struct TimeoutMessageComponent: View {
     let operationFailure: OperationFailure
-    @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject public var viewModel: KhipuViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.verySmall) {
@@ -18,7 +19,7 @@ struct TimeoutMessageComponent: View {
                     .frame(height: Dimens.extraSmall)
             }
             Group {
-                FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"))
+                FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"), themeManager: themeManager)
                 Spacer()
                     .frame(height: Dimens.extraLarge)
             }
@@ -46,9 +47,6 @@ struct TimeoutMessageComponent: View {
                     textToCopy: FieldUtils.formatOperationId(operationId: operationFailure.operationID ?? ""),
                     background:Color(red: 60/255, green: 180/255, blue: 229/255)
                 )
-                
-                Spacer()
-                
             }
                 
             MainButton(
@@ -56,10 +54,11 @@ struct TimeoutMessageComponent: View {
                 enabled: true,
                 onClick: {
                     viewModel.uiState.returnToApp = true
-                }
+                },
+                foregroundColor: themeManager.selectedTheme.onTertiary,
+                backgroundColor: themeManager.selectedTheme.tertiary
             )
         }
         .padding(.all, Dimens.extraMedium)
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
     }
 }

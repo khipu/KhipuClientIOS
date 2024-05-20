@@ -17,7 +17,7 @@ struct CopyToClipboardOperationId: View {
                     .resizable()
                     .frame(width: Dimens.large, height: Dimens.large)
             }
-            .padding()
+            .padding(.all, 8)
             .background(background)
             .cornerRadius(Dimens.extraSmall)
         }

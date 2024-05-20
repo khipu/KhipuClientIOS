@@ -22,8 +22,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-
-        sampleTextField.text = "jzp1igdcprx1"
+        sampleTextField.text = "irpz3ovxewta"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -47,14 +46,30 @@ class ViewController: UIViewController {
         KhipuLauncher.launch(
             navigationController: self.navigationController!,
             operationId: sampleInput.text!,
-            options: KhenshinOptions.Builder()
+            options: KhipuOptions.Builder()
                 .topBarTitle("Mi Khipu")
                 .topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
+                .theme(.light)
+                .skipExitPage(false)
+//                .header(KhipuHeader.Builder()
+//                    .headerUIView(CustomHeaderUIVIew())
+//                    .height(140)
+//                    .build()
+//                )
+                .colors(KhipuColors.Builder()
+//                    .darkPrimary("#00FF00")
+//                    .lightPrimary("#0000FF")
+//                    .lightBackground("#FF0000")
+//                    .darkBackground("#FF00FF")
+//                    .lightTopBarContainer("#ff0000")
+//                    .lightOnTopBarContainer("#00ff00")
+//                    .darkTopBarContainer("#00ff00")
+//                    .darkOnTopBarContainer("#0000ff")
+                    .build())
                 .build()) { result in
                     print("Operation result \(result.asJson())")
                 }
-
     }
     
     lazy private var spacer: UIView = {

@@ -1,10 +1,3 @@
-//
-//  TextField.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 09-05-24.
-//
-
 import SwiftUI
 import KhenshinProtocol
 
@@ -14,45 +7,34 @@ struct KhipuRutField: View {
     var hasNextField: Bool
     var isValid: (Bool) -> Void
     var returnValue: (String) -> Void
-    @State var passwordVisible: Bool = false
     @State var rutValue: String = ""
     @State var error: String = ""
     @State var lastModificationTime: TimeInterval = 0
-    @ObservedObject var viewModel: KhenshinViewModel
+    @ObservedObject var viewModel: KhipuViewModel
+    @ObservedObject var themeManager: ThemeManager
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
-            Text(formItem.label ?? "")
-                .font(.subheadline)
-                .padding(.horizontal, 16)
-            HStack {
-                TextField(formItem.label ?? "", text: $rutValue)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                    .multilineTextAlignment(.leading)
-            }
-            .padding(.horizontal, 0)
-            .onChange(of: rutValue) { newValue in
-                onChange(newValue: newValue)
-            }
+            FieldLabel(text: formItem.label, themeManager: themeManager)
+            TextField(formItem.placeHolder ?? "", text: $rutValue)
+                .textFieldStyle(.roundedBorder)
+                .autocorrectionDisabled(true)
+                .textInputAutocapitalization(.never)
+                .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
+                .multilineTextAlignment(.leading)
+                .onChange(of: rutValue) { newValue in
+                    onChange(newValue: newValue)
+                }
             
             if !(formItem.hint?.isEmpty ?? true) {
-                Text(formItem.hint ?? "")
-                    .font(.caption)
-                    .foregroundColor(.gray)
+                HintLabel(text: formItem.hint, themeManager: themeManager)
             }
             if shouldDisplayError() {
-                HStack {
-                    Spacer()
-                    Text(error)
-                        .font(.footnote)
-                        .foregroundColor(.red)
-                        .padding(.horizontal, 16)
-
-                }
+                ErrorLabel(text: error, themeManager: themeManager)
             }
         }
+        .padding(.vertical, Dimens.verySmall)
         .onAppear {
             startTimer()
         }

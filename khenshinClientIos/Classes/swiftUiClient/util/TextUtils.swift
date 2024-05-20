@@ -1,10 +1,3 @@
-//
-//  TextUtils.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 15-05-24.
-//
-
 import Foundation
 
 func formatOperationId(_ operationId: String?) -> String {
@@ -18,9 +11,8 @@ func formatOperationId(_ operationId: String?) -> String {
     
     let start = operationId?.index(operationId!.startIndex, offsetBy: 4)
     let middle = operationId?.index(operationId!.startIndex, offsetBy: 8)
-    let end = operationId?.index(operationId!.endIndex, offsetBy: -4)
     
-    return "\(operationId?[..<start!] ?? "")-\(operationId?[start!..<middle!] ?? "")-\(operationId?[middle!..<end!] ?? "")"
+    return "\(operationId?[..<start!] ?? "")-\(operationId?[start!..<middle!] ?? "")-\(operationId?[middle!...] ?? "")"
 }
 
 func cleanString(_ replaceValue: String?) -> String {

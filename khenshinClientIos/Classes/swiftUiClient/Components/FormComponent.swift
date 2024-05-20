@@ -17,38 +17,41 @@ public struct FormComponent: View {
     @State private var submittedForm: Bool = false
     @State private var formValues: [String: String] = [:]
     public var formRequest: FormRequest
-    @ObservedObject public var viewModel: KhenshinViewModel
+    @ObservedObject public var viewModel: KhipuViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     public var body: some View {
         VStack {
-            FormTitle(text: formRequest.title!)
+            FormTitle(text: formRequest.title!, themeManager: themeManager)
             if(!viewModel.uiState.bank.isEmpty) {
-                FormPill(text: viewModel.uiState.bank)
+                FormPill(text: viewModel.uiState.bank, themeManager: themeManager)
             }
             if(formRequest.info != nil && !formRequest.info!.isEmpty) {
-                FormInfo(text: formRequest.info!)
+                FormInfo(text: formRequest.info!, themeManager: themeManager)
             }
             ForEach(formRequest.items.indices, id: \.self) { index in
                 DrawComponent(
-                    khenshinViewModel: viewModel,
                     item: formRequest.items[index],
                     hasNextField: index < formRequest.items.count - 1,
                     formValues: $formValues,
                     submitFunction: submitForm,
-                    viewModel: viewModel
+                    viewModel: viewModel, 
+                    themeManager: themeManager
                 )
             }
             if(getShouldShowContinueButton(formRequest: formRequest)) {
-                MainButton(text: getMainButtonText(formRequest: formRequest, khenshinUiState: viewModel.uiState),
+                MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                            enabled: validForm(),
                            onClick: {
                                 submittedForm = true
                                 submitForm()
-                            }
+                            },
+                           foregroundColor: themeManager.selectedTheme.onPrimary,
+                           backgroundColor: themeManager.selectedTheme.primary
                 )
             }
         }
-        .padding([.leading, .trailing], 20)
+        .padding(.all, Dimens.extraMedium)
         .onAppear {
             
             if let progress = viewModel.uiState.currentForm!.progress,
@@ -61,9 +64,9 @@ public struct FormComponent: View {
         }
     }
     
-    private func getMainButtonText(formRequest: FormRequest, khenshinUiState: KhenshinUiState) -> String {
+    private func getMainButtonText(formRequest: FormRequest, khipuUiState: KhipuUiState) -> String {
         if formRequest.continueLabel == nil || formRequest.continueLabel?.isEmpty ?? true {
-            return khenshinUiState.translator.t("default.continue.label")
+            return khipuUiState.translator.t("default.continue.label")
         } else {
             return formRequest.continueLabel ?? ""
         }
@@ -79,7 +82,7 @@ public struct FormComponent: View {
         }
     }
     
-    func submitNovalidate(formRequest: FormRequest, viewModel: KhenshinViewModel) -> Void {
+    func submitNovalidate(formRequest: FormRequest, viewModel: KhipuViewModel) -> Void {
         let answers = formRequest.items.map {
             FormItemAnswer(
                 id: $0.id,
@@ -93,7 +96,7 @@ public struct FormComponent: View {
             type: MessageType.formResponse
         )
         do {
-            try viewModel.khenshinSocketClient?.sendMessage(type: response.type.rawValue, message: response.jsonString() ?? "")
+            try viewModel.khipuSocketIOClient?.sendMessage(type: response.type.rawValue, message: response.jsonString() ?? "")
         } catch {
             print("Error sending form")
         }
@@ -108,16 +111,16 @@ public struct FormComponent: View {
 @available(iOS 15.0, *)
 struct DrawComponent: View {
     
-    var khenshinViewModel: KhenshinViewModel
     var item: FormItem
     var hasNextField: Bool
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
-    @ObservedObject var viewModel: KhenshinViewModel
+    @ObservedObject var viewModel: KhipuViewModel
+    @ObservedObject var themeManager: ThemeManager
     
     public var body: some View {
         let validationFun: (Bool) -> Void = { valid in
-            khenshinViewModel.uiState.validatedFormItems[item.id] = valid
+            viewModel.uiState.validatedFormItems[item.id] = valid
         }
         let getValueFun: (String) -> Void = { value in
             formValues[item.id] = value
@@ -135,7 +138,8 @@ struct DrawComponent: View {
                 formItem: item,
                 isValid: validationFun,
                 returnValue: getValueFun,
-                submitFunction: submitFunction
+                submitFunction: submitFunction,
+                themeManager: themeManager
             )
         case FormItemTypes.dataTable:
             KhipuDataTableField(
@@ -185,7 +189,8 @@ struct DrawComponent: View {
                 hasNextField: hasNextField,
                 isValid: validationFun,
                 returnValue: getValueFun,
-                viewModel: viewModel
+                viewModel: viewModel,
+                themeManager: themeManager
             )
         case FormItemTypes.separator:
             KhipuSeparatorField(
@@ -207,7 +212,8 @@ struct DrawComponent: View {
                 hasNextField: hasNextField,
                 isValid: validationFun,
                 returnValue: getValueFun,
-                viewModel: viewModel
+                viewModel: viewModel,
+                themeManager: themeManager
             )
         }
     }

@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  khenshinClientIos
-//
-//  Created by mauriciocastillo on 02/19/2024.
-//  Copyright (c) 2024 mauriciocastillo. All rights reserved.
-//
 
 import UIKit
 
@@ -14,14 +7,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
         let discoverVC = ViewController() as UIViewController
         let navigationController = UINavigationController(rootViewController: discoverVC)
         navigationController.navigationBar.isTranslucent = true
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
-
         return true
     }
 

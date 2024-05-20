@@ -3,29 +3,28 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct FormInfo: View {
     var text: String
+    @ObservedObject var themeManager: ThemeManager
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
+            Spacer()
+                .frame(width: Dimens.medium)
             Image(systemName: "info.circle")
                 .resizable()
                 .scaledToFit()
                 .frame(width: 24, height: 24)
-                .foregroundColor(Color.blue)
+                .foregroundColor(themeManager.selectedTheme.secondary)
             Text(text)
                 .font(.system(size: 16))
-                .foregroundColor(Color.blue)
+                .foregroundColor(themeManager.selectedTheme.secondary)
+            Spacer()
         }
-        .padding(.vertical, 8)
-        .padding(.horizontal, 16)
-        .background(Color.blue.opacity(0.1))
-        .clipShape(RoundedRectangle(cornerRadius: 8))
+        .padding(.all, Dimens.verySmall)
+        .background(themeManager.selectedTheme.surface)
         .overlay(
-            RoundedRectangle(cornerRadius: 8)
-                .stroke(Color.blue, lineWidth: 1)
-        )
-        .padding(.horizontal, 16)
-        
-        Spacer().frame(height: Dimens.moderatelyLarge)
+            RoundedRectangle(cornerRadius: Dimens.extraSmall)
+                .stroke(themeManager.selectedTheme.secondary, lineWidth: 1)
+                )
     }
 }
 

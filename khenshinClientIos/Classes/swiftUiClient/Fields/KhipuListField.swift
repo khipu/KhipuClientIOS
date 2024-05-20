@@ -1,10 +1,3 @@
-//
-//  TextField.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 09-05-24.
-//
-
 import SwiftUI
 import KhenshinProtocol
 
