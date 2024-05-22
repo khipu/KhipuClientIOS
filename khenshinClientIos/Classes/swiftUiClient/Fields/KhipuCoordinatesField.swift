@@ -11,7 +11,7 @@ struct KhipuCoordinatesField: View {
     let isValid: (Bool) -> Void
     let returnValue: (String) -> Void
     let submitFunction: () -> Void
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     enum FocusableField: Hashable, CaseIterable {
         case coord1, coord2, coord3
@@ -23,7 +23,7 @@ struct KhipuCoordinatesField: View {
         VStack {
             HStack(spacing: 16) {
                 VStack(alignment: .center) {
-                    FieldLabel(text: formItem.labels?[0], themeManager: themeManager)
+                    FieldLabel(text: formItem.labels?[0])
                     SecureField("", text: $coord1)
                         .frame(minWidth: 30, maxWidth: 80)
                         .padding(.trailing, 8)
@@ -44,7 +44,7 @@ struct KhipuCoordinatesField: View {
                 }
                 
                 VStack(alignment: .center) {
-                    FieldLabel(text: formItem.labels?[1], themeManager: themeManager)
+                    FieldLabel(text: formItem.labels?[1])
                     SecureField("", text: $coord2)
                         .frame(minWidth: 30, maxWidth: 90)
                         .padding(.horizontal, 8)
@@ -66,7 +66,7 @@ struct KhipuCoordinatesField: View {
                 }
                 
                 VStack(alignment: .center) {
-                    FieldLabel(text: formItem.labels?[2], themeManager: themeManager)
+                    FieldLabel(text: formItem.labels?[2])
                     SecureField("", text: $coord3)
                         .frame(minWidth: 30, maxWidth: 80)
                         .padding(.leading, 8)

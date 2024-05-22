@@ -3,14 +3,14 @@ import SwiftUI
 @available(iOS 13.0, *)
 struct FieldLabel: View {
     var text: String?
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         VStack {
             Text(text ?? "")
-                .foregroundColor(themeManager.selectedTheme.onSurface)
+                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .font(.subheadline)
-            Spacer().frame(height: Dimens.extraSmall)
+            Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
         }
     }
 }

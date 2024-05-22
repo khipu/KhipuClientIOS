@@ -5,9 +5,9 @@ struct MainButton: View {
     let text: String
     let enabled: Bool
     let onClick: () -> Void
-    @EnvironmentObject private var themeManager: ThemeManager
     let foregroundColor: Color
     let backgroundColor: Color
+    @EnvironmentObject private var themeManager: ThemeManager
     @State private var submitted = false
     
     var body: some View {
@@ -20,7 +20,7 @@ struct MainButton: View {
                 .padding()
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .background(enabled && !submitted ? backgroundColor : .gray.opacity(0.5))
-                .cornerRadius(Dimens.extraSmall)
+                .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
         }
         .disabled(!enabled && !submitted)
     }

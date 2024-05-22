@@ -5,48 +5,54 @@ import KhenshinProtocol
 struct SuccessMessageComponent: View {
     let operationSuccess: OperationSuccess
     @ObservedObject public var viewModel: KhipuViewModel
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         VStack {
-            Image(systemName: "checkmark.circle.fill")
-                .font(.system(size: Dimens.extraLarge))
-                .foregroundColor(themeManager.selectedTheme.success)
-            Spacer().frame(height: Dimens.moderatelyLarge)
-            Text(operationSuccess.title ?? "")
-                .font(.title2)
-                .foregroundColor(themeManager.selectedTheme.onBackground)
-            Spacer().frame(height: Dimens.extraSmall)
-            Text(operationSuccess.body ?? "")
-                .font(.body)
-                .foregroundColor(themeManager.selectedTheme.onBackground)
-                .multilineTextAlignment(.center)
-            Spacer().frame(height: Dimens.moderatelyLarge)
-            Text(viewModel.uiState.translator.t("default.operation.code.label"))
-                .font(.footnote)
-                .foregroundColor(themeManager.selectedTheme.onBackground)
-            Spacer().frame(height: Dimens.extraSmall)
-            Text(formatOperationId(operationSuccess.operationID ?? ""))
-                .font(.body)
-                .foregroundColor(themeManager.selectedTheme.primary)
-                .padding(.horizontal, Dimens.extraMedium)
-                .padding(.vertical, Dimens.extraSmall)
-                .background(
-                    Color(uiColor: .lightGray)
-                        .opacity(0.3)
-                        .cornerRadius(Dimens.extraSmall)
-                )
-            Spacer().frame(height: Dimens.veryLarge)
+            Group {
+                Image(systemName: "checkmark.circle.fill")
+                    .font(.system(size: themeManager.selectedTheme.dimens.extraLarge))
+                    .foregroundColor(themeManager.selectedTheme.colors.success)
+                Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
+                Text(operationSuccess.title ?? "")
+                    .font(.title2)
+                    .foregroundColor(themeManager.selectedTheme.colors.onBackground)
+                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+            }
+            Group {
+                Text(operationSuccess.body ?? "")
+                    .font(.body)
+                    .foregroundColor(themeManager.selectedTheme.colors.onBackground)
+                    .multilineTextAlignment(.center)
+                Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
+                Text(viewModel.uiState.translator.t("default.operation.code.label"))
+                    .font(.footnote)
+                    .foregroundColor(themeManager.selectedTheme.colors.onBackground)
+                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+            }
+            Group {
+                Text(formatOperationId(operationSuccess.operationID ?? ""))
+                    .font(.body)
+                    .foregroundColor(themeManager.selectedTheme.colors.primary)
+                    .padding(.horizontal, themeManager.selectedTheme.dimens.extraMedium)
+                    .padding(.vertical, themeManager.selectedTheme.dimens.extraSmall)
+                    .background(
+                        Color(uiColor: .lightGray)
+                            .opacity(0.3)
+                            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
+                    )
+                Spacer().frame(height: themeManager.selectedTheme.dimens.veryLarge)
+            }
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
                 onClick: {
                     viewModel.uiState.returnToApp = true
                 },
-                foregroundColor: themeManager.selectedTheme.onSuccess,
-                backgroundColor: themeManager.selectedTheme.success
+                foregroundColor: themeManager.selectedTheme.colors.onSuccess,
+                backgroundColor: themeManager.selectedTheme.colors.success
             )
-        }.padding(.all, Dimens.extraMedium)
+        }.padding(.all, themeManager.selectedTheme.dimens.extraMedium)
     }
 }
 

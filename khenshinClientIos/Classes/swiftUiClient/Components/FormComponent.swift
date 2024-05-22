@@ -18,16 +18,16 @@ public struct FormComponent: View {
     @State private var formValues: [String: String] = [:]
     public var formRequest: FormRequest
     @ObservedObject public var viewModel: KhipuViewModel
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     public var body: some View {
         VStack {
-            FormTitle(text: formRequest.title!, themeManager: themeManager)
+            FormTitle(text: formRequest.title!)
             if(!viewModel.uiState.bank.isEmpty) {
-                FormPill(text: viewModel.uiState.bank, themeManager: themeManager)
+                FormPill(text: viewModel.uiState.bank)
             }
             if(formRequest.info != nil && !formRequest.info!.isEmpty) {
-                FormInfo(text: formRequest.info!, themeManager: themeManager)
+                FormInfo(text: formRequest.info!)
             }
             ForEach(formRequest.items.indices, id: \.self) { index in
                 DrawComponent(
@@ -35,8 +35,7 @@ public struct FormComponent: View {
                     hasNextField: index < formRequest.items.count - 1,
                     formValues: $formValues,
                     submitFunction: submitForm,
-                    viewModel: viewModel, 
-                    themeManager: themeManager
+                    viewModel: viewModel
                 )
             }
             if(getShouldShowContinueButton(formRequest: formRequest)) {
@@ -46,12 +45,12 @@ public struct FormComponent: View {
                                 submittedForm = true
                                 submitForm()
                             },
-                           foregroundColor: themeManager.selectedTheme.onPrimary,
-                           backgroundColor: themeManager.selectedTheme.primary
+                           foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                           backgroundColor: themeManager.selectedTheme.colors.primary
                 )
             }
         }
-        .padding(.all, Dimens.extraMedium)
+        .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
         .onAppear {
             
             if let progress = viewModel.uiState.currentForm!.progress,
@@ -116,7 +115,7 @@ struct DrawComponent: View {
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
     @ObservedObject var viewModel: KhipuViewModel
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     public var body: some View {
         let validationFun: (Bool) -> Void = { valid in
@@ -138,8 +137,7 @@ struct DrawComponent: View {
                 formItem: item,
                 isValid: validationFun,
                 returnValue: getValueFun,
-                submitFunction: submitFunction,
-                themeManager: themeManager
+                submitFunction: submitFunction
             )
         case FormItemTypes.dataTable:
             KhipuDataTableField(
@@ -189,8 +187,7 @@ struct DrawComponent: View {
                 hasNextField: hasNextField,
                 isValid: validationFun,
                 returnValue: getValueFun,
-                viewModel: viewModel,
-                themeManager: themeManager
+                viewModel: viewModel
             )
         case FormItemTypes.separator:
             KhipuSeparatorField(
@@ -212,8 +209,7 @@ struct DrawComponent: View {
                 hasNextField: hasNextField,
                 isValid: validationFun,
                 returnValue: getValueFun,
-                viewModel: viewModel,
-                themeManager: themeManager
+                viewModel: viewModel
             )
         }
     }

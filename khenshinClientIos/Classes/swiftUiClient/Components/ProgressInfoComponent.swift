@@ -4,22 +4,22 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct ProgressInfoComponent: View {
     var message: String
-    @ObservedObject var themeManager: ThemeManager
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         VStack {
             VStack(alignment: .center) {
                 ProgressView()
-                    .progressViewStyle(CircularProgressViewStyle(tint: themeManager.selectedTheme.primary))
-                    .padding(.top, Dimens.huge)
-                    .padding(.bottom, Dimens.large)
+                    .progressViewStyle(CircularProgressViewStyle(tint: themeManager.selectedTheme.colors.primary))
+                    .padding(.top, themeManager.selectedTheme.dimens.huge)
+                    .padding(.bottom, themeManager.selectedTheme.dimens.large)
                 Text(message)
-                    .font(.system(size: Dimens.large))
-                    .padding(.horizontal, Dimens.moderatelyLarge)
+                    .font(.system(size: themeManager.selectedTheme.dimens.large))
+                    .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
             }
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, Dimens.moderatelyLarge)
+        .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
     }
 }
