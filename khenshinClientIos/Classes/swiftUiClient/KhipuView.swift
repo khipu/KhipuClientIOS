@@ -65,6 +65,8 @@ public struct KhipuView: View {
                     ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(viewModel: viewModel)
+                    AuthorizationRequestView(viewModel: viewModel)
+
                 default:
                     EmptyView()
             }

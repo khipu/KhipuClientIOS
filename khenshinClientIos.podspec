@@ -33,9 +33,9 @@ TODO: Add long description of the pod here.
   s.source_files = 'khenshinClientIos/Classes/**/*'
   s.resources = 'khenshinClientIos/Assets/**/*.{xcassets,json,ttf}'
 
-  #s.resource_bundles = {
-  #    'khenshinClientIosAssets' => ['khenshinClientIos/Assets/**/*.{xcassets,json,ttf}']
-  #}
+  s.resource_bundles = {
+      'khenshinClientIosAssets' => ['khenshinClientIos/Assets/**/*.{xcassets,json,ttf}']
+  }
 
   # s.resource_bundles = {
   #   'khenshinClientIos' => ['khenshinClientIos/Assets/*.png']
@@ -44,4 +44,5 @@ TODO: Add long description of the pod here.
   s.dependency 'Socket.IO-Client-Swift'
   s.dependency 'KhenshinSecureMessage'
   s.dependency 'KhenshinProtocol', '1.0.42'
+
 end

@@ -14,6 +14,7 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		765AD62FF125D78C9D9BD868 /* Pods_khenshinClientIos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE1BEF23DF568C4F32C6707 /* Pods_khenshinClientIos_Tests.framework */; };
 		ABFA01ADFD0F5FA4950CCC90 /* Pods_khenshinClientIos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 497C3F997170ED339A46B464 /* Pods_khenshinClientIos_Example.framework */; };
+		BD1B5A2E2BFE736100376920 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD1B5A2D2BFE736100376920 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		607FACE51AFB9204008FA782 /* khenshinClientIos_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = khenshinClientIos_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
+		BD1B5A2D2BFE736100376920 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../khenshinClientIos/Assets/Resources/Images.xcassets; sourceTree = "<group>"; };
 		E2B34EABC507DE7881EDA02C /* khenshinClientIos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = khenshinClientIos.podspec; path = ../khenshinClientIos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E60D19324E892A937F07F734 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		EE99C62A2E7BAF2AE1696066 /* Pods-khenshinClientIos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-khenshinClientIos_Example.release.xcconfig"; path = "Target Support Files/Pods-khenshinClientIos_Example/Pods-khenshinClientIos_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +92,7 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
+				BD1B5A2D2BFE736100376920 /* Images.xcassets */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for khenshinClientIos */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -245,6 +248,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD1B5A2E2BFE736100376920 /* Images.xcassets in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
