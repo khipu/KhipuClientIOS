@@ -177,4 +177,12 @@ struct Colors {
     var onSuccessContainer: Color {
         return Color("onSuccessContainer", bundle: bundle)
     }
+    
+    var buttonForeground: Color {
+        return Color("buttonForeground", bundle: bundle)
+    }
+    
+    var buttonBackground: Color {
+        return Color("buttonBackground", bundle: bundle)
+    }
 }
