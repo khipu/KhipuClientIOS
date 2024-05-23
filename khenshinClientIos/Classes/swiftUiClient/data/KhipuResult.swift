@@ -6,12 +6,12 @@ public struct KhipuResult: Codable {
     let exitMessage: String
     let result: String
     let events: [KhipuEvent]
-    let exitUrl: String
+    let exitUrl: String?
     let failureReason: String?
     let continueUrl: String?
     
     var description: String {
-        return String(format: "{operationId: %@, result: %@, failureReason: %@, exitTitle: %@, exitMessage: %@, exitUrl: %@, continueUrl: %@, events: %@}", operationId, result, failureReason ?? "nil", exitTitle, exitMessage, exitUrl, continueUrl ?? "nil", events)
+        return String(format: "{operationId: %@, result: %@, failureReason: %@, exitTitle: %@, exitMessage: %@, exitUrl: %@, continueUrl: %@, events: %@}", operationId, result, failureReason ?? "nil", exitTitle, exitMessage, exitUrl ?? "nil", continueUrl ?? "nil", events)
     }
     
     public func asJson() -> String {

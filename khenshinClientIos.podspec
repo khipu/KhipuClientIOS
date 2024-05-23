@@ -31,15 +31,7 @@ TODO: Add long description of the pod here.
   s.ios.deployment_target = '12.0'
 
   s.source_files = 'khenshinClientIos/Classes/**/*'
-  s.resources = 'khenshinClientIos/Assets/**/*.{xcassets,json,ttf}'
-
-  s.resource_bundles = {
-      'khenshinClientIosAssets' => ['khenshinClientIos/Assets/**/*.{xcassets,json,ttf}']
-  }
-
-  # s.resource_bundles = {
-  #   'khenshinClientIos' => ['khenshinClientIos/Assets/*.png']
-  # }
+  s.resources = 'khenshinClientIos/Assets/**/*.{xcassets,json,ttf,html,js,css}'
 
   s.dependency 'Socket.IO-Client-Swift'
   s.dependency 'KhenshinSecureMessage'
