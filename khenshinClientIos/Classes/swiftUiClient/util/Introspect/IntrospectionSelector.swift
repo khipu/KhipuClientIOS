@@ -59,6 +59,7 @@ public struct IntrospectionSelector<Target: PlatformEntity> {
     }
 }
 
+@available(iOS 13.0.0, *)
 extension PlatformViewController {
     func `as`<Base: PlatformEntity>(_ baseType: Base.Type) -> (any PlatformEntity)? {
         if Base.self == PlatformView.self {

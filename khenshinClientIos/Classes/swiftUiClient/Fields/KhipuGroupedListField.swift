@@ -19,8 +19,9 @@ public struct KhipuGroupedListField: View {
         formItem.groupedOptions?.options ?? []
     }
     
+    
     var filteredList: [GroupedOption] {
-        filterBankByText(currentList: allOptions, textFieldValue: textFieldValue)
+        filterBankByText(currentList: filterBankByTab(currentList: allOptions), textFieldValue: textFieldValue)
     }
     
     public var body: some View {
@@ -34,12 +35,20 @@ public struct KhipuGroupedListField: View {
             .padding()
             
             TextField(formItem.placeHolder ?? "", text: $textFieldValue)
-                .padding()
+                .padding(.vertical)
+                .padding(.horizontal, 36)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                 )
                 .padding(.horizontal)
+                .overlay(
+                    Image(systemName: "magnifyingglass")
+                    .foregroundColor(.gray)
+                    .padding(.horizontal, 24)
+                    ,
+                    alignment: .leading
+                )
             
             ScrollView {
                 VStack(spacing: 16) {
@@ -92,6 +101,12 @@ public struct KhipuGroupedListField: View {
             return currentList.filter {
                 $0.name?.localizedCaseInsensitiveContains(textFieldValue) == true
             }
+        }
+    }
+    
+    func filterBankByTab(currentList: [GroupedOption]) -> [GroupedOption] {
+        return currentList.filter {
+            $0.tag == tabs[selectedTabIndex]
         }
     }
 }

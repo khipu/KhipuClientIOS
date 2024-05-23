@@ -3,6 +3,7 @@ import SwiftUI
 
 typealias IntrospectionViewID = UUID
 
+@available(iOS 13.0.0, *)
 fileprivate enum IntrospectionStore {
     static var shared: [IntrospectionViewID: Pair] = [:]
 
@@ -12,6 +13,7 @@ fileprivate enum IntrospectionStore {
     }
 }
 
+@available(iOS 13.0.0, *)
 extension PlatformEntity {
     var introspectionAnchorEntity: Base? {
         if let introspectionController = self as? IntrospectionPlatformViewController {
@@ -55,6 +57,7 @@ struct IntrospectionAnchorView: PlatformViewControllerRepresentable {
     static func dismantlePlatformViewController(_ controller: IntrospectionAnchorPlatformViewController, coordinator: Coordinator) {}
 }
 
+@available(iOS 13.0.0, *)
 final class IntrospectionAnchorPlatformViewController: PlatformViewController {
     init(id: IntrospectionViewID) {
         super.init(nibName: nil, bundle: nil)
@@ -146,6 +149,7 @@ struct IntrospectionView<Target: PlatformEntity>: PlatformViewControllerRepresen
     }
 }
 
+@available(iOS 13.0.0, *)
 final class IntrospectionPlatformViewController: PlatformViewController {
     let id: IntrospectionViewID
     var handler: (() -> Void)? = nil
@@ -220,6 +224,7 @@ final class IntrospectionPlatformViewController: PlatformViewController {
 
 import ObjectiveC
 
+@available(iOS 13.0.0, *)
 extension PlatformView {
     fileprivate var introspectionController: IntrospectionPlatformViewController? {
         get {

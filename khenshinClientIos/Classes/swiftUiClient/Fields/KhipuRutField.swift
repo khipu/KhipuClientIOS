@@ -101,7 +101,8 @@ extension CustomKeyboard {
                 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
+            .padding(.all, 6)
+            .padding(.bottom, 36)
         }
             
         
@@ -122,15 +123,16 @@ struct LabeledButton: View {
             playSystemFeedback?()
         }
         label: {
-            Label(text, systemImage: "")
-                .padding()
+            Text(text)
+                .font(.system(size: 24))
+                .padding(.all, 9)
                 .background(Color("buttonBackground", bundle: bundle))
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color("buttonBackground", bundle: bundle))
         .foregroundColor(Color("buttonForeground", bundle: bundle))
-        .cornerRadius(8)
-        .shadow(radius: 2)
+        .cornerRadius(6)
+        .shadow(radius: 0, y: 1)
     }
 }
 
@@ -148,12 +150,11 @@ struct ImageButton: View {
             
         } label: {
             Image(systemName: imageName)
-                .padding()
+                .imageScale(.large)
+                .padding(.all, 9)
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .foregroundColor(Color("buttonForeground", bundle: bundle))
-        .cornerRadius(8)
-        .shadow(radius: 2)
     }
 }
