@@ -48,7 +48,7 @@ class ViewController: UIViewController {
             operationId: sampleInput.text!,
             options: KhipuOptions.Builder()
                 .topBarTitle("Mi Khipu")
-                //.topBarImageResourceName("merchant_logo")
+                .topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
                 .theme(.light)
                 .skipExitPage(true)
@@ -59,7 +59,7 @@ class ViewController: UIViewController {
 //                )
                 .colors(KhipuColors.Builder()
 //                    .darkPrimary("#00FF00")
- //                     .lightPrimary("#0000FF")
+//                    .lightPrimary("#0000FF")
 //                    .lightBackground("#FF0000")
 //                    .darkBackground("#FF00FF")
 //                    .lightTopBarContainer("#ff0000")

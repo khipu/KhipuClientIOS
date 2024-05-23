@@ -10,11 +10,7 @@ struct AuthorizationRequestView: View {
             MobileAuthorizationRequestView(authorizationRequest: viewModel.uiState.currentAuthorizationRequest!,viewModel: viewModel)
         case .qr:
             QrAuthorizationRequestView(authorizationRequest: viewModel.uiState.currentAuthorizationRequest!,viewModel: viewModel)
-        case .custom:
-            EmptyView()
-        case .none:
-            EmptyView()
-        case .some(.none):
+        default:
             EmptyView()
         }
     }
