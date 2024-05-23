@@ -26,6 +26,7 @@ struct KhipuRutField: View {
                 .onChange(of: rutValue) { newValue in
                     onChange(newValue: newValue)
                 }
+                .customKeyboard(.rutKeyboard)
             
             if !(formItem.hint?.isEmpty ?? true) {
                 HintLabel(text: formItem.hint)
@@ -66,5 +67,93 @@ struct KhipuRutField: View {
             return viewModel.uiState.translator.t("form.validation.error.rut.invalid")
         }
         return ""
+    }
+}
+
+
+@available(iOS 15.0, *)
+extension CustomKeyboard {
+    static var rutKeyboard: CustomKeyboard {
+        CustomKeyboardBuilder { textDocumentProxy, submit, playSystemFeedback in
+            HStack {
+                VStack {
+                    LabeledButton(text: "1", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    LabeledButton(text: "4", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    LabeledButton(text: "7", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    LabeledButton(text: "K", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                VStack {
+                    LabeledButton(text: "2", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    LabeledButton(text: "5", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    LabeledButton(text: "8", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    LabeledButton(text: "0", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                VStack {
+                    LabeledButton(text: "3", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    LabeledButton(text: "6", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    LabeledButton(text: "9", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    ImageButton(imageName: "delete.left", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
+                    
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
+        }
+            
+        
+    }
+}
+
+
+@available(iOS 15.0.0, *)
+struct LabeledButton: View {
+    let text: String
+    let textDocumentProxy: UITextDocumentProxy
+    let playSystemFeedback: (() -> ())?
+    let bundle = Bundle(identifier: "org.cocoapods.khenshinClientIos")
+    
+    var body: some View {
+        Button {
+            textDocumentProxy.insertText(text)
+            playSystemFeedback?()
+        }
+        label: {
+            Label(text, systemImage: "")
+                .padding()
+                .background(Color("buttonBackground", bundle: bundle))
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color("buttonBackground", bundle: bundle))
+        .foregroundColor(Color("buttonForeground", bundle: bundle))
+        .cornerRadius(8)
+        .shadow(radius: 2)
+    }
+}
+
+@available(iOS 15.0.0, *)
+struct ImageButton: View {
+    let bundle = Bundle(identifier: "org.cocoapods.khenshinClientIos")
+    let imageName: String
+    let textDocumentProxy: UITextDocumentProxy
+    let playSystemFeedback: (() -> ())?
+    
+    var body: some View {
+        Button {
+            textDocumentProxy.deleteBackward()
+            playSystemFeedback?()
+            
+        } label: {
+            Image(systemName: imageName)
+                .padding()
+            
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .foregroundColor(Color("buttonForeground", bundle: bundle))
+        .cornerRadius(8)
+        .shadow(radius: 2)
     }
 }
