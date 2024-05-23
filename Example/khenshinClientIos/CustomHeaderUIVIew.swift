@@ -61,7 +61,7 @@ class CustomHeaderUIVIew: UIView, KhipuHeaderProtocol {
     }
     
     private func setupView() {
-        backgroundColor = .brown
+        backgroundColor = .cyan
         addSubview(subjectLabel)
         addSubview(amountLabel)
         addSubview(merchantNameLabel)

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no'">
+        <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <script type="text/javascript" src="https://js.khipu.com/v1/kws.js"></script>
+        <style>
+            #khenshin-web-root {
+                padding: 0;
+                display: inline-block;
+            }
+
+            #khenshin-web-root > iframe {
+                display: block;
+                margin: 0;
+                min-width: 450px;
+                min-height: 700px;
+            }
+
+            @media (max-width: 510px) {
+                body {
+                    margin: 0;
+                }
+
+                #main {
+                    width: 96%;
+                    border-radius: 0;
+                    border: none;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div id="khenshin-web-root"></div>
+        <script type="text/javascript">
+
+            const startOperation = (operationId, locale, skipExitPage, primaryColor) => {
+                console.log(`will startOperation for ${operationId}, locale: ${locale}, skipExitPage: ${skipExitPage}`)
+
+                const closeCallback = (url) => {
+                    window.webkit.messageHandlers.closeHandler.postMessage(url)
+                };
+                
+                const options = {
+                    mountElement: document.getElementById('khenshin-web-root'),
+                    modal: true,
+                    locale: locale,
+                    modalOptions: {
+                        maxWidth: '450',
+                        maxHeight: '750',
+                    },
+                    options: {
+                        style: {
+                            primaryColor: primaryColor != "undefined" ? primaryColor : '#7E42A8',
+                            //fontFamily: 'Roboto',
+                        },
+                        skipExitPage: skipExitPage,
+                    },
+                    skipFP: true,
+                    closeCallback: closeCallback,
+                }
+
+                const prettyJson = (obj) => JSON.stringify(obj, null, 4)
+
+                const callback = (result) => {
+                    window.webkit.messageHandlers.resultHandler.postMessage(prettyJson(result))
+                };
+
+                let khipu = new Khipu();
+                khipu.startOperation(operationId, callback, options);
+            }
+        </script>
+    </body>
+</html>

@@ -12,6 +12,7 @@ import KhenshinProtocol
 public struct KhipuView: View {
     @StateObject var themeManager = ThemeManager()
     @StateObject var viewModel = KhipuViewModel()
+    @State private var isConfirmingClose = false
     @Environment(\.colorScheme) var colorScheme
     var dismiss: (() -> Void)
     let operationId: String
@@ -89,9 +90,21 @@ public struct KhipuView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {
-                    viewModel.uiState.returnToApp = true
+                    isConfirmingClose = true
+                    
                 } label: {
                     Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
+                }.confirmationDialog(
+                    viewModel.uiState.translator.t("modal.abortOperation.title"),
+                    isPresented: $isConfirmingClose,
+                    titleVisibility: .visible
+                ) {
+                    Button(viewModel.uiState.translator.t("modal.abortOperation.cancel.button"), role: .destructive) {
+                        viewModel.uiState.returnToApp = true
+                    }
+                    Button(viewModel.uiState.translator.t("modal.abortOperation.continue.button"), role: .cancel) {
+                        isConfirmingClose = false
+                    }
                 }
             }
             ToolbarItem(placement: .principal) {

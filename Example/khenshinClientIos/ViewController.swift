@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "bi2vwoxbpmv0"
+        sampleTextField.text = "ej9vd79vo9kl"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -51,10 +51,10 @@ class ViewController: UIViewController {
                 .topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
                 .theme(.light)
-                .skipExitPage(false)
+                .skipExitPage(true)
 //                .header(KhipuHeader.Builder()
 //                    .headerUIView(CustomHeaderUIVIew())
-//                    .height(140)
+//                    .height(300)
 //                    .build()
 //                )
                 .colors(KhipuColors.Builder()
