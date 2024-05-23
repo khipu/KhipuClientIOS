@@ -31,9 +31,6 @@ public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandle
     public override func loadView() {
         let webConfiguration = WKWebViewConfiguration()
         webView = WKWebView(frame: .zero, configuration: webConfiguration)
-        if #available(iOS 16.4, *) {
-            webView.isInspectable = true
-        }
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
