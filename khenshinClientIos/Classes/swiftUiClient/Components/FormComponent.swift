@@ -16,6 +16,7 @@ public struct FormComponent: View {
     
     @State private var submittedForm: Bool = false
     @State private var formValues: [String: String] = [:]
+    @State private var storedForm: Bool = false
     public var formRequest: FormRequest
     @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
@@ -38,6 +39,10 @@ public struct FormComponent: View {
                     viewModel: viewModel
                 )
             }
+            RememberValues(
+                formRequest: formRequest,
+                storedForm: $storedForm,
+                viewModel: viewModel)
             if(getShouldShowContinueButton(formRequest: formRequest)) {
                 MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                            enabled: validForm(),
@@ -52,7 +57,6 @@ public struct FormComponent: View {
         }
         .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
         .onAppear {
-            
             if let progress = viewModel.uiState.currentForm!.progress,
                let current = progress.current,
                let total = progress.total {
@@ -62,6 +66,39 @@ public struct FormComponent: View {
             }
         }
     }
+    
+    private struct RememberValues: View {
+        public var formRequest: FormRequest
+        @Binding var storedForm: Bool
+        @ObservedObject var viewModel: KhipuViewModel
+        
+        public var body: some View {
+            if(formRequest.rememberValues ?? false) {
+                Toggle(isOn: $storedForm) {
+                    Text("Recordar credenciales")
+                }
+                .toggleStyle(iOSCheckboxToggleStyle())
+                .onAppear {
+                    getSavedForm()
+                }
+            }
+        }
+        
+        private func getSavedForm() {
+            do {
+                guard let storedCredentials = try CredentialsStorageUtil.searchCredentials(server: viewModel.uiState.bank) else {
+                    throw KeychainError.noPassword
+                }
+                viewModel.uiState.storedUsername = storedCredentials.username
+                viewModel.uiState.storedPassword = storedCredentials.password
+                storedForm = true
+            } catch {
+                print("No credentials found for \(viewModel.uiState.bank)")
+            }
+        }
+    }
+    
+    
     
     private func getMainButtonText(formRequest: FormRequest, khipuUiState: KhipuUiState) -> String {
         if formRequest.continueLabel == nil || formRequest.continueLabel?.isEmpty ?? true {
@@ -98,6 +135,12 @@ public struct FormComponent: View {
             try viewModel.khipuSocketIOClient?.sendMessage(type: response.type.rawValue, message: response.jsonString() ?? "")
         } catch {
             print("Error sending form")
+        }
+        if(self.formRequest.rememberValues ?? false && storedForm) {
+            let credentials = Credentials(username: answers[0].value, password: answers[1].value)
+            try! CredentialsStorageUtil.storeCredentials(credentials: credentials, server: viewModel.uiState.bank)
+        } else if(self.formRequest.rememberValues ?? false && !storedForm) {
+            try! CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)
         }
     }
     

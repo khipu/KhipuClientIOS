@@ -16,6 +16,7 @@ struct KhipuTextField: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
+        
         VStack(alignment: .leading, spacing:0) {
             FieldLabel(text: formItem.label)
             HStack {
@@ -76,6 +77,9 @@ struct KhipuTextField: View {
         .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
         .onAppear {
             startTimer()
+            if(viewModel.uiState.currentForm?.rememberValues ?? false) {
+                textFieldValue = viewModel.uiState.storedPassword
+            }
         }
     }
     
