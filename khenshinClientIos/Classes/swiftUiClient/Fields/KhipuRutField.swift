@@ -15,6 +15,7 @@ struct KhipuRutField: View {
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     
     var body: some View {
+              
         VStack(alignment: .leading, spacing:0) {
             FieldLabel(text: formItem.label)
             TextField(formItem.placeHolder ?? "", text: $rutValue)
@@ -27,7 +28,11 @@ struct KhipuRutField: View {
                     onChange(newValue: newValue)
                 }
                 .customKeyboard(.rutKeyboard)
-            
+                .onAppear {
+                    if(viewModel.uiState.currentForm?.rememberValues ?? false) {
+                        rutValue = viewModel.uiState.storedUsername
+                    }  
+                }
             if !(formItem.hint?.isEmpty ?? true) {
                 HintLabel(text: formItem.hint)
             }
