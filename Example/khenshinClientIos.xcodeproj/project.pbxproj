@@ -15,6 +15,9 @@
 		765AD62FF125D78C9D9BD868 /* Pods_khenshinClientIos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE1BEF23DF568C4F32C6707 /* Pods_khenshinClientIos_Tests.framework */; };
 		ABFA01ADFD0F5FA4950CCC90 /* Pods_khenshinClientIos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 497C3F997170ED339A46B464 /* Pods_khenshinClientIos_Example.framework */; };
 		BD1B5A2E2BFE736100376920 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD1B5A2D2BFE736100376920 /* Images.xcassets */; };
+		BD5033082BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */; };
+		BDA93D152C002748008887F5 /* AuthorizationRequestComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */; };
+		BDE1CB772C00E49B000FF18F /* ViewInspectorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1CB762C00E49B000FF18F /* ViewInspectorUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +45,9 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		BD1B5A2D2BFE736100376920 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../khenshinClientIos/Assets/Resources/Images.xcassets; sourceTree = "<group>"; };
+		BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantDialogComponentTests.swift; sourceTree = "<group>"; };
+		BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestComponentTest.swift; sourceTree = "<group>"; };
+		BDE1CB762C00E49B000FF18F /* ViewInspectorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewInspectorUtils.swift; sourceTree = "<group>"; };
 		E2B34EABC507DE7881EDA02C /* khenshinClientIos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = khenshinClientIos.podspec; path = ../khenshinClientIos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E60D19324E892A937F07F734 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		EE99C62A2E7BAF2AE1696066 /* Pods-khenshinClientIos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-khenshinClientIos_Example.release.xcconfig"; path = "Target Support Files/Pods-khenshinClientIos_Example/Pods-khenshinClientIos_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -135,6 +141,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				BDE1CB752C00E0B7000FF18F /* utils */,
+				BDA93D132C0026DA008887F5 /* Components */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -157,6 +165,23 @@
 				1926946F7126EC05B014A5AD /* LICENSE */,
 			);
 			name = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
+		BDA93D132C0026DA008887F5 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */,
+				BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		BDE1CB752C00E0B7000FF18F /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				BDE1CB762C00E49B000FF18F /* ViewInspectorUtils.swift */,
+			);
+			name = utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -189,6 +214,7 @@
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
+				D5E9F96D06EE1B99217D5F29 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -319,6 +345,7 @@
 				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
 				"${BUILT_PRODUCTS_DIR}/Sodium/Sodium.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
+				"${BUILT_PRODUCTS_DIR}/ViewInspector/ViewInspector.framework",
 				"${BUILT_PRODUCTS_DIR}/khenshinClientIos/khenshinClientIos.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -328,11 +355,30 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewInspector.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/khenshinClientIos.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-khenshinClientIos_Example/Pods-khenshinClientIos_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D5E9F96D06EE1B99217D5F29 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-khenshinClientIos_Tests/Pods-khenshinClientIos_Tests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/ViewInspector/ViewInspector.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ViewInspector.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-khenshinClientIos_Tests/Pods-khenshinClientIos_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -353,6 +399,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				BDA93D152C002748008887F5 /* AuthorizationRequestComponentTest.swift in Sources */,
+				BDE1CB772C00E49B000FF18F /* ViewInspectorUtils.swift in Sources */,
+				BD5033082BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
