@@ -44,38 +44,35 @@ final class MerchantDialogComponentTests: XCTestCase {
         do {
             let view = try component.inspect()
             
-            let titleText = try view.navigationView().scrollView().vStack().text(0)
-            XCTAssertEqual(try titleText.string(), "Detalles del Pago")
+            let vStack = try view.navigationView().scrollView().vStack()
             
-            let destinataryLabelText = try view.navigationView().scrollView().vStack().text(1)
-            XCTAssertEqual(try destinataryLabelText.string(), "Destinatario")
+            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Detalles del Pago"), "Failed to find the text: Detalles del Pago")
             
-            let merchantText = try view.navigationView().scrollView().vStack().text(2)
-            XCTAssertEqual(try merchantText.string(), merchant)
+            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Destinatario"), "Failed to find the text: Destinatario")
             
-            let subjectLabelText = try view.navigationView().scrollView().vStack().text(3)
-            XCTAssertEqual(try subjectLabelText.string(), "Asunto")
+            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: merchant), "Failed to find the text:"+merchant)
             
-            let subjectText = try view.navigationView().scrollView().vStack().text(4)
-            XCTAssertEqual(try subjectText.string(), subject)
+            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Asunto"), "Failed to find the text: Asunto")
+            
+            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: subject), "Failed to find the text:"+subject)
             
             if !description.isEmpty {
-                let descriptionLabelText = try view.navigationView().scrollView().vStack().tupleView(5).text(0)
+                let descriptionLabelText = try vStack.tupleView(5).text(0)
                 XCTAssertEqual(try descriptionLabelText.string(), "Descripción")
                 
-                let descriptionText = try view.navigationView().scrollView().vStack().tupleView(5).text(1)
+                let descriptionText = try vStack.tupleView(5).text(1)
                 XCTAssertEqual(try descriptionText.string(), description)
                 
-                let amountLabelText = try view.navigationView().scrollView().vStack().text(6)
+                let amountLabelText = try vStack.text(6)
                 XCTAssertEqual(try amountLabelText.string(), "Monto a Pagar")
                 
-                let amountText = try view.navigationView().scrollView().vStack().text(7)
+                let amountText = try vStack.text(7)
                 XCTAssertEqual(try amountText.string(), amount)
             } else {
-                let amountLabelText = try view.navigationView().scrollView().vStack().text(5)
+                let amountLabelText = try vStack.text(5)
                 XCTAssertEqual(try amountLabelText.string(), "Monto a Pagar")
                 
-                let amountText = try view.navigationView().scrollView().vStack().text(6)
+                let amountText = try vStack.text(6)
                 XCTAssertEqual(try amountText.string(), amount)
             }
         } catch {

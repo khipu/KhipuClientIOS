@@ -14,17 +14,6 @@ extension MobileAuthorizationRequestView: Inspectable { }
 extension QrAuthorizationRequestView: Inspectable { }
 
 
-@available(iOS 13.0, *)
-class MockKhipuViewModel: KhipuViewModel {
-    override init() {
-        super.init()
-        uiState.translator = KhipuTranslator(translations: [
-            "modal.authorization.use.app": "Use the app to authorize",
-            "modal.authorization.wait": "Please wait"
-        ])
-    }
-}
-
 @available(iOS 15.0, *)
 final class AuthorizationRequestComponentTests: XCTestCase {
     
@@ -45,11 +34,11 @@ final class AuthorizationRequestComponentTests: XCTestCase {
                 let inspectedView = try view.inspect().view(AuthorizationRequestView.self).view(MobileAuthorizationRequestView.self)
                 let vStack = try inspectedView.vStack()
                 
-                XCTAssertTrue(try ViewInspectorUtils.verifyFormTitleInVStack(vStack, expectedText: "Use the app to authorize"), "Failed to find FormTitle with text: Use the app to authorize")
+                XCTAssertTrue(try ViewInspectorUtils.verifyFormTitleInStack(vStack, expectedText: "Use the app to authorize"), "Failed to find FormTitle with text: Use the app to authorize")
                 
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInVStack(vStack, expectedText: "Please authorize using the app"), "Failed to find the text: Please authorize using the app")
+                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Please authorize using the app"), "Failed to find the text: Please authorize using the app")
                 
-                XCTAssertTrue(try ViewInspectorUtils.verifyButtonInVStack(vStack, expectedButtonText: "Please wait"), "Failed to find the button with text: Please wait")
+                XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(vStack, expectedButtonText: "Please wait"), "Failed to find the button with text: Please wait")
             } catch {
                 XCTFail("Failed to inspect view: \(error)")
             }
@@ -71,7 +60,6 @@ final class AuthorizationRequestComponentTests: XCTestCase {
             .environmentObject(themeManager)
         
         ViewHosting.host(view: view)
-        
         let exp = expectation(description: "onAppear")
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             exp.fulfill()
@@ -79,9 +67,8 @@ final class AuthorizationRequestComponentTests: XCTestCase {
                 let inspectedView = try view.inspect().view(AuthorizationRequestView.self).view(QrAuthorizationRequestView.self)
                 
                 let vStack = try inspectedView.vStack()
-                let text = try vStack.text(1).string()
+                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Scan the QR code"), "Scan the QR code")
                 
-                XCTAssertEqual(text, "Scan the QR code")
             } catch {
                 XCTFail("Failed to inspect view: \(error)")
             }

@@ -18,6 +18,8 @@
 		BD5033082BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */; };
 		BDA93D152C002748008887F5 /* AuthorizationRequestComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */; };
 		BDE1CB772C00E49B000FF18F /* ViewInspectorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1CB762C00E49B000FF18F /* ViewInspectorUtils.swift */; };
+		BDE1CB792C01183D000FF18F /* CopyToClipboardComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1CB782C01183D000FF18F /* CopyToClipboardComponentTests.swift */; };
+		BDE1CB7B2C0129BE000FF18F /* FailureMessageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1CB7A2C0129BE000FF18F /* FailureMessageComponentTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantDialogComponentTests.swift; sourceTree = "<group>"; };
 		BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestComponentTest.swift; sourceTree = "<group>"; };
 		BDE1CB762C00E49B000FF18F /* ViewInspectorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewInspectorUtils.swift; sourceTree = "<group>"; };
+		BDE1CB782C01183D000FF18F /* CopyToClipboardComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyToClipboardComponentTests.swift; sourceTree = "<group>"; };
+		BDE1CB7A2C0129BE000FF18F /* FailureMessageComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailureMessageComponentTests.swift; sourceTree = "<group>"; };
 		E2B34EABC507DE7881EDA02C /* khenshinClientIos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = khenshinClientIos.podspec; path = ../khenshinClientIos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		E60D19324E892A937F07F734 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		EE99C62A2E7BAF2AE1696066 /* Pods-khenshinClientIos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-khenshinClientIos_Example.release.xcconfig"; path = "Target Support Files/Pods-khenshinClientIos_Example/Pods-khenshinClientIos_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -172,6 +176,8 @@
 			children = (
 				BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */,
 				BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */,
+				BDE1CB782C01183D000FF18F /* CopyToClipboardComponentTests.swift */,
+				BDE1CB7A2C0129BE000FF18F /* FailureMessageComponentTests.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -398,9 +404,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDE1CB7B2C0129BE000FF18F /* FailureMessageComponentTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				BDA93D152C002748008887F5 /* AuthorizationRequestComponentTest.swift in Sources */,
 				BDE1CB772C00E49B000FF18F /* ViewInspectorUtils.swift in Sources */,
+				BDE1CB792C01183D000FF18F /* CopyToClipboardComponentTests.swift in Sources */,
 				BD5033082BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
