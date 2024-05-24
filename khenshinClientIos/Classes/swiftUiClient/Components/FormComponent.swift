@@ -9,6 +9,7 @@ import Foundation
 
 import SwiftUI
 import KhenshinProtocol
+import LocalAuthentication
 
 
 @available(iOS 15.0.0, *)
@@ -16,6 +17,7 @@ public struct FormComponent: View {
     
     @State private var submittedForm: Bool = false
     @State private var formValues: [String: String] = [:]
+    @AppStorage("storedCredentials") private var storedForm: Bool = false
     public var formRequest: FormRequest
     @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
@@ -35,16 +37,21 @@ public struct FormComponent: View {
                     hasNextField: index < formRequest.items.count - 1,
                     formValues: $formValues,
                     submitFunction: submitForm,
-                    viewModel: viewModel
+                    viewModel: viewModel,
+                    storedForm: $storedForm
                 )
             }
+            RememberValues(
+                formRequest: formRequest,
+                storedForm: $storedForm,
+                viewModel: viewModel)
             if(getShouldShowContinueButton(formRequest: formRequest)) {
                 MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                            enabled: validForm(),
                            onClick: {
-                                submittedForm = true
-                                submitForm()
-                            },
+                    submittedForm = true
+                    submitForm()
+                },
                            foregroundColor: themeManager.selectedTheme.colors.onPrimary,
                            backgroundColor: themeManager.selectedTheme.colors.primary
                 )
@@ -52,13 +59,13 @@ public struct FormComponent: View {
         }
         .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
         .onAppear {
-            
             if let progress = viewModel.uiState.currentForm!.progress,
                let current = progress.current,
                let total = progress.total {
                 
                 let currentProgress = Float(current) / Float(total)
                 viewModel.setCurrentProgress(currentProgress: currentProgress)
+                viewModel.uiState.storedForm = storedForm
             }
         }
     }
@@ -99,13 +106,37 @@ public struct FormComponent: View {
         } catch {
             print("Error sending form")
         }
+        if(self.formRequest.rememberValues ?? false && storedForm) {
+            let credentials = Credentials(username: answers[0].value, password: answers[1].value)
+            try! CredentialsStorageUtil.storeCredentials(credentials: credentials, server: viewModel.uiState.bank)
+        } else if(self.formRequest.rememberValues ?? false && !storedForm) {
+            try! CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)
+        }
     }
     
     private func getShouldShowContinueButton(formRequest: FormRequest) -> Bool {
         return !(formRequest.items.count == 1 && (formRequest.items.first?.type == FormItemTypes.groupedList || formRequest.items.first?.type == FormItemTypes.list))
     }
     
+    
 }
+
+@available(iOS 15.0, *)
+private struct RememberValues: View {
+    public var formRequest: FormRequest
+    @Binding var storedForm: Bool
+    @ObservedObject var viewModel: KhipuViewModel
+    
+    public var body: some View {
+        if(formRequest.rememberValues ?? false) {
+            Toggle(isOn: $storedForm) {
+                Text("Recordar credenciales")
+            }
+            .toggleStyle(iOSCheckboxToggleStyle())
+        }
+    }
+}
+
 
 @available(iOS 15.0, *)
 struct DrawComponent: View {
@@ -115,6 +146,7 @@ struct DrawComponent: View {
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
     @ObservedObject var viewModel: KhipuViewModel
+    @Binding var storedForm: Bool
     @EnvironmentObject private var themeManager: ThemeManager
     
     public var body: some View {
@@ -212,8 +244,7 @@ struct DrawComponent: View {
                 viewModel: viewModel
             )
         }
-    }
-    
+    }    
 }
 
 
