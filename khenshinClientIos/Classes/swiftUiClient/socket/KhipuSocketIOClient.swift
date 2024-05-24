@@ -22,6 +22,7 @@ public class KhipuSocketIOClient {
             .compress,
             .forceNew(true),
             .secure(true),
+            .reconnectAttempts(-1),
             .connectParams([
                 "clientId": UUID().uuidString,
                 "clientPublicKey": secureMessage.publicKeyBase64,
@@ -38,6 +39,7 @@ public class KhipuSocketIOClient {
         self.socket = socketManager.defaultSocket
         self.viewModel = viewModel
         self.skipExitPage = skipExitPage
+        self.clearKhssCookies()
         self.addListeners()
         
     }
@@ -58,6 +60,10 @@ public class KhipuSocketIOClient {
         
         self.socket.on(clientEvent: .reconnectAttempt) { data, ack in
             print("[id: \(self.viewModel.uiState.operationId)] reconnectAttempt")
+        }
+        
+        self.socket.onAny { data in
+            self.showCookies()
         }
         
         
@@ -378,5 +384,28 @@ public class KhipuSocketIOClient {
         print("SENDING MESSAGE \(message)")
         let encryptedMessage = self.secureMessage.encrypt(plainText: message, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
         socket.emit(type, encryptedMessage!)
+    }
+    
+    func clearKhssCookies() {
+        let cookieStorage = HTTPCookieStorage.shared
+        let cookies = cookieStorage.cookies!
+        for cookie in cookies {
+            if (cookie.name == "khss") {
+                cookieStorage.deleteCookie(cookie)
+            }
+        }
+    }
+    
+    func showCookies() {
+
+        let cookieStorage = HTTPCookieStorage.shared
+        //println("policy: \(cookieStorage.cookieAcceptPolicy.rawValue)")
+
+        let cookies = cookieStorage.cookies!
+        print("Cookies.count: \(cookies.count)")
+        for cookie in cookies {
+            print("\(cookie.name)=\(cookie.value) \(cookie.domain)")
+        }
+        
     }
 }
