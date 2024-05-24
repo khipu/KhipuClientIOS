@@ -3,6 +3,7 @@ import Foundation
 import SocketIO
 import KhenshinSecureMessage
 import KhenshinProtocol
+import LocalAuthentication
 
 @available(iOS 13.0, *)
 public class KhipuSocketIOClient {
@@ -92,7 +93,7 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.currentMessageType = MessageType.authorizationRequest.rawValue
                 self.viewModel.uiState.currentAuthorizationRequest = authRequest
             } catch {
-                print("Error processing form message, mid \(mid)")
+                print("Error processing authorizationRequest message, mid \(mid)")
             }
         }
         
@@ -114,11 +115,7 @@ public class KhipuSocketIOClient {
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
             do {
                 let formRequest = try FormRequest(decryptedMessage!)
-                self.viewModel.uiState.validatedFormItems = formRequest.items.reduce(into: [String: Bool]()) {
-                    $0[$1.id] = false
-                }
-                self.viewModel.uiState.currentMessageType = MessageType.formRequest.rawValue
-                self.viewModel.uiState.currentForm = formRequest
+                self.authAndGetSavedForm(formRequest)
             } catch {
                 print("Error processing form message, mid \(mid)")
             }
@@ -285,7 +282,7 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.currentMessageType = MessageType.progressInfo.rawValue
                 self.viewModel.uiState.progressInfoMessage = progressInfo.message!
             } catch {
-                print("Error processing form message, mid \(mid)")
+                print("Error processing progressInfo message, mid \(mid)")
             }
         }
         
@@ -302,7 +299,7 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.currentMessageType = MessageType.translation.rawValue
                 self.viewModel.uiState.translator = KhipuTranslator(translations: translation.data!)
             } catch {
-                print("Error processing form message, mid \(mid)")
+                print("Error processing translation message, mid \(mid)")
             }
         }
         
@@ -323,7 +320,7 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.currentMessageType = MessageType.siteOperationComplete.rawValue
                 self.viewModel.setSiteOperationComplete(type: siteOperationComplete.operationType, value: siteOperationComplete.value)
             } catch {
-                print("Error processing form message, mid \(mid)")
+                print("Error processing siteOperationComplete message, mid \(mid)")
             }
         }
         
@@ -397,15 +394,62 @@ public class KhipuSocketIOClient {
     }
     
     func showCookies() {
-
+        
         let cookieStorage = HTTPCookieStorage.shared
         //println("policy: \(cookieStorage.cookieAcceptPolicy.rawValue)")
-
+        
         let cookies = cookieStorage.cookies!
         print("Cookies.count: \(cookies.count)")
         for cookie in cookies {
             print("\(cookie.name)=\(cookie.value) \(cookie.domain)")
         }
+    }
         
+    private func authAndGetSavedForm(_ formRequest: FormRequest) -> Void {
+        let context = LAContext()
+        var error: NSError?
+        print("self.viewModel.uiState.storedForm = \(self.viewModel.uiState.storedForm)")
+        
+        if (isLoginFormAndStored(formRequest) && formRequest.rememberValues ?? false && context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)) {
+            let reason = "Confirme su identidad."
+        
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                DispatchQueue.main.async {
+                    if success {
+                        self.getSavedForm(formRequest)
+                    }
+                }
+            }
+        } else {
+            loadForm(formRequest)
+        }
+    }
+    
+    private func getSavedForm(_ formRequest: FormRequest) -> Void {
+        do {
+            guard let storedCredentials = try CredentialsStorageUtil.searchCredentials(server: self.viewModel.uiState.bank) else {
+                throw KeychainError.noPassword
+            }
+            self.viewModel.uiState.storedUsername = storedCredentials.username
+            self.viewModel.uiState.storedPassword = storedCredentials.password
+        } catch {
+            print("No credentials found for \(self.viewModel.uiState.bank)")
+        }
+        loadForm(formRequest)
+    }
+    
+    private func loadForm(_ formRequest: FormRequest) -> Void {
+        self.viewModel.uiState.validatedFormItems = formRequest.items.reduce(into: [String: Bool]()) {
+            $0[$1.id] = false
+        }
+        self.viewModel.uiState.currentMessageType = MessageType.formRequest.rawValue
+        self.viewModel.uiState.currentForm = formRequest
+    }
+    
+    
+    private func isLoginFormAndStored(_ formRequest: FormRequest) -> Bool {
+        self.viewModel.uiState.storedForm && formRequest.items.filter({
+            $0.id == "username" || $0.id == "password"
+        }).count == 2
     }
 }

@@ -37,16 +37,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
-                 <array>
-                    <string>bancochilemipass</string>
-                    <string>BciPassApp</string>
-                    <string>BICEPassApp</string>
-                    <string>keypass</string>
-                    <string>SantanderPassApp</string>
-                    <string>tupass</string>
-                    <string>bancoestado</string>
-                    <string>itau.cl</string>
-                    <string>SecurityPass</string>
-                 </array>
+	<array>
+		<string>bancochilemipass</string>
+		<string>BciPassApp</string>
+		<string>BICEPassApp</string>
+		<string>keypass</string>
+		<string>SantanderPassApp</string>
+		<string>tupass</string>
+		<string>bancoestado</string>
+		<string>itau.cl</string>
+		<string>SecurityPass</string>
+	</array>
+	<key>NSFaceIDUsageDescription</key>
+	<string>Unlocks device for password storage</string>
 </dict>
 </plist>

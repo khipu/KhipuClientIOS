@@ -13,6 +13,7 @@ public struct KhipuView: View {
     @StateObject var themeManager = ThemeManager()
     @StateObject var viewModel = KhipuViewModel()
     @State private var isConfirmingClose = false
+    @AppStorage("storedCredentials") private var storedForm: Bool = false
     @Environment(\.colorScheme) var colorScheme
     var dismiss: (() -> Void)
     let operationId: String
@@ -128,6 +129,7 @@ public struct KhipuView: View {
             )
             viewModel.connectClient()
             themeManager.selectedTheme.setColorSchemeAndCustomColors(colorScheme: colorScheme, colors: options.colors)
+            viewModel.uiState.storedForm = storedForm
         })
         .environmentObject(themeManager)
     }

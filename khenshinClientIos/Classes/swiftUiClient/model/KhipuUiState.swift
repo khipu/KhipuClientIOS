@@ -29,4 +29,5 @@ struct KhipuUiState {
     var personalIdentifier: String = ""
     var storedUsername: String = ""
     var storedPassword: String = ""
+    var storedForm: Bool = false
 }
