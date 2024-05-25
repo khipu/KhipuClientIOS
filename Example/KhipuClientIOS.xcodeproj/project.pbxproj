@@ -7,19 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4ACD9BAB2BFADE97005DF1EE /* CustomHeaderUIVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4ACD9BAA2BFADE97005DF1EE /* CustomHeaderUIVIew.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
-		765AD62FF125D78C9D9BD868 /* Pods_khenshinClientIos_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DE1BEF23DF568C4F32C6707 /* Pods_khenshinClientIos_Tests.framework */; };
-		ABFA01ADFD0F5FA4950CCC90 /* Pods_khenshinClientIos_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 497C3F997170ED339A46B464 /* Pods_khenshinClientIos_Example.framework */; };
-		BD1B5A2E2BFE736100376920 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BD1B5A2D2BFE736100376920 /* Images.xcassets */; };
-		BD5033082BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */; };
-		BDA93D152C002748008887F5 /* AuthorizationRequestComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */; };
-		BDE1CB772C00E49B000FF18F /* ViewInspectorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1CB762C00E49B000FF18F /* ViewInspectorUtils.swift */; };
-		BDE1CB792C01183D000FF18F /* CopyToClipboardComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1CB782C01183D000FF18F /* CopyToClipboardComponentTests.swift */; };
-		BDE1CB7B2C0129BE000FF18F /* FailureMessageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDE1CB7A2C0129BE000FF18F /* FailureMessageComponentTests.swift */; };
+		7E059F83A1C5E6B5684C3BAA /* Pods_KhipuClientIOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */; };
+		A5167ECE6E3712AB29C54E4E /* Pods_KhipuClientIOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25A47703EA0D6EF73A46C0B /* Pods_KhipuClientIOS_Tests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,35 +21,28 @@
 			containerPortal = 607FACC81AFB9204008FA782 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 607FACCF1AFB9204008FA782;
-			remoteInfo = khenshinClientIos;
+			remoteInfo = KhipuClientIOS;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		168CDDDD49015F1B2707B251 /* Pods-khenshinClientIos_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-khenshinClientIos_Tests.release.xcconfig"; path = "Target Support Files/Pods-khenshinClientIos_Tests/Pods-khenshinClientIos_Tests.release.xcconfig"; sourceTree = "<group>"; };
-		1926946F7126EC05B014A5AD /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		2DE1BEF23DF568C4F32C6707 /* Pods_khenshinClientIos_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_khenshinClientIos_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		497C3F997170ED339A46B464 /* Pods_khenshinClientIos_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_khenshinClientIos_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4ACD9BAA2BFADE97005DF1EE /* CustomHeaderUIVIew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeaderUIVIew.swift; sourceTree = "<group>"; };
-		607FACD01AFB9204008FA782 /* khenshinClientIos_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = khenshinClientIos_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		05E56BC0EA511A1210CC3A4E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		1C3AEF4D2D347243770F5910 /* Pods-KhipuClientIOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		29506C8577AD33C3B29C428F /* Pods-KhipuClientIOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.release.xcconfig"; sourceTree = "<group>"; };
+		5A2884C75050EA9150A4E3E7 /* Pods-KhipuClientIOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		607FACD01AFB9204008FA782 /* KhipuClientIOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KhipuClientIOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		607FACD71AFB9204008FA782 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		607FACDC1AFB9204008FA782 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		607FACE51AFB9204008FA782 /* khenshinClientIos_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = khenshinClientIos_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		607FACE51AFB9204008FA782 /* KhipuClientIOS_Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KhipuClientIOS_Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		BD1B5A2D2BFE736100376920 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../khenshinClientIos/Assets/Resources/Images.xcassets; sourceTree = "<group>"; };
-		BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerchantDialogComponentTests.swift; sourceTree = "<group>"; };
-		BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestComponentTest.swift; sourceTree = "<group>"; };
-		BDE1CB762C00E49B000FF18F /* ViewInspectorUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewInspectorUtils.swift; sourceTree = "<group>"; };
-		BDE1CB782C01183D000FF18F /* CopyToClipboardComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CopyToClipboardComponentTests.swift; sourceTree = "<group>"; };
-		BDE1CB7A2C0129BE000FF18F /* FailureMessageComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailureMessageComponentTests.swift; sourceTree = "<group>"; };
-		E2B34EABC507DE7881EDA02C /* khenshinClientIos.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = khenshinClientIos.podspec; path = ../khenshinClientIos.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		E60D19324E892A937F07F734 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
-		EE99C62A2E7BAF2AE1696066 /* Pods-khenshinClientIos_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-khenshinClientIos_Example.release.xcconfig"; path = "Target Support Files/Pods-khenshinClientIos_Example/Pods-khenshinClientIos_Example.release.xcconfig"; sourceTree = "<group>"; };
-		F01BC78BFB92596F08FAE0C8 /* Pods-khenshinClientIos_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-khenshinClientIos_Tests.debug.xcconfig"; path = "Target Support Files/Pods-khenshinClientIos_Tests/Pods-khenshinClientIos_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		F905B1ABBB8B1C04198D905F /* Pods-khenshinClientIos_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-khenshinClientIos_Example.debug.xcconfig"; path = "Target Support Files/Pods-khenshinClientIos_Example/Pods-khenshinClientIos_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		7E23CC4D2962148772A3CEAA /* Pods-KhipuClientIOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		B25A47703EA0D6EF73A46C0B /* Pods_KhipuClientIOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		CC0A43F03CFB34C330043D48 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		E09EC8476A9C9725101CB626 /* KhipuClientIOS.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = KhipuClientIOS.podspec; path = ../KhipuClientIOS.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,7 +50,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABFA01ADFD0F5FA4950CCC90 /* Pods_khenshinClientIos_Example.framework in Frameworks */,
+				7E059F83A1C5E6B5684C3BAA /* Pods_KhipuClientIOS_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,66 +58,44 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				765AD62FF125D78C9D9BD868 /* Pods_khenshinClientIos_Tests.framework in Frameworks */,
+				A5167ECE6E3712AB29C54E4E /* Pods_KhipuClientIOS_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		37063008FC1AA3E517B945DC /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				F905B1ABBB8B1C04198D905F /* Pods-khenshinClientIos_Example.debug.xcconfig */,
-				EE99C62A2E7BAF2AE1696066 /* Pods-khenshinClientIos_Example.release.xcconfig */,
-				F01BC78BFB92596F08FAE0C8 /* Pods-khenshinClientIos_Tests.debug.xcconfig */,
-				168CDDDD49015F1B2707B251 /* Pods-khenshinClientIos_Tests.release.xcconfig */,
-			);
-			path = Pods;
-			sourceTree = "<group>";
-		};
-		47255B37903A1568E3E87597 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				497C3F997170ED339A46B464 /* Pods_khenshinClientIos_Example.framework */,
-				2DE1BEF23DF568C4F32C6707 /* Pods_khenshinClientIos_Tests.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				BD1B5A2D2BFE736100376920 /* Images.xcassets */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
-				607FACD21AFB9204008FA782 /* Example for khenshinClientIos */,
+				607FACD21AFB9204008FA782 /* Example for KhipuClientIOS */,
 				607FACE81AFB9204008FA782 /* Tests */,
 				607FACD11AFB9204008FA782 /* Products */,
-				37063008FC1AA3E517B945DC /* Pods */,
-				47255B37903A1568E3E87597 /* Frameworks */,
+				ABBE15DFACA0856F6526AE62 /* Pods */,
+				8A56D410D16B5E9764867665 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		607FACD11AFB9204008FA782 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				607FACD01AFB9204008FA782 /* khenshinClientIos_Example.app */,
-				607FACE51AFB9204008FA782 /* khenshinClientIos_Tests.xctest */,
+				607FACD01AFB9204008FA782 /* KhipuClientIOS_Example.app */,
+				607FACE51AFB9204008FA782 /* KhipuClientIOS_Tests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		607FACD21AFB9204008FA782 /* Example for khenshinClientIos */ = {
+		607FACD21AFB9204008FA782 /* Example for KhipuClientIOS */ = {
 			isa = PBXGroup;
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
-				4ACD9BAA2BFADE97005DF1EE /* CustomHeaderUIVIew.swift */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
 			);
-			name = "Example for khenshinClientIos";
-			path = khenshinClientIos;
+			name = "Example for KhipuClientIOS";
+			path = KhipuClientIOS;
 			sourceTree = "<group>";
 		};
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
@@ -145,8 +109,6 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				BDE1CB752C00E0B7000FF18F /* utils */,
-				BDA93D132C0026DA008887F5 /* Components */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -164,72 +126,73 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				E2B34EABC507DE7881EDA02C /* khenshinClientIos.podspec */,
-				E60D19324E892A937F07F734 /* README.md */,
-				1926946F7126EC05B014A5AD /* LICENSE */,
+				E09EC8476A9C9725101CB626 /* KhipuClientIOS.podspec */,
+				05E56BC0EA511A1210CC3A4E /* README.md */,
+				CC0A43F03CFB34C330043D48 /* LICENSE */,
 			);
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		BDA93D132C0026DA008887F5 /* Components */ = {
+		8A56D410D16B5E9764867665 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BD5033072BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift */,
-				BDA93D142C002748008887F5 /* AuthorizationRequestComponentTest.swift */,
-				BDE1CB782C01183D000FF18F /* CopyToClipboardComponentTests.swift */,
-				BDE1CB7A2C0129BE000FF18F /* FailureMessageComponentTests.swift */,
+				02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */,
+				B25A47703EA0D6EF73A46C0B /* Pods_KhipuClientIOS_Tests.framework */,
 			);
-			path = Components;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		BDE1CB752C00E0B7000FF18F /* utils */ = {
+		ABBE15DFACA0856F6526AE62 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				BDE1CB762C00E49B000FF18F /* ViewInspectorUtils.swift */,
+				1C3AEF4D2D347243770F5910 /* Pods-KhipuClientIOS_Example.debug.xcconfig */,
+				29506C8577AD33C3B29C428F /* Pods-KhipuClientIOS_Example.release.xcconfig */,
+				7E23CC4D2962148772A3CEAA /* Pods-KhipuClientIOS_Tests.debug.xcconfig */,
+				5A2884C75050EA9150A4E3E7 /* Pods-KhipuClientIOS_Tests.release.xcconfig */,
 			);
-			name = utils;
+			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		607FACCF1AFB9204008FA782 /* khenshinClientIos_Example */ = {
+		607FACCF1AFB9204008FA782 /* KhipuClientIOS_Example */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "khenshinClientIos_Example" */;
+			buildConfigurationList = 607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "KhipuClientIOS_Example" */;
 			buildPhases = (
-				0BD527CF870D35999036D0E1 /* [CP] Check Pods Manifest.lock */,
+				5F4B5DCABF45943CD868684E /* [CP] Check Pods Manifest.lock */,
 				607FACCC1AFB9204008FA782 /* Sources */,
 				607FACCD1AFB9204008FA782 /* Frameworks */,
 				607FACCE1AFB9204008FA782 /* Resources */,
-				8827547F6B812B9B14BD8100 /* [CP] Embed Pods Frameworks */,
+				2D3A03853639B5DC33BB70C8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = khenshinClientIos_Example;
-			productName = khenshinClientIos;
-			productReference = 607FACD01AFB9204008FA782 /* khenshinClientIos_Example.app */;
+			name = KhipuClientIOS_Example;
+			productName = KhipuClientIOS;
+			productReference = 607FACD01AFB9204008FA782 /* KhipuClientIOS_Example.app */;
 			productType = "com.apple.product-type.application";
 		};
-		607FACE41AFB9204008FA782 /* khenshinClientIos_Tests */ = {
+		607FACE41AFB9204008FA782 /* KhipuClientIOS_Tests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "khenshinClientIos_Tests" */;
+			buildConfigurationList = 607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "KhipuClientIOS_Tests" */;
 			buildPhases = (
-				22BFD349B9D48D2A83934EE1 /* [CP] Check Pods Manifest.lock */,
+				8EEC49F72E5FC5F26E49F9FE /* [CP] Check Pods Manifest.lock */,
 				607FACE11AFB9204008FA782 /* Sources */,
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
-				D5E9F96D06EE1B99217D5F29 /* [CP] Embed Pods Frameworks */,
+				ACF2911DADDE6D648AEF432D /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				607FACE71AFB9204008FA782 /* PBXTargetDependency */,
 			);
-			name = khenshinClientIos_Tests;
+			name = KhipuClientIOS_Tests;
 			productName = Tests;
-			productReference = 607FACE51AFB9204008FA782 /* khenshinClientIos_Tests.xctest */;
+			productReference = 607FACE51AFB9204008FA782 /* KhipuClientIOS_Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -245,17 +208,17 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 2X63E3W773;
-						LastSwiftMigration = 1540;
+						LastSwiftMigration = 0900;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 2X63E3W773;
-						LastSwiftMigration = 1540;
+						LastSwiftMigration = 0900;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
 			};
-			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "khenshinClientIos" */;
+			buildConfigurationList = 607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "KhipuClientIOS" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -269,8 +232,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				607FACCF1AFB9204008FA782 /* khenshinClientIos_Example */,
-				607FACE41AFB9204008FA782 /* khenshinClientIos_Tests */,
+				607FACCF1AFB9204008FA782 /* KhipuClientIOS_Example */,
+				607FACE41AFB9204008FA782 /* KhipuClientIOS_Tests */,
 			);
 		};
 /* End PBXProject section */
@@ -280,7 +243,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BD1B5A2E2BFE736100376920 /* Images.xcassets in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -295,85 +257,85 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0BD527CF870D35999036D0E1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-khenshinClientIos_Example-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		22BFD349B9D48D2A83934EE1 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-khenshinClientIos_Tests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8827547F6B812B9B14BD8100 /* [CP] Embed Pods Frameworks */ = {
+		2D3A03853639B5DC33BB70C8 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-khenshinClientIos_Example/Pods-khenshinClientIos_Example-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/KhenshinProtocol/KhenshinProtocol.framework",
 				"${BUILT_PRODUCTS_DIR}/KhenshinSecureMessage/KhenshinSecureMessage.framework",
+				"${BUILT_PRODUCTS_DIR}/KhipuClientIOS/KhipuClientIOS.framework",
 				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
 				"${BUILT_PRODUCTS_DIR}/Sodium/Sodium.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
-				"${BUILT_PRODUCTS_DIR}/khenshinClientIos/khenshinClientIos.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KhenshinProtocol.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KhenshinSecureMessage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KhipuClientIOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/khenshinClientIos.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-khenshinClientIos_Example/Pods-khenshinClientIos_Example-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D5E9F96D06EE1B99217D5F29 /* [CP] Embed Pods Frameworks */ = {
+		5F4B5DCABF45943CD868684E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KhipuClientIOS_Example-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8EEC49F72E5FC5F26E49F9FE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-KhipuClientIOS_Tests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ACF2911DADDE6D648AEF432D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-khenshinClientIos_Tests/Pods-khenshinClientIos_Tests-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/ViewInspector/ViewInspector.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
@@ -382,7 +344,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-khenshinClientIos_Tests/Pods-khenshinClientIos_Tests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -394,7 +356,6 @@
 			files = (
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
-				4ACD9BAB2BFADE97005DF1EE /* CustomHeaderUIVIew.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -402,12 +363,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BDE1CB7B2C0129BE000FF18F /* FailureMessageComponentTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
-				BDA93D152C002748008887F5 /* AuthorizationRequestComponentTest.swift in Sources */,
-				BDE1CB772C00E49B000FF18F /* ViewInspectorUtils.swift in Sources */,
-				BDE1CB792C01183D000FF18F /* CopyToClipboardComponentTests.swift in Sources */,
-				BD5033082BFFCFEB005A1C36 /* MerchantDialogComponentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +372,7 @@
 /* Begin PBXTargetDependency section */
 		607FACE71AFB9204008FA782 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 607FACCF1AFB9204008FA782 /* khenshinClientIos_Example */;
+			target = 607FACCF1AFB9204008FA782 /* KhipuClientIOS_Example */;
 			targetProxy = 607FACE61AFB9204008FA782 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -523,41 +479,41 @@
 		};
 		607FACF01AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F905B1ABBB8B1C04198D905F /* Pods-khenshinClientIos_Example.debug.xcconfig */;
+			baseConfigurationReference = 1C3AEF4D2D347243770F5910 /* Pods-KhipuClientIOS_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2X63E3W773;
-				INFOPLIST_FILE = khenshinClientIos/Info.plist;
+				INFOPLIST_FILE = KhipuClientIOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
 		607FACF11AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EE99C62A2E7BAF2AE1696066 /* Pods-khenshinClientIos_Example.release.xcconfig */;
+			baseConfigurationReference = 29506C8577AD33C3B29C428F /* Pods-KhipuClientIOS_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = 2X63E3W773;
-				INFOPLIST_FILE = khenshinClientIos/Info.plist;
+				INFOPLIST_FILE = KhipuClientIOS/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULE_NAME = ExampleApp;
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Release;
 		};
 		607FACF31AFB9204008FA782 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F01BC78BFB92596F08FAE0C8 /* Pods-khenshinClientIos_Tests.debug.xcconfig */;
+			baseConfigurationReference = 7E23CC4D2962148772A3CEAA /* Pods-KhipuClientIOS_Tests.debug.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 2X63E3W773;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -574,14 +530,14 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/khenshinClientIos_Example.app/khenshinClientIos_Example";
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KhipuClientIOS_Example.app/KhipuClientIOS_Example";
 			};
 			name = Debug;
 		};
 		607FACF41AFB9204008FA782 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 168CDDDD49015F1B2707B251 /* Pods-khenshinClientIos_Tests.release.xcconfig */;
+			baseConfigurationReference = 5A2884C75050EA9150A4E3E7 /* Pods-KhipuClientIOS_Tests.release.xcconfig */;
 			buildSettings = {
 				DEVELOPMENT_TEAM = 2X63E3W773;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -594,15 +550,15 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/khenshinClientIos_Example.app/khenshinClientIos_Example";
+				SWIFT_VERSION = 4.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KhipuClientIOS_Example.app/KhipuClientIOS_Example";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "khenshinClientIos" */ = {
+		607FACCB1AFB9204008FA782 /* Build configuration list for PBXProject "KhipuClientIOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACED1AFB9204008FA782 /* Debug */,
@@ -611,7 +567,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "khenshinClientIos_Example" */ = {
+		607FACEF1AFB9204008FA782 /* Build configuration list for PBXNativeTarget "KhipuClientIOS_Example" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF01AFB9204008FA782 /* Debug */,
@@ -620,7 +576,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "khenshinClientIos_Tests" */ = {
+		607FACF21AFB9204008FA782 /* Build configuration list for PBXNativeTarget "KhipuClientIOS_Tests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				607FACF31AFB9204008FA782 /* Debug */,

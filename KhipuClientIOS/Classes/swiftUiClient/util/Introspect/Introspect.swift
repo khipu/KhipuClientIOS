@@ -201,7 +201,7 @@ extension PlatformViewController: PlatformEntity {
 
     @_spi(Internals)
     public var descendants: [PlatformViewController] {
-        children
+        childViewControllers
     }
 
     @_spi(Internals)

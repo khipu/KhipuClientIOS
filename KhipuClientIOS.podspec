@@ -1,5 +1,5 @@
 #
-# Be sure to run `pod lib lint khenshinClientIos.podspec' to ensure this is a
+# Be sure to run `pod lib lint KhipuClientIOS.podspec' to ensure this is a
 # valid spec before submitting.
 #
 # Any lines starting with a # are optional, but their use is encouraged
@@ -7,9 +7,9 @@
 #
 
 Pod::Spec.new do |s|
-  s.name             = 'khenshinClientIos'
+  s.name             = 'KhipuClientIOS'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of khenshinClientIos.'
+  s.summary          = 'A short description of KhipuClientIOS.'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -21,20 +21,19 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/mauriciocastillo/khenshinClientIos'
+  s.homepage         = 'https://github.com/Emilio Davis/KhipuClientIOS'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'mauriciocastillo' => 'mauricio.castillo@khipu.com' }
-  s.source           = { :git => 'https://github.com/mauriciocastillo/khenshinClientIos.git', :tag => s.version.to_s }
+  s.author           = { 'Emilio Davis' => 'emilio.davis@khipu.com' }
+  s.source           = { :git => 'https://github.com/Emilio Davis/KhipuClientIOS.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '12.0'
 
-  s.source_files = 'khenshinClientIos/Classes/**/*'
-  s.resources = 'khenshinClientIos/Assets/**/*.{xcassets,json,ttf,html,js,css}'
+  s.source_files = 'KhipuClientIOS/Classes/**/*'
+  s.resources = 'KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css}'
 
   s.dependency 'Socket.IO-Client-Swift'
   s.dependency 'KhenshinSecureMessage'
   s.dependency 'KhenshinProtocol', '1.0.42'
-
 end

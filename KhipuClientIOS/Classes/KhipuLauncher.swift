@@ -41,13 +41,13 @@ public class KhipuLauncher {
                     if(options.colors?.darkTopBarContainer != nil) {
                         appearance.backgroundColor = UIColor(hexString: options.colors!.darkTopBarContainer!)
                     } else {
-                        appearance.backgroundColor = UIColor(Color("darkTopBarContainer", bundle: Bundle(identifier: "org.cocoapods.khenshinClientIos")))
+                        appearance.backgroundColor = UIColor(Color("darkTopBarContainer", bundle: Bundle(identifier: KhipuConstants.KHIPU_BUNDLE_IDENTIFIER)))
                     }
                 } else {
                     if(options.colors?.lightTopBarContainer != nil) {
                         appearance.backgroundColor = UIColor(hexString: options.colors!.lightTopBarContainer!)
                     } else {
-                        appearance.backgroundColor = UIColor(Color("lightTopBarContainer", bundle: Bundle(identifier: "org.cocoapods.khenshinClientIos")))
+                        appearance.backgroundColor = UIColor(Color("lightTopBarContainer", bundle: Bundle(identifier: KhipuConstants.KHIPU_BUNDLE_IDENTIFIER)))
                     }
                 }
             } else {

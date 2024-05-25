@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import khenshinClientIos
+import KhipuClientIOS
 
 class ViewController: UIViewController {
 

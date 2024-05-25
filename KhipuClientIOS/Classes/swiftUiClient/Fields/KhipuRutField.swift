@@ -120,7 +120,7 @@ struct LabeledButton: View {
     let text: String
     let textDocumentProxy: UITextDocumentProxy
     let playSystemFeedback: (() -> ())?
-    let bundle = Bundle(identifier: "org.cocoapods.khenshinClientIos")
+    let bundle = Bundle(identifier: KhipuConstants.KHIPU_BUNDLE_IDENTIFIER)
     
     var body: some View {
         Button {
@@ -143,7 +143,7 @@ struct LabeledButton: View {
 
 @available(iOS 15.0.0, *)
 struct ImageButton: View {
-    let bundle = Bundle(identifier: "org.cocoapods.khenshinClientIos")
+    let bundle = Bundle(identifier: KhipuConstants.KHIPU_BUNDLE_IDENTIFIER)
     let imageName: String
     let textDocumentProxy: UITextDocumentProxy
     let playSystemFeedback: (() -> ())?
