@@ -1,14 +1,13 @@
 use_frameworks!
 
-platform :ios, '12.0'
+platform :ios, '13.0'
 
 target 'khenshinClientIos_Example' do
   pod 'khenshinClientIos', :path => '../'
 
   target 'khenshinClientIos_Tests' do
     inherit! :search_paths
-
-    
+    pod 'ViewInspector', :git => 'https://github.com/nalexn/ViewInspector.git'
   end
 end
 
