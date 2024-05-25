@@ -31,18 +31,18 @@ public struct KhipuView: View {
     }
     
     public var body: some View {
-        ScrollView(.vertical) {
-            VStack(alignment: .leading, spacing: 0) {
-                VStack {
-                    if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
-                        if(options.header != nil && options.header?.headerUIView != nil){
-                            HeaderRepresentableComponent(viewModel: viewModel, baseView: options.header!.headerUIView!)
-                                .frame(maxHeight: CGFloat(integerLiteral: options.header?.height ?? 100))
-                        } else {
-                            HeaderComponent(viewModel: viewModel)
-                        }
+        VStack(alignment: .leading, spacing: 0) {
+            VStack {
+                if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
+                    if(options.header != nil && options.header?.headerUIView != nil){
+                        HeaderRepresentableComponent(viewModel: viewModel, baseView: options.header!.headerUIView!)
+                            .frame(maxHeight: CGFloat(integerLiteral: options.header?.height ?? 100))
+                    } else {
+                        HeaderComponent(viewModel: viewModel)
                     }
                 }
+            }
+            ScrollView(.vertical){
                 switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
                     ProgressComponent(viewModel: viewModel)

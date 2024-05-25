@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "h4we9vuehxqv"
+        sampleTextField.text = "d7gywspfe4be"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -54,7 +54,7 @@ class ViewController: UIViewController {
                 .skipExitPage(false)
 //                .header(KhipuHeader.Builder()
 //                    .headerUIView(CustomHeaderUIVIew())
-//                    .height(300)
+//                    .height(120)
 //                    .build()
 //                )
                 .colors(KhipuColors.Builder()

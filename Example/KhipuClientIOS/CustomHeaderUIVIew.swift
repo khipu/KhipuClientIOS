@@ -1,5 +1,5 @@
 import UIKit
-import khenshinClientIos
+import KhipuClientIOS
 
 class CustomHeaderUIVIew: UIView, KhipuHeaderProtocol {
     
