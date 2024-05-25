@@ -50,47 +50,47 @@ public struct KhipuGroupedListField: View {
                     alignment: .leading
                 )
             
-            ScrollView {
-                VStack(spacing: 16) {
-                    ForEach(filteredList, id: \.value) { option in
-                        Button(action: {
-                            selectedOption = option
-                            isValid(true)
-                            returnValue(option.value ?? "")
-                            submitFunction()
-                        }) {
-                            HStack {
-                                AsyncImage(url: URL(string: option.image ?? "")) { phase in
-                                    if let image = phase.image {
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(width: 40, height: 40)
-                                            .clipShape(Circle())
-                                    } else if phase.error != nil {
-                                        Color.red
-                                            .frame(width: 40, height: 40)
-                                            .clipShape(Circle())
-                                    } else {
-                                        Color.gray
-                                            .frame(width: 40, height: 40)
-                                            .clipShape(Circle())
-                                    }
+            
+            VStack(spacing: 16) {
+                ForEach(filteredList, id: \.value) { option in
+                    Button(action: {
+                        selectedOption = option
+                        isValid(true)
+                        returnValue(option.value ?? "")
+                        submitFunction()
+                    }) {
+                        HStack {
+                            AsyncImage(url: URL(string: option.image ?? "")) { phase in
+                                if let image = phase.image {
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(Circle())
+                                } else if phase.error != nil {
+                                    Color.red
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(Circle())
+                                } else {
+                                    Color.gray
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(Circle())
                                 }
-                                Text(option.name ?? "")
-                                    .foregroundColor(.primary)
-                                Spacer()
                             }
-                            .padding()
-                            .background(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                            )
+                            Text(option.name ?? "")
+                                .foregroundColor(.primary)
+                            Spacer()
                         }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                        )
                     }
                 }
-                .padding()
             }
+            .padding()
+            
         }
     }
     

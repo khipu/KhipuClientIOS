@@ -31,18 +31,19 @@ public struct KhipuView: View {
     }
     
     public var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            VStack {
-                if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
-                    if(options.header != nil && options.header?.headerUIView != nil){
-                        HeaderRepresentableComponent(viewModel: viewModel, baseView: options.header!.headerUIView!)
-                            .frame(maxHeight: CGFloat(integerLiteral: options.header?.height ?? 100))
-                    } else {
-                        HeaderComponent(viewModel: viewModel)
+        ScrollView(.vertical) {
+            VStack(alignment: .leading, spacing: 0) {
+                VStack {
+                    if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
+                        if(options.header != nil && options.header?.headerUIView != nil){
+                            HeaderRepresentableComponent(viewModel: viewModel, baseView: options.header!.headerUIView!)
+                                .frame(maxHeight: CGFloat(integerLiteral: options.header?.height ?? 100))
+                        } else {
+                            HeaderComponent(viewModel: viewModel)
+                        }
                     }
                 }
-            }
-            switch(viewModel.uiState.currentMessageType) {
+                switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
                     ProgressComponent(viewModel: viewModel)
                     FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
@@ -68,18 +69,19 @@ public struct KhipuView: View {
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(viewModel: viewModel)
                     AuthorizationRequestView(viewModel: viewModel)
-
+                    
                 default:
                     EmptyView()
-            }
-            if(viewModel.uiState.returnToApp) {
-                ExecuteCode {
-                    viewModel.disconnectClient()
-                    completitionHandler!(buildResult(viewModel.uiState))
-                    dismiss()
                 }
+                if(viewModel.uiState.returnToApp) {
+                    ExecuteCode {
+                        viewModel.disconnectClient()
+                        completitionHandler!(buildResult(viewModel.uiState))
+                        dismiss()
+                    }
+                }
+                Spacer()
             }
-            Spacer()
         }
         .background(themeManager.selectedTheme.colors.background)
         .navigationBarBackButtonHidden(true)
