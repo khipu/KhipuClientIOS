@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AD82D472C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */; };
+		4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTests.swift */; };
+		4AD82D492C0253FD0065CC37 /* FailureMessageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D432C0253FD0065CC37 /* FailureMessageComponentTests.swift */; };
+		4AD82D4A2C0253FD0065CC37 /* MerchantDialogComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D442C0253FD0065CC37 /* MerchantDialogComponentTests.swift */; };
+		4AD82D4B2C0253FD0065CC37 /* ViewInspectorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D462C0253FD0065CC37 /* ViewInspectorUtils.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -30,6 +35,11 @@
 		05E56BC0EA511A1210CC3A4E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		1C3AEF4D2D347243770F5910 /* Pods-KhipuClientIOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		29506C8577AD33C3B29C428F /* Pods-KhipuClientIOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.release.xcconfig"; sourceTree = "<group>"; };
+		4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestComponentTest.swift; sourceTree = "<group>"; };
+		4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToClipboardComponentTests.swift; sourceTree = "<group>"; };
+		4AD82D432C0253FD0065CC37 /* FailureMessageComponentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailureMessageComponentTests.swift; sourceTree = "<group>"; };
+		4AD82D442C0253FD0065CC37 /* MerchantDialogComponentTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerchantDialogComponentTests.swift; sourceTree = "<group>"; };
+		4AD82D462C0253FD0065CC37 /* ViewInspectorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewInspectorUtils.swift; sourceTree = "<group>"; };
 		5A2884C75050EA9150A4E3E7 /* Pods-KhipuClientIOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* KhipuClientIOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KhipuClientIOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -65,6 +75,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4AD82D452C0253FD0065CC37 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */,
+				4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTests.swift */,
+				4AD82D432C0253FD0065CC37 /* FailureMessageComponentTests.swift */,
+				4AD82D442C0253FD0065CC37 /* MerchantDialogComponentTests.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
@@ -109,6 +130,8 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				4AD82D452C0253FD0065CC37 /* Components */,
+				4AD82D462C0253FD0065CC37 /* ViewInspectorUtils.swift */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -208,12 +231,12 @@
 					607FACCF1AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 2X63E3W773;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1540;
 					};
 					607FACE41AFB9204008FA782 = {
 						CreatedOnToolsVersion = 6.3.1;
 						DevelopmentTeam = 2X63E3W773;
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1540;
 						TestTargetID = 607FACCF1AFB9204008FA782;
 					};
 				};
@@ -363,7 +386,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AD82D492C0253FD0065CC37 /* FailureMessageComponentTests.swift in Sources */,
+				4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTests.swift in Sources */,
+				4AD82D4B2C0253FD0065CC37 /* ViewInspectorUtils.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				4AD82D472C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift in Sources */,
+				4AD82D4A2C0253FD0065CC37 /* MerchantDialogComponentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,7 +518,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -507,7 +535,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.demo.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -530,7 +558,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KhipuClientIOS_Example.app/KhipuClientIOS_Example";
 			};
 			name = Debug;
@@ -550,7 +578,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/KhipuClientIOS_Example.app/KhipuClientIOS_Example";
 			};
 			name = Release;

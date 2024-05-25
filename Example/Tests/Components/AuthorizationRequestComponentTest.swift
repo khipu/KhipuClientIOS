@@ -1,5 +1,5 @@
 import XCTest
-@testable import khenshinClientIos
+@testable import KhipuClientIOS
 import SwiftUI
 import ViewInspector
 @testable import KhenshinProtocol

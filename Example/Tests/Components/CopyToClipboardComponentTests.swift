@@ -1,7 +1,7 @@
 import XCTest
 import SwiftUI
 import ViewInspector
-@testable import khenshinClientIos
+@testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
 extension CopyToClipboardOperationId: Inspectable { }

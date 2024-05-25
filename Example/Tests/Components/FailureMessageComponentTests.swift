@@ -1,7 +1,7 @@
 import XCTest
 import SwiftUI
 import ViewInspector
-@testable import khenshinClientIos
+@testable import KhipuClientIOS
 @testable import KhenshinProtocol
 
 @available(iOS 15.0, *)
