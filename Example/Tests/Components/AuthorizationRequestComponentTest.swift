@@ -34,11 +34,11 @@ final class AuthorizationRequestComponentTests: XCTestCase {
                 let inspectedView = try view.inspect().view(AuthorizationRequestView.self).view(MobileAuthorizationRequestView.self)
                 let vStack = try inspectedView.vStack()
                 
-                XCTAssertTrue(try ViewInspectorUtils.verifyFormTitleInStack(vStack, expectedText: "Use the app to authorize"), "Failed to find FormTitle with text: Use the app to authorize")
+                XCTAssertTrue(try ViewInspectorUtils.verifyFormTitleInStack(vStack, expectedText: "Autoriza con tu App"), "Failed to find FormTitle with text: Autoriza con tu App")
                 
                 XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Please authorize using the app"), "Failed to find the text: Please authorize using the app")
                 
-                XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(vStack, expectedButtonText: "Please wait"), "Failed to find the button with text: Please wait")
+                XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(vStack, expectedButtonText: "Esperando autorización"), "Failed to find the button with text: Esperando autorización")
             } catch {
                 XCTFail("Failed to inspect view: \(error)")
             }
