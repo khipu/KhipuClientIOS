@@ -1,0 +1,6 @@
+framework module Pods_KhipuClientIOS_Example {
+  umbrella header "Pods-KhipuClientIOS_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

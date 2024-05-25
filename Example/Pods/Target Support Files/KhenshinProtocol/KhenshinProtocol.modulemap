@@ -1,0 +1,6 @@
+framework module KhenshinProtocol {
+  umbrella header "KhenshinProtocol-umbrella.h"
+
+  export *
+  module * { export * }
+}

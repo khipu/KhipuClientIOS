@@ -2,14 +2,16 @@ use_frameworks!
 
 platform :ios, '13.0'
 
-target 'khenshinClientIos_Example' do
-  pod 'khenshinClientIos', :path => '../'
+target 'KhipuClientIOS_Example' do
+  pod 'KhipuClientIOS', :path => '../'
 
-  target 'khenshinClientIos_Tests' do
+  target 'KhipuClientIOS_Tests' do
     inherit! :search_paths
+
     pod 'ViewInspector'
   end
 end
+
 
 post_install do |installer|
     installer.generated_projects.each do |project|

@@ -1,0 +1,43 @@
+PODS:
+  - KhenshinProtocol (1.0.42)
+  - KhenshinSecureMessage (1.0.0):
+    - Sodium (= 0.9.1)
+  - KhipuClientIOS (0.1.0):
+    - KhenshinProtocol (= 1.0.42)
+    - KhenshinSecureMessage
+    - Socket.IO-Client-Swift
+  - Socket.IO-Client-Swift (16.1.0):
+    - Starscream (~> 4.0.6)
+  - Sodium (0.9.1)
+  - Starscream (4.0.8)
+  - ViewInspector (0.9.11)
+
+DEPENDENCIES:
+  - KhipuClientIOS (from `../`)
+  - ViewInspector
+
+SPEC REPOS:
+  trunk:
+    - KhenshinProtocol
+    - KhenshinSecureMessage
+    - Socket.IO-Client-Swift
+    - Sodium
+    - Starscream
+    - ViewInspector
+
+EXTERNAL SOURCES:
+  KhipuClientIOS:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  KhenshinProtocol: 36184f1ef7bc2a1d3110f9ec4a8fce73c38ecbda
+  KhenshinSecureMessage: 9d4009b965e013c20f9f6d1cd81883c3830606d9
+  KhipuClientIOS: 8ff9cc58e266dae1cf08076fb7e814fb66b21166
+  Socket.IO-Client-Swift: ee4b8f80a3db18dd7f32b266ddf273310609443c
+  Sodium: 23d11554ecd556196d313cf6130d406dfe7ac6da
+  Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
+  ViewInspector: f251d90316dce2b58ebe5d7d88bc07643c055c78
+
+PODFILE CHECKSUM: fbd56c3f394d8bc0b583b36d0096c06e865cc304
+
+COCOAPODS: 1.15.2

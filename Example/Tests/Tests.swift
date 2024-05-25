@@ -1,5 +1,5 @@
 import XCTest
-import khenshinClientIos
+import KhipuClientIOS
 
 class Tests: XCTestCase {
     
