@@ -1,6 +1,0 @@
-framework module KhipuClientIOS {
-  umbrella header "KhipuClientIOS-umbrella.h"
-
-  export *
-  module * { export * }
-}

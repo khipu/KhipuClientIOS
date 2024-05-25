@@ -1,6 +1,0 @@
-framework module KhenshinSecureMessage {
-  umbrella header "KhenshinSecureMessage-umbrella.h"
-
-  export *
-  module * { export * }
-}

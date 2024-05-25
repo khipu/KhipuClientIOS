@@ -3,6 +3,8 @@
 
 # Xcode
 build/
+Example/Pods
+Example/Podfile.lock
 *.pbxuser
 !default.pbxuser
 *.mode1v3
