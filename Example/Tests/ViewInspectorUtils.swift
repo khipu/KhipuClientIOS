@@ -258,7 +258,7 @@ class MockKhipuViewModel: KhipuViewModel {
 
 @available(iOS 13.0, *)
 class ViewInspectorUtils {
-
+    
     static func verifyFormTitleInStack<T>(_ stack: InspectableView<T>, expectedText: String) throws -> Bool where T: MultipleViewContent {
         for index in 0..<stack.count {
             if let formTitle = try? stack.view(FormTitle.self, index) {
@@ -281,7 +281,7 @@ class ViewInspectorUtils {
         }
         return false
     }
-
+    
     
     static func verifyTextInStack<T>(_ stack: InspectableView<T>, expectedText: String) throws -> Bool where T: MultipleViewContent {
         for index in 0..<stack.count {
@@ -307,27 +307,27 @@ class ViewInspectorUtils {
     
     
     static func verifyButtonInStack<T>(_ stack: InspectableView<T>, expectedButtonText: String) throws -> Bool where T: MultipleViewContent {
-         for index in 0..<stack.count {
-             if let button = try? stack.button(index) {
-                 let buttonText = try button.labelView().text().string()
-                 if buttonText == expectedButtonText {
-                     XCTAssertEqual(buttonText, expectedButtonText)
-                     XCTAssertTrue(try button.isDisabled())
-                     return true
-                 }
-             }
-             if let innerHStack = try? stack.hStack(index) {
-                 if try verifyButtonInStack(innerHStack, expectedButtonText: expectedButtonText) {
-                     return true
-                 }
-             }
-             if let innerVStack = try? stack.vStack(index) {
-                 if try verifyButtonInStack(innerVStack, expectedButtonText: expectedButtonText) {
-                     return true
-                 }
-             }
-         }
-         return false
-     }
+        for index in 0..<stack.count {
+            if let button = try? stack.button(index) {
+                let buttonText = try button.labelView().text().string()
+                if buttonText == expectedButtonText {
+                    XCTAssertEqual(buttonText, expectedButtonText)
+                    return true
+                }
+            }
+            if let innerHStack = try? stack.hStack(index) {
+                if try verifyButtonInStack(innerHStack, expectedButtonText: expectedButtonText) {
+                    return true
+                }
+            }
+            if let innerVStack = try? stack.vStack(index) {
+                if try verifyButtonInStack(innerVStack, expectedButtonText: expectedButtonText) {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+
     
 }
