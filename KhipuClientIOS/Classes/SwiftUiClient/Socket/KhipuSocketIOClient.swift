@@ -11,12 +11,11 @@ public class KhipuSocketIOClient {
     private var socket: SocketIOClient
     private let secureMessage: SecureMessage
     private let KHENSHIN_PUBLIC_KEY: String
-    private let clientId: String
     private var receivedMessages: [String]
     private var viewModel: KhipuViewModel
     private var skipExitPage: Bool
 
-    public init(serverUrl url: String, clientId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, viewModel: KhipuViewModel) {
+    public init(serverUrl url: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
@@ -26,7 +25,7 @@ public class KhipuSocketIOClient {
             .secure(true),
             .reconnectAttempts(-1),
             .connectParams([
-                "clientId": clientId,
+                "clientId": UUID().uuidString,
                 "clientPublicKey": secureMessage.publicKeyBase64,
                 "locale": locale,
                 "userAgent": UAString(),
@@ -41,7 +40,6 @@ public class KhipuSocketIOClient {
         self.socket = socketManager.defaultSocket
         self.viewModel = viewModel
         self.skipExitPage = skipExitPage
-        self.clientId = clientId
         self.clearKhssCookies()
         self.addListeners()
         
@@ -412,10 +410,11 @@ public class KhipuSocketIOClient {
         var error: NSError?
         print("self.viewModel.uiState.storedForm = \(self.viewModel.uiState.storedForm)")
         
-        if (formRequest.rememberValues ?? false && isLoginFormAndStored(formRequest)) {
-            if(context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)) {
+        if(context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)) {
+            if (formRequest.rememberValues ?? false && isLoginFormAndStored(formRequest)) {
                 let reason = "Confirme su identidad."
-                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
+            
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
                     DispatchQueue.main.async {
                         if success {
                             self.getSavedForm(formRequest)
