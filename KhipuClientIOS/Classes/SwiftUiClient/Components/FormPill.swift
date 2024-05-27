@@ -6,12 +6,15 @@ struct FormPill: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        Text(text)
-            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-            .padding(.all, themeManager.selectedTheme.dimens.extraSmall)
-            .overlay(
-                RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.large)
-                    .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 1))
+        HStack {
+            
+            Text(text)
+                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                .padding(.all, themeManager.selectedTheme.dimens.extraSmall)
+                .overlay(
+                    RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.large)
+                        .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 1))
+        }
     }
 }
 
