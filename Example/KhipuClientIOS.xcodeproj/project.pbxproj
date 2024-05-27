@@ -19,6 +19,12 @@
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7E059F83A1C5E6B5684C3BAA /* Pods_KhipuClientIOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */; };
 		A5167ECE6E3712AB29C54E4E /* Pods_KhipuClientIOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B25A47703EA0D6EF73A46C0B /* Pods_KhipuClientIOS_Tests.framework */; };
+		BDD4455A2C04D25300098056 /* FormInfoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD445592C04D25300098056 /* FormInfoTests.swift */; };
+		BDD4455C2C04D3B000098056 /* FormPillTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4455B2C04D3B000098056 /* FormPillTests.swift */; };
+		BDD4455E2C04D68500098056 /* FormTitleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4455D2C04D68500098056 /* FormTitleTests.swift */; };
+		BDD445602C04D89B00098056 /* FormWarningTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4455F2C04D89B00098056 /* FormWarningTest.swift */; };
+		BDD445622C04DD7F00098056 /* HeaderComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD445612C04DD7F00098056 /* HeaderComponentTests.swift */; };
+		BDD445642C04F73A00098056 /* MainButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD445632C04F73A00098056 /* MainButtonTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +59,12 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7E23CC4D2962148772A3CEAA /* Pods-KhipuClientIOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B25A47703EA0D6EF73A46C0B /* Pods_KhipuClientIOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BDD445592C04D25300098056 /* FormInfoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormInfoTests.swift; sourceTree = "<group>"; };
+		BDD4455B2C04D3B000098056 /* FormPillTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormPillTests.swift; sourceTree = "<group>"; };
+		BDD4455D2C04D68500098056 /* FormTitleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormTitleTests.swift; sourceTree = "<group>"; };
+		BDD4455F2C04D89B00098056 /* FormWarningTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormWarningTest.swift; sourceTree = "<group>"; };
+		BDD445612C04DD7F00098056 /* HeaderComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderComponentTests.swift; sourceTree = "<group>"; };
+		BDD445632C04F73A00098056 /* MainButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButtonTests.swift; sourceTree = "<group>"; };
 		CC0A43F03CFB34C330043D48 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E09EC8476A9C9725101CB626 /* KhipuClientIOS.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = KhipuClientIOS.podspec; path = ../KhipuClientIOS.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -84,6 +96,12 @@
 				4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTests.swift */,
 				4AD82D432C0253FD0065CC37 /* FailureMessageComponentTests.swift */,
 				4AD82D442C0253FD0065CC37 /* MerchantDialogComponentTests.swift */,
+				BDD445592C04D25300098056 /* FormInfoTests.swift */,
+				BDD4455B2C04D3B000098056 /* FormPillTests.swift */,
+				BDD4455D2C04D68500098056 /* FormTitleTests.swift */,
+				BDD4455F2C04D89B00098056 /* FormWarningTest.swift */,
+				BDD445612C04DD7F00098056 /* HeaderComponentTests.swift */,
+				BDD445632C04F73A00098056 /* MainButtonTests.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -391,11 +409,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BDD4455A2C04D25300098056 /* FormInfoTests.swift in Sources */,
 				4AD82D492C0253FD0065CC37 /* FailureMessageComponentTests.swift in Sources */,
 				4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTests.swift in Sources */,
 				4AD82D4B2C0253FD0065CC37 /* ViewInspectorUtils.swift in Sources */,
+				BDD445602C04D89B00098056 /* FormWarningTest.swift in Sources */,
+				BDD4455E2C04D68500098056 /* FormTitleTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
 				4AD82D472C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift in Sources */,
+				BDD445642C04F73A00098056 /* MainButtonTests.swift in Sources */,
+				BDD4455C2C04D3B000098056 /* FormPillTests.swift in Sources */,
+				BDD445622C04DD7F00098056 /* HeaderComponentTests.swift in Sources */,
 				4AD82D4A2C0253FD0065CC37 /* MerchantDialogComponentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
