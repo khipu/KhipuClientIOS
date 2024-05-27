@@ -17,7 +17,6 @@ public struct FormComponent: View {
     
     @State private var submittedForm: Bool = false
     @State private var formValues: [String: String] = [:]
-    @AppStorage("storedCredentials") private var storedForm: Bool = false
     public var formRequest: FormRequest
     @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
@@ -37,13 +36,11 @@ public struct FormComponent: View {
                     hasNextField: index < formRequest.items.count - 1,
                     formValues: $formValues,
                     submitFunction: submitForm,
-                    viewModel: viewModel,
-                    storedForm: $storedForm
+                    viewModel: viewModel
                 )
             }
             RememberValues(
                 formRequest: formRequest,
-                storedForm: $storedForm,
                 viewModel: viewModel)
             if(getShouldShowContinueButton(formRequest: formRequest)) {
                 MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
@@ -65,7 +62,6 @@ public struct FormComponent: View {
                 
                 let currentProgress = Float(current) / Float(total)
                 viewModel.setCurrentProgress(currentProgress: currentProgress)
-                viewModel.uiState.storedForm = storedForm
             }
         }
     }
@@ -106,10 +102,10 @@ public struct FormComponent: View {
         } catch {
             print("Error sending form")
         }
-        if(self.formRequest.rememberValues ?? false && storedForm) {
+        if(self.formRequest.rememberValues ?? false && viewModel.uiState.storedForm) {
             let credentials = Credentials(username: answers[0].value, password: answers[1].value)
             try! CredentialsStorageUtil.storeCredentials(credentials: credentials, server: viewModel.uiState.bank)
-        } else if(self.formRequest.rememberValues ?? false && !storedForm) {
+        } else if(self.formRequest.rememberValues ?? false && !viewModel.uiState.storedForm) {
             try! CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)
         }
     }
@@ -124,8 +120,8 @@ public struct FormComponent: View {
 @available(iOS 15.0, *)
 private struct RememberValues: View {
     public var formRequest: FormRequest
-    @Binding var storedForm: Bool
     @ObservedObject var viewModel: KhipuViewModel
+    @AppStorage("storedCredentials") private var storedForm: Bool = false
     
     public var body: some View {
         if(formRequest.rememberValues ?? false) {
@@ -133,6 +129,10 @@ private struct RememberValues: View {
                 Text("Recordar credenciales")
             }
             .toggleStyle(iOSCheckboxToggleStyle())
+            .onChange(of: storedForm, perform: { newValue in
+                viewModel.uiState.storedForm = newValue
+                storedForm = newValue
+            })
         }
     }
 }
@@ -146,7 +146,6 @@ struct DrawComponent: View {
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
     @ObservedObject var viewModel: KhipuViewModel
-    @Binding var storedForm: Bool
     @EnvironmentObject private var themeManager: ThemeManager
     
     public var body: some View {
@@ -244,7 +243,7 @@ struct DrawComponent: View {
                 viewModel: viewModel
             )
         }
-    }    
+    }
 }
 
 

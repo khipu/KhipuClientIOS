@@ -11,11 +11,12 @@ public class KhipuSocketIOClient {
     private var socket: SocketIOClient
     private let secureMessage: SecureMessage
     private let KHENSHIN_PUBLIC_KEY: String
+    private let clientId: String
     private var receivedMessages: [String]
     private var viewModel: KhipuViewModel
     private var skipExitPage: Bool
-
-    public init(serverUrl url: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, viewModel: KhipuViewModel) {
+    
+    public init(serverUrl url: String, clientId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
@@ -25,7 +26,7 @@ public class KhipuSocketIOClient {
             .secure(true),
             .reconnectAttempts(-1),
             .connectParams([
-                "clientId": UUID().uuidString,
+                "clientId": clientId,
                 "clientPublicKey": secureMessage.publicKeyBase64,
                 "locale": locale,
                 "userAgent": UAString(),
@@ -40,6 +41,7 @@ public class KhipuSocketIOClient {
         self.socket = socketManager.defaultSocket
         self.viewModel = viewModel
         self.skipExitPage = skipExitPage
+        self.clientId = clientId
         self.clearKhssCookies()
         self.addListeners()
         
@@ -328,11 +330,11 @@ public class KhipuSocketIOClient {
             print("Received message \(MessageType.welcomeMessageShown.rawValue)")
         }
     }
-
+    
     public func connect() {
         socket.connect()
     }
-
+    
     func isRepeatedMessage(data: [Any], type: String) -> Bool {
         if let mid = data[1] as? String {
             print("[id: \(self.viewModel.uiState.operationId)] Received message \(type), mid \(mid)")
@@ -343,13 +345,13 @@ public class KhipuSocketIOClient {
         }
         return false
     }
-
+    
     func disconnect() {
         socket.disconnect()
         socket.removeAllHandlers()
         socketManager.reconnects = false
     }
-
+    
     func sendOperationResponse() {
         do {
             if (self.viewModel.uiState.operationId.count > 12){
@@ -374,9 +376,9 @@ public class KhipuSocketIOClient {
         } catch {
             print("Error sending operation response")
         }
-
+        
     }
-
+    
     public func sendMessage(type: String, message: String) {
         print("SENDING MESSAGE \(message)")
         let encryptedMessage = self.secureMessage.encrypt(plainText: message, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
@@ -404,17 +406,16 @@ public class KhipuSocketIOClient {
             print("\(cookie.name)=\(cookie.value) \(cookie.domain)")
         }
     }
-        
+    
     private func authAndGetSavedForm(_ formRequest: FormRequest) -> Void {
         let context = LAContext()
         var error: NSError?
         print("self.viewModel.uiState.storedForm = \(self.viewModel.uiState.storedForm)")
         
-        if(context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)) {
-            if (formRequest.rememberValues ?? false && isLoginFormAndStored(formRequest)) {
+        if (formRequest.rememberValues ?? false && isLoginFormAndStored(formRequest)) {
+            if(context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)) {
                 let reason = "Confirme su identidad."
-            
-                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, authenticationError in
+                context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
                     DispatchQueue.main.async {
                         if success {
                             self.getSavedForm(formRequest)
