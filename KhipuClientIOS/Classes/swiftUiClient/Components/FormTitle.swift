@@ -6,11 +6,13 @@ struct FormTitle: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        Text(text)
-            .font(.title)
-            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-            .multilineTextAlignment(.center)
-            .padding()
+        HStack {
+            Text(text)
+                .font(.title)
+                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                .multilineTextAlignment(.center)
+                .padding()
+        }
     }
 }
 

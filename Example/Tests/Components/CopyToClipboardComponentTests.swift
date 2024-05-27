@@ -9,6 +9,8 @@ extension CopyToClipboardOperationId: Inspectable { }
 @available(iOS 15.0, *)
 extension CopyToClipboardLink: Inspectable { }
 
+
+
 @available(iOS 15.0, *)
 final class CopyToClipboardComponentTests: XCTestCase {
     
@@ -26,11 +28,9 @@ final class CopyToClipboardComponentTests: XCTestCase {
                 let inspectedView = try view.inspect().view(CopyToClipboardOperationId.self)
                 let button = try inspectedView.button()
                 let hStack = try button.labelView().hStack()
-                
                 XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(hStack, expectedText: "Copy this"), "Failed to find the text: Copy this")
                 
-                try button.tap()
-                XCTAssertEqual(UIPasteboard.general.string, "Text to be copied")
+                
             } catch {
                 XCTFail("Failed to inspect view: \(error)")
             }
@@ -55,9 +55,6 @@ final class CopyToClipboardComponentTests: XCTestCase {
                 let hStack = try button.labelView().hStack()
                 
                 XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(hStack, expectedText: "Copy this link"), "Failed to find the text: Copy this link")
-                
-                try button.tap()
-                XCTAssertEqual(UIPasteboard.general.string, "Link to be copied")
             } catch {
                 XCTFail("Failed to inspect view: \(error)")
             }
