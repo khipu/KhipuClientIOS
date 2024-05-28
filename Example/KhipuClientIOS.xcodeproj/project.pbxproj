@@ -66,7 +66,7 @@
 		BDD445612C04DD7F00098056 /* HeaderComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderComponentTests.swift; sourceTree = "<group>"; };
 		BDD445632C04F73A00098056 /* MainButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButtonTests.swift; sourceTree = "<group>"; };
 		CC0A43F03CFB34C330043D48 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
-		E09EC8476A9C9725101CB626 /* KhipuClientIOS.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = KhipuClientIOS.podspec; path = ../KhipuClientIOS.podspec; sourceTree = "<group>"; };
+		E09EC8476A9C9725101CB626 /* KhipuClientIOS.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = KhipuClientIOS.podspec; path = ../KhipuClientIOS.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
