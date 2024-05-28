@@ -1,25 +1,15 @@
-#
-# Be sure to run `pod lib lint KhipuClientIOS.podspec' to ensure this is a
-# valid spec before submitting.
-#
-# Any lines starting with a # are optional, but their use is encouraged
-# To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
-#
-
 Pod::Spec.new do |s|
   s.name             = 'KhipuClientIOS'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'A short description of KhipuClientIOS.'
 
-# This description is used to generate tags and improve search results.
-#   * Think: What does it do? Why did you write it? What is the focus?
-#   * Try to keep it short, snappy and to the point.
-#   * Write the description between the DESC delimiters below.
-#   * Finally, don't worry about the indent, CocoaPods strips it!
-
   s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  Khipu is a payment method operating in Chile, Argentina, Peru, and soon in Mexico and Spain. It allows merchants to collect payments electronically and customers to pay using their bank accounts (Checking, Savings, Electronic Checkbooks, etc.).
+
+  Standard use of Khipu requires that the customer authorize the payment on Khipu's website or by installing a mobile app, the Khipu payment terminal.
+
+  The Khipu SDK for Android/iOS allows merchants with an app (Android and/or iOS) to embed the payment authorization process directly in their app, thereby reducing friction in the buying process and, consequently, increasing the conversion rate of the entire process.
+  DESC
 
   s.homepage         = 'https://github.com/khipu/KhipuClientIOS'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
