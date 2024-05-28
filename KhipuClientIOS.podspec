@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'KhipuClientIOS'
   s.version          = '1.0.0'
-  s.summary          = 'A short description of KhipuClientIOS.'
+  s.summary          = 'A Client for iOS Apps written in Swift for Khipu'
 
   s.description      = <<-DESC
   Khipu is a payment method operating in Chile, Argentina, Peru, and soon in Mexico and Spain. It allows merchants to collect payments electronically and customers to pay using their bank accounts (Checking, Savings, Electronic Checkbooks, etc.).
@@ -23,6 +23,8 @@ Pod::Spec.new do |s|
   s.resources = 'KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css}'
 
   s.dependency 'Socket.IO-Client-Swift'
+  s.dependency 'Starscream', '4.0.6'
   s.dependency 'KhenshinSecureMessage'
   s.dependency 'KhenshinProtocol', '1.0.42'
+  s.swift_versions = "5.0"
 end
