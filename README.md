@@ -1,6 +1,5 @@
 # KhipuClientIOS
 
-[![CI Status](https://img.shields.io/travis/Emilio Davis/KhipuClientIOS.svg?style=flat)](https://travis-ci.org/Emilio Davis/KhipuClientIOS)
 [![Version](https://img.shields.io/cocoapods/v/KhipuClientIOS.svg?style=flat)](https://cocoapods.org/pods/KhipuClientIOS)
 [![License](https://img.shields.io/cocoapods/l/KhipuClientIOS.svg?style=flat)](https://cocoapods.org/pods/KhipuClientIOS)
 [![Platform](https://img.shields.io/cocoapods/p/KhipuClientIOS.svg?style=flat)](https://cocoapods.org/pods/KhipuClientIOS)
@@ -22,7 +21,7 @@ pod 'KhipuClientIOS'
 
 ## Author
 
-Emilio Davis, emilio.davis@khipu.com
+Khipu, developers@khipu.com
 
 ## License
 
