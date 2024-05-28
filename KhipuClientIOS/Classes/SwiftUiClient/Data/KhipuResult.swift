@@ -1,14 +1,14 @@
 import Foundation
 
 public struct KhipuResult: Codable {
-    let operationId: String
-    let exitTitle: String
-    let exitMessage: String
-    let result: String
-    let events: [KhipuEvent]
-    let exitUrl: String?
-    let failureReason: String?
-    let continueUrl: String?
+    public let operationId: String
+    public let exitTitle: String
+    public let exitMessage: String
+    public let result: String
+    public let events: [KhipuEvent]
+    public let exitUrl: String?
+    public let failureReason: String?
+    public let continueUrl: String?
     
     var description: String {
         return String(format: "{operationId: %@, result: %@, failureReason: %@, exitTitle: %@, exitMessage: %@, exitUrl: %@, continueUrl: %@, events: %@}", operationId, result, failureReason ?? "nil", exitTitle, exitMessage, exitUrl ?? "nil", continueUrl ?? "nil", events)
@@ -26,9 +26,9 @@ public struct KhipuResult: Codable {
 }
 
 public struct KhipuEvent: Codable {
-    let name: String
-    let timestamp: String
-    let type: String
+    public let name: String
+    public let timestamp: String
+    public let type: String
     
     var description: String {
         return String(format: "{name: %@, timestamp: %@, type: %@}", name, timestamp, type)
