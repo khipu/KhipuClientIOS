@@ -14,7 +14,7 @@ public struct KhipuView: View {
     @StateObject var viewModel = KhipuViewModel()
     @State private var isConfirmingClose = false
     @AppStorage("storedCredentials") private var storedForm: Bool = false
-    @AppStorage("clientId") private var clientId: String?
+    @AppStorage("browserId") private var browserId: String?
     @Environment(\.colorScheme) var colorScheme
     var dismiss: (() -> Void)
     let operationId: String
@@ -121,13 +121,13 @@ public struct KhipuView: View {
                 }
             }
         }.onAppear(perform: {
-            if(clientId == nil) {
-                clientId = UUID().uuidString
+            if(browserId == nil) {
+                browserId = UUID().uuidString
             }
             viewModel.uiState.operationId = self.operationId
             viewModel.setKhipuSocketIOClient(
                 serverUrl: options.serverUrl,
-                clientId: clientId!,
+                browserId: browserId!,
                 publicKey: options.serverPublicKey,
                 appName: appName(),
                 appVersion: appVersion(),

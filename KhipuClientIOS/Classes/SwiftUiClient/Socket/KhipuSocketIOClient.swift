@@ -11,12 +11,11 @@ public class KhipuSocketIOClient {
     private var socket: SocketIOClient
     private let secureMessage: SecureMessage
     private let KHENSHIN_PUBLIC_KEY: String
-    private let clientId: String
     private var receivedMessages: [String]
     private var viewModel: KhipuViewModel
     private var skipExitPage: Bool
     
-    public init(serverUrl url: String, clientId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, viewModel: KhipuViewModel) {
+    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
@@ -26,12 +25,12 @@ public class KhipuSocketIOClient {
             .secure(true),
             .reconnectAttempts(-1),
             .connectParams([
-                "clientId": clientId,
+                "clientId": UUID().uuidString,
                 "clientPublicKey": secureMessage.publicKeyBase64,
                 "locale": locale,
                 "userAgent": UAString(),
                 "uiType": "payment",
-                "browserId": UUID().uuidString, //TODO: make this permanent
+                "browserId": browserId,
                 "appName": appName,
                 "appVersion": appVersion,
                 "appOS": "iOS"
@@ -41,7 +40,6 @@ public class KhipuSocketIOClient {
         self.socket = socketManager.defaultSocket
         self.viewModel = viewModel
         self.skipExitPage = skipExitPage
-        self.clientId = clientId
         self.clearKhssCookies()
         self.addListeners()
         
