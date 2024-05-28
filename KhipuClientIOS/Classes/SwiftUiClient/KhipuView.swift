@@ -12,27 +12,26 @@ import KhenshinProtocol
 public struct KhipuView: View {
     @StateObject var themeManager = ThemeManager()
     @StateObject var viewModel = KhipuViewModel()
-    @State private var isConfirmingClose = false
     @AppStorage("storedCredentials") private var storedForm: Bool = false
     @AppStorage("browserId") private var browserId: String?
     @Environment(\.colorScheme) var colorScheme
-    var dismiss: (() -> Void)
     let operationId: String
     let options: KhipuOptions
     let completitionHandler: ((KhipuResult) -> Void)?
-
+    let hostingControllerContainer: HostingControllerContainer
+    
     init(operationId: String,
          options: KhipuOptions,
          onComplete: ((KhipuResult) -> Void)?,
-         dismiss: @escaping (() -> Void)) {
+         hostingControllerContainer: HostingControllerContainer) {
         self.operationId = operationId
         self.options = options
         self.completitionHandler = onComplete
-        self.dismiss = dismiss
+        self.hostingControllerContainer = hostingControllerContainer
     }
-    
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
+            NvigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, viewModel: viewModel)
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     if(options.header != nil && options.header?.headerUIView != nil){
@@ -78,7 +77,7 @@ public struct KhipuView: View {
                     ExecuteCode {
                         viewModel.disconnectClient()
                         completitionHandler!(buildResult(viewModel.uiState))
-                        dismiss()
+                        hostingControllerContainer.hostingController?.dismiss(animated: true)
                     }
                 }
                 Spacer()
@@ -91,36 +90,7 @@ public struct KhipuView: View {
             maxHeight: .infinity,
             alignment: .topLeading
         )
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button {
-                    isConfirmingClose = true
-                    
-                } label: {
-                    Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
-                }.confirmationDialog(
-                    viewModel.uiState.translator.t("modal.abortOperation.title"),
-                    isPresented: $isConfirmingClose,
-                    titleVisibility: .visible
-                ) {
-                    Button(viewModel.uiState.translator.t("modal.abortOperation.cancel.button"), role: .destructive) {
-                        viewModel.uiState.returnToApp = true
-                    }
-                    Button(viewModel.uiState.translator.t("modal.abortOperation.continue.button"), role: .cancel) {
-                        isConfirmingClose = false
-                    }
-                }
-            }
-            ToolbarItem(placement: .principal) {
-                if (options.topBarImageResourceName == nil) {
-                    Text(options.topBarTitle ?? appName()).foregroundStyle(themeManager.selectedTheme.colors.onTopBarContainer)
-                } else {
-                    Image(options.topBarImageResourceName!)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                }
-            }
-        }.onAppear(perform: {
+        .onAppear(perform: {
             if(browserId == nil) {
                 browserId = UUID().uuidString
             }
@@ -234,6 +204,6 @@ public struct KhipuView: View {
 @available(iOS 15.0.0, *)
 struct KhipuView_Previews: PreviewProvider {
     static var previews: some View {
-        KhipuView(operationId: "OPERATION ID", options: KhipuOptions.Builder().build(), onComplete: nil, dismiss: {})
+        KhipuView(operationId: "OPERATION ID", options: KhipuOptions.Builder().build(), onComplete: nil, hostingControllerContainer: HostingControllerContainer())
     }
 }

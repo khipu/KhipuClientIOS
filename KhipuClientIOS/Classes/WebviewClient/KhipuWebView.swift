@@ -6,7 +6,6 @@ import KhenshinProtocol
 public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandler, WKNavigationDelegate {
     
     var webView: WKWebView!
-    var dismiss: (() -> Void)
     let operationId: String
     let options: KhipuOptions
     let completitionHandler: ((KhipuResult) -> Void)?
@@ -15,12 +14,10 @@ public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandle
     
     public init(operationId: String,
                 options: KhipuOptions,
-                onComplete: ((KhipuResult) -> Void)?,
-                dismiss: @escaping (() -> Void)) {
+                onComplete: ((KhipuResult) -> Void)?) {
         self.operationId = operationId
         self.options = options
         self.completitionHandler = onComplete
-        self.dismiss = dismiss
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -77,7 +74,7 @@ public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandle
                 failureReason: FailureReasonType.userCanceled.rawValue,
                 continueUrl: nil
             ))
-            self.dismiss()
+            self.dismiss(animated: true)
         }
 
         let cancelAction = UIAlertAction(title: "No, continuar pagando", style: .cancel) { _ in
@@ -101,7 +98,7 @@ public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandle
             failureReason: FailureReasonType.userCanceled.rawValue,
             continueUrl: nil
         ))
-        dismiss()
+        dismiss(animated: true)
     }
     
     
@@ -143,7 +140,7 @@ public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandle
                 if(result != nil && completitionHandler != nil) {
                     completitionHandler!(result!)
                 }
-                dismiss()
+                dismiss(animated: true)
             }
         }
     }

@@ -22,7 +22,7 @@ class ViewController: UIViewController {
 
     lazy private var sampleInput: UITextField = {
         let sampleTextField =  UITextField()
-        sampleTextField.text = "d7gywspfe4be"
+        sampleTextField.text = "5mmhq03ax41z"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -44,11 +44,11 @@ class ViewController: UIViewController {
 
     @objc func buttonAction(sender: UIButton!) {
         KhipuLauncher.launch(
-            navigationController: self.navigationController!,
+            presenter: self,
             operationId: sampleInput.text!,
             options: KhipuOptions.Builder()
                 .topBarTitle("Mi Khipu")
-                .topBarImageResourceName("merchant_logo")
+                //.topBarImageResourceName("merchant_logo")
                 .locale("es_CL")
                 .theme(.light)
                 .skipExitPage(false)
@@ -70,6 +70,7 @@ class ViewController: UIViewController {
                 .build()) { result in
                     print("Operation result \(result.asJson())")
                 }
+
     }
     
     lazy private var spacer: UIView = {
