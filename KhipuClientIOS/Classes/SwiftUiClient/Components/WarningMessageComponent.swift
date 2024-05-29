@@ -28,7 +28,7 @@ struct WarningMessageComponent: View {
             
             FormWarning(text: operationWarning.body ?? "")
             Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
-            DetailSectionWarning(operationWarning: operationWarning,operationInfo: viewModel.uiState.operationInfo!,viewModel: viewModel)
+            DetailSectionWarning(operationWarning: operationWarning,operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel)
             Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
@@ -47,7 +47,7 @@ struct WarningMessageComponent: View {
 @available(iOS 15.0.0, *)
 struct DetailSectionWarning: View {
     var operationWarning: OperationWarning
-    var operationInfo: OperationInfo
+    var operationInfo: OperationInfo?
     @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
     
@@ -57,8 +57,8 @@ struct DetailSectionWarning: View {
                 .foregroundColor(Color(.label))
                 .font(.headline)
                 .fontWeight(.bold)
-            DetailItemWarning(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo.amount ?? "")
-            DetailItemWarning(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo.merchant?.name ?? "")
+            DetailItemWarning(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
+            DetailItemWarning(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")
             DetailItemWarning(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationWarning.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationWarning.reason),shouldCopyValue: true)
         }
     }

@@ -102,10 +102,10 @@ public struct FormComponent: View {
         } catch {
             print("Error sending form")
         }
-        if(self.formRequest.rememberValues ?? false && viewModel.uiState.storedForm) {
+        if(self.formRequest.rememberValues ?? false && viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)) {
             let credentials = Credentials(username: answers[0].value, password: answers[1].value)
             try! CredentialsStorageUtil.storeCredentials(credentials: credentials, server: viewModel.uiState.bank)
-        } else if(self.formRequest.rememberValues ?? false && !viewModel.uiState.storedForm) {
+        } else if(self.formRequest.rememberValues ?? false && !viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)) {
             try! CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)
         }
     }
@@ -121,7 +121,8 @@ public struct FormComponent: View {
 private struct RememberValues: View {
     public var formRequest: FormRequest
     @ObservedObject var viewModel: KhipuViewModel
-    @AppStorage("storedCredentials") private var storedForm: Bool = false
+    @State private var storedForm: Bool = false
+    @AppStorage("storedBankCredentials") private var storedBankForms: String = ""
     
     public var body: some View {
         if(formRequest.rememberValues ?? false) {
@@ -130,9 +131,20 @@ private struct RememberValues: View {
             }
             .toggleStyle(iOSCheckboxToggleStyle())
             .onChange(of: storedForm, perform: { newValue in
-                viewModel.uiState.storedForm = newValue
+                if(newValue) {
+                    if(!viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)) {
+                        viewModel.uiState.storedBankForms.append(viewModel.uiState.bank)
+                    }
+                } else {
+                    viewModel.uiState.storedBankForms = viewModel.uiState.storedBankForms.filter { $0 != viewModel.uiState.bank }
+                }
+                storedBankForms = viewModel.uiState.storedBankForms.joined(separator: "|")
                 storedForm = newValue
             })
+            .onAppear {
+                storedForm = viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)
+            }
+            
         }
     }
 }
