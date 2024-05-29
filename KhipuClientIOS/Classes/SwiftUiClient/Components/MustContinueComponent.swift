@@ -77,19 +77,16 @@ struct InformationSection: View {
             
             Spacer().frame(height: themeManager.selectedTheme.dimens.extraMedium)
             
-            InteractiveIconsComponent(khipuViewModel: khipuViewModel)
-            
+            if #available(iOS 16.0, *) {
+                ShareLink(item: URL(string: khipuUiState.operationInfo?.urls?.info ?? "")!,
+                          message: Text(khipuUiState.translator.t("page.operationMustContinue.share.link.body"))){
+                    Label("Compartir", systemImage: "square.and.arrow.up")
+                }
+            }
         }
         .padding()
         .border(themeManager.selectedTheme.colors.onSurface)
         .cornerRadius(themeManager.selectedTheme.dimens.moderatelySmall)
-        /*.padding()
-        .overlay(
-            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
-                .strokeBorder(themeManager.selectedTheme.colors.onSurface)
-                .padding(themeManager.selectedTheme.dimens.veryLarge)
-            
-        )*/
     }
 }
 
