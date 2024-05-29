@@ -12,7 +12,7 @@ import KhenshinProtocol
 public struct KhipuView: View {
     @StateObject var themeManager = ThemeManager()
     @StateObject var viewModel = KhipuViewModel()
-    @AppStorage("storedCredentials") private var storedForm: Bool = false
+    @AppStorage("storedBankCredentials") private var storedBankForms: String = ""
     @AppStorage("browserId") private var browserId: String?
     @Environment(\.colorScheme) var colorScheme
     let operationId: String
@@ -106,7 +106,8 @@ public struct KhipuView: View {
             )
             viewModel.connectClient()
             themeManager.selectedTheme.setColorSchemeAndCustomColors(colorScheme: colorScheme, colors: options.colors)
-            viewModel.uiState.storedForm = storedForm
+            viewModel.uiState.storedBankForms = storedBankForms.split(separator: "|")
+                .map { String($0) }
         })
         .environmentObject(themeManager)
     }

@@ -407,9 +407,7 @@ public class KhipuSocketIOClient {
     
     private func authAndGetSavedForm(_ formRequest: FormRequest) -> Void {
         let context = LAContext()
-        var error: NSError?
-        print("self.viewModel.uiState.storedForm = \(self.viewModel.uiState.storedForm)")
-        
+        var error: NSError?        
         if (formRequest.rememberValues ?? false && isLoginFormAndStored(formRequest)) {
             if(context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)) {
                 let reason = "Confirme su identidad."
@@ -453,7 +451,7 @@ public class KhipuSocketIOClient {
     
     
     private func isLoginFormAndStored(_ formRequest: FormRequest) -> Bool {
-        self.viewModel.uiState.storedForm && formRequest.items.filter({
+        self.viewModel.uiState.storedBankForms.contains(self.viewModel.uiState.bank) && formRequest.items.filter({
             $0.id == "username" || $0.id == "password"
         }).count == 2
     }
