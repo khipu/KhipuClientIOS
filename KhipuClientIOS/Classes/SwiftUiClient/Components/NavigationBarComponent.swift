@@ -1,7 +1,7 @@
 import SwiftUI
 
 @available(iOS 15.0, *)
-struct NvigationBarComponent: View {
+struct NavigationBarComponent: View {
     var title: String?
     var imageName: String?
     @State private var isConfirmingClose = false
