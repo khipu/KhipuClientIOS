@@ -10,33 +10,38 @@ import SwiftUI
 @available(iOS 14.0, *)
 struct InteractiveIconsComponent: View {
     @StateObject var khipuViewModel: KhipuViewModel
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         let khipuUiState = khipuViewModel.uiState
         let completeMessage = "\(khipuUiState.translator.t("page.operationMustContinue.share.link.body")) \(khipuUiState.operationInfo?.urls?.info ?? "")"
+        let bundle = Bundle(identifier: KhipuConstants.KHIPU_BUNDLE_IDENTIFIER)
         
         HStack {
             let actions = [
-                IconAction(icon: UIImage(named: "whatsapp")!, uri: "https://wa.me/?text=\(completeMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")", descriptionId: "desc_whatsapp"),
-                IconAction(icon: UIImage(named: "email")!, uri: "mailto:", descriptionId: "desc_email"/*, intent: {
+                IconAction(icon: "whatsapp", uri: "https://wa.me/?text=\(completeMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")", descriptionId: "desc_whatsapp"),
+                IconAction(icon: "email", uri: "mailto:", descriptionId: "desc_email"/*, intent: {
                     let intent = UIActivityViewController(activityItems: [khipuUiState.translator.t("page.operationMustContinue.share.link.title"), completeMessage], applicationActivities: nil)
                     return intent
                 }()*/),
-                IconAction(icon: UIImage(named: "telegram")!, uri: "https://t.me/share/url?url=\(completeMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")", descriptionId: "desc_telegram")
+                IconAction(icon: "telegram", uri: "https://t.me/share/url?url=\(completeMessage.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")", descriptionId: "desc_telegram")
             ]
             
             ForEach(actions, id: \.uri) { action in
                 Link(destination: URL(string: action.uri)!) {
-                    Image(uiImage: action.icon)
-                        .font(.largeTitle)
+                    Image(action.icon, bundle: bundle)
+                        .resizable()
+                        .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
+                        .padding(themeManager.selectedTheme.dimens.verySmall)
                 }
             }
         }
+        
     }
 }
 
 struct IconAction {
-    let icon: UIImage
+    let icon: String
     let uri: String
     let descriptionId: String
 }

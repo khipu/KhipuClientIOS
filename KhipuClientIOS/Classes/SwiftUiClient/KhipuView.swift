@@ -31,7 +31,7 @@ public struct KhipuView: View {
     }
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NvigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, viewModel: viewModel)
+            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, viewModel: viewModel)
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     if(options.header != nil && options.header?.headerUIView != nil){
@@ -69,6 +69,10 @@ public struct KhipuView: View {
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(viewModel: viewModel)
                     AuthorizationRequestView(viewModel: viewModel)
+                case MessageType.operationMustContinue.rawValue:
+                    if (!options.skipExitPage) {
+                        MustContinueComponent(viewModel: viewModel, operationMustContinue: viewModel.uiState.operationMustContinue!)
+                    }
                     
                 default:
                     EmptyView()
@@ -110,7 +114,7 @@ public struct KhipuView: View {
         })
         .environmentObject(themeManager)
     }
-
+    
     func buildResult(_ state: KhipuUiState) -> KhipuResult {
         if (viewModel.uiState.operationSuccess != nil) {
             return KhipuResult(
@@ -188,7 +192,7 @@ public struct KhipuView: View {
         }
         return events!.map { KhipuEvent(name: $0.name, timestamp: $0.timestamp, type: $0.type)}
     }
-
+    
     func shouldShowHeader(currentMessageType: String) -> Bool {
         let excludedTypes = [
             MessageType.operationSuccess.rawValue,

@@ -8,9 +8,9 @@
 import SwiftUI
 import KhenshinProtocol
 
-@available(iOS 14.0, *)
+@available(iOS 15.0, *)
 struct MustContinueComponent: View {
-    @StateObject private var khipuViewModel: KhipuViewModel
+    @StateObject var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
     let operationMustContinue: OperationMustContinue
     
@@ -18,30 +18,30 @@ struct MustContinueComponent: View {
         VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.extraSmall) {
             Image(systemName: "clock.fill")
                 .foregroundColor(themeManager.selectedTheme.colors.tertiary)
-                .font(.system(size: themeManager.selectedTheme.dimens.extraLarge))
+                .font(.system(size: themeManager.selectedTheme.dimens.larger))
             
-            Text(khipuViewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
+            Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.headline)
+                .font(.system(size: themeManager.selectedTheme.dimens.large))
                 .multilineTextAlignment(.center)
             
             Text(operationMustContinue.title ?? "")
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.title2)
+                .font(.system(size: themeManager.selectedTheme.dimens.large))
                 .multilineTextAlignment(.center)
             
             FormWarning(text: operationMustContinue.body ?? "")
             
-            Spacer(minLength: themeManager.selectedTheme.dimens.moderatelyLarge)
-            InformationSection(operationMustContinue: operationMustContinue, khipuViewModel: khipuViewModel, khipuUiState: khipuViewModel.uiState)
-            Spacer(minLength: themeManager.selectedTheme.dimens.moderatelyLarge)
-            DetailSection(operationMustContinue: operationMustContinue, khipuViewModel: khipuViewModel)
-            Spacer(minLength: themeManager.selectedTheme.dimens.moderatelyLarge)
+            Spacer(minLength: themeManager.selectedTheme.dimens.veryMedium)
+            InformationSection(operationMustContinue: operationMustContinue, khipuViewModel: viewModel, khipuUiState: viewModel.uiState)
+            Spacer(minLength: themeManager.selectedTheme.dimens.veryMedium)
+            DetailSection(operationMustContinue: operationMustContinue)
+            Spacer(minLength: themeManager.selectedTheme.dimens.veryMedium)
             MainButton(
-                text: khipuViewModel.uiState.translator.t("default.end.and.go.back"),
+                text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
                 onClick: {
-                    khipuViewModel.uiState.returnToApp = true
+                    viewModel.uiState.returnToApp = true
                 },
                 foregroundColor: themeManager.selectedTheme.colors.onTertiary,
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
@@ -53,7 +53,7 @@ struct MustContinueComponent: View {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 struct InformationSection: View {
     @EnvironmentObject private var themeManager: ThemeManager
     let operationMustContinue: OperationMustContinue
@@ -62,33 +62,34 @@ struct InformationSection: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
+            Text(khipuUiState.translator.t("page.operationMustContinue.share.description"))
+                .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                .font(.system(size: themeManager.selectedTheme.dimens.extraMedium))
+                .multilineTextAlignment(.center)
             
-            ZStack {
-                RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
-                    .fill(themeManager.selectedTheme.colors.surface)
-                    .border(width: themeManager.selectedTheme.dimens.none, edges: .all, color: themeManager.selectedTheme.colors.onTertiary)
-                    .padding(themeManager.selectedTheme.dimens.veryLarge)
-                
-                VStack(alignment: .center) {
-                    Text(khipuUiState.translator.t("page.operationMustContinue.share.description"))
-                        .foregroundColor(themeManager.selectedTheme.colors.surface)
-                        .font(.system(size: themeManager.selectedTheme.dimens.veryMedium))
-                        .multilineTextAlignment(.center)
-                    
-                    Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
-                    
-                    CopyToClipboardLink(
-                        text: khipuUiState.operationInfo?.urls?.info ?? "",
-                        textToCopy: khipuUiState.operationInfo?.urls?.info ?? "",
-                        background: themeManager.selectedTheme.colors.secondary
-                    )
-                    
-                    Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
-                    
-                    InteractiveIconsComponent(khipuViewModel: khipuViewModel)
-                }
-            }
+            Spacer().frame(height: themeManager.selectedTheme.dimens.extraMedium)
+            
+            CopyToClipboardLink(
+                text: khipuUiState.operationInfo?.urls?.info ?? "",
+                textToCopy: khipuUiState.operationInfo?.urls?.info ?? "",
+                background: themeManager.selectedTheme.colors.secondaryContainer
+            )
+            
+            Spacer().frame(height: themeManager.selectedTheme.dimens.extraMedium)
+            
+            InteractiveIconsComponent(khipuViewModel: khipuViewModel)
+            
         }
+        .padding()
+        .border(themeManager.selectedTheme.colors.onSurface)
+        .cornerRadius(themeManager.selectedTheme.dimens.moderatelySmall)
+        /*.padding()
+        .overlay(
+            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
+                .strokeBorder(themeManager.selectedTheme.colors.onSurface)
+                .padding(themeManager.selectedTheme.dimens.veryLarge)
+            
+        )*/
     }
 }
 
@@ -110,7 +111,7 @@ struct DetailItemMustContinue: View {
                     .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                     .font(.body)
             } else {
-                CopyToClipboardOperationId(text: formatOperationId(value), textToCopy: value, background: Color(uiColor: .secondarySystemBackground))
+                CopyToClipboardOperationId(text: formatOperationId(value), textToCopy: value, background: themeManager.selectedTheme.colors.secondaryContainer)
             }
         }
         .padding(.vertical, 4)
