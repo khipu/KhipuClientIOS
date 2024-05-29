@@ -38,8 +38,8 @@ public class KhipuLauncher {
                 options: options,
                 onComplete: onComplete)
         }
-        view.modalPresentationStyle = .overCurrentContext
-        presenter.present(view, animated: false)
+        view.modalPresentationStyle = .overFullScreen
+        presenter.present(view, animated: true)
     }
     
     
