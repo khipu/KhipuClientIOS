@@ -67,9 +67,13 @@ struct MobileAuthorizationRequestView: View {
             
             Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
             
-            Image("authorize")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
+            AsyncImage(url: URL(string: "https://s3.amazonaws.com/static.khipu.com/khipu-client/authorize.png")) { image in
+                image
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+            } placeholder: {
+                ProgressView()
+            }
             
             Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
             
