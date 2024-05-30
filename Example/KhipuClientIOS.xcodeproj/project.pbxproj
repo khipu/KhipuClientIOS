@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -25,6 +25,8 @@
 		BDD445602C04D89B00098056 /* FormWarningTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4455F2C04D89B00098056 /* FormWarningTest.swift */; };
 		BDD445622C04DD7F00098056 /* HeaderComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD445612C04DD7F00098056 /* HeaderComponentTests.swift */; };
 		BDD445642C04F73A00098056 /* MainButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD445632C04F73A00098056 /* MainButtonTests.swift */; };
+		C55C20ED2C07CC4B0015A732 /* DashedLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55C20EC2C07CC4B0015A732 /* DashedLineTests.swift */; };
+		C5DB1B062C08C6110061351A /* EndToEndEncryptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB1B052C08C6110061351A /* EndToEndEncryptionTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,8 @@
 		BDD4455F2C04D89B00098056 /* FormWarningTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormWarningTest.swift; sourceTree = "<group>"; };
 		BDD445612C04DD7F00098056 /* HeaderComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderComponentTests.swift; sourceTree = "<group>"; };
 		BDD445632C04F73A00098056 /* MainButtonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButtonTests.swift; sourceTree = "<group>"; };
+		C55C20EC2C07CC4B0015A732 /* DashedLineTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashedLineTests.swift; sourceTree = "<group>"; };
+		C5DB1B052C08C6110061351A /* EndToEndEncryptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndToEndEncryptionTest.swift; sourceTree = "<group>"; };
 		CC0A43F03CFB34C330043D48 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		E09EC8476A9C9725101CB626 /* KhipuClientIOS.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = KhipuClientIOS.podspec; path = ../KhipuClientIOS.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 /* End PBXFileReference section */
@@ -92,6 +96,8 @@
 		4AD82D452C0253FD0065CC37 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				C5DB1B052C08C6110061351A /* EndToEndEncryptionTest.swift */,
+				C55C20EC2C07CC4B0015A732 /* DashedLineTests.swift */,
 				4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */,
 				4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTests.swift */,
 				4AD82D432C0253FD0065CC37 /* FailureMessageComponentTests.swift */,
@@ -414,8 +420,10 @@
 				4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTests.swift in Sources */,
 				4AD82D4B2C0253FD0065CC37 /* ViewInspectorUtils.swift in Sources */,
 				BDD445602C04D89B00098056 /* FormWarningTest.swift in Sources */,
+				C5DB1B062C08C6110061351A /* EndToEndEncryptionTest.swift in Sources */,
 				BDD4455E2C04D68500098056 /* FormTitleTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,
+				C55C20ED2C07CC4B0015A732 /* DashedLineTests.swift in Sources */,
 				4AD82D472C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift in Sources */,
 				BDD445642C04F73A00098056 /* MainButtonTests.swift in Sources */,
 				BDD4455C2C04D3B000098056 /* FormPillTests.swift in Sources */,
