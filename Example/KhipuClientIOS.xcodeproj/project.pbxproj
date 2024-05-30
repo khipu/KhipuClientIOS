@@ -309,20 +309,20 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/KHTweetNacl/KHTweetNacl.framework",
 				"${BUILT_PRODUCTS_DIR}/KhenshinProtocol/KhenshinProtocol.framework",
 				"${BUILT_PRODUCTS_DIR}/KhenshinSecureMessage/KhenshinSecureMessage.framework",
 				"${BUILT_PRODUCTS_DIR}/KhipuClientIOS/KhipuClientIOS.framework",
 				"${BUILT_PRODUCTS_DIR}/Socket.IO-Client-Swift/SocketIO.framework",
-				"${BUILT_PRODUCTS_DIR}/Sodium/Sodium.framework",
 				"${BUILT_PRODUCTS_DIR}/Starscream/Starscream.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KHTweetNacl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KhenshinProtocol.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KhenshinSecureMessage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/KhipuClientIOS.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SocketIO.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sodium.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Starscream.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
