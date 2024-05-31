@@ -75,7 +75,7 @@ public struct KhipuView: View {
                     }
                     
                 default:
-                    EmptyView()
+                    EndToEndEncryption(viewModel: viewModel)
                 }
                 if(viewModel.uiState.returnToApp) {
                     ExecuteCode {
