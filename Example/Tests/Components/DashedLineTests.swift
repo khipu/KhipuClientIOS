@@ -3,18 +3,20 @@ import SwiftUI
 import ViewInspector
 @testable import KhipuClientIOS
 
+@available(iOS 13.0, *)
+extension DashedLine: Inspectable { }
+
+@available(iOS 13.0, *)
+extension Line: Inspectable { }
+
 @available(iOS 15.0, *)
 final class DasehdLineTests: XCTestCase {
 
-    func testFormInfoView() throws {
-        let themeManager = ThemeManager()
+    func testDashedLineView() throws {
         let view = DashedLine()
-            .environmentObject(themeManager)
-        
-        ViewHosting.host(view: view)
-                
-        let inspectedView = try view.inspect().view(Line.self)
-        XCTAssertNotNil(inspectedView)
-
+        let inspectedView = try view.inspect()
+        let strokeStyleModifier = try inspectedView.shape(0).strokeStyle()
+        XCTAssertEqual(strokeStyleModifier.lineWidth, 1)
+        XCTAssertEqual(strokeStyleModifier.dash, [5])
     }
 }
