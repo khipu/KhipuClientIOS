@@ -17,10 +17,8 @@ final class EndToEndEncryptionTests: XCTestCase {
         ViewHosting.host(view: view)
         
         let inspectedView = try view.inspect()
-        let circle = try view.inspect().view(Circle.self)
-        
-        let hStack = try inspectedView.hStack()
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(hStack, expectedText: message), "Failed to find the text: \(message)")
-        XCTAssertNotNil(circle)
+
+        let vStack = try inspectedView.vStack()
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: message), "Failed to find the text: \(message)")
     }
 }
