@@ -7,8 +7,8 @@ import LocalAuthentication
 
 @available(iOS 13.0, *)
 public class KhipuSocketIOClient {
-    private let socketManager: SocketManager
-    private var socket: SocketIOClient
+    private var socketManager: SocketManager?
+    private var socket: SocketIOClient?
     private let secureMessage: SecureMessage
     private let KHENSHIN_PUBLIC_KEY: String
     private var receivedMessages: [String]
@@ -37,7 +37,7 @@ public class KhipuSocketIOClient {
             ])
         ])
         self.receivedMessages = []
-        self.socket = socketManager.defaultSocket
+        self.socket = socketManager?.defaultSocket
         self.viewModel = viewModel
         self.skipExitPage = skipExitPage
         self.clearKhssCookies()
@@ -46,29 +46,29 @@ public class KhipuSocketIOClient {
     }
     
     private func addListeners() {
-        self.socket.on(clientEvent: .connect) { data, ack in
+        self.socket?.on(clientEvent: .connect) { data, ack in
             print("[id: \(self.viewModel.uiState.operationId)] connected")
         }
         
-        self.socket.on(clientEvent: .disconnect) { data, ack in
+        self.socket?.on(clientEvent: .disconnect) { data, ack in
             let reason = data.first as! String
             print("[id: \(self.viewModel.uiState.operationId)] disconnected, reason \(reason)")
         }
         
-        self.socket.on(clientEvent: .reconnect) { data, ack in
+        self.socket?.on(clientEvent: .reconnect) { data, ack in
             print("[id: \(self.viewModel.uiState.operationId)] reconnect")
         }
         
-        self.socket.on(clientEvent: .reconnectAttempt) { data, ack in
+        self.socket?.on(clientEvent: .reconnectAttempt) { data, ack in
             print("[id: \(self.viewModel.uiState.operationId)] reconnectAttempt")
         }
         
-        self.socket.onAny { data in
+        self.socket?.onAny { data in
             self.showCookies()
         }
         
         
-        self.socket.on(MessageType.operationRequest.rawValue) { data, ack in
+        self.socket?.on(MessageType.operationRequest.rawValue) { data, ack in
             print("Received message \(MessageType.operationRequest.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.operationRequest.rawValue)) {
                 return
@@ -80,7 +80,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.authorizationRequest.rawValue) { data, ack in
+        self.socket?.on(MessageType.authorizationRequest.rawValue) { data, ack in
             print("Received message \(MessageType.authorizationRequest.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.authorizationRequest.rawValue)) {
                 return
@@ -97,7 +97,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.cancelOperationComplete.rawValue) { data, ack in
+        self.socket?.on(MessageType.cancelOperationComplete.rawValue) { data, ack in
             print("Received message \(MessageType.cancelOperationComplete.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.cancelOperationComplete.rawValue)) {
                 return
@@ -105,7 +105,7 @@ public class KhipuSocketIOClient {
             self.viewModel.uiState.currentMessageType = MessageType.cancelOperationComplete.rawValue
         }
         
-        self.socket.on(MessageType.formRequest.rawValue) { data, ack in
+        self.socket?.on(MessageType.formRequest.rawValue) { data, ack in
             print("Received message \(MessageType.formRequest.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.formRequest.rawValue)) {
                 return
@@ -121,7 +121,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.openAuthorizationApp.rawValue) { data, ack in
+        self.socket?.on(MessageType.openAuthorizationApp.rawValue) { data, ack in
             print("Received message \(MessageType.openAuthorizationApp.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.openAuthorizationApp.rawValue)) {
                 return
@@ -144,7 +144,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.operationDescriptorInfo.rawValue) { data, ack in
+        self.socket?.on(MessageType.operationDescriptorInfo.rawValue) { data, ack in
             print("Received message \(MessageType.operationDescriptorInfo.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.operationDescriptorInfo.rawValue)) {
                 return
@@ -152,7 +152,7 @@ public class KhipuSocketIOClient {
             self.viewModel.uiState.currentMessageType = MessageType.operationDescriptorInfo.rawValue
         }
         
-        self.socket.on(MessageType.operationFailure.rawValue) { data, ack in
+        self.socket?.on(MessageType.operationFailure.rawValue) { data, ack in
             print("Received message \(MessageType.operationFailure.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.operationFailure.rawValue)) {
                 return
@@ -173,7 +173,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.operationInfo.rawValue) { data, ack in
+        self.socket?.on(MessageType.operationInfo.rawValue) { data, ack in
             print("Received message \(MessageType.operationInfo.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.operationInfo.rawValue)) {
                 return
@@ -190,7 +190,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.operationResponse.rawValue) { data, ack in
+        self.socket?.on(MessageType.operationResponse.rawValue) { data, ack in
             print("Received message \(MessageType.operationResponse.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.operationResponse.rawValue)) {
                 return
@@ -198,7 +198,7 @@ public class KhipuSocketIOClient {
             self.viewModel.uiState.currentMessageType = MessageType.operationResponse.rawValue
         }
         
-        self.socket.on(MessageType.operationSuccess.rawValue) { data, ack in
+        self.socket?.on(MessageType.operationSuccess.rawValue) { data, ack in
             print("Received message \(MessageType.operationSuccess.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.operationSuccess.rawValue)) {
                 return
@@ -219,7 +219,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.operationWarning.rawValue) { data, ack in
+        self.socket?.on(MessageType.operationWarning.rawValue) { data, ack in
             print("Received message \(MessageType.operationWarning.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.operationWarning.rawValue)) {
                 return
@@ -240,7 +240,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.operationMustContinue.rawValue) { data, ack in
+        self.socket?.on(MessageType.operationMustContinue.rawValue) { data, ack in
             print("Received message \(MessageType.operationMustContinue.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.operationMustContinue.rawValue)) {
                 return
@@ -261,15 +261,15 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.preAuthorizationCanceled.rawValue) { data, ack in
+        self.socket?.on(MessageType.preAuthorizationCanceled.rawValue) { data, ack in
             print("Received message \(MessageType.preAuthorizationCanceled.rawValue)")
         }
         
-        self.socket.on(MessageType.preAuthorizationStarted.rawValue) { data, ack in
+        self.socket?.on(MessageType.preAuthorizationStarted.rawValue) { data, ack in
             print("Received message \(MessageType.preAuthorizationStarted.rawValue)")
         }
         
-        self.socket.on(MessageType.progressInfo.rawValue) { data, ack in
+        self.socket?.on(MessageType.progressInfo.rawValue) { data, ack in
             print("Received message \(MessageType.progressInfo.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.progressInfo.rawValue)) {
                 return
@@ -286,7 +286,7 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.translation.rawValue) { data, ack in
+        self.socket?.on(MessageType.translation.rawValue) { data, ack in
             print("Received message \(MessageType.translation.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.translation.rawValue)) {
                 return
@@ -303,11 +303,11 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.siteInfo.rawValue) { data, ack in
+        self.socket?.on(MessageType.siteInfo.rawValue) { data, ack in
             print("Received message \(MessageType.siteInfo.rawValue)")
         }
         
-        self.socket.on(MessageType.siteOperationComplete.rawValue) { data, ack in
+        self.socket?.on(MessageType.siteOperationComplete.rawValue) { data, ack in
             print("Received message \(MessageType.siteOperationComplete.rawValue)")
             if (self.isRepeatedMessage(data: data, type: MessageType.siteOperationComplete.rawValue)) {
                 return
@@ -324,13 +324,13 @@ public class KhipuSocketIOClient {
             }
         }
         
-        self.socket.on(MessageType.welcomeMessageShown.rawValue) { data, ack in
+        self.socket?.on(MessageType.welcomeMessageShown.rawValue) { data, ack in
             print("Received message \(MessageType.welcomeMessageShown.rawValue)")
         }
     }
     
     public func connect() {
-        socket.connect()
+        socket?.connect()
     }
     
     func isRepeatedMessage(data: [Any], type: String) -> Bool {
@@ -345,9 +345,11 @@ public class KhipuSocketIOClient {
     }
     
     func disconnect() {
-        socket.disconnect()
-        socket.removeAllHandlers()
-        socketManager.reconnects = false
+        socket?.disconnect()
+        socket?.removeAllHandlers()
+        socketManager?.reconnects = false
+        socket = nil
+        socketManager = nil
     }
     
     func sendOperationResponse() {
@@ -380,7 +382,7 @@ public class KhipuSocketIOClient {
     public func sendMessage(type: String, message: String) {
         print("SENDING MESSAGE \(message)")
         let encryptedMessage = self.secureMessage.encrypt(plainText: message, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
-        socket.emit(type, encryptedMessage!)
+        socket?.emit(type, encryptedMessage!)
     }
     
     func clearKhssCookies() {
