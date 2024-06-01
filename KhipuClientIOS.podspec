@@ -20,7 +20,9 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '12.0'
 
   s.source_files = 'KhipuClientIOS/Classes/**/*'
-  s.resources = 'KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css}'
+  s.resource_bundles = {
+    'KhipuClientIOS' => ['KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css}']
+  }
 
   s.dependency 'Socket.IO-Client-Swift'
   s.dependency 'Starscream', '4.0.6'

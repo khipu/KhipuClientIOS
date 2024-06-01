@@ -105,7 +105,7 @@ public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandle
     public override func viewDidLoad() {
         super.viewDidLoad()
         do {
-            guard let filePath = Bundle(identifier: KhipuConstants.KHIPU_BUNDLE_IDENTIFIER)!.path(forResource: "khipuClient", ofType: "html")
+            guard let filePath = KhipuClientBundleHelper.podBundle!.path(forResource: "khipuClient", ofType: "html")
             else {
                 // File Error
                 print ("File reading error")

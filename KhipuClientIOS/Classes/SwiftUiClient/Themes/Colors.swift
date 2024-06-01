@@ -11,7 +11,7 @@ import SwiftUI
 @available(iOS 13.0, *)
 struct Colors {
     var localColors: LocalColors = LocalColors()
-    var bundle = Bundle(identifier: KhipuConstants.KHIPU_BUNDLE_IDENTIFIER)
+    var bundle = KhipuClientBundleHelper.podBundle
     var colorScheme: ColorScheme = .light
     
     var primary: Color {
