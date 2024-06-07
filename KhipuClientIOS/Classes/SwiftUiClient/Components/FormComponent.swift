@@ -202,7 +202,8 @@ struct DrawComponent: View {
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
-                returnValue: getValueFun
+                returnValue: getValueFun,
+                viewModel: viewModel
             )
         case FormItemTypes.imageChallenge:
             KhipuImageChallengeField(
