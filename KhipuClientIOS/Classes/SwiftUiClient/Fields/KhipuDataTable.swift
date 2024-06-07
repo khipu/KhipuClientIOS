@@ -18,8 +18,8 @@ struct KhipuDataTable: View {
                                 .font(.body)
                                 .frame(maxWidth: .infinity)
                         } else {
-                            Spacer()
-                        }
+                            Text("").font(.body)
+                            .frame(maxWidth: .infinity)                        }
                     }
                 }
             }
