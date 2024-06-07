@@ -49,7 +49,9 @@ struct KhipuCheckboxField: View {
     
     func onChange(newValue: Bool) {
         isChecked = newValue
-        error = validateCheckAndMandatory(checked: isChecked, formItem: formItem)
+        error = ValidationUtils.validateCheckAndMandatory(isChecked,
+                                                          formItem.mandatory,
+                                                          viewModel.uiState.translator)
         isValid(error.isEmpty)
         returnValue(String(newValue))
         lastModificationTime = Date().timeIntervalSince1970
@@ -59,10 +61,52 @@ struct KhipuCheckboxField: View {
         return !error.isEmpty && (currentTime - lastModificationTime > 1)
     }
     
-    func validateCheckAndMandatory(checked: Bool, formItem: FormItem) -> String {
-        if formItem.mandatory == true && !isChecked {
-            return viewModel.uiState.translator.t("form.validation.error.default.required")
+}
+
+@available(iOS 15.0, *)
+struct KhipuCheckboxField_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = KhipuViewModel()
+        let isValid: (Bool) -> Void = { param in }
+        let returnValue: (String) -> Void = { param in }
+        viewModel.uiState = KhipuUiState()
+        viewModel.uiState.translator = KhipuTranslator(translations: [:])
+        
+        let formItem1 = try! FormItem(
+                 """
+                     {
+                       "id": "item1",
+                       "label": "item1",
+                       "type": "\(FormItemTypes.checkbox.rawValue)",
+                       "checked": false
+                     }
+                 """
+        )
+        let formItem2 = try! FormItem(
+                 """
+                     {
+                       "id": "item1",
+                       "label": "item1",
+                       "type": "\(FormItemTypes.checkbox.rawValue)",
+                       "checked": true
+                     }
+                 """
+        )
+        return VStack {
+            KhipuCheckboxField(
+                formItem: formItem1,
+                hasNextField: false,
+                isValid:  isValid,
+                returnValue: returnValue,
+                viewModel: viewModel
+            )
+            KhipuCheckboxField(
+                formItem: formItem2,
+                hasNextField: false,
+                isValid:  isValid,
+                returnValue: returnValue,
+                viewModel: viewModel
+            )
         }
-        return ""
     }
 }

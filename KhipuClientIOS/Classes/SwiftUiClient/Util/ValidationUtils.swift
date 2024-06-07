@@ -57,4 +57,11 @@ class ValidationUtils {
         let numberPredicate = NSPredicate(format: "SELF MATCHES %@", regex)
         return numberPredicate.evaluate(with: string)
     }
+    
+    static func validateCheckAndMandatory(_ isChecked: Bool, _ mandatory: Bool?, _ translator: KhipuTranslator) -> String {
+        if (mandatory == true && !isChecked) {
+            return translator.t("form.validation.error.default.required")
+        }
+        return ""
+    }
 }
