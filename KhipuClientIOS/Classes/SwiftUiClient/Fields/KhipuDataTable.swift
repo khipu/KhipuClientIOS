@@ -29,24 +29,6 @@ struct KhipuDataTable: View {
     }
 }
 
-//struct FieldUtils {
-//    static func getMaxDataTableCells(dataTable: DataTable) -> Int {
-//        return dataTable.rows?.max(by: { $0.cells.count < $1.cells.count })?.cells.count ?? 0
-//    }
-//}
-//
-//struct DataTable {
-//    let rows: [Row]?
-//}
-//
-//struct Row {
-//    let cells: [Cell]
-//}
-//
-//struct Cell {
-//    let text: String
-//}
-
 
 
 @available(iOS 15.0, *)
