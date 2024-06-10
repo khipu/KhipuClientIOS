@@ -21,6 +21,6 @@ struct FormPill: View {
 @available(iOS 13.0, *)
 struct FormPill_Previews: PreviewProvider {
     static var previews: some View {
-        FormPill(text: "Nombre banco")
+        return FormPill(text: "Nombre banco")
     }
 }

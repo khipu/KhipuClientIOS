@@ -14,3 +14,13 @@ struct HintLabel: View {
             }
     }
 }
+
+@available(iOS 13.0, *)
+struct HintLabel_Previews: PreviewProvider {
+    static var previews: some View {
+        return HintLabel(text: "This is a hint label")
+            .environmentObject(ThemeManager())
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
+}
