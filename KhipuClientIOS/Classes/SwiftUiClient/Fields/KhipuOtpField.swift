@@ -1,17 +1,126 @@
 import SwiftUI
 import KhenshinProtocol
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 struct KhipuOtpField: View {
-    var formItem: FormItem
-    var hasNextField: Bool
-    var isValid: (Bool) -> Void
-    var returnValue: (String) -> Void
-    @State var passwordVisible: Bool = false
-    @State var textFieldValue: String = ""
+    @State private var states: [String] = ["","","", "", "", ""]
+    
+    let formItem: FormItem
+    let isValid: (Bool) -> Void
+    let returnValue: (String) -> Void
+    
+    @EnvironmentObject private var themeManager: ThemeManager
+    
+    enum FocusableField: Int, CaseIterable {
+        case coord1 = 0
+        case coord2 = 1
+        case coord3 = 2
+        case coord4 = 3
+        case coord5 = 4
+        case coord6 = 5
+    }
+    
+    @State private var focusedIndex: Int = 0
+    @FocusState private var focusedField: FocusableField?
     
     var body: some View {
-        Text(formItem.label ?? "")
-        TextField(formItem.placeHolder ?? "", text: $textFieldValue)
+        let count: Int = min(Int(formItem.length ?? 0), 6)
+        VStack {
+            FieldLabel(text: formItem.label)
+            HStack(spacing: 16) {
+                ForEach(0..<count, id: \.self) { index in
+                    VStack(alignment: .center) {
+                        CoordinateInputField(formItem: formItem,
+                                             coordValue: $states[index],
+                                             length: 1,
+                                             nextField: {
+                            focusedIndex = (focusedIndex + 1) % count
+                            focusedField = FieldUtils.getElement(FocusableField.self, at: focusedIndex)
+                        },
+                                             updateIndex:  {
+                            focusedIndex = index
+                            focusedField = FieldUtils.getElement(FocusableField.self, at: focusedIndex)
+                        }
+                        )
+                        .focused($focusedField,   equals: FieldUtils.getElement(FocusableField.self, at: index))
+                        
+                        
+                    }
+                }
+            }
+            if !(formItem.hint?.isEmpty ?? true) {
+                HintLabel(text: formItem.hint)
+            }
+        }
+        
+        .padding(.horizontal, 16)
+        .onChange(of: states) { _ in
+            isValid(states.prefix(count).allSatisfy { $0.count == 1 })
+            returnValue(states.prefix(count).joined(separator: "|"))
+        }
+    }
+}
+
+@available(iOS 15.0, *)
+struct KhipuOtpField_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = KhipuViewModel()
+        let isValid: (Bool) -> Void = { param in }
+        let returnValue: (String) -> Void = { param in }
+        viewModel.uiState = KhipuUiState()
+        viewModel.uiState.translator = KhipuTranslator(translations: [:])
+        
+        let formItem1 = try! FormItem(
+                 """
+                     {
+                       "id": "item1",
+                       "label": "Type your DIGIPASS with numbers",
+                       "length": 4,
+                       "type": "\(FormItemTypes.otp.rawValue)",
+                       "hint": "Give me the answer",
+                       "number": false,
+                     }
+                 """
+        )
+        let formItem2 = try! FormItem(
+                 """
+                     {
+                       "id": "item2",
+                       "label": "Type your alphanumeric otp",
+                       "length": 5,
+                       "type": "\(FormItemTypes.otp.rawValue)",
+                       "number" : false
+                     }
+                 """
+        )
+        let formItem3 = try! FormItem(
+                 """
+                     {
+                       "id": "item3",
+                       "label": "Type your alphanumeric otp secure",
+                       "length": 6,
+                       "type": "\(FormItemTypes.otp.rawValue)",
+                       "secure" : true
+                     }
+                 """
+        )
+        return VStack {
+            KhipuOtpField(
+                formItem: formItem1,
+                isValid:  isValid,
+                returnValue: returnValue
+            )
+            KhipuOtpField(
+                formItem: formItem2,
+                isValid:  isValid,
+                returnValue: returnValue
+            )
+            KhipuOtpField(
+                formItem: formItem3,
+                isValid:  isValid,
+                returnValue: returnValue
+            )
+        }
+        .environmentObject(ThemeManager())
     }
 }

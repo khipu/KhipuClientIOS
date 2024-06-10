@@ -209,6 +209,6 @@ public struct KhipuView: View {
 @available(iOS 15.0.0, *)
 struct KhipuView_Previews: PreviewProvider {
     static var previews: some View {
-        KhipuView(operationId: "OPERATION ID", options: KhipuOptions.Builder().build(), onComplete: nil, hostingControllerContainer: HostingControllerContainer())
+        KhipuView(operationId: "rgq1gwc0rprl", options: KhipuOptions.Builder().build(), onComplete: nil, hostingControllerContainer: HostingControllerContainer())
     }
 }

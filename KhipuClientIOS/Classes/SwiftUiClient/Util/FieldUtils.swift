@@ -91,4 +91,10 @@ class FieldUtils {
 
     }
 
+    
+    static func getElement<N: RawRepresentable & CaseIterable>(_ type: N.Type, at index: Int) -> N? where N.AllCases: RandomAccessCollection {
+        let allCases = type.allCases
+        guard index >= 0 && index < allCases.count else { return nil }
+        return allCases[allCases.index(allCases.startIndex, offsetBy: index)]
+    }
 }
