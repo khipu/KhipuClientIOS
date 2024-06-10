@@ -14,3 +14,14 @@ struct ErrorLabel: View {
         }
     }
 }
+
+@available(iOS 13.0, *)
+struct ErrorLabel_Previews: PreviewProvider {
+    static var previews: some View {
+        
+        return ErrorLabel(text: "This is an error message")
+            .environmentObject(ThemeManager())
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
+}

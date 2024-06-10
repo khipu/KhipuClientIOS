@@ -14,3 +14,13 @@ struct FieldLabel: View {
         }
     }
 }
+
+@available(iOS 13.0, *)
+struct FieldLabel_Previews: PreviewProvider {
+    static var previews: some View {
+        return FieldLabel(text: "Field label")
+            .environmentObject(ThemeManager())
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
+}
