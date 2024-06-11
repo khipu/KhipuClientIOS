@@ -259,4 +259,127 @@ struct DrawComponent: View {
     }
 }
 
+@available(iOS 15.0.0, *)
+public struct FormComponent_Previews: PreviewProvider {
+    static public var previews: some View {
+       let formItem = try! FormItem(
+        """
+          {
+           "id": "item1",
+           "label": "item1",
+           "type": "\(FormItemTypes.dataTable.rawValue)",
+           "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}
+                , "indices":0
+          }
+        """
+       )
+        let request = FormRequest(
+            alternativeAction: nil,
+            continueLabel: "continue",
+            errorMessage: "error message",
+            id: "id",
+            info: "info",
+            items: [formItem],
+            pageTitle: "Page Title",
+            progress: Progress(current: 1, total: 2),
+            rememberValues: true,
+            termsURL: "",
+            timeout: 300,
+            title: "Title",
+            type: MessageType.formRequest
+        )
+        let viewModel = KhipuViewModel()
+        viewModel.uiState = KhipuUiState(currentForm: request)
+        return FormComponent(
+            formRequest: request,
+            viewModel: viewModel
+        )
+        .environmentObject(ThemeManager())
+    }
+}
 
+@available(iOS 15.0, *)
+struct RememberValues_Previews: PreviewProvider {
+    static var previews: some View {
+        
+        let formItem = try! FormItem(
+         """
+           {
+            "id": "item1",
+            "label": "item1",
+            "type": "\(FormItemTypes.dataTable.rawValue)",
+            "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}},
+           }
+         """
+        )
+        return RememberValues(formRequest: FormRequest(
+            alternativeAction: nil,
+            continueLabel: "continue",
+            errorMessage: "error message",
+            id: "id",
+            info: "info",
+            items: [formItem],
+            pageTitle: "Page Title",
+            progress: nil,
+            rememberValues: true,
+            termsURL: "",
+            timeout: 300,
+            title: "Title",
+            type: MessageType.formRequest
+        ), viewModel: KhipuViewModel())
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
+
+@available(iOS 15.0, *)
+struct DrawComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        let formItem = try! FormItem(
+         """
+           {
+            "id": "item1",
+            "label": "item1",
+            "type": "\(FormItemTypes.dataTable.rawValue)",
+            "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}
+           }
+         """
+        )
+        let formItem1 = try! FormItem(
+                 """
+                     {
+                       "id": "item1",
+                       "label": "Type your DIGIPASS with numbers",
+                       "length": 4,
+                       "type": "\(FormItemTypes.otp.rawValue)",
+                       "hint": "Give me the answer",
+                       "number": false,
+                     }
+                 """
+        )
+        let submitFunction: () -> Void = {}
+        let getFunction: () -> [String: String] = { ["key":"value"]}
+        let setFunction: ([String: String]) -> Void = { param in }
+                
+        return VStack {
+            Text("DataTable:").underline().padding()
+            DrawComponent(
+                item: formItem,
+                hasNextField: false,
+                formValues: Binding(get: getFunction, set: setFunction),
+                submitFunction: submitFunction,
+                viewModel: KhipuViewModel())
+            .environmentObject(ThemeManager())
+            .padding()
+            Text("OTP:").underline().padding()
+            DrawComponent(
+                item: formItem1,
+                hasNextField: false,
+                formValues: Binding(get: getFunction, set: setFunction),
+                submitFunction: submitFunction,
+                viewModel: KhipuViewModel())
+            .environmentObject(ThemeManager())
+            .padding()
+        }
+    }
+}

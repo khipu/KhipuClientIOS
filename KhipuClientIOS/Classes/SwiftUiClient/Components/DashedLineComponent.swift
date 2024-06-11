@@ -25,3 +25,10 @@ struct Line: Shape {
         return path
     }
 }
+
+@available(iOS 13.0, *)
+struct DashedLine_Previews: PreviewProvider {
+    static var previews: some View {
+        DashedLine()
+    }
+}

@@ -20,7 +20,7 @@ struct EndToEndEncryption: View {
                        height: themeManager.selectedTheme.dimens.extraLarge,
                        alignment: .center)
                 .padding([.top], themeManager.selectedTheme.dimens.massive)
-            Text(viewModel.uiState.translator.t("endToEndEncryption", default: ""))
+            Text(viewModel.uiState.translator.t("default.end.to.end.encryption"))
                 .frame(alignment: .center)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -59,5 +59,23 @@ struct CircularProgressView: View {
         .onAppear {
             drawingStroke.toggle()
         }
+    }
+}
+
+@available(iOS 13.0, *)
+struct EndToEndEncryption_Previews: PreviewProvider {
+    static var previews: some View {
+        EndToEndEncryption(viewModel: KhipuViewModel())
+            .environmentObject(ThemeManager())
+            .padding()
+    }
+}
+
+@available(iOS 13.0, *)
+struct CircularProgressView_Previews: PreviewProvider {
+    static var previews: some View {
+        CircularProgressView()
+            .environmentObject(ThemeManager())
+            .padding()
     }
 }
