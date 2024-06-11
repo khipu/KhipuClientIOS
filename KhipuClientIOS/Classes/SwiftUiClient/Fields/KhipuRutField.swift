@@ -163,3 +163,80 @@ struct ImageButton: View {
         .foregroundColor(Color("buttonForeground", bundle: bundle))
     }
 }
+
+class MockTextDocumentProxy: NSObject, UITextDocumentProxy {
+    var documentContextBeforeInput: String?
+    var documentContextAfterInput: String?
+    var selectedText: String?
+    var documentInputMode: UITextInputMode?
+    var documentIdentifier: UUID
+    var hasText: Bool
+    func adjustTextPosition(byCharacterOffset offset: Int) {}
+    func setMarkedText(_ markedText: String, selectedRange: NSRange) {}
+    func unmarkText() {}
+    func insertText(_ text: String) {}
+    func deleteBackward() {}
+    
+    override init() {
+        self.documentIdentifier = UUID()
+        self.selectedText = "abcdef"
+        self.hasText = true
+        super.init()
+    }
+    
+}
+
+
+@available(iOS 15.0.0, *)
+struct KhipuRutField_Previews: PreviewProvider {
+    static var previews: some View {
+        let formItem1 = try! FormItem(
+             """
+                 {
+                   "id": "Some text",
+                   "label": "Label",
+                   "type": "\(FormItemTypes.text.rawValue)",
+                   "hint": "Enter some text",
+                   "placeHolder": "Ex: my text"
+                 }
+             """
+        )
+        let isValid: (Bool) -> Void = { param in }
+        let returnValue: (String) -> Void = { param in }
+        return KhipuRutField(
+            formItem: formItem1,
+            hasNextField: false,
+            isValid: isValid,
+            returnValue: returnValue,
+            rutValue: "",
+            error: "Error message",
+            lastModificationTime: TimeInterval.pi,
+            viewModel: KhipuViewModel(),
+            currentTime: TimeInterval.pi
+        )
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
+
+@available(iOS 15.0.0, *)
+struct LabeledButton_Previews: PreviewProvider {
+    static var previews: some View {
+        LabeledButton(
+            text: "Delete",
+            textDocumentProxy: MockTextDocumentProxy(),
+            playSystemFeedback: { print("System feedback played") }
+        )
+    }
+}
+
+@available(iOS 15.0.0, *)
+struct ImageButton_Previews: PreviewProvider {
+    static var previews: some View {
+        ImageButton(
+            imageName: "delete.left",
+            textDocumentProxy: MockTextDocumentProxy(),
+            playSystemFeedback: { print("System feedback played") }
+        )
+    }
+}

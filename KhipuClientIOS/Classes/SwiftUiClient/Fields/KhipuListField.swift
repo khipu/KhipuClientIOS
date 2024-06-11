@@ -24,6 +24,7 @@ struct KhipuListField: View {
                             .font(.system(size: 16))
                             .fontWeight(.bold)
                             .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         
                         if let dataTable = option.dataTable, !dataTable.rows.isEmpty {
                             KhipuDataTable(dataTable: dataTable)
@@ -49,3 +50,34 @@ struct Dimensions {
     static let veryLarge: CGFloat = 64
 }
 
+@available(iOS 15.0, *)
+struct KhipuListField_Previews: PreviewProvider {
+    static var previews: some View {
+        let isValid: (Bool) -> Void = { param in }
+        let returnValue: (String) -> Void = { param in }
+        let submitFunction: () -> Void = {}
+        let formItem1 = try! FormItem(
+         """
+           {
+            "id": "item1",
+            "label": "item1",
+            "placeholder": "placeholder",
+            "type": "\(FormItemTypes.dataTable.rawValue)",
+            "options":[
+                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option 1", "value": "1" },
+                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option 2", "value": "2" },
+                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option with datatable", "value": "3", "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}}
+            ]
+            }
+           
+         """
+        )
+        return KhipuListField(
+            formItem: formItem1,
+            isValid: isValid,
+            returnValue: returnValue,
+            submitFunction: submitFunction
+        )
+        .padding()
+    }
+}

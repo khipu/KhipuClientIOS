@@ -16,7 +16,7 @@ struct KhipuDataTable: View {
                             Text(cell.text)
                                 .foregroundColor(Color(uiColor: .secondaryLabel))
                                 .font(.body)
-                                .frame(maxWidth: .infinity)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         } else {
                             Text("").font(.body)
                             .frame(maxWidth: .infinity)                        }
@@ -52,5 +52,6 @@ struct KhipuDataTable_Previews: PreviewProvider {
         
         return KhipuDataTable(dataTable: mockDataTable)
             .previewLayout(.sizeThatFits)
+            .padding()
     }
 }

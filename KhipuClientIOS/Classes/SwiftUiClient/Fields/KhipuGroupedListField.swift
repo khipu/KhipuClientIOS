@@ -110,3 +110,33 @@ public struct KhipuGroupedListField: View {
         }
     }
 }
+
+@available(iOS 15.0, *)
+struct KhipuGroupedList_Previews: PreviewProvider {
+    static var previews: some View {
+        let isValid: (Bool) -> Void = { param in }
+        let returnValue: (String) -> Void = { param in }
+        let submitFunction: () -> Void = {}
+        let formItem1 = try! FormItem(
+         """
+           {
+            "id": "item1",
+            "label": "item1",
+            "placeholder": "placeholder",
+            "type": "\(FormItemTypes.dataTable.rawValue)",
+            "groupedOptions": {
+                "options":[
+                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Demo Bank", "tag": "Persona", "value": "1" },
+                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Demo Bank Empresa", "tag": "Empresa", "value": "2" }
+            ], "tagsOrder": "Persona,Empresa"}
+           }
+         """
+        )
+        return KhipuGroupedListField(
+            formItem: formItem1,
+            isValid: isValid,
+            returnValue: returnValue,
+            submitFunction: submitFunction)
+        .padding()
+    }
+}
