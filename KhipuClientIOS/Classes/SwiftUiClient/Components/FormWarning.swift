@@ -29,3 +29,12 @@ struct FormWarning: View {
         
     }
 }
+
+@available(iOS 15.0, *)
+struct FormWarning_Previews: PreviewProvider{
+    static var previews: some View {
+        FormWarning(text: "Warning text")
+            .environmentObject(ThemeManager())
+            .padding()
+    }
+}

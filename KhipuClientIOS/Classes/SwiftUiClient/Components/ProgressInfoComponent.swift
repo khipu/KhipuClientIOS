@@ -23,3 +23,12 @@ struct ProgressInfoComponent: View {
         .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
     }
 }
+
+@available(iOS 15.0, *)
+struct ProgressInfoComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        return ProgressInfoComponent(message: "Progress info message")
+            .environmentObject(ThemeManager())
+            .previewLayout(.sizeThatFits)
+    }
+}

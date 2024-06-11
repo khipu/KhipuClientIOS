@@ -89,3 +89,66 @@ struct DetailItemWarning: View {
     }
 }
 
+@available(iOS 15.0, *)
+struct WarningMessageComponent_Previews:PreviewProvider{
+    static var previews: some View{
+        return WarningMessageComponent(operationWarning:
+            OperationWarning(
+                type: MessageType.operationWarning,
+                body: "body",
+                events: nil,
+                exitURL: "exitUrl",
+                operationID: "operationID",
+                resultMessage: "resultMessage",
+                title: "Title",
+                reason: FailureReasonType.taskDumped
+            ), viewModel: KhipuViewModel()
+        )
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
+
+@available(iOS 15.0, *)
+struct DetailSectionWarning_Previews:PreviewProvider{
+    static var previews: some View{
+        return DetailSectionWarning(
+            operationWarning: OperationWarning(
+                type: MessageType.operationWarning,
+                body: "body",
+                events: nil,
+                exitURL: "exitUrl",
+                operationID: "operationID",
+                resultMessage: "resultMessage",
+                title: "Title",
+                reason: FailureReasonType.taskDumped
+            ), operationInfo: OperationInfo(
+                acceptManualTransfer: true,
+                amount: "$ 1.000",
+                body: "body",
+                email: "khipu@khipu.com",
+                merchant: nil,
+                operationID: "operationID",
+                subject: "Subject",
+                type: MessageType.operationInfo,
+                urls: nil,
+                welcomeScreen: nil
+            ), viewModel: KhipuViewModel()
+        )
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
+
+@available(iOS 15.0, *)
+struct DetailItemWarning_Previews:PreviewProvider{
+    static var previews: some View{
+        return DetailItemWarning(
+            label: "Label",
+            value: "Value",
+            shouldCopyValue: true
+        )
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}

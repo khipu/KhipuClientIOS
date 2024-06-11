@@ -28,3 +28,11 @@ struct FormInfo: View {
     }
 }
 
+@available(iOS 15.0, *)
+struct FormInfo_Previews: PreviewProvider {
+    static var previews: some View {
+        FormInfo(text: "Info text")
+            .environmentObject(ThemeManager())
+            .padding()
+    }
+}

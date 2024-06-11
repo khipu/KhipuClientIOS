@@ -25,3 +25,28 @@ struct MainButton: View {
         .disabled(!enabled && !submitted)
     }
 }
+
+@available(iOS 13.0, *)
+struct MainButton_Previews: PreviewProvider {
+    static var previews: some View {
+        let onClick: () -> Void = {}
+        return VStack {
+            MainButton(
+                text: "Enabled buton",
+                enabled: true,
+                onClick: onClick,
+                foregroundColor: Color(hexString: "#FFFFFF")!,
+                backgroundColor: Color(hexString: "#8347AC")!
+            )
+            MainButton(
+                text: "Disabled buton",
+                enabled: false,
+                onClick: onClick,
+                foregroundColor: Color(hexString: "#FFFFFF")!,
+                backgroundColor: Color(hexString: "#8347AC")!
+            )
+        }
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}

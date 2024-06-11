@@ -160,3 +160,144 @@ struct DetailSection: View {
         }
     }
 }
+
+@available(iOS 15.0, *)
+struct MustContinueComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = KhipuViewModel()
+        let urls = Urls(
+            attachment: ["https://www.khipu.com"],
+            cancel: "https://www.khipu.com",
+            changePaymentMethod: "https://www.khipu.com",
+            fallback: "https://www.khipu.com",
+            image: "https://www.khipu.com",
+            info: "https://www.khipu.com",
+            manualTransfer: "https://www.khipu.com",
+            urlsReturn: "https://www.khipu.com"
+        )
+        let uiState = KhipuUiState(operationInfo: OperationInfo(
+                acceptManualTransfer: true,
+                amount: "$ 1.000",
+                body: "body",
+                email: "khipu@khipu.com",
+                merchant: nil,
+                operationID: "operationID",
+                subject: "Subject",
+                type: MessageType.operationInfo,
+                urls: urls,
+                welcomeScreen: nil
+            )
+        )
+        let operationMustContinue = OperationMustContinue(
+            type: MessageType.operationMustContinue,
+            body: "body",
+            events: nil,
+            exitURL: "exitUrl",
+            operationID: "operationID",
+            resultMessage: "resultMessage",
+            title: "Title",
+            reason: nil
+        )
+        viewModel.uiState = uiState
+        return MustContinueComponent(
+            viewModel: viewModel,
+            operationMustContinue: OperationMustContinue(
+                type: MessageType.operationMustContinue,
+                body: "body",
+                events: nil,
+                exitURL: "exitUrl",
+                operationID: "operationID",
+                resultMessage: "resultMessage",
+                title: "Title",
+                reason: nil
+            )
+        )
+        .environmentObject(ThemeManager())
+        .previewLayout(.sizeThatFits)
+    }
+}
+
+
+@available(iOS 15.0, *)
+struct InformationSection_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = KhipuViewModel()
+        let urls = Urls(
+            attachment: ["https://www.khipu.com"],
+            cancel: "https://www.khipu.com",
+            changePaymentMethod: "https://www.khipu.com",
+            fallback: "https://www.khipu.com",
+            image: "https://www.khipu.com",
+            info: "https://www.khipu.com",
+            manualTransfer: "https://www.khipu.com",
+            urlsReturn: "https://www.khipu.com"
+        )
+        let uiState = KhipuUiState(operationInfo: OperationInfo(
+                acceptManualTransfer: true,
+                amount: "$ 1.000",
+                body: "body",
+                email: "khipu@khipu.com",
+                merchant: nil,
+                operationID: "operationID",
+                subject: "Subject",
+                type: MessageType.operationInfo,
+                urls: urls,
+                welcomeScreen: nil
+            )
+        )
+        let operationMustContinue = OperationMustContinue(
+            type: MessageType.operationMustContinue,
+            body: "body",
+            events: nil,
+            exitURL: "exitUrl",
+            operationID: "operationID",
+            resultMessage: "resultMessage",
+            title: "Title",
+            reason: nil
+        )
+        return InformationSection(
+                    operationMustContinue: operationMustContinue,
+                    khipuViewModel: viewModel,
+                    khipuUiState: uiState
+                )
+                .environmentObject(ThemeManager())
+                .previewLayout(.sizeThatFits)
+                .padding()
+    }
+}
+
+
+@available(iOS 15.0, *)
+struct DetailItemMustContinue_Previews: PreviewProvider {
+    static var previews: some View {
+        return DetailItemMustContinue(
+            label: "Label",
+            value: "Value",
+            shouldCopyValue: true
+        )
+        .environmentObject(ThemeManager())
+        .previewLayout(.sizeThatFits)
+        .padding()
+    }
+}
+
+@available(iOS 15.0, *)
+struct DetailSection_Previews: PreviewProvider {
+    static var previews: some View {
+        return DetailSection(
+            operationMustContinue: OperationMustContinue(
+                type: MessageType.operationMustContinue,
+                body: "body",
+                events: nil,
+                exitURL: "exitUrl",
+                operationID: "operationID",
+                resultMessage: "resultMessage",
+                title: "Title",
+                reason: nil
+            )
+        )
+        .environmentObject(ThemeManager())
+        .previewLayout(.sizeThatFits)
+        .padding()
+    }
+}

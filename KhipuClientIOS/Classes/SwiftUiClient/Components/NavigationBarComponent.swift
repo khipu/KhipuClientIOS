@@ -52,3 +52,15 @@ struct NavigationBarComponent: View {
         .background(themeManager.selectedTheme.colors.topBarContainer)
     }
 }
+
+@available(iOS 15.0, *)
+struct NavigationBarComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        return NavigationBarComponent(
+            title: "Title",
+            imageName: nil,
+            viewModel: KhipuViewModel()
+        )
+        .environmentObject(ThemeManager())
+    }
+}

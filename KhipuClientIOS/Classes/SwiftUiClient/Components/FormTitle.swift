@@ -20,6 +20,7 @@ struct FormTitle: View {
 @available(iOS 13.0, *)
 struct FormTitle_Previews: PreviewProvider {
     static var previews: some View {
-        FormTitle(text: "Título")
+        FormTitle(text: "Title")
+            .environmentObject(ThemeManager())
     }
 }

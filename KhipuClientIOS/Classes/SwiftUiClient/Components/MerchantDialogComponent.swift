@@ -54,3 +54,18 @@ struct MerchantDialogComponent: View {
         }
     }
 }
+
+@available(iOS 15.0.0, *)
+struct MerchantDialogComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        let onDismissRequest: () -> Void = {}
+        return MerchantDialogComponent(
+            onDismissRequest: onDismissRequest,
+            translator: KhipuUiState().translator,
+            merchant: "Merchant",
+            subject: "Subject",
+            description: "Description",
+            amount: "$ 1.000"
+        ).padding()
+    }
+}

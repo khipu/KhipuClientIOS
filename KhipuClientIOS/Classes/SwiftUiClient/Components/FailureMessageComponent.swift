@@ -1,6 +1,5 @@
 import SwiftUI
 import KhenshinProtocol
-import SwiftUI
 
 
 @available(iOS 15.0.0, *)
@@ -90,3 +89,56 @@ struct DetailItemFailure: View {
     }
 }
 
+
+@available(iOS 15.0, *)
+struct FailureMessageComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        FailureMessageComponent(
+            operationFailure:
+                OperationFailure(
+                    type: MessageType.operationFailure,
+                    body: "body",
+                    events: nil,
+                    exitURL: "exitUrl",
+                    operationID: "operationID",
+                    resultMessage: "resultMessage",
+                    title: "Title",
+                    reason: FailureReasonType.taskExecutionError
+        ), viewModel: KhipuViewModel())
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
+
+@available(iOS 15.0, *)
+struct DetailSectionFailure_Previews: PreviewProvider {
+    static var previews: some View {
+        DetailSectionFailure(
+            operationFailure:
+                OperationFailure(
+                    type: MessageType.operationFailure,
+                    body: "body",
+                    events: nil,
+                    exitURL: "exitUrl",
+                    operationID: "operationID",
+                    resultMessage: "resultMessage",
+                    title: "Title",
+                    reason: FailureReasonType.taskExecutionError
+        ), viewModel: KhipuViewModel())
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
+
+
+@available(iOS 15.0, *)
+struct DetailItemFailure_Previews: PreviewProvider {
+    static var previews: some View {
+        DetailItemFailure(
+            label: "Label",
+            value: "Value"
+        )
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}

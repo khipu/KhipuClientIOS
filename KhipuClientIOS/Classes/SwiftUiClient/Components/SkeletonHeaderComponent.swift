@@ -1,7 +1,5 @@
 import SwiftUI
 
-import SwiftUI
-
 @available(iOS 15.0, *)
 struct SkeletonHeaderComponent: View {
     var body: some View {
@@ -107,5 +105,12 @@ struct ShimmerViewModifier: ViewModifier {
 extension View {
     func shimmer() -> some View {
         self.modifier(ShimmerViewModifier())
+    }
+}
+
+@available(iOS 15.0, *)
+struct SkeletonHeaderComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        return SkeletonHeaderComponent()
     }
 }
