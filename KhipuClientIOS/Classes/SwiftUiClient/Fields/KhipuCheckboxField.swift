@@ -108,5 +108,6 @@ struct KhipuCheckboxField_Previews: PreviewProvider {
                 viewModel: viewModel
             )
         }
+        .environmentObject(ThemeManager())
     }
 }

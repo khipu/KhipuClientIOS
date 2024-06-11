@@ -146,3 +146,54 @@ struct KhipuTextField: View {
         case invalidNumber
     }
 }
+
+@available(iOS 15.0, *)
+struct KhipuTextField_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = KhipuViewModel()
+        let isValid: (Bool) -> Void = { param in }
+        let returnValue: (String) -> Void = { param in }
+        viewModel.uiState = KhipuUiState()
+        viewModel.uiState.translator = KhipuTranslator(translations: [:])
+        
+        let formItem1 = try! FormItem(
+                 """
+                     {
+                       "id": "Some text",
+                       "label": "item1",
+                       "type": "\(FormItemTypes.text.rawValue)",
+                       "hint": "Enter some text",
+                       "placeHolder": "Ej: my text"
+                     }
+                 """
+        )
+        let formItem2 = try! FormItem(
+                 """
+                     {
+                       "id": "item2",
+                       "label": "Password",
+                       "secure": true,
+                       "type": "\(FormItemTypes.text.rawValue)",
+                       "hint": "Enter your password"
+                     }
+                 """
+        )
+        return VStack {
+            KhipuTextField(
+                formItem: formItem1,
+                hasNextField: false,
+                isValid:  isValid,
+                returnValue: returnValue,
+                viewModel: viewModel
+            )
+            KhipuTextField(
+                formItem: formItem2,
+                hasNextField: false,
+                isValid:  isValid,
+                returnValue: returnValue,
+                viewModel: viewModel
+            )
+        }
+        .environmentObject(ThemeManager())
+    }
+}

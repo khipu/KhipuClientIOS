@@ -20,6 +20,7 @@ struct KhipuHeaderCheckboxField: View {
                     Text(formItem.title ?? "")
                     Spacer()
                 }
+                .padding(.vertical)
             }
             HStack {
                 Toggle(isOn: $isChecked) {
@@ -35,9 +36,18 @@ struct KhipuHeaderCheckboxField: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-
+            
             if !(formItem.items?.isEmpty ?? true) {
-                Text("TODO: agregar los items cuando sean una lista")
+                VStack {
+                    ForEach(formItem.items ?? [], id: \.self) {
+                        item in
+                        HStack {
+                            Image(systemName:  "checkmark.square")
+                            Text(item)
+                        }
+                    }
+                }
+                .padding()
             }
             
             if !(formItem.bottomText?.isEmpty ?? false) {
@@ -66,7 +76,7 @@ struct KhipuHeaderCheckboxField: View {
     
     func onChange(newValue: Bool) {
         isChecked = newValue
-        error = ValidationUtils.validateCheckAndMandatory(isChecked, 
+        error = ValidationUtils.validateCheckAndMandatory(isChecked,
                                                           formItem.mandatory,
                                                           viewModel.uiState.translator)
         isValid(error.isEmpty)
@@ -77,7 +87,7 @@ struct KhipuHeaderCheckboxField: View {
     func shouldDisplayError() -> Bool {
         return !error.isEmpty && (currentTime - lastModificationTime > 1)
     }
-   
+    
 }
 
 @available(iOS 15.0, *)
@@ -94,8 +104,8 @@ struct KhipuHeaderCheckboxField_Previews: PreviewProvider {
                        "id": "item1",
                        "label": "item1",
                        "title": "HeaderCheckbox with title",
-                       "items": "some checked items",
                        "bottomText": "The bottom text",
+                       "items": ["item1", "item2"],
                        "type": "\(FormItemTypes.headerCheckbox.rawValue)",
                        "checked": false
                      }
@@ -129,5 +139,6 @@ struct KhipuHeaderCheckboxField_Previews: PreviewProvider {
                 viewModel: viewModel
             )
         }
+        .environmentObject(ThemeManager())
     }
 }

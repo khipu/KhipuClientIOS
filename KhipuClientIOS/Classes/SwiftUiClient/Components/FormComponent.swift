@@ -180,8 +180,7 @@ struct DrawComponent: View {
             KhipuCoordinatesField(
                 formItem: item,
                 isValid: validationFun,
-                returnValue: getValueFun,
-                submitFunction: submitFunction
+                returnValue: getValueFun
             )
         case FormItemTypes.dataTable:
             KhipuDataTableField(
@@ -222,7 +221,6 @@ struct DrawComponent: View {
         case FormItemTypes.otp:
             KhipuOtpField(
                 formItem: item,
-                hasNextField: hasNextField,
                 isValid: validationFun,
                 returnValue: getValueFun
             )
