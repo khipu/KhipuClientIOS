@@ -31,7 +31,7 @@ public struct KhipuView: View {
     }
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, viewModel: viewModel)
+            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, imageUrl: options.topBarImageUrl, viewModel: viewModel)
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     if(options.header != nil && options.header?.headerUIView != nil){

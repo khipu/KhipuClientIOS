@@ -5,6 +5,7 @@ public class KhipuOptions {
     let serverPublicKey: String
     let header: KhipuHeader?
     let topBarTitle: String?
+    let topBarImageUrl: String?
     let topBarImageResourceName: String?
     let skipExitPage: Bool
     let theme: Theme
@@ -16,6 +17,7 @@ public class KhipuOptions {
         serverPublicKey: String,
         header: KhipuHeader?,
         topBarTitle: String?,
+        topBarImageUrl: String?,
         topBarImageResourceName: String?,
         skipExitPage: Bool,
         theme: Theme,
@@ -26,6 +28,7 @@ public class KhipuOptions {
         self.serverPublicKey = serverPublicKey
         self.header = header
         self.topBarTitle = topBarTitle
+        self.topBarImageUrl = topBarImageUrl
         self.topBarImageResourceName = topBarImageResourceName
         self.skipExitPage = skipExitPage
         self.theme = theme
@@ -42,6 +45,7 @@ public class KhipuOptions {
         var _serverPublicKey: String = "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw="
         var _header: KhipuHeader?
         var _topBarTitle: String?
+        var _topBarImageUrl: String?
         var _topBarImageResourceName: String?
         var _skipExitPage: Bool = false
         var _theme: Theme = .system
@@ -69,6 +73,11 @@ public class KhipuOptions {
 
         public func topBarTitle(_ topBarTitle: String) -> Builder {
             self._topBarTitle = topBarTitle
+            return self
+        }
+        
+        public func topBarImageUrl(_ topBarImageUrl: String) -> Builder {
+            self._topBarImageUrl = topBarImageUrl
             return self
         }
 
@@ -103,6 +112,7 @@ public class KhipuOptions {
                 serverPublicKey: _serverPublicKey,
                 header: _header,
                 topBarTitle: _topBarTitle,
+                topBarImageUrl: _topBarImageUrl,
                 topBarImageResourceName: _topBarImageResourceName,
                 skipExitPage: _skipExitPage,
                 theme: _theme,

@@ -4,6 +4,7 @@ import SwiftUI
 struct NavigationBarComponent: View {
     var title: String?
     var imageName: String?
+    var imageUrl: String?
     @State private var isConfirmingClose = false
     @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
@@ -12,12 +13,20 @@ struct NavigationBarComponent: View {
         HStack {
             Spacer().frame(width: 50)
             Spacer()
-            if (imageName == nil) {
-                Text(title ?? appName()).foregroundStyle(themeManager.selectedTheme.colors.onTopBarContainer).font(.title3)
-            } else {
+            if (imageUrl != nil) {
+                AsyncImage(url: URL(string: imageUrl!)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                } placeholder: {
+                    ProgressView()
+                }
+            } else if (imageName != nil) {
                 Image(imageName!)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+            } else {
+                Text(title ?? appName()).foregroundStyle(themeManager.selectedTheme.colors.onTopBarContainer).font(.title3)
             }
             Spacer()
             Button {

@@ -50,7 +50,9 @@ class ViewController: UIViewController {
         KhipuLauncher.launch(
             presenter: self,
             operationId: sampleInput.text!,
-            options: KhipuOptions.Builder().build()
+            options: KhipuOptions.Builder()
+                .topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
+                .build()
                 ) { result in
                     print("Operation result \(result.asJson())")
                 }
