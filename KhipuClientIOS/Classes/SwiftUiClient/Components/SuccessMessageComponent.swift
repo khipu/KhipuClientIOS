@@ -56,3 +56,22 @@ struct SuccessMessageComponent: View {
     }
 }
 
+@available(iOS 15.0, *)
+struct SuccessMessageComponent_Previews: PreviewProvider{
+    static var previews: some View{
+        
+        return SuccessMessageComponent(operationSuccess: OperationSuccess(
+                canUpdateEmail: false,
+                type: MessageType.operationSuccess,
+                body: "body",
+                events: nil,
+                exitURL: "exitUrl",
+                operationID: "operationID",
+                resultMessage: "resultMessage",
+                title: "Title"
+            ), viewModel: KhipuViewModel()
+        )
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}

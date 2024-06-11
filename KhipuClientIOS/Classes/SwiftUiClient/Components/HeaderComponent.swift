@@ -1,6 +1,7 @@
 
 import Foundation
 import SwiftUI
+import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
 struct HeaderComponent: View {
@@ -90,6 +91,43 @@ struct HeaderComponent: View {
             }
         }
     }
-   
+}
 
+@available(iOS 15.0.0, *)
+struct HeaderComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        let uiState = KhipuUiState(operationInfo: OperationInfo(
+                acceptManualTransfer: true,
+                amount: "$ 1.000",
+                body: "body",
+                email: "khipu@khipu.com",
+                merchant: 
+                    Merchant(
+                        logo: "",
+                        name: "Merchant"
+                    ),
+                operationID: "operationID",
+                subject: "Subject",
+                type: MessageType.operationInfo,
+                urls: nil,
+                welcomeScreen: nil
+            )
+        )
+        let viewModel = KhipuViewModel()
+        viewModel.uiState = uiState
+        return VStack{
+            Text("Skeleton:")
+            HeaderComponent(
+                viewModel: KhipuViewModel()
+            )
+            .environmentObject(ThemeManager())
+            .padding()
+            Text("Loaded:")
+            HeaderComponent(
+                viewModel: viewModel
+            )
+            .environmentObject(ThemeManager())
+            .padding()
+        }
+    }
 }

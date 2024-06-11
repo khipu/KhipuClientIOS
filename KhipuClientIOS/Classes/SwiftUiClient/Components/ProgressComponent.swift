@@ -14,3 +14,26 @@ struct ProgressComponent: View {
             .padding(.all, 0)
     }
 }
+@available(iOS 15.0, *)
+struct ProgressComponent_Previews: PreviewProvider {
+    static var previews: some View {
+        let viewModel = KhipuViewModel()
+        viewModel.setCurrentProgress(currentProgress: 0.5)
+        let viewModel2 = KhipuViewModel()
+        viewModel2.setCurrentProgress(currentProgress: 1)
+        return VStack{
+            Text("Progress 0%")
+            ProgressComponent(viewModel: KhipuViewModel())
+                .environmentObject(ThemeManager())
+                .previewLayout(.sizeThatFits)
+            Text("Progress 50%")
+            ProgressComponent(viewModel: viewModel)
+                .environmentObject(ThemeManager())
+                .previewLayout(.sizeThatFits)
+            Text("Progress 100%")
+            ProgressComponent(viewModel: viewModel2)
+                .environmentObject(ThemeManager())
+                .previewLayout(.sizeThatFits)
+        }
+    }
+}

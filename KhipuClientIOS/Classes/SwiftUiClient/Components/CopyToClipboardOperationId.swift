@@ -51,3 +51,30 @@ struct CopyToClipboardLink: View {
         .buttonStyle(PlainButtonStyle())
     }
 }
+
+@available(iOS 15.0, *)
+struct CopyToClipboardOperationId_Previews: PreviewProvider {
+    static var previews: some View {
+        CopyToClipboardOperationId(
+            text: "Copy",
+            textToCopy: "Copied text",
+            background: Color(hexString: "#a6c6e5")!
+        )
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
+
+
+@available(iOS 15.0, *)
+struct CopyToClipboardLink_Previews: PreviewProvider {
+    static var previews: some View {
+        CopyToClipboardLink(
+            text: "Copy", 
+            textToCopy: "Copied text",
+            background: Color(hexString: "#a6c6e5")!
+        )
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
