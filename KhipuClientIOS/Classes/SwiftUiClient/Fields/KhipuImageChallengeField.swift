@@ -34,7 +34,7 @@ struct KhipuImageChallengeField: View {
             .frame(maxWidth: .infinity, alignment: .center)
             
             TextField(formItem.placeHolder ?? "", text: $value)
-                .textFieldStyle(.roundedBorder)
+                .textFieldStyle(KhipuTextFieldStyle())
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))

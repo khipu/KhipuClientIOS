@@ -19,7 +19,7 @@ struct KhipuRutField: View {
         VStack(alignment: .leading, spacing:0) {
             FieldLabel(text: formItem.label)
             TextField(formItem.placeHolder ?? "", text: $rutValue)
-                .textFieldStyle(.roundedBorder)
+                .textFieldStyle(KhipuTextFieldStyle())
                 .autocorrectionDisabled(true)
                 .textInputAutocapitalization(.never)
                 .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))

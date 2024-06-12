@@ -1,6 +1,6 @@
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 struct FormTitle: View {
     var text: String
     @EnvironmentObject private var themeManager: ThemeManager
@@ -8,16 +8,15 @@ struct FormTitle: View {
     var body: some View {
         HStack {
             Text(text)
-                .font(.title)
+                .font(.title2)
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .multilineTextAlignment(.center)
-                .padding()
         }
     }
 }
 
 
-@available(iOS 13.0, *)
+@available(iOS 14.0, *)
 struct FormTitle_Previews: PreviewProvider {
     static var previews: some View {
         FormTitle(text: "Title")

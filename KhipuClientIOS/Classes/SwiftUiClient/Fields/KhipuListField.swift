@@ -9,10 +9,12 @@ struct KhipuListField: View {
     let submitFunction: () -> Void
     
     @State private var selectedOption: ListOption?
+    @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .leading, spacing: Dimensions.small) {
             ForEach(formItem.options ?? [], id: \.value) { option in
+                Spacer().frame(height: 3)
                 Button(action: {
                     selectedOption = option
                     isValid(true)
@@ -33,8 +35,8 @@ struct KhipuListField: View {
                     .padding()
                     .frame(maxWidth: .infinity)
                     .background(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
+                            .stroke(themeManager.selectedTheme.colors.onBackground, lineWidth: 0.5)
                     )
                 }
             }
@@ -79,5 +81,6 @@ struct KhipuListField_Previews: PreviewProvider {
             submitFunction: submitFunction
         )
         .padding()
+        .environmentObject(ThemeManager())
     }
 }

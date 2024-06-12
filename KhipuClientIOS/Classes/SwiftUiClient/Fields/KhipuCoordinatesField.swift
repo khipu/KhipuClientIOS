@@ -20,7 +20,7 @@ struct CoordinateInputField: View {
         .frame(minWidth: 30, maxWidth: 80)
         .padding(.trailing, 8)
         .multilineTextAlignment(.center)
-        .textFieldStyle(RoundedBorderTextFieldStyle())
+        .textFieldStyle(KhipuTextFieldStyle())
         .autocorrectionDisabled(true)
         .textInputAutocapitalization(.never)
         .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))

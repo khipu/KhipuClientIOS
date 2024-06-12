@@ -8,22 +8,22 @@ struct FormInfo: View {
     var body: some View {
         HStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/) {
             Spacer()
-                .frame(width: themeManager.selectedTheme.dimens.medium)
-            Image(systemName: "info.circle")
+                .frame(width: themeManager.selectedTheme.dimens.small)
+            Image(systemName: "info.circle.fill")
                 .resizable()
                 .scaledToFit()
-                .frame(width: 24, height: 24)
+                .frame(width: 16, height: 16)
                 .foregroundColor(themeManager.selectedTheme.colors.secondary)
             Text(text)
-                .font(.system(size: 16))
+                .font(.system(size: 14))
                 .foregroundColor(themeManager.selectedTheme.colors.secondary)
             Spacer()
         }
-        .padding(.all, themeManager.selectedTheme.dimens.verySmall)
+        .padding(.all, 10)
         .background(themeManager.selectedTheme.colors.surface)
         .overlay(
             RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
-                .stroke(themeManager.selectedTheme.colors.secondary, lineWidth: 1)
+                .stroke(themeManager.selectedTheme.colors.secondary, lineWidth: 0.3)
                 )
     }
 }

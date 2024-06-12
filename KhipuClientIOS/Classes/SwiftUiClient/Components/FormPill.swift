@@ -1,24 +1,24 @@
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 struct FormPill: View {
     var text: String
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         HStack {
-            
             Text(text)
+                .font(.caption2)
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .padding(.all, themeManager.selectedTheme.dimens.extraSmall)
                 .overlay(
                     RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.large)
-                        .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 1))
+                        .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth:0.5))
         }
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 struct FormPill_Previews: PreviewProvider {
     static var previews: some View {
         FormPill(text: "Bank name")
