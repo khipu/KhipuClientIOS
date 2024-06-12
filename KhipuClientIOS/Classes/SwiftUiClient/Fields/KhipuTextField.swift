@@ -23,7 +23,7 @@ struct KhipuTextField: View {
                 if formItem.secure == true {
                     if passwordVisible {
                         TextField(formItem.placeHolder ?? "", text: $textFieldValue)
-                            .textFieldStyle(.roundedBorder)
+                            .textFieldStyle(KhipuTextFieldStyle())
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
                             .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
@@ -39,7 +39,7 @@ struct KhipuTextField: View {
                             )
                     } else {
                         SecureField(formItem.placeHolder ?? "", text: $textFieldValue)
-                            .textFieldStyle(.roundedBorder)
+                            .textFieldStyle(KhipuTextFieldStyle())
                             .autocorrectionDisabled(true)
                             .textInputAutocapitalization(.never)
                             .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
@@ -56,7 +56,7 @@ struct KhipuTextField: View {
                     }
                 } else {
                     TextField(formItem.placeHolder ?? "", text: $textFieldValue)
-                        .textFieldStyle(.roundedBorder)
+                        .textFieldStyle(KhipuTextFieldStyle())
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
                         .multilineTextAlignment(.leading)

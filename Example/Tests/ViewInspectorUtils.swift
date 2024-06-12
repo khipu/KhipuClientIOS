@@ -256,7 +256,7 @@ class MockKhipuViewModel: KhipuViewModel {
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 class ViewInspectorUtils {
     
     static func verifyFormTitleInStack<T>(_ stack: InspectableView<T>, expectedText: String) throws -> Bool where T: MultipleViewContent {
