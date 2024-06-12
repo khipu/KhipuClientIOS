@@ -20,7 +20,7 @@ struct KhipuCheckboxField: View {
                     Text(formItem.label ?? "")
                 }
                 .onAppear {
-                    isChecked = formItem.checked ?? false
+                    isChecked = formItem.defaultState == "on"
                 }
                 .toggleStyle(iOSCheckboxToggleStyle())
                 .onChange(of: isChecked) { newValue in
@@ -49,8 +49,8 @@ struct KhipuCheckboxField: View {
     
     func onChange(newValue: Bool) {
         isChecked = newValue
-        error = ValidationUtils.validateCheckAndMandatory(isChecked,
-                                                          formItem.mandatory,
+        error = ValidationUtils.valiateCheckRequiredState(isChecked,
+                                                          formItem.requiredState,
                                                           viewModel.uiState.translator)
         isValid(error.isEmpty)
         returnValue(String(newValue))
@@ -78,7 +78,7 @@ struct KhipuCheckboxField_Previews: PreviewProvider {
                        "id": "item1",
                        "label": "item1",
                        "type": "\(FormItemTypes.checkbox.rawValue)",
-                       "checked": false
+                       "defaultState": "on"
                      }
                  """
         )
@@ -88,7 +88,8 @@ struct KhipuCheckboxField_Previews: PreviewProvider {
                        "id": "item1",
                        "label": "item1",
                        "type": "\(FormItemTypes.checkbox.rawValue)",
-                       "checked": true
+                       "defaultState": "off",
+                       "requiredState": "on"
                      }
                  """
         )

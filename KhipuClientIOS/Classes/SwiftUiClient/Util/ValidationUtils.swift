@@ -58,9 +58,11 @@ class ValidationUtils {
         return numberPredicate.evaluate(with: string)
     }
     
-    static func validateCheckAndMandatory(_ isChecked: Bool, _ mandatory: Bool?, _ translator: KhipuTranslator) -> String {
-        if (mandatory == true && !isChecked) {
-            return translator.t("form.validation.error.default.required")
+    static func valiateCheckRequiredState(_ isChecked: Bool, _ requiredState: String?, _ translator: KhipuTranslator) -> String {
+        if (requiredState == "on" && !isChecked) {
+            return translator.t("form.validation.error.switch.accept.required")
+        } else if (requiredState == "off" && isChecked) {
+            return translator.t("form.validation.error.switch.decline.required")
         }
         return ""
     }

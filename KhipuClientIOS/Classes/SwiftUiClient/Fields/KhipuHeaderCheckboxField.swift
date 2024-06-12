@@ -27,7 +27,7 @@ struct KhipuHeaderCheckboxField: View {
                     Text((formItem.label ?? ""))
                 }
                 .onAppear {
-                    isChecked = formItem.checked ?? false
+                    isChecked = formItem.defaultState == "on"
                 }
                 .toggleStyle(iOSCheckboxToggleStyle())
                 .onChange(of: isChecked) { newValue in
@@ -76,8 +76,8 @@ struct KhipuHeaderCheckboxField: View {
     
     func onChange(newValue: Bool) {
         isChecked = newValue
-        error = ValidationUtils.validateCheckAndMandatory(isChecked,
-                                                          formItem.mandatory,
+        error = ValidationUtils.valiateCheckRequiredState(isChecked,
+                                                          formItem.requiredState,
                                                           viewModel.uiState.translator)
         isValid(error.isEmpty)
         returnValue(String(newValue))
@@ -107,7 +107,8 @@ struct KhipuHeaderCheckboxField_Previews: PreviewProvider {
                        "bottomText": "The bottom text",
                        "items": ["item1", "item2"],
                        "type": "\(FormItemTypes.headerCheckbox.rawValue)",
-                       "checked": false
+                       "defaultState": "off",
+                        "requiredState": "on"
                      }
                  """
         )
@@ -119,7 +120,7 @@ struct KhipuHeaderCheckboxField_Previews: PreviewProvider {
                         "title": "HeaderCheckbox selected",
                         "mandatory": true,
                        "type": "\(FormItemTypes.headerCheckbox.rawValue)",
-                       "checked": true
+                       "defaultState": "on",
                      }
                  """
         )
