@@ -7,30 +7,37 @@ struct SkeletonHeaderComponent: View {
             HStack(spacing: 4) {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
-                    .frame(width: 24, height: 24)
+                    .frame(width: 32, height: 32)
                     .cornerRadius(4)
                     .shimmer()
 
                 VStack(alignment: .leading, spacing: 4) {
                     Rectangle()
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: 100, height: 10)
+                        .frame(width: 100, height: 12)
                         .cornerRadius(4)
                         .shimmer()
                     Rectangle()
                         .fill(Color.gray.opacity(0.3))
-                        .frame(width: 150, height: 10)
+                        .frame(width: 150, height: 12)
                         .cornerRadius(4)
                         .shimmer()
                 }
 
                 Spacer()
-
-                Rectangle()
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(width: 40, height: 16)
-                    .cornerRadius(4)
-                    .shimmer()
+                
+                VStack(alignment: .trailing, spacing: 4) {
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: 100, height: 12)
+                        .cornerRadius(4)
+                        .shimmer()
+                    Rectangle()
+                        .fill(Color.gray.opacity(0.3))
+                        .frame(width: 100, height: 16)
+                        .cornerRadius(4)
+                        .shimmer()
+                }
             }
 
             Divider()
@@ -40,13 +47,13 @@ struct SkeletonHeaderComponent: View {
             HStack {
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
-                    .frame(width: 80, height: 10)
+                    .frame(width: 186, height: 16)
                     .cornerRadius(4)
                     .shimmer()
                 Spacer()
                 Rectangle()
                     .fill(Color.gray.opacity(0.3))
-                    .frame(width: 60, height: 10)
+                    .frame(width: 80, height: 16)
                     .cornerRadius(4)
                     .shimmer()
             }

@@ -20,7 +20,7 @@ struct EndToEndEncryption: View {
                        height: themeManager.selectedTheme.dimens.extraLarge,
                        alignment: .center)
                 .padding([.top], themeManager.selectedTheme.dimens.massive)
-            Text(viewModel.uiState.translator.t("default.end.to.end.encryption"))
+            Text(viewModel.uiState.translator.t("default.end.to.end.encryption", default: ""))
                 .frame(alignment: .center)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
