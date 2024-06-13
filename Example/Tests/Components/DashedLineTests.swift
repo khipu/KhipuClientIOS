@@ -3,12 +3,6 @@ import SwiftUI
 import ViewInspector
 @testable import KhipuClientIOS
 
-@available(iOS 13.0, *)
-extension DashedLine: Inspectable { }
-
-@available(iOS 13.0, *)
-extension Line: Inspectable { }
-
 @available(iOS 15.0, *)
 final class DasehdLineTests: XCTestCase {
 

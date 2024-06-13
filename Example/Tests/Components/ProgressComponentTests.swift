@@ -2,21 +2,12 @@ import XCTest
 import SwiftUI
 import ViewInspector
 @testable import KhipuClientIOS
-@available(
-    iOS 15.0,
-    *
-)
-extension ProgressComponent: Inspectable {
-    
-}
-@available(
-    iOS 15.0,
-    *
-)
+
+@available(iOS 15.0,*)
 final class ProgressComponentTests: XCTestCase {
     func testProgressComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
-        let viewModel = MockKhipuViewModel()
+        let viewModel = KhipuViewModel()
         viewModel.uiState.currentProgress = 0.5
         let view = ProgressComponent(
             viewModel: viewModel

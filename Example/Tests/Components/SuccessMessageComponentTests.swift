@@ -5,9 +5,6 @@ import ViewInspector
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-extension SuccessMessageComponent: Inspectable { }
-
-@available(iOS 15.0, *)
 final class SuccessMessageComponentTests: XCTestCase {
     func testSuccessMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()

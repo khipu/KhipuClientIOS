@@ -4,14 +4,6 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-extension CopyToClipboardOperationId: Inspectable { }
-
-@available(iOS 15.0, *)
-extension CopyToClipboardLink: Inspectable { }
-
-
-
-@available(iOS 15.0, *)
 final class CopyToClipboardComponentTests: XCTestCase {
     
     func testCopyToClipboardOperationId() throws {
