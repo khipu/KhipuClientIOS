@@ -4,10 +4,6 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 13.0, *)
-extension MainButton: Inspectable { }
-
-
-@available(iOS 13.0, *)
 final class MainButtonTests: XCTestCase {
     
     func testMainButtonRendersCorrectly() throws {

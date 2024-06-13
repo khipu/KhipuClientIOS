@@ -5,9 +5,6 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-extension MerchantDialogComponent: Inspectable { }
-
-@available(iOS 15.0, *)
 final class MerchantDialogComponentTests: XCTestCase {
     
     func testMerchantDialogComponentRendering() throws {

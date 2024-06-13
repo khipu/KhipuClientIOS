@@ -10,7 +10,7 @@ final class EndToEndEncryptionTests: XCTestCase {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
         let message = "Encriptado"
-        viewModel.uiState.translator = KhipuTranslator(translations: ["endToEndEncryption": message])
+        viewModel.uiState.translator = KhipuTranslator(translations: ["default.end.to.end.encryption": message])
         let view = EndToEndEncryption(viewModel: viewModel)
             .environmentObject(themeManager)
         

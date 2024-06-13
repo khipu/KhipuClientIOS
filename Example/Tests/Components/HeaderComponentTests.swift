@@ -5,15 +5,16 @@ import KhenshinProtocol
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-extension HeaderComponent: Inspectable { }
-
-@available(iOS 15.0, *)
 final class HeaderComponentTests: XCTestCase {
     
     func testHeaderComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
-        let viewModel = MockKhipuViewModel()
-        
+        let viewModel = KhipuViewModel()
+        viewModel.uiState.translator = KhipuTranslator(translations: [
+            "header.amount": "MONTO A PAGAR",
+            "header.code.label": "Código",
+            "header.details.show": "Ver detalle",
+        ])
         let operationInfo = OperationInfo(
             acceptManualTransfer: true,
             amount: "1000",

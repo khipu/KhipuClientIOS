@@ -5,20 +5,11 @@ import ViewInspector
 @testable import KhenshinProtocol
 
 @available(iOS 15.0, *)
-extension FailureMessageComponent: Inspectable { }
-
-@available(iOS 15.0, *)
-extension DetailSectionFailure: Inspectable { }
-
-@available(iOS 15.0, *)
-extension DetailItemFailure: Inspectable { }
-
-@available(iOS 15.0, *)
 final class FailureMessageComponentTests: XCTestCase {
 
     func testFailureMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
-        let viewModel = MockKhipuViewModel()
+        let viewModel = KhipuViewModel()
         let operationFailure = OperationFailure(
             type: .operationFailure,
             body: "The operation could not be completed",
@@ -54,7 +45,10 @@ final class FailureMessageComponentTests: XCTestCase {
             
         func testDetailSectionFailureRendersCorrectly() throws {
             let themeManager = ThemeManager()
-            let viewModel = MockKhipuViewModel()
+            let viewModel = KhipuViewModel()
+            viewModel.uiState.translator = KhipuTranslator(translations: [
+                "default.detail.label": "Detalle",
+            ])
             let operationFailure = OperationFailure(
                 type: .operationFailure,
                 body: "The operation could not be completed",
@@ -100,7 +94,6 @@ final class FailureMessageComponentTests: XCTestCase {
                     let vStack = try inspectedView.vStack()
                     
                     XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Detalle"), "Failed to find the text: Detalle")
-
                 } catch {
                     XCTFail("Failed to inspect view: \(error)")
                 }

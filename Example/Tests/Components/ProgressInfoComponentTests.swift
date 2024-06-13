@@ -4,9 +4,6 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0,*)
-extension ProgressInfoComponent: Inspectable {}
-
-@available(iOS 15.0,*)
 final class ProgressInfoComponentTests: XCTestCase {
     func testProgressInfoComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
