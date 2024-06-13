@@ -55,7 +55,7 @@ final class HeaderComponentTests: XCTestCase {
                 XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Transaction Subject"), "Failed to find the text: Transaction Subject")
                 XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "MONTO A PAGAR"), "Failed to find the text: MONTO A PAGAR")
                 XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "1000"), "Failed to find the text: 1000")
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Código • 12345"), "Failed to find the text: Código • 12345")
+                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "CÓDIGO • 12345"), "Failed to find the text: Código • 12345")
                 XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(vStack, expectedButtonText: "Ver detalle"), "Failed to find the button with text: Ver detalle")
             
             } catch {
