@@ -218,25 +218,3 @@ struct KhipuRutField_Previews: PreviewProvider {
         .padding()
     }
 }
-
-@available(iOS 15.0.0, *)
-struct LabeledButton_Previews: PreviewProvider {
-    static var previews: some View {
-        LabeledButton(
-            text: "Delete",
-            textDocumentProxy: MockTextDocumentProxy(),
-            playSystemFeedback: { print("System feedback played") }
-        )
-    }
-}
-
-@available(iOS 15.0.0, *)
-struct ImageButton_Previews: PreviewProvider {
-    static var previews: some View {
-        ImageButton(
-            imageName: "delete.left",
-            textDocumentProxy: MockTextDocumentProxy(),
-            playSystemFeedback: { print("System feedback played") }
-        )
-    }
-}

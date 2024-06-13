@@ -64,3 +64,16 @@ struct NavigationBarComponent_Previews: PreviewProvider {
         .environmentObject(ThemeManager())
     }
 }
+
+@available(iOS 15.0, *)
+struct NavigationBarComponentWithImage_Previews: PreviewProvider {
+    static var previews: some View {
+        return NavigationBarComponent(
+            title: "Title",
+            imageName: nil, 
+            imageUrl: "https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-black.png",
+            viewModel: KhipuViewModel()
+        )
+        .environmentObject(ThemeManager())
+    }
+}

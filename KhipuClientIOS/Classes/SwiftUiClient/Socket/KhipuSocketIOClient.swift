@@ -19,7 +19,7 @@ public class KhipuSocketIOClient {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
-            .log(true),
+            //.log(true),
             .compress,
             .forceNew(true),
             .secure(true),
@@ -64,7 +64,7 @@ public class KhipuSocketIOClient {
         }
         
         self.socket?.onAny { data in
-            self.showCookies()
+            //self.showCookies()
         }
         
         
@@ -380,7 +380,7 @@ public class KhipuSocketIOClient {
     }
     
     public func sendMessage(type: String, message: String) {
-        print("SENDING MESSAGE \(message)")
+        print("SENDING MESSAGE \(type)")
         let encryptedMessage = self.secureMessage.encrypt(plainText: message, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
         socket?.emit(type, encryptedMessage!)
     }
