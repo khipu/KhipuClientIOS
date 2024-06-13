@@ -85,8 +85,10 @@ struct InformationSection: View {
             }
         }
         .padding()
-        .border(themeManager.selectedTheme.colors.onSurface)
-        .cornerRadius(themeManager.selectedTheme.dimens.moderatelySmall)
+        .overlay(
+            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.moderatelySmall)
+                .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 0.3)
+        )
     }
 }
 
@@ -187,16 +189,6 @@ struct MustContinueComponent_Previews: PreviewProvider {
                 urls: urls,
                 welcomeScreen: nil
             )
-        )
-        let operationMustContinue = OperationMustContinue(
-            type: MessageType.operationMustContinue,
-            body: "body",
-            events: nil,
-            exitURL: "exitUrl",
-            operationID: "operationID",
-            resultMessage: "resultMessage",
-            title: "Title",
-            reason: nil
         )
         viewModel.uiState = uiState
         return MustContinueComponent(
