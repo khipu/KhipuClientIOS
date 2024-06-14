@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		154B39C32C1B891400B5C61F /* SwitchFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154B39C22C1B891400B5C61F /* SwitchFieldTest.swift */; };
+		159663772C1CCB2900454D90 /* CheckboxFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159663762C1CCB2900454D90 /* CheckboxFieldTest.swift */; };
+		159663792C1CCD5100454D90 /* HeaderCheckboxTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159663782C1CCD5100454D90 /* HeaderCheckboxTest.swift */; };
+		15B89EC12C207F3A00A1964D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 155F0E4F2C207B61005481EC /* XCTest.framework */; platformFilter = ios; };
+		15B89EC22C207F3A00A1964D /* XCTest.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 155F0E4F2C207B61005481EC /* XCTest.framework */; platformFilter = ios; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		17C44A933D70C35EC73C68BF /* Pods_KhipuClientIOS_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B89EC42C207F9000A1964D /* Pods_KhipuClientIOS_Tests.framework */; };
 		4AD82D472C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */; };
 		4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTests.swift */; };
 		4AD82D492C0253FD0065CC37 /* FailureMessageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D432C0253FD0065CC37 /* FailureMessageComponentTests.swift */; };
@@ -30,6 +36,7 @@
 		BDD445642C04F73A00098056 /* MainButtonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD445632C04F73A00098056 /* MainButtonTests.swift */; };
 		C55C20ED2C07CC4B0015A732 /* DashedLineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55C20EC2C07CC4B0015A732 /* DashedLineTests.swift */; };
 		C5DB1B062C08C6110061351A /* EndToEndEncryptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB1B052C08C6110061351A /* EndToEndEncryptionTest.swift */; };
+		CA5352A17E2D19382836EA49 /* Pods_KhipuClientIOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15B89EBD2C207E5800A1964D /* Pods_KhipuClientIOS_Example.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,9 +49,36 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		15B89EC32C207F3A00A1964D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				15B89EC22C207F3A00A1964D /* XCTest.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E56BC0EA511A1210CC3A4E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		154B39C22C1B891400B5C61F /* SwitchFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchFieldTest.swift; sourceTree = "<group>"; };
+		155F0E392C207B56005481EC /* KhenshinProtocol.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KhenshinProtocol.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		155F0E3A2C207B56005481EC /* KhenshinSecureMessage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KhenshinSecureMessage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		155F0E3B2C207B56005481EC /* KhipuClientIOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KhipuClientIOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		155F0E3C2C207B56005481EC /* KHTweetNacl.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = KHTweetNacl.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		155F0E3D2C207B56005481EC /* SocketIO.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SocketIO.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		155F0E3E2C207B56005481EC /* Starscream.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Starscream.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		155F0E3F2C207B56005481EC /* ViewInspector.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ViewInspector.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		155F0E4F2C207B61005481EC /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		159663762C1CCB2900454D90 /* CheckboxFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxFieldTest.swift; sourceTree = "<group>"; };
+		159663782C1CCD5100454D90 /* HeaderCheckboxTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCheckboxTest.swift; sourceTree = "<group>"; };
+		15B89EBD2C207E5800A1964D /* Pods_KhipuClientIOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_KhipuClientIOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		15B89EC42C207F9000A1964D /* Pods_KhipuClientIOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Pods_KhipuClientIOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C3AEF4D2D347243770F5910 /* Pods-KhipuClientIOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		29506C8577AD33C3B29C428F /* Pods-KhipuClientIOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestComponentTest.swift; sourceTree = "<group>"; };
@@ -85,6 +119,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7E059F83A1C5E6B5684C3BAA /* Pods_KhipuClientIOS_Example.framework in Frameworks */,
+				CA5352A17E2D19382836EA49 /* Pods_KhipuClientIOS_Example.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,12 +128,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5167ECE6E3712AB29C54E4E /* Pods_KhipuClientIOS_Tests.framework in Frameworks */,
+				15B89EC12C207F3A00A1964D /* XCTest.framework in Frameworks */,
+				17C44A933D70C35EC73C68BF /* Pods_KhipuClientIOS_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		154B39C12C1B88DB00B5C61F /* Fields */ = {
+			isa = PBXGroup;
+			children = (
+				154B39C22C1B891400B5C61F /* SwitchFieldTest.swift */,
+				159663762C1CCB2900454D90 /* CheckboxFieldTest.swift */,
+				159663782C1CCD5100454D90 /* HeaderCheckboxTest.swift */,
+			);
+			path = Fields;
+			sourceTree = "<group>";
+		};
 		4AD82D452C0253FD0065CC37 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +213,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				154B39C12C1B88DB00B5C61F /* Fields */,
 				4AD82D452C0253FD0065CC37 /* Components */,
 				4AD82D462C0253FD0065CC37 /* ViewInspectorUtils.swift */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
@@ -195,6 +243,16 @@
 		8A56D410D16B5E9764867665 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15B89EC42C207F9000A1964D /* Pods_KhipuClientIOS_Tests.framework */,
+				15B89EBD2C207E5800A1964D /* Pods_KhipuClientIOS_Example.framework */,
+				155F0E4F2C207B61005481EC /* XCTest.framework */,
+				155F0E392C207B56005481EC /* KhenshinProtocol.framework */,
+				155F0E3A2C207B56005481EC /* KhenshinSecureMessage.framework */,
+				155F0E3B2C207B56005481EC /* KhipuClientIOS.framework */,
+				155F0E3C2C207B56005481EC /* KHTweetNacl.framework */,
+				155F0E3D2C207B56005481EC /* SocketIO.framework */,
+				155F0E3E2C207B56005481EC /* Starscream.framework */,
+				155F0E3F2C207B56005481EC /* ViewInspector.framework */,
 				02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */,
 				B25A47703EA0D6EF73A46C0B /* Pods_KhipuClientIOS_Tests.framework */,
 			);
@@ -243,6 +301,7 @@
 				607FACE21AFB9204008FA782 /* Frameworks */,
 				607FACE31AFB9204008FA782 /* Resources */,
 				ACF2911DADDE6D648AEF432D /* [CP] Embed Pods Frameworks */,
+				15B89EC32C207F3A00A1964D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -261,7 +320,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 0830;
+				LastSwiftUpdateCheck = 1540;
 				LastUpgradeCheck = 1540;
 				ORGANIZATIONNAME = CocoaPods;
 				TargetAttributes = {
@@ -437,10 +496,13 @@
 				C55C20ED2C07CC4B0015A732 /* DashedLineTests.swift in Sources */,
 				4AD82D472C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift in Sources */,
 				BDD445642C04F73A00098056 /* MainButtonTests.swift in Sources */,
+				159663772C1CCB2900454D90 /* CheckboxFieldTest.swift in Sources */,
 				BDAE5D842C0A153100B6DDD4 /* SuccessMessageComponentTests.swift in Sources */,
+				154B39C32C1B891400B5C61F /* SwitchFieldTest.swift in Sources */,
 				BDD4455C2C04D3B000098056 /* FormPillTests.swift in Sources */,
 				BDD445622C04DD7F00098056 /* HeaderComponentTests.swift in Sources */,
 				4AD82D4A2C0253FD0065CC37 /* MerchantDialogComponentTests.swift in Sources */,
+				159663792C1CCD5100454D90 /* HeaderCheckboxTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

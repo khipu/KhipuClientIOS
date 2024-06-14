@@ -61,6 +61,17 @@
                ReferencedContainer = "container:KhipuClientIOS.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO"
+            parallelizable = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "15DBA8012C2079A6004BFA7C"
+               BuildableName = "KhipuClientIOSTests.xctest"
+               BlueprintName = "KhipuClientIOSTests"
+               ReferencedContainer = "container:KhipuClientIOS.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
