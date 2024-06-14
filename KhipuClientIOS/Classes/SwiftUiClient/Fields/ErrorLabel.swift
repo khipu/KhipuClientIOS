@@ -12,6 +12,7 @@ struct ErrorLabel: View {
                 .font(.footnote)
                 .foregroundColor(themeManager.selectedTheme.colors.error)
         }
+        .padding(.top, 5)
     }
 }
 

@@ -49,8 +49,8 @@ struct MerchantDialogComponent: View {
                 .padding()
                 .frame(maxWidth: 300) 
             }
-            .navigationTitle("Detalles del Pago")
-            .navigationBarItems(trailing: Button("Cerrar", action: onDismissRequest))
+            .navigationTitle(translator.t("modal.merchant.info.title"))
+            .navigationBarItems(trailing: Button(translator.t("modal.merchant.info.close.button"), action: onDismissRequest))
         }
     }
 }

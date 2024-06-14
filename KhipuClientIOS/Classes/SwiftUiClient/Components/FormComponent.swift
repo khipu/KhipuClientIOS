@@ -42,6 +42,11 @@ public struct FormComponent: View {
             RememberValues(
                 formRequest: formRequest,
                 viewModel: viewModel)
+            
+            if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
+                TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
+            }
+
             if(getShouldShowContinueButton(formRequest: formRequest)) {
                 MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                            enabled: validForm(),
@@ -126,24 +131,28 @@ private struct RememberValues: View {
     
     public var body: some View {
         if(formRequest.rememberValues ?? false) {
-            Toggle(isOn: $storedForm) {
-                Text("Recordar credenciales")
-            }
-            .toggleStyle(iOSCheckboxToggleStyle())
-            .onChange(of: storedForm, perform: { newValue in
-                if(newValue) {
-                    if(!viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)) {
-                        viewModel.uiState.storedBankForms.append(viewModel.uiState.bank)
-                    }
-                } else {
-                    viewModel.uiState.storedBankForms = viewModel.uiState.storedBankForms.filter { $0 != viewModel.uiState.bank }
+            HStack{
+                Toggle(isOn: $storedForm) {
+                    Text("Recordar credenciales")
                 }
-                storedBankForms = viewModel.uiState.storedBankForms.joined(separator: "|")
-                storedForm = newValue
-            })
-            .onAppear {
-                storedForm = viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)
+                .toggleStyle(iOSCheckboxToggleStyle())
+                .onChange(of: storedForm, perform: { newValue in
+                    if(newValue) {
+                        if(!viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)) {
+                            viewModel.uiState.storedBankForms.append(viewModel.uiState.bank)
+                        }
+                    } else {
+                        viewModel.uiState.storedBankForms = viewModel.uiState.storedBankForms.filter { $0 != viewModel.uiState.bank }
+                    }
+                    storedBankForms = viewModel.uiState.storedBankForms.joined(separator: "|")
+                    storedForm = newValue
+                })
+                .onAppear {
+                    storedForm = viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)
+                }
+                Spacer()
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
             
         }
     }
@@ -276,7 +285,7 @@ public struct FormComponent_Previews: PreviewProvider {
        )
         let request = FormRequest(
             alternativeAction: nil,
-            continueLabel: "continue",
+            continueLabel: "Continue",
             errorMessage: "error message",
             id: "id",
             info: "info",
