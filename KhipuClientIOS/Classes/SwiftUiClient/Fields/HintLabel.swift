@@ -11,7 +11,8 @@ struct HintLabel: View {
             Text(text ?? "")
                 .font(.caption)
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-            }
+        }
+        .padding(.top, 5)
     }
 }
 
