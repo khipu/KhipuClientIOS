@@ -11,11 +11,7 @@ final class FormInfoTests: XCTestCase {
         let view = FormInfo(text: "Information")
             .environmentObject(themeManager)
         
-        ViewHosting.host(view: view)
-        
         let inspectedView = try view.inspect()
-        
-        let hStack = try inspectedView.hStack()
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(hStack, expectedText: "Information"), "Failed to find the text: Information")
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Information"), "Failed to find the text: Information")
     }
 }

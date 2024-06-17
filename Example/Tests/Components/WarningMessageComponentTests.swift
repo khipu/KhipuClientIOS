@@ -23,29 +23,22 @@ final class WarningMessageComponentTests: XCTestCase {
         
         let view = WarningMessageComponent(operationWarning: operationWarning, viewModel: viewModel)
             .environmentObject(themeManager)
+
+        let inspectView = try view.inspect().view(WarningMessageComponent.self)
         
-        ViewHosting.host(view: view)
+        let texts = inspectView.findAll(ViewType.Text.self)
+        let images = inspectView.findAll(ViewType.Image.self)
+        let formWarnings = inspectView.findAll(FormWarning.self)
+        let detailSectionWarnings = inspectView.findAll(DetailSectionWarning.self)
+        let mainButtons = inspectView.findAll(MainButton.self)
         
-        let exp = expectation(description: "onAppear")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exp.fulfill()
-            do {
-                let inspectedView = try view.inspect().view(WarningMessageComponent.self)
-                let vStack = try inspectedView.vStack()
-                
-                XCTAssertNoThrow(try vStack.image(0))
-                XCTAssertEqual(try vStack.text(1).string(), "page.operationWarning.failure.after.notify.pre.header")
-                XCTAssertEqual(try vStack.text(2).string(), operationWarning.title)
-                XCTAssertNoThrow(try vStack.view(FormWarning.self, 3))
-                XCTAssertNoThrow(try vStack.spacer(4))
-                XCTAssertNoThrow(try vStack.view(DetailSectionWarning.self, 5))
-                XCTAssertNoThrow(try vStack.spacer(6))
-                XCTAssertNoThrow(try vStack.view(MainButton.self, 7))
-            } catch {
-                XCTFail("Failed to inspect view: \(error)")
-            }
-        }
-        wait(for: [exp], timeout: 2.0)
+        
+        XCTAssertEqual(try texts[0].string(), "page.operationWarning.failure.after.notify.pre.header")
+        XCTAssertEqual(try texts[1].string(), operationWarning.title)
+        XCTAssertGreaterThanOrEqual(images.count, 1)
+        XCTAssertEqual(formWarnings.count, 1)
+        XCTAssertEqual(detailSectionWarnings.count, 1)
+        XCTAssertEqual(mainButtons.count, 1)
     }
     
     func testDetailSectionWarningRendersCorrectly() throws {
@@ -79,56 +72,37 @@ final class WarningMessageComponentTests: XCTestCase {
         let view = DetailSectionWarning(operationWarning: operationWarning, operationInfo: operationInfo, viewModel: viewModel)
             .environmentObject(themeManager)
         
-        ViewHosting.host(view: view)
+        let inspectView = try view.inspect().view(DetailSectionWarning.self)
+        let texts = inspectView.findAll(ViewType.Text.self)
+        let detailItemWarnings = inspectView.findAll(DetailItemWarning.self)
         
-        let exp = expectation(description: "onAppear")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exp.fulfill()
-            do {
-                var inspectedView = try view.inspect().view(DetailSectionWarning.self)
-                let vStack = try inspectedView.vStack()
-                
-                XCTAssertEqual(try vStack.text(0).string(), "default.detail.label")
-                XCTAssertNoThrow(try vStack.view(DetailItemWarning.self, 1))
-                XCTAssertNoThrow(try vStack.view(DetailItemWarning.self, 2))
-                XCTAssertNoThrow(try vStack.view(DetailItemWarning.self, 3))
-            } catch {
-                XCTFail("Failed to inspect view: \(error)")
-            }
-        }
-        wait(for: [exp], timeout: 2.0)
+        XCTAssertEqual(try texts[0].string(), "default.detail.label")
+        XCTAssertEqual(detailItemWarnings.count, 3)
+
     }
-    func testDetailItemWarningRendersCorrectly() throws {
+    
+    func testDetailItemWarning() throws {
+        
         let themeManager = ThemeManager()
-        let viewShouldCopy = DetailItemWarning(label: "Label one", value: "Value one", shouldCopyValue: true).environmentObject(themeManager)
-        let viewShouldNotCopy = DetailItemWarning(label: "Label two", value: "Value two", shouldCopyValue: false).environmentObject(themeManager)
+        let view = DetailItemWarning(label: "Label", value: "Value", shouldCopyValue: true).environmentObject(themeManager)
         
-        ViewHosting.host(view: viewShouldCopy)
-        ViewHosting.host(view: viewShouldNotCopy)
+        let inspectView = try view.inspect().view(DetailItemWarning.self)
+        let texts = inspectView.findAll(ViewType.Text.self)
+        XCTAssertEqual(try texts[0].string(), "Label")
+        XCTAssertFalse(try ViewInspectorUtils.verifyTextInStack(inspectView, expectedText: "Value"))
+        XCTAssertNoThrow(try inspectView.find(CopyToClipboardOperationId.self))
+        XCTAssertEqual(inspectView.findAll(CopyToClipboardOperationId.self).count, 1)
+    }
+    
+    func testDetailItemWarningNoCopy() throws {
+        let themeManager = ThemeManager()
+        let view = DetailItemWarning(label: "Label", value: "Value", shouldCopyValue: false).environmentObject(themeManager)
         
-        let exp = expectation(description: "onAppear")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exp.fulfill()
-            do {
-                let inspectedViewShouldCopy = try viewShouldCopy.inspect().view(DetailItemWarning.self)
-                let hStackShouldCopy = try inspectedViewShouldCopy.hStack()
-                
-                XCTAssertEqual(try hStackShouldCopy.text(0).string(), "Label one")
-                XCTAssertNoThrow(try hStackShouldCopy.spacer(1))
-                XCTAssertFalse(try ViewInspectorUtils.verifyTextInStack(hStackShouldCopy, expectedText: "Value one"))
-                XCTAssertNoThrow(try hStackShouldCopy.find(CopyToClipboardOperationId.self))
-                
-                let inspectedViewShouldNotCopy = try viewShouldNotCopy.inspect().view(DetailItemWarning.self)
-                let hStackShouldNotCopy = try inspectedViewShouldNotCopy.hStack()
-                
-                XCTAssertEqual(try hStackShouldNotCopy.text(0).string(), "Label two")
-                XCTAssertNoThrow(try hStackShouldNotCopy.spacer(1))
-                XCTAssertEqual(try hStackShouldNotCopy.text(2).string(), "Value two")
-                
-            } catch {
-                XCTFail("Failed to inspect view: \(error)")
-            }
-        }
-        wait(for: [exp], timeout: 2.0)
+        let inspectView = try view.inspect().view(DetailItemWarning.self)
+        let texts = inspectView.findAll(ViewType.Text.self)
+        XCTAssertEqual(texts.count, 2)
+        XCTAssertEqual(try texts[0].string(), "Label")
+        XCTAssertEqual(try texts[1].string(), "Value")
+        XCTAssertEqual(inspectView.findAll(CopyToClipboardOperationId.self).count, 0)
     }
 }

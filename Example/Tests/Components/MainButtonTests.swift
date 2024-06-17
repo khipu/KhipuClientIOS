@@ -19,24 +19,12 @@ final class MainButtonTests: XCTestCase {
             backgroundColor: .blue
         ).environmentObject(themeManager)
         
-        ViewHosting.host(view: button)
-        
-        let exp = expectation(description: "onAppear")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exp.fulfill()
-            do {
-                let inspectedView = try button.inspect().view(MainButton.self)
-                let buttonView = try inspectedView.button()
-                XCTAssertEqual(try buttonView.labelView().text().string(), "Click Me")
-                XCTAssertEqual(try buttonView.isDisabled(), false)
-                XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), Color.white)
-                
-            } catch {
-                XCTFail("Failed to inspect view: \(error)")
-            }
-        }
-        
-        wait(for: [exp], timeout: 2.0)
+        let inspectedView = try button.inspect().view(MainButton.self)
+        let buttonView = try inspectedView.button()
+        XCTAssertEqual(try buttonView.labelView().text().string(), "Click Me")
+        XCTAssertEqual(buttonView.isDisabled(), false)
+        XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), Color.white)
+ 
     }
     
     func testMainButtonDisabledState() throws {
@@ -54,7 +42,7 @@ final class MainButtonTests: XCTestCase {
         let inspectedView = try button.inspect().view(MainButton.self)
         let buttonView = try inspectedView.button()
         XCTAssertEqual(try buttonView.labelView().text().string(), "Click Me")
-        XCTAssertEqual(try buttonView.isDisabled(), true)
+        XCTAssertEqual(buttonView.isDisabled(), true)
         XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), .secondary.opacity(0.3))
     }
 }

@@ -14,11 +14,7 @@ final class EndToEndEncryptionTests: XCTestCase {
         let view = EndToEndEncryption(viewModel: viewModel)
             .environmentObject(themeManager)
         
-        ViewHosting.host(view: view)
-        
         let inspectedView = try view.inspect()
-
-        let vStack = try inspectedView.vStack()
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: message), "Failed to find the text: \(message)")
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: message), "Failed to find the text: \(message)")
     }
 }

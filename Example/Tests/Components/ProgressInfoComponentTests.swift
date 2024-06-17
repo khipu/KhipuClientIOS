@@ -17,35 +17,13 @@ final class ProgressInfoComponentTests: XCTestCase {
         ViewHosting.host(
             view: view
         )
-        let exp = expectation(
-            description: "onAppear"
+
+        let inspectedView = try view.inspect().view(
+            ProgressInfoComponent.self
         )
-        DispatchQueue.main.asyncAfter(
-            deadline: .now() + 1
-        ) {
-            exp.fulfill()
-            do {
-                let inspectedView = try view.inspect().view(
-                    ProgressInfoComponent.self
-                )
-                XCTAssertTrue(
-                    try ViewInspectorUtils.verifyTextInStack(
-                        inspectedView.vStack().vStack(
-                            0
-                        ),
-                        expectedText: message
-                    ),
-                       "Failed to find the text: \( message)"
-                )
-            } catch {
-                XCTFail(
-                   "Failed to inspect view: \(error)"
-                )
-            }
-        }
-        wait(
-            for: [exp],
-            timeout: 2.0
+        XCTAssertTrue(
+            try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: message), "Failed to find the text: \( message)"
         )
+
     }
 }
