@@ -97,11 +97,11 @@ public struct KhipuGroupedListField: View {
     func filterBankByText(currentList: [GroupedOption], textFieldValue: String) -> [GroupedOption] {
         if textFieldValue.isEmpty {
             return currentList
-        } else {
-            return currentList.filter {
+        }
+        
+        return currentList.filter {
                 $0.name?.localizedCaseInsensitiveContains(textFieldValue) == true
             }
-        }
     }
     
     func filterBankByTab(currentList: [GroupedOption]) -> [GroupedOption] {

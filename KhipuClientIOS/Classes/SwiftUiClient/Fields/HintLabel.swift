@@ -6,14 +6,16 @@ struct HintLabel: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        HStack {
-            Spacer()
-            Text(text ?? "")
-                .font(.caption)
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .accessibilityIdentifier("hintText")
+        if !(text?.isEmpty ?? true) {
+            HStack {
+                Spacer()
+                Text(text ?? "")
+                    .font(.caption)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                    .accessibilityIdentifier("hintText")
+            }
+            .padding(.top, 5)
         }
-        .padding(.top, 5)
     }
 }
 

@@ -33,9 +33,8 @@ struct KhipuRutField: View {
                         rutValue = viewModel.uiState.storedUsername
                     }  
                 }
-            if !(formItem.hint?.isEmpty ?? true) {
-                HintLabel(text: formItem.hint)
-            }
+            HintLabel(text: formItem.hint)
+            
             if shouldDisplayError() {
                 ErrorLabel(text: error)
             }

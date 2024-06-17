@@ -67,9 +67,8 @@ struct KhipuTextField: View {
                 onChange(newValue: newValue)
             }
             
-            if !(formItem.hint?.isEmpty ?? true) {
-                HintLabel(text: formItem.hint)
-            }
+            HintLabel(text: formItem.hint)
+            
             if shouldDisplayError() {
                 ErrorLabel(text: error)
             }
@@ -77,7 +76,7 @@ struct KhipuTextField: View {
         .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
         .onAppear {
             startTimer()
-            if(viewModel.uiState.currentForm?.rememberValues ?? false) {
+            if viewModel.uiState.currentForm?.rememberValues ?? false {
                 textFieldValue = viewModel.uiState.storedPassword
             }
         }

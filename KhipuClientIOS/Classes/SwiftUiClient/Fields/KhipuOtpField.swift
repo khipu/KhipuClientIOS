@@ -48,10 +48,8 @@ struct KhipuOtpField: View {
                     }
                 }
             }
-            if !(formItem.hint?.isEmpty ?? true) {
-                HintLabel(text: formItem.hint)
-            }
-        }
+            HintLabel(text: formItem.hint)
+         }
         
         .padding(.horizontal, 16)
         .onChange(of: states) { _ in

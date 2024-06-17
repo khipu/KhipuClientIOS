@@ -36,9 +36,9 @@ final class CheckboxFieldTest: XCTestCase {
             viewModel: viewModel
         )
 
-        let instected = try view.environmentObject(ThemeManager()).inspect()
+        let inpsected = try view.environmentObject(ThemeManager()).inspect()
 
-        let label = try instected.find(viewWithAccessibilityIdentifier: "labelText")
+        let label = try inpsected.find(viewWithAccessibilityIdentifier: "labelText")
         let text = try label.text().string()
         XCTAssertEqual(text, "Some stuff")
 
