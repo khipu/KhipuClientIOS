@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15E4F64C2C2097B4001DA7C9 /* CheckboxFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64B2C2097B4001DA7C9 /* CheckboxFieldTest.swift */; };
+		15E4F64E2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64D2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift */; };
+		15E4F6502C2097F7001DA7C9 /* SwitchFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64F2C2097F7001DA7C9 /* SwitchFieldTest.swift */; };
 		4AD82D472C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */; };
 		4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTests.swift */; };
 		4AD82D492C0253FD0065CC37 /* FailureMessageComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D432C0253FD0065CC37 /* FailureMessageComponentTests.swift */; };
@@ -45,6 +48,9 @@
 /* Begin PBXFileReference section */
 		02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E56BC0EA511A1210CC3A4E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		15E4F64B2C2097B4001DA7C9 /* CheckboxFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxFieldTest.swift; sourceTree = "<group>"; };
+		15E4F64D2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCheckboxFieldTest.swift; sourceTree = "<group>"; };
+		15E4F64F2C2097F7001DA7C9 /* SwitchFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchFieldTest.swift; sourceTree = "<group>"; };
 		1C3AEF4D2D347243770F5910 /* Pods-KhipuClientIOS_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		29506C8577AD33C3B29C428F /* Pods-KhipuClientIOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestComponentTest.swift; sourceTree = "<group>"; };
@@ -99,6 +105,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		15551B8B2C20944900B45348 /* Fields */ = {
+			isa = PBXGroup;
+			children = (
+				15E4F64B2C2097B4001DA7C9 /* CheckboxFieldTest.swift */,
+				15E4F64D2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift */,
+				15E4F64F2C2097F7001DA7C9 /* SwitchFieldTest.swift */,
+			);
+			path = Fields;
+			sourceTree = "<group>";
+		};
 		4AD82D452C0253FD0065CC37 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -166,6 +182,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				15551B8B2C20944900B45348 /* Fields */,
 				4AD82D452C0253FD0065CC37 /* Components */,
 				4AD82D462C0253FD0065CC37 /* ViewInspectorUtils.swift */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
@@ -426,11 +443,14 @@
 			files = (
 				BDD4455A2C04D25300098056 /* FormInfoTests.swift in Sources */,
 				4AD82D492C0253FD0065CC37 /* FailureMessageComponentTests.swift in Sources */,
+				15E4F6502C2097F7001DA7C9 /* SwitchFieldTest.swift in Sources */,
 				4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTests.swift in Sources */,
 				4AD82D4B2C0253FD0065CC37 /* ViewInspectorUtils.swift in Sources */,
 				BDAE5D822C0A10AE00B6DDD4 /* ProgressInfoComponentTests.swift in Sources */,
+				15E4F64E2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift in Sources */,
 				BDAE5D802C0A100400B6DDD4 /* ProgressComponentTests.swift in Sources */,
 				BDD445602C04D89B00098056 /* FormWarningTest.swift in Sources */,
+				15E4F64C2C2097B4001DA7C9 /* CheckboxFieldTest.swift in Sources */,
 				C5DB1B062C08C6110061351A /* EndToEndEncryptionTest.swift in Sources */,
 				BDD4455E2C04D68500098056 /* FormTitleTests.swift in Sources */,
 				607FACEC1AFB9204008FA782 /* Tests.swift in Sources */,

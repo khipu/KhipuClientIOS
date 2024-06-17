@@ -17,7 +17,5 @@ final class FormInfoTests: XCTestCase {
         
         let hStack = try inspectedView.hStack()
         XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(hStack, expectedText: "Information"), "Failed to find the text: Information")
-
-
     }
 }

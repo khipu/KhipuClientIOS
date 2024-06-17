@@ -59,9 +59,11 @@ class ValidationUtils {
     }
     
     static func valiateCheckRequiredState(_ isChecked: Bool, _ requiredState: String?, _ translator: KhipuTranslator) -> String {
-        if (requiredState == "on" && !isChecked) {
+        if requiredState == "on" && !isChecked {
             return translator.t("form.validation.error.switch.accept.required")
-        } else if (requiredState == "off" && isChecked) {
+        }
+
+        if requiredState == "off" && isChecked {
             return translator.t("form.validation.error.switch.decline.required")
         }
         return ""

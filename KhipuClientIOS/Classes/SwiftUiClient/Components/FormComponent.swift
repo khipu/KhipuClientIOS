@@ -84,7 +84,7 @@ public struct FormComponent: View {
     }
     
     private func submitForm() -> Void {
-        if(validForm()) {
+        if validForm() {
             submitNovalidate(formRequest: formRequest, viewModel: viewModel)
         }
     }
@@ -272,7 +272,7 @@ struct DrawComponent: View {
 @available(iOS 15.0.0, *)
 public struct FormComponent_Previews: PreviewProvider {
     static public var previews: some View {
-       let formItem = try! FormItem(
+        let formItem = try! FormItem(
         """
           {
            "id": "item1",
@@ -282,7 +282,7 @@ public struct FormComponent_Previews: PreviewProvider {
                 , "indices":0
           }
         """
-       )
+        )
         let request = FormRequest(
             alternativeAction: nil,
             continueLabel: "Continue",
