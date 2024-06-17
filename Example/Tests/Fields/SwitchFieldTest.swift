@@ -35,13 +35,13 @@ final class SwitchFieldTest: XCTestCase {
             returnValue: returnValue,
             viewModel: viewModel
         )
-        let instected = try view.environmentObject(ThemeManager()).inspect()
+        let inspected = try view.environmentObject(ThemeManager()).inspect()
 
-        let label = try instected.find(viewWithAccessibilityIdentifier: "labelText")
+        let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText")
         let text = try label.text().string()
         XCTAssertEqual(text, "Accept some stuff")
 
-        let hint = try instected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
+        let hint = try inspected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
         XCTAssertEqual(hint, "You must accept")
 
 

@@ -38,12 +38,12 @@ final class HeaderCheckboxFieldTest: XCTestCase {
             viewModel: viewModel
         )
 
-        let instected = try view.environmentObject(ThemeManager()).inspect()
+        let inspected = try view.environmentObject(ThemeManager()).inspect()
 
-        let title = try instected.find(viewWithAccessibilityIdentifier: "titleText").text().string()
+        let title = try inspected.find(viewWithAccessibilityIdentifier: "titleText").text().string()
         XCTAssertEqual(title, "The title")
 
-        let label = try instected.find(viewWithAccessibilityIdentifier: "labelText")
+        let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText")
         let labelText = try label.text().string()
         XCTAssertEqual(labelText, "Some stuff")
 
