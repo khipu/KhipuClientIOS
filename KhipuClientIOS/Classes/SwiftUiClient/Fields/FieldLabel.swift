@@ -6,12 +6,14 @@ struct FieldLabel: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack {
-            Text(text ?? "")
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.subheadline)
-                .accessibilityIdentifier("labelText")
-            Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+        if !(text?.isEmpty ?? true) {
+            VStack {
+                Text(text ?? "")
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                    .font(.subheadline)
+                    .accessibilityIdentifier("labelText")
+                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+            }
         }
     }
 }

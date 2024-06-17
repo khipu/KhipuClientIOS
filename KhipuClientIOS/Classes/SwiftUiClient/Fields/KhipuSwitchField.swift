@@ -34,10 +34,8 @@ struct KhipuSwitchField: View {
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             
-            if !(formItem.hint?.isEmpty ?? true) {
-                HintLabel(text: formItem.hint)
-            }
-
+            HintLabel(text: formItem.hint)
+            
             if shouldDisplayError() {
                 ErrorLabel(text: error)
             }
