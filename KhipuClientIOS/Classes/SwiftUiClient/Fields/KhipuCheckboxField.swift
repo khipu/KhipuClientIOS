@@ -13,14 +13,18 @@ struct KhipuCheckboxField: View {
     @State var error: String = ""
     @State var isChecked: Bool = false
     
+    internal var didAppear: ((Self) -> Void)?
+
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
             HStack {
                 Toggle(isOn: $isChecked) {
-                    Text(formItem.label ?? "")
+                    FieldLabel(text: formItem.label)
                 }
+                .accessibilityIdentifier("checkbox")
                 .onAppear {
                     isChecked = formItem.defaultState == "on"
+                    self.didAppear?(self)
                 }
                 .toggleStyle(iOSCheckboxToggleStyle())
                 .onChange(of: isChecked) { newValue in

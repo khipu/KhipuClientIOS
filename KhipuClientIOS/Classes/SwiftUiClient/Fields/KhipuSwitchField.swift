@@ -13,14 +13,18 @@ struct KhipuSwitchField: View {
     @State var error: String = ""
     @State var isChecked: Bool = false
     
+    internal var didAppear: ((Self) -> Void)?
+
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
             HStack {
                 Toggle(isOn: $isChecked) {
-                    Text(formItem.label ?? "")
+                    FieldLabel(text: formItem.label).accessibilityIdentifier("toggleText")
                 }
-            .onAppear {
+                .accessibilityIdentifier("toggle")
+                .onAppear {
                     isChecked = formItem.defaultState == "on"
+                    self.didAppear?(self)
                 }
                 .onChange(of: isChecked) { newValue in
                     onChange(newValue: newValue)
@@ -30,6 +34,10 @@ struct KhipuSwitchField: View {
             .padding()
             .frame(maxWidth: .infinity, alignment: .leading)
             
+            if !(formItem.hint?.isEmpty ?? true) {
+                HintLabel(text: formItem.hint)
+            }
+
             if shouldDisplayError() {
                 ErrorLabel(text: error)
             }
@@ -75,8 +83,9 @@ struct KhipuSwitchField_Previews: PreviewProvider {
                  """
                      {
                        "id": "item1",
-                       "label": "item1",
+                       "label": "Do you accept the terms?",
                        "type": "\(FormItemTypes.formItemTypesSWITCH.rawValue)",
+                       "hint": "You must accept the terms",
                        "defaultState": "off"
                      }
                  """

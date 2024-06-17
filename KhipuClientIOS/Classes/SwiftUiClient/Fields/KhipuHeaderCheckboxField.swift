@@ -13,21 +13,25 @@ struct KhipuHeaderCheckboxField: View {
     @State var error: String = ""
     @State var isChecked: Bool = false
     
+    internal var didAppear: ((Self) -> Void)?
+
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
             if !(formItem.title?.isEmpty ?? false) {
                 HStack {
-                    Text(formItem.title ?? "")
+                    Text(formItem.title ?? "").accessibilityIdentifier("titleText")
                     Spacer()
                 }
                 .padding(.vertical)
             }
             HStack {
                 Toggle(isOn: $isChecked) {
-                    Text((formItem.label ?? ""))
+                    FieldLabel(text: formItem.label)
                 }
+                .accessibilityIdentifier("toggle")
                 .onAppear {
                     isChecked = formItem.defaultState == "on"
+                    self.didAppear?(self)
                 }
                 .toggleStyle(iOSCheckboxToggleStyle())
                 .onChange(of: isChecked) { newValue in
@@ -37,6 +41,10 @@ struct KhipuHeaderCheckboxField: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             
+            if shouldDisplayError() {
+                ErrorLabel(text: error)
+            }
+
             if !(formItem.items?.isEmpty ?? true) {
                 VStack {
                     ForEach(formItem.items ?? [], id: \.self) {
@@ -47,19 +55,18 @@ struct KhipuHeaderCheckboxField: View {
                         }
                     }
                 }
+                .accessibilityIdentifier("items")
                 .padding()
             }
             
             if !(formItem.bottomText?.isEmpty ?? false) {
                 HStack {
-                    Text(formItem.bottomText ?? "")
+                    Text(formItem.bottomText ?? "") .accessibilityIdentifier("bottomText")
                     Spacer()
                 }
             }
             
-            if shouldDisplayError() {
-                ErrorLabel(text: error)
-            }
+
         }
         .padding(.horizontal)
         .onAppear {
@@ -105,7 +112,7 @@ struct KhipuHeaderCheckboxField_Previews: PreviewProvider {
                        "label": "item1",
                        "title": "HeaderCheckbox with title",
                        "bottomText": "The bottom text",
-                       "items": ["item1", "item2"],
+                       "items": ["item 1", "item 2", "item 3"],
                        "type": "\(FormItemTypes.headerCheckbox.rawValue)",
                        "defaultState": "off",
                         "requiredState": "on"

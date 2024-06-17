@@ -1,6 +1,6 @@
 import SwiftUI
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 struct FieldLabel: View {
     var text: String?
     @EnvironmentObject private var themeManager: ThemeManager
@@ -10,12 +10,13 @@ struct FieldLabel: View {
             Text(text ?? "")
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .font(.subheadline)
+                .accessibilityIdentifier("labelText")
             Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
         }
     }
 }
 
-@available(iOS 13.0, *)
+@available(iOS 15.0, *)
 struct FieldLabel_Previews: PreviewProvider {
     static var previews: some View {
         return FieldLabel(text: "Field label")
