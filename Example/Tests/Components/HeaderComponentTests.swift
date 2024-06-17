@@ -41,28 +41,16 @@ final class HeaderComponentTests: XCTestCase {
         
         let view = HeaderComponent(viewModel: viewModel)
             .environmentObject(themeManager)
+
+        let inspectedView = try view.inspect().view(HeaderComponent.self)
+        let vStack = try inspectedView.vStack()
         
-        ViewHosting.host(view: view)
-        
-        let exp = expectation(description: "onAppear")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exp.fulfill()
-            do {
-                let inspectedView = try view.inspect().view(HeaderComponent.self)
-                let vStack = try inspectedView.vStack()
-                
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Merchant Name"), "Failed to find the text: Merchant Name")
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Transaction Subject"), "Failed to find the text: Transaction Subject")
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "MONTO A PAGAR"), "Failed to find the text: MONTO A PAGAR")
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "1000"), "Failed to find the text: 1000")
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "CÓDIGO • 12345"), "Failed to find the text: Código • 12345")
-                XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(vStack, expectedButtonText: "Ver detalle"), "Failed to find the button with text: Ver detalle")
-            
-            } catch {
-                XCTFail("Failed to inspect view: \(error)")
-            }
-        }
-        
-        wait(for: [exp], timeout: 5.0)
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Merchant Name"), "Failed to find the text: Merchant Name")
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Transaction Subject"), "Failed to find the text: Transaction Subject")
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "MONTO A PAGAR"), "Failed to find the text: MONTO A PAGAR")
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "1000"), "Failed to find the text: 1000")
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "CÓDIGO • 12345"), "Failed to find the text: Código • 12345")
+        XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(vStack, expectedButtonText: "Ver detalle"), "Failed to find the button with text: Ver detalle")
+
     }
 }

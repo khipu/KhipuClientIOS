@@ -19,24 +19,12 @@ final class AuthorizationRequestComponentTests: XCTestCase {
         let view = AuthorizationRequestView(viewModel: viewModel)
             .environmentObject(themeManager)
         
-        ViewHosting.host(view: view)
+        let inspectedView = try view.inspect().view(AuthorizationRequestView.self).view(MobileAuthorizationRequestView.self)
         
-        let exp = expectation(description: "onAppear")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exp.fulfill()
-            do {
-                let inspectedView = try view.inspect().view(AuthorizationRequestView.self).view(MobileAuthorizationRequestView.self)
-                let vStack = try inspectedView.vStack()
-                
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Please authorize using the app"), "Failed to find the text: Please authorize using the app")
-                
-                XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(vStack, expectedButtonText: "Esperando autorización"), "Failed to find the button with text: Esperando autorización")
-            } catch {
-                XCTFail("Failed to inspect view: \(error)")
-            }
-        }
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Please authorize using the app"), "Failed to find the text: Please authorize using the app")
         
-        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(inspectedView, expectedButtonText: "Esperando autorización"), "Failed to find the button with text: Esperando autorización")
+
     }
     
     
@@ -50,21 +38,9 @@ final class AuthorizationRequestComponentTests: XCTestCase {
         let view = AuthorizationRequestView(viewModel: viewModel)
             .environmentObject(themeManager)
         
-        ViewHosting.host(view: view)
-        let exp = expectation(description: "onAppear")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exp.fulfill()
-            do {
-                let inspectedView = try view.inspect().view(AuthorizationRequestView.self).view(QrAuthorizationRequestView.self)
-                
-                let vStack = try inspectedView.vStack()
-                XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Scan the QR code"), "Scan the QR code")
-                
-            } catch {
-                XCTFail("Failed to inspect view: \(error)")
-            }
-        }
+        let inspectedView = try view.inspect().view(AuthorizationRequestView.self).view(QrAuthorizationRequestView.self)
         
-        wait(for: [exp], timeout: 2.0)
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Scan the QR code"), "Scan the QR code")
+
     }
 }

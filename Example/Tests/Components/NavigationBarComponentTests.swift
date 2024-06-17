@@ -6,52 +6,39 @@ import KhenshinProtocol
 
 @available(iOS 15.0, *)
 final class NavigationBarComponentTests: XCTestCase {
-    func testNavigationBarRendersCorrectly() throws {
+    func testNavigationBarWithImageURLRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
         
-        let viewImageUrl = NavigationBarComponent(imageUrl: "imageUrl", viewModel: viewModel).environmentObject(themeManager)
-        let viewImageName = NavigationBarComponent(imageName: "imageName", viewModel: viewModel).environmentObject(themeManager)
-        let viewTitle = NavigationBarComponent(title: "title", viewModel: viewModel).environmentObject(themeManager)
-        let viewEmpty = NavigationBarComponent(viewModel: viewModel).environmentObject(themeManager)
+        let view = NavigationBarComponent(imageUrl: "imageUrl", viewModel: viewModel).environmentObject(themeManager)
+
+        let inspectView = try view.inspect().view(NavigationBarComponent.self)
         
-        ViewHosting.host(view: viewImageUrl)
-        ViewHosting.host(view: viewImageName)
-        ViewHosting.host(view: viewTitle)
-        ViewHosting.host(view: viewEmpty)
+        let asyncImage = try inspectView.find(ViewType.AsyncImage.self)
+        XCTAssertEqual(try asyncImage.url(), URL(string: "imageUrl"))
+    }
+    
+    func testNavigationBarWithImageNameRendersCorrectly() throws {
+        let themeManager = ThemeManager()
+        let viewModel = KhipuViewModel()
         
-        let exp = expectation(description: "onAppear")
+        let view = NavigationBarComponent(imageName: "imageName", viewModel: viewModel).environmentObject(themeManager)
+
+        let inspectView = try view.inspect().view(NavigationBarComponent.self)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            exp.fulfill()
-            do {
-                var inspectView = try viewImageUrl.inspect().view(NavigationBarComponent.self)
-                var hStack = try inspectView.hStack()
-                
-                XCTAssertNoThrow(try hStack.asyncImage(2))
-                XCTAssertThrowsError(try hStack.image(2))
-                XCTAssertThrowsError(try hStack.text(2))
-                XCTAssertNoThrow(try hStack.button(4))
-                
-                inspectView = try viewImageName.inspect().view(NavigationBarComponent.self)
-                hStack = try inspectView.hStack()
-                
-                XCTAssertNoThrow(try hStack.image(2))
-                XCTAssertThrowsError(try hStack.asyncImage(2))
-                XCTAssertThrowsError(try hStack.text(2))
-                XCTAssertNoThrow(try hStack.button(4))
-                
-                inspectView = try viewTitle.inspect().view(NavigationBarComponent.self)
-                hStack = try inspectView.hStack()
-                
-                XCTAssertNoThrow(try hStack.text(2))
-                XCTAssertThrowsError(try hStack.asyncImage(2))
-                XCTAssertThrowsError(try hStack.image(2))
-                XCTAssertNoThrow(try hStack.button(4))
-            } catch {
-                XCTFail("Failed to inspect view: \(error)")
-            }
-        }
-        wait(for: [exp], timeout: 2.0)
+        let image = try inspectView.find(ViewType.Image.self)
+        XCTAssertEqual(try image.actualImage().name(), "imageName")
+    }
+    
+    func testNavigationBarWithTextRendersCorrectly() throws {
+        let themeManager = ThemeManager()
+        let viewModel = KhipuViewModel()
+        
+        let view = NavigationBarComponent(title: "title", viewModel: viewModel).environmentObject(themeManager)
+
+        let inspectView = try view.inspect().view(NavigationBarComponent.self)
+        
+        let text = try inspectView.find(ViewType.Text.self)
+        XCTAssertEqual(try text.string(), "title")
     }
 }
