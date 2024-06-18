@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct KhipuDataTableField: View {
+struct DataTableField: View {
     var formItem: FormItem
     var hasNextField: Bool
     var isValid: (Bool) -> Void
@@ -11,12 +11,12 @@ struct KhipuDataTableField: View {
     @State var textFieldValue: String = ""
     
     var body: some View {
-        KhipuDataTable(dataTable: formItem.dataTable!)
+        DataTableCommon(dataTable: formItem.dataTable!)
     }
 }
 
 @available(iOS 15.0, *)
-struct KhipuDataTableField_Previews: PreviewProvider {
+struct DataTableField_Previews: PreviewProvider {
     static var previews: some View {
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
@@ -64,21 +64,21 @@ struct KhipuDataTableField_Previews: PreviewProvider {
         )
         return VStack {
             Text("DataTable empty:")
-            KhipuDataTableField(
+            DataTableField(
                 formItem: formItem1,
                 hasNextField: false,
                 isValid: isValid,
                 returnValue: returnValue
             )
             Text("DataTable one cell:")
-            KhipuDataTableField(
+            DataTableField(
                 formItem: formItem2,
                 hasNextField: false,
                 isValid: isValid,
                 returnValue: returnValue
             )
             Text("DataTable two rows:")
-            KhipuDataTableField(
+            DataTableField(
                 formItem: formItem3,
                 hasNextField: false,
                 isValid: isValid,

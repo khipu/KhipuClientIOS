@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
-struct KhipuDataTable: View {
+struct DataTableCommon: View {
     let dataTable: DataTable
     
     var body: some View {
@@ -25,14 +25,11 @@ struct KhipuDataTable: View {
             }
         }
         .padding()
-        .background(Color(uiColor: .systemBackground))
     }
 }
 
-
-
 @available(iOS 15.0, *)
-struct KhipuDataTable_Previews: PreviewProvider {
+struct DataTableCommon_Previews: PreviewProvider {
     static var previews: some View {
         let mockRowSeparator = RowSeparator(color: nil, height: nil)
         let mockDataTable = DataTable(rows: [
@@ -50,7 +47,7 @@ struct KhipuDataTable_Previews: PreviewProvider {
             ])
         ], rowSeparator: mockRowSeparator)
         
-        return KhipuDataTable(dataTable: mockDataTable)
+        return DataTableCommon(dataTable: mockDataTable)
             .previewLayout(.sizeThatFits)
             .padding()
     }

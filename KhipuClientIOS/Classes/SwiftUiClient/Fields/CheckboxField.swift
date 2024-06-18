@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct KhipuCheckboxField: View {
+struct CheckboxField: View {
     var formItem: FormItem
     var hasNextField: Bool
     var isValid: (Bool) -> Void
@@ -68,7 +68,7 @@ struct KhipuCheckboxField: View {
 }
 
 @available(iOS 15.0, *)
-struct KhipuCheckboxField_Previews: PreviewProvider {
+struct CheckboxField_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = KhipuViewModel()
         let isValid: (Bool) -> Void = { param in }
@@ -98,14 +98,14 @@ struct KhipuCheckboxField_Previews: PreviewProvider {
                  """
         )
         return VStack {
-            KhipuCheckboxField(
+            CheckboxField(
                 formItem: formItem1,
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
-            KhipuCheckboxField(
+            CheckboxField(
                 formItem: formItem2,
                 hasNextField: false,
                 isValid:  isValid,

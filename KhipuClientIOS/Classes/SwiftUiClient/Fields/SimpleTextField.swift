@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct KhipuTextField: View {
+struct SimpleTextField: View {
     var formItem: FormItem
     var hasNextField: Bool
     var isValid: (Bool) -> Void
@@ -178,14 +178,14 @@ struct KhipuTextField_Previews: PreviewProvider {
                  """
         )
         return VStack {
-            KhipuTextField(
+            SimpleTextField(
                 formItem: formItem1,
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
-            KhipuTextField(
+            SimpleTextField(
                 formItem: formItem2,
                 hasNextField: false,
                 isValid:  isValid,

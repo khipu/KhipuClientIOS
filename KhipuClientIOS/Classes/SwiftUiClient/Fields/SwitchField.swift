@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct KhipuSwitchField: View {
+struct SwitchField: View {
     var formItem: FormItem
     var hasNextField: Bool
     var isValid: (Bool) -> Void
@@ -100,14 +100,14 @@ struct KhipuSwitchField_Previews: PreviewProvider {
                  """
         )
         return VStack {
-            KhipuSwitchField(
+            SwitchField(
                 formItem: formItem1,
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
-            KhipuSwitchField(
+            SwitchField(
                 formItem: formItem2,
                 hasNextField: false,
                 isValid:  isValid,

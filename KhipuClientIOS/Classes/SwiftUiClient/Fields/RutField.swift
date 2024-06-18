@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct KhipuRutField: View {
+struct RutField: View {
     var formItem: FormItem
     var hasNextField: Bool
     var isValid: (Bool) -> Void
@@ -202,7 +202,7 @@ struct KhipuRutField_Previews: PreviewProvider {
         )
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
-        return KhipuRutField(
+        return RutField(
             formItem: formItem1,
             hasNextField: false,
             isValid: isValid,

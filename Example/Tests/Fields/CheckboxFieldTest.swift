@@ -28,7 +28,7 @@ final class CheckboxFieldTest: XCTestCase {
                  """
          )
 
-        var view = KhipuCheckboxField(
+        var view = CheckboxField(
             formItem: formItem,
             hasNextField: false,
             isValid:  isValid,
