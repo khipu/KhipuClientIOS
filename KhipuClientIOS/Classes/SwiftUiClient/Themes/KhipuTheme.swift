@@ -9,7 +9,7 @@ class KhipuTheme: ThemeProtocol {
     
     public func setColorSchemeAndCustomColors(colorScheme: ColorScheme, colors: KhipuColors?) {
         self.colors.colorScheme = colorScheme
-        if(colors != nil) {
+        if colors != nil {
             self.colors.localColors = LocalColors(colors: colors!)
         }
     }

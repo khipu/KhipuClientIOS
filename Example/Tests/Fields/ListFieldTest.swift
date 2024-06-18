@@ -23,7 +23,7 @@ final class ListFieldTest: XCTestCase {
                 "id": "item1",
                 "label": "Choose an option",
                 "placeholder": "placeholder",
-                "type": "\(FormItemTypes.dataTable.rawValue)",
+                "type": "\(FormItemTypes.list.rawValue)",
                 "options":[
                         {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option 0", "value": "0" },
                         {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option 1", "value": "1" },
@@ -34,7 +34,7 @@ final class ListFieldTest: XCTestCase {
              """
         )
 
-        var view = KhipuListField(
+        let view = KhipuListField(
             formItem: formItem,
             isValid:  isValid,
             returnValue: returnValue,
@@ -48,7 +48,8 @@ final class ListFieldTest: XCTestCase {
         
         for index in 0..<3 {
             let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem\(index + 1)")
-            XCTAssertEqual(try item.vStack().text(0).string(), "Option \(index)")
+            XCTAssertNoThrow(try item.vStack().vStack(0).hStack(0).view(OptionImage.self, 0))
+            XCTAssertEqual(try item.vStack().vStack(0).hStack(0).text(1).string(), "Option \(index)")
         }
         
         let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem3")

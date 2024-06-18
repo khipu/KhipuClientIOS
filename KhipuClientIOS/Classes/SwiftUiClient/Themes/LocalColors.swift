@@ -19,40 +19,40 @@ class LocalColors {
     init(){}
     
     init(colors: KhipuColors) {
-        if(colors.lightBackground != nil) {
+        if colors.lightBackground != nil {
             self.lightBackground = Color(hexString: colors.lightBackground!)
         }
-        if(colors.lightOnBackground != nil) {
+        if colors.lightOnBackground != nil {
             self.lightOnBackground = Color(hexString: colors.lightOnBackground!)
         }
-        if(colors.lightPrimary != nil) {
+        if colors.lightPrimary != nil {
             self.lightPrimary = Color(hexString: colors.lightPrimary!)
         }
-        if(colors.lightOnPrimary != nil) {
+        if colors.lightOnPrimary != nil {
             self.lightOnPrimary = Color(hexString: colors.lightOnPrimary!)
         }
-        if(colors.lightTopBarContainer != nil) {
+        if colors.lightTopBarContainer != nil {
             self.lightTopBarContainer = Color(hexString: colors.lightTopBarContainer!)
         }
-        if(colors.lightOnTopBarContainer != nil) {
+        if colors.lightOnTopBarContainer != nil {
             self.lightOnTopBarContainer = Color(hexString: colors.lightOnTopBarContainer!)
         }
-        if(colors.darkBackground != nil) {
+        if colors.darkBackground != nil {
             self.darkBackground = Color(hexString: colors.darkBackground!)
         }
-        if(colors.darkOnBackground != nil) {
+        if colors.darkOnBackground != nil {
             self.darkOnBackground = Color(hexString: colors.darkOnBackground!)
         }
-        if(colors.darkPrimary != nil) {
+        if colors.darkPrimary != nil {
             self.darkPrimary = Color(hexString: colors.darkPrimary!)
         }
-        if(colors.darkOnPrimary != nil) {
+        if colors.darkOnPrimary != nil {
             self.darkOnPrimary = Color(hexString: colors.darkOnPrimary!)
         }
-        if(colors.darkTopBarContainer != nil) {
+        if colors.darkTopBarContainer != nil {
             self.darkTopBarContainer = Color(hexString: colors.darkTopBarContainer!)
         }
-        if(colors.darkOnTopBarContainer != nil) {
+        if colors.darkOnTopBarContainer != nil {
             self.darkOnTopBarContainer = Color(hexString: colors.darkOnTopBarContainer!)
         }
     }
