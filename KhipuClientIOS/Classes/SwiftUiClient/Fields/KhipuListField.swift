@@ -13,6 +13,7 @@ struct KhipuListField: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: Dimensions.small) {
+            FieldLabel(text: formItem.label)
             var a = 0
             ForEach(formItem.options ?? [], id: \.value) { option in
                 a = a + 1
@@ -68,7 +69,7 @@ struct KhipuListField_Previews: PreviewProvider {
          """
            {
             "id": "item1",
-            "label": "item1",
+            "label": "Select an option",
             "placeholder": "placeholder",
             "type": "\(FormItemTypes.list.rawValue)",
             "options":[
