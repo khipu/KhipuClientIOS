@@ -272,30 +272,41 @@ struct DrawComponent: View {
 @available(iOS 15.0.0, *)
 public struct FormComponent_Previews: PreviewProvider {
     static public var previews: some View {
-        let formItem = try! FormItem(
-        """
-          {
-           "id": "item1",
-           "label": "item1",
-           "type": "\(FormItemTypes.dataTable.rawValue)",
-           "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}
-                , "indices":0
-          }
-        """
+        let formItem1 = try! FormItem(
+         """
+             {
+               "id": "Some text",
+               "label": "Username",
+               "type": "\(FormItemTypes.text.rawValue)",
+               "hint": "Enter some text",
+               "placeHolder": "Ej: my text"
+             }
+         """
+        )
+        let formItem2 = try! FormItem(
+         """
+             {
+               "id": "item2",
+               "label": "Password",
+               "secure": true,
+               "type": "\(FormItemTypes.text.rawValue)",
+               "hint": "Enter your password"
+             }
+         """
         )
         let request = FormRequest(
             alternativeAction: nil,
             continueLabel: "Continue",
             errorMessage: "error message",
             id: "id",
-            info: "info",
-            items: [formItem],
+            info: "This is an info alert",
+            items: [formItem1, formItem2],
             pageTitle: "Page Title",
             progress: Progress(current: 1, total: 2),
             rememberValues: true,
             termsURL: "",
             timeout: 300,
-            title: "Title",
+            title: "Login",
             type: MessageType.formRequest
         )
         let viewModel = KhipuViewModel()
@@ -356,16 +367,16 @@ struct DrawComponent_Previews: PreviewProvider {
          """
         )
         let formItem1 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "Type your DIGIPASS with numbers",
-                       "length": 4,
-                       "type": "\(FormItemTypes.otp.rawValue)",
-                       "hint": "Give me the answer",
-                       "number": false,
-                     }
-                 """
+         """
+             {
+               "id": "item1",
+               "label": "Type your DIGIPASS with numbers",
+               "length": 4,
+               "type": "\(FormItemTypes.otp.rawValue)",
+               "hint": "Give me the answer",
+               "number": false,
+             }
+         """
         )
         let submitFunction: () -> Void = {}
         let getFunction: () -> [String: String] = { ["key":"value"]}
