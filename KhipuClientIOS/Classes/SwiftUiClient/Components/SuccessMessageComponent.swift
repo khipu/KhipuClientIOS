@@ -31,7 +31,7 @@ struct SuccessMessageComponent: View {
                 Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
             }
             Group {
-                Text(formatOperationId(operationSuccess.operationID ?? ""))
+                Text(FieldUtils.formatOperationId(operationId: operationSuccess.operationID ?? ""))
                     .font(.body)
                     .foregroundColor(themeManager.selectedTheme.colors.primary)
                     .padding(.horizontal, themeManager.selectedTheme.dimens.extraMedium)
