@@ -275,18 +275,18 @@ public struct FormComponent_Previews: PreviewProvider {
         let formItem1 = try! FormItem(
          """
              {
-               "id": "Some text",
+               "id": "username",
                "label": "Username",
                "type": "\(FormItemTypes.text.rawValue)",
-               "hint": "Enter some text",
-               "placeHolder": "Ej: my text"
+               "hint": "Enter your username",
+               "placeHolder": "Ej: Username"
              }
          """
         )
         let formItem2 = try! FormItem(
          """
              {
-               "id": "item2",
+               "id": "password",
                "label": "Password",
                "secure": true,
                "type": "\(FormItemTypes.text.rawValue)",
