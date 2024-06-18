@@ -21,7 +21,7 @@ final class ListFieldTest: XCTestCase {
              """
                {
                 "id": "item1",
-                "label": "item1",
+                "label": "Choose an option",
                 "placeholder": "placeholder",
                 "type": "\(FormItemTypes.dataTable.rawValue)",
                 "options":[
@@ -41,6 +41,10 @@ final class ListFieldTest: XCTestCase {
             submitFunction: submitFunction
         )
         let inspected = try view.environmentObject(ThemeManager()).inspect()
+        
+        let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText")
+        let text = try label.text().string()
+        XCTAssertEqual(text, "Choose an option")
         
         for index in 0..<3 {
             let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem\(index + 1)")
