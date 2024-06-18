@@ -5,7 +5,7 @@ import KhenshinProtocol
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class NavigationBarComponentTests: XCTestCase {
+final class NavigationBarComponentTest: XCTestCase {
     func testNavigationBarWithImageURLRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()

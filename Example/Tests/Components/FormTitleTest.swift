@@ -4,7 +4,7 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class FormTitleTests: XCTestCase {
+final class FormTitleTest: XCTestCase {
 
     func testFormTitleView() throws {
         let themeManager = ThemeManager()

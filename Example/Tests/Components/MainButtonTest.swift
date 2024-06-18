@@ -4,7 +4,7 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 13.0, *)
-final class MainButtonTests: XCTestCase {
+final class MainButtonTest: XCTestCase {
     
     func testMainButtonRendersCorrectly() throws {
         let themeManager = ThemeManager()

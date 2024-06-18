@@ -4,7 +4,7 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0,*)
-final class ProgressInfoComponentTests: XCTestCase {
+final class ProgressInfoComponentTest: XCTestCase {
     func testProgressInfoComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let message = "Loading message"

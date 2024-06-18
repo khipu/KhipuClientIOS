@@ -5,7 +5,7 @@ import KhenshinProtocol
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class TimeoutMessageComponentTests: XCTestCase {
+final class TimeoutMessageComponentTest: XCTestCase {
     func testTimeoutMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
