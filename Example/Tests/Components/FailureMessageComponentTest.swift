@@ -5,7 +5,7 @@ import ViewInspector
 @testable import KhenshinProtocol
 
 @available(iOS 15.0, *)
-final class FailureMessageComponentTests: XCTestCase {
+final class FailureMessageComponentTest: XCTestCase {
 
     func testFailureMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()

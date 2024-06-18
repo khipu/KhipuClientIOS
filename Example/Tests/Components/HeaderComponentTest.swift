@@ -5,7 +5,7 @@ import KhenshinProtocol
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class HeaderComponentTests: XCTestCase {
+final class HeaderComponentTest: XCTestCase {
     
     func testHeaderComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()

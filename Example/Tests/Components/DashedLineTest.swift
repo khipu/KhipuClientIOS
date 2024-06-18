@@ -4,7 +4,7 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class DasehdLineTests: XCTestCase {
+final class DasehdLineTest: XCTestCase {
 
     func testDashedLineView() throws {
         let view = DashedLine()

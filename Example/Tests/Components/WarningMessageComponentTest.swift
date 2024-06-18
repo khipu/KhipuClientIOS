@@ -5,7 +5,7 @@ import KhenshinProtocol
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class WarningMessageComponentTests: XCTestCase {
+final class WarningMessageComponentTest: XCTestCase {
     func testWarningMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()

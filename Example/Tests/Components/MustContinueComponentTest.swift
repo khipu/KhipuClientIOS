@@ -5,7 +5,7 @@ import KhenshinProtocol
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class MustContinueComponentTests: XCTestCase {
+final class MustContinueComponentTest: XCTestCase {
     func testMustContinueComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()

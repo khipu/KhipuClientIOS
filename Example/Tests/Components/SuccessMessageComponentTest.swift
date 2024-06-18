@@ -5,7 +5,7 @@ import ViewInspector
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-final class SuccessMessageComponentTests: XCTestCase {
+final class SuccessMessageComponentTest: XCTestCase {
     func testSuccessMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()

@@ -5,7 +5,7 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class MerchantDialogComponentTests: XCTestCase {
+final class MerchantDialogComponentTest: XCTestCase {
     
     func testMerchantDialogComponentRendering() throws {
         let translations: [String: String] = [

@@ -4,7 +4,7 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class CopyToClipboardComponentTests: XCTestCase {
+final class CopyToClipboardComponentTest: XCTestCase {
     
     func testCopyToClipboardOperationId() throws {
         let themeManager = ThemeManager()

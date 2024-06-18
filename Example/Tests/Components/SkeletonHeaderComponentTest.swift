@@ -5,7 +5,7 @@ import KhenshinProtocol
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-final class SkeletonHeaderComponentTests: XCTestCase {
+final class SkeletonHeaderComponentTest: XCTestCase {
     func testSkeletonHeaderComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let view = SkeletonHeaderComponent().environmentObject(themeManager)
