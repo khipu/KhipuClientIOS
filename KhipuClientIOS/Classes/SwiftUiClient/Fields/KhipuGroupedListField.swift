@@ -39,13 +39,13 @@ public struct KhipuGroupedListField: View {
                 .padding(.horizontal, 36)
                 .overlay(
                     RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                        .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                 )
                 .padding(.horizontal)
                 .overlay(
                     Image(systemName: "magnifyingglass")
-                    .foregroundColor(.gray)
-                    .padding(.horizontal, 24)
+                        .foregroundColor(.gray)
+                        .padding(.horizontal, 24)
                     ,
                     alignment: .leading
                 )
@@ -59,33 +59,13 @@ public struct KhipuGroupedListField: View {
                         returnValue(option.value ?? "")
                         submitFunction()
                     }) {
-                        HStack {
-                            AsyncImage(url: URL(string: option.image ?? "")) { phase in
-                                if let image = phase.image {
-                                    image
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 40, height: 40)
-                                        .clipShape(Circle())
-                                } else if phase.error != nil {
-                                    Color.red
-                                        .frame(width: 40, height: 40)
-                                        .clipShape(Circle())
-                                } else {
-                                    Color.gray
-                                        .frame(width: 40, height: 40)
-                                        .clipShape(Circle())
-                                }
+                        KhipuListOption(selected: selectedOption?.value == option.value ) {
+                            HStack {
+                                OptionImage(image:option.image)
+                                Text(option.name ?? "").foregroundColor(.primary)
+                                Spacer()
                             }
-                            Text(option.name ?? "")
-                                .foregroundColor(.primary)
-                            Spacer()
                         }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.4), lineWidth: 1)
-                        )
                     }
                 }
             }
@@ -100,8 +80,8 @@ public struct KhipuGroupedListField: View {
         }
         
         return currentList.filter {
-                $0.name?.localizedCaseInsensitiveContains(textFieldValue) == true
-            }
+            $0.name?.localizedCaseInsensitiveContains(textFieldValue) == true
+        }
     }
     
     func filterBankByTab(currentList: [GroupedOption]) -> [GroupedOption] {
@@ -127,6 +107,7 @@ struct KhipuGroupedList_Previews: PreviewProvider {
             "groupedOptions": {
                 "options":[
                     {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Demo Bank", "tag": "Persona", "value": "1" },
+                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Alternative Demo Bank", "tag": "Persona", "value": "2" },
                     {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Demo Bank Empresa", "tag": "Empresa", "value": "2" }
             ], "tagsOrder": "Persona,Empresa"}
            }
@@ -138,5 +119,6 @@ struct KhipuGroupedList_Previews: PreviewProvider {
             returnValue: returnValue,
             submitFunction: submitFunction)
         .padding()
+        .environmentObject(ThemeManager())
     }
 }

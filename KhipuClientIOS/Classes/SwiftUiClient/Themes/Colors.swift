@@ -15,14 +15,14 @@ struct Colors {
     var colorScheme: ColorScheme = .light
     
     var primary: Color {
-        if(colorScheme == .dark) {
+        if colorScheme == .dark {
             return localColors.darkPrimary ?? Color("primary", bundle: bundle)
         }
         return localColors.lightPrimary ?? Color("primary", bundle: bundle)
     }
     
     var onPrimary: Color {
-        if(colorScheme == .dark) {
+        if colorScheme == .dark {
             return localColors.darkOnPrimary ?? Color("onPrimary", bundle: bundle)
         }
         return localColors.lightOnPrimary ?? Color("onPrimary", bundle: bundle)
@@ -85,28 +85,28 @@ struct Colors {
     }
     
     var background: Color {
-        if(colorScheme == .dark) {
+        if colorScheme == .dark {
             return localColors.darkBackground ?? Color("background", bundle: bundle)
         }
         return localColors.lightBackground ?? Color("background", bundle: bundle)
     }
     
     var onBackground: Color {
-        if(colorScheme == .dark) {
+        if colorScheme == .dark {
             return localColors.darkOnBackground ?? Color("onBackground", bundle: bundle)
         }
         return localColors.lightOnBackground ?? Color("onBackground", bundle: bundle)
     }
     
     var surface: Color {
-        if(colorScheme == .dark) {
+        if colorScheme == .dark {
             return localColors.darkBackground ?? Color("surface", bundle: bundle)
         }
         return localColors.lightBackground ?? Color("surface", bundle: bundle)
     }
     
     var onSurface: Color {
-        if(colorScheme == .dark) {
+        if colorScheme == .dark {
             return localColors.darkOnBackground ?? Color("onSurface", bundle: bundle)
         }
         return localColors.lightOnBackground ?? Color("onSurface", bundle: bundle)
@@ -149,14 +149,14 @@ struct Colors {
     }
     
     var topBarContainer: Color {
-        if(colorScheme == .dark) {
+        if colorScheme == .dark {
             return localColors.darkTopBarContainer ?? Color("topBarContainer", bundle: bundle)
         }
         return localColors.lightTopBarContainer ?? Color("topBarContainer", bundle: bundle)
     }
     
     var onTopBarContainer: Color {
-        if(colorScheme == .dark) {
+        if colorScheme == .dark {
             return localColors.darkOnTopBarContainer ?? Color("onTopBarContainer", bundle: bundle)
         }
         return localColors.lightOnTopBarContainer ?? Color("onTopBarContainer", bundle: bundle)

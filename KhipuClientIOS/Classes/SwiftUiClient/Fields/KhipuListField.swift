@@ -25,25 +25,23 @@ struct KhipuListField: View {
                         returnValue(option.value ?? "")
                         submitFunction()
                     }) {
-                        VStack(alignment: .leading, spacing: Dimensions.small) {
-                            Text(option.name ?? "")
-                                .font(.system(size: 16))
-                                .fontWeight(.bold)
-                                .foregroundColor(.primary)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            
-                            
-                            if let dataTable = option.dataTable, !dataTable.rows.isEmpty {
-                                KhipuDataTable(dataTable: dataTable).accessibilityIdentifier("dataTable" )
+                        KhipuListOption(selected: selectedOption?.value == option.value) {
+                            VStack {
+                                HStack {
+                                    OptionImage(image:option.image)
+                                    Text(option.name ?? "")
+                                        .font(.system(size: 16))
+                                        .fontWeight(.bold)
+                                        .foregroundColor(.primary)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                    
+                                }
+                                if let dataTable = option.dataTable, !dataTable.rows.isEmpty {
+                                    KhipuDataTable(dataTable: dataTable).accessibilityIdentifier("dataTable" )
+                                }
                             }
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(
-                            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
-                                .stroke(themeManager.selectedTheme.colors.onBackground, lineWidth: 0.5)
-                        )
-                        .accessibilityIdentifier("listItem\(a)" )
+                            
+                        }.accessibilityIdentifier("listItem\(a)")
                     }
                 }
             }
