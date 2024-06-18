@@ -34,7 +34,7 @@ final class ListFieldTest: XCTestCase {
              """
         )
 
-        let view = KhipuListField(
+        let view = ListField(
             formItem: formItem,
             isValid:  isValid,
             returnValue: returnValue,
@@ -48,8 +48,8 @@ final class ListFieldTest: XCTestCase {
         
         for index in 0..<3 {
             let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem\(index + 1)")
-            XCTAssertNoThrow(try item.vStack().vStack(0).hStack(0).view(OptionImage.self, 0))
-            XCTAssertEqual(try item.vStack().vStack(0).hStack(0).text(1).string(), "Option \(index)")
+            XCTAssertNoThrow(try item.vStack().vStack(0).view(OptionLabel.self, 0).hStack(0).view(OptionImage.self, 0))
+            XCTAssertEqual(try item.vStack().vStack(0).view(OptionLabel.self, 0).hStack(0).text(1).string(), "Option \(index)")
         }
         
         let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem3")

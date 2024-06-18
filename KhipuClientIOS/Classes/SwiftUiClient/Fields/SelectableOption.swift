@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct KhipuListOption<Content: View>: View  {
+struct SelectableOption<Content: View>: View  {
     var selected: Bool
     let content: () -> Content
     
@@ -29,14 +29,14 @@ struct KhipuListOption<Content: View>: View  {
 
 
 @available(iOS 15.0, *)
-struct KhipuListOption_Previews: PreviewProvider {
+struct ListOption_Previews: PreviewProvider {
     static var previews: some View {
         
         return VStack {
-            KhipuListOption(selected: true) {
+            SelectableOption(selected: true) {
                 Text("hello")
             }
-            KhipuListOption(selected: false) {
+            SelectableOption(selected: false) {
                 Text("goodbye")
             }
 

@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct KhipuListField: View {
+struct ListField: View {
     let formItem: FormItem
     let isValid: (Bool) -> Void
     let returnValue: (String) -> Void
@@ -25,22 +25,14 @@ struct KhipuListField: View {
                         returnValue(option.value ?? "")
                         submitFunction()
                     }) {
-                        KhipuListOption(selected: selectedOption?.value == option.value) {
+                        SelectableOption(selected: selectedOption?.value == option.value) {
                             VStack {
-                                HStack {
-                                    OptionImage(image:option.image)
-                                    Text(option.name ?? "")
-                                        .font(.system(size: 16))
-                                        .fontWeight(.bold)
-                                        .foregroundColor(.primary)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    
-                                }
+                                OptionLabel(image:option.image, text:option.name)
+                               
                                 if let dataTable = option.dataTable, !dataTable.rows.isEmpty {
-                                    KhipuDataTable(dataTable: dataTable).accessibilityIdentifier("dataTable" )
+                                    DataTableCommon(dataTable: dataTable).accessibilityIdentifier("dataTable" )
                                 }
                             }
-                            
                         }.accessibilityIdentifier("listItem\(a)")
                     }
                 }
@@ -79,7 +71,7 @@ struct KhipuListField_Previews: PreviewProvider {
            
          """
         )
-        return KhipuListField(
+        return ListField(
             formItem: formItem1,
             isValid: isValid,
             returnValue: returnValue,

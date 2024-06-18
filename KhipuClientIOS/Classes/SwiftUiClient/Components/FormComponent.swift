@@ -178,7 +178,7 @@ struct DrawComponent: View {
         }
         switch item.type {
         case FormItemTypes.checkbox:
-            KhipuCheckboxField(
+            CheckboxField(
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
@@ -186,27 +186,27 @@ struct DrawComponent: View {
                 viewModel: viewModel
             )
         case FormItemTypes.coordinates:
-            KhipuCoordinatesField(
+            CoordinatesField(
                 formItem: item,
                 isValid: validationFun,
                 returnValue: getValueFun
             )
         case FormItemTypes.dataTable:
-            KhipuDataTableField(
+            DataTableField(
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
                 returnValue: getValueFun
             )
         case FormItemTypes.groupedList:
-            KhipuGroupedListField(
+            GroupedListField(
                 formItem: item,
                 isValid: validationFun,
                 returnValue: getValueFun,
                 submitFunction: submitFunction
             )
         case FormItemTypes.headerCheckbox:
-            KhipuHeaderCheckboxField(
+            HeaderCheckboxField(
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
@@ -214,7 +214,7 @@ struct DrawComponent: View {
                 viewModel: viewModel
             )
         case FormItemTypes.imageChallenge:
-            KhipuImageChallengeField(
+            ImageChallengeField(
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
@@ -222,20 +222,20 @@ struct DrawComponent: View {
                 viewModel: viewModel
             )
         case FormItemTypes.list:
-            KhipuListField(
+            ListField(
                 formItem: item,
                 isValid: validationFun,
                 returnValue: getValueFun,
                 submitFunction: submitFunction
             )
         case FormItemTypes.otp:
-            KhipuOtpField(
+            OtpField(
                 formItem: item,
                 isValid: validationFun,
                 returnValue: getValueFun
             )
         case FormItemTypes.rut:
-            KhipuRutField(
+            RutField(
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
@@ -243,14 +243,14 @@ struct DrawComponent: View {
                 viewModel: viewModel
             )
         case FormItemTypes.separator:
-            KhipuSeparatorField(
+            SeparatorField(
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
                 returnValue: getValueFun
             )
         case FormItemTypes.formItemTypesSWITCH:
-            KhipuSwitchField(
+            SwitchField(
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,
@@ -258,7 +258,7 @@ struct DrawComponent: View {
                 viewModel: viewModel
             )
         case FormItemTypes.text:
-            KhipuTextField(
+            SimpleTextField(
                 formItem: item,
                 hasNextField: hasNextField,
                 isValid: validationFun,

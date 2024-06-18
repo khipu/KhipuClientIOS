@@ -28,7 +28,7 @@ final class SwitchFieldTest: XCTestCase {
                  """
         )
 
-        var view = KhipuSwitchField(
+        var view = SwitchField(
             formItem: formItem,
             hasNextField: false,
             isValid:  isValid,

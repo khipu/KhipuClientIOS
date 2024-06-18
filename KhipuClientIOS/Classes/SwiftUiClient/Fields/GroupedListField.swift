@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-public struct KhipuGroupedListField: View {
+public struct GroupedListField: View {
     var formItem: FormItem
     var isValid: (Bool) -> Void
     var returnValue: (String) -> Void
@@ -59,12 +59,8 @@ public struct KhipuGroupedListField: View {
                         returnValue(option.value ?? "")
                         submitFunction()
                     }) {
-                        KhipuListOption(selected: selectedOption?.value == option.value ) {
-                            HStack {
-                                OptionImage(image:option.image)
-                                Text(option.name ?? "").foregroundColor(.primary)
-                                Spacer()
-                            }
+                        SelectableOption(selected: selectedOption?.value == option.value ) {
+                            OptionLabel(image:option.image, text:option.name)
                         }
                     }
                 }
@@ -92,7 +88,7 @@ public struct KhipuGroupedListField: View {
 }
 
 @available(iOS 15.0, *)
-struct KhipuGroupedList_Previews: PreviewProvider {
+struct GroupedList_Previews: PreviewProvider {
     static var previews: some View {
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
@@ -113,7 +109,7 @@ struct KhipuGroupedList_Previews: PreviewProvider {
            }
          """
         )
-        return KhipuGroupedListField(
+        return GroupedListField(
             formItem: formItem1,
             isValid: isValid,
             returnValue: returnValue,

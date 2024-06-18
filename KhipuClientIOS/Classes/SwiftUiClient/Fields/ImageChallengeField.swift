@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct KhipuImageChallengeField: View {
+struct ImageChallengeField: View {
     var formItem: FormItem
     var hasNextField: Bool
     var isValid: (Bool) -> Void
@@ -108,7 +108,7 @@ struct KhipuImageChallengeField: View {
 }
 
 @available(iOS 15.0, *)
-struct KhipuImageChallengeField_Previews: PreviewProvider {
+struct ImageChallengeField_Previews: PreviewProvider {
     static var previews: some View {
         let viewModel = KhipuViewModel()
         let isValid: (Bool) -> Void = { param in }
@@ -130,7 +130,7 @@ struct KhipuImageChallengeField_Previews: PreviewProvider {
         )
         
         return VStack {
-            KhipuImageChallengeField(
+            ImageChallengeField(
                 formItem: formItem,
                 hasNextField: false,
                 isValid:  isValid,

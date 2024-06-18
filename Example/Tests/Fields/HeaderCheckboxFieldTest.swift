@@ -30,7 +30,7 @@ final class HeaderCheckboxFieldTest: XCTestCase {
                  """
          )
 
-        var view = KhipuHeaderCheckboxField(
+        var view = HeaderCheckboxField(
             formItem: formItem,
             hasNextField: false,
             isValid:  isValid,

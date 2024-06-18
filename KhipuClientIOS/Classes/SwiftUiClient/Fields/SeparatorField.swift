@@ -2,7 +2,7 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 13.0, *)
-struct KhipuSeparatorField: View {
+struct SeparatorField: View {
     var formItem: FormItem
     var hasNextField: Bool
     var isValid: (Bool) -> Void
@@ -44,12 +44,12 @@ struct KhipuSeparatorField_Previews: PreviewProvider {
         )
         return VStack {
             Text("Separator with color:")
-            KhipuSeparatorField(formItem: formItem1, hasNextField: false, isValid: isValid, returnValue: returnValue)
+            SeparatorField(formItem: formItem1, hasNextField: false, isValid: isValid, returnValue: returnValue)
                 .environmentObject(ThemeManager())
                 .previewLayout(.sizeThatFits)
                 .padding()
             Text("Separator with no color specified:")
-            KhipuSeparatorField(formItem: formItem2, hasNextField: false, isValid: isValid, returnValue: returnValue)
+            SeparatorField(formItem: formItem2, hasNextField: false, isValid: isValid, returnValue: returnValue)
                 .environmentObject(ThemeManager())
                 .previewLayout(.sizeThatFits)
                 .padding()
