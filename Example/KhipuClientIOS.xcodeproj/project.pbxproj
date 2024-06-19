@@ -12,6 +12,7 @@
 		154872C52C20A40600038189 /* KhipuLabelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154872C42C20A40600038189 /* KhipuLabelTest.swift */; };
 		154872C72C20A7F400038189 /* HintLabelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154872C62C20A7F400038189 /* HintLabelTest.swift */; };
 		1583B0282C236AE600B5B9C7 /* FormErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1583B0272C236AE600B5B9C7 /* FormErrorTest.swift */; };
+		1583B02A2C236FC600B5B9C7 /* OtpFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1583B0292C236FC600B5B9C7 /* OtpFieldTest.swift */; };
 		15E4F64C2C2097B4001DA7C9 /* CheckboxFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64B2C2097B4001DA7C9 /* CheckboxFieldTest.swift */; };
 		15E4F64E2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64D2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift */; };
 		15E4F6502C2097F7001DA7C9 /* SwitchFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64F2C2097F7001DA7C9 /* SwitchFieldTest.swift */; };
@@ -88,6 +89,7 @@
 		154872C42C20A40600038189 /* KhipuLabelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KhipuLabelTest.swift; sourceTree = "<group>"; };
 		154872C62C20A7F400038189 /* HintLabelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintLabelTest.swift; sourceTree = "<group>"; };
 		1583B0272C236AE600B5B9C7 /* FormErrorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormErrorTest.swift; sourceTree = "<group>"; };
+		1583B0292C236FC600B5B9C7 /* OtpFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpFieldTest.swift; sourceTree = "<group>"; };
 		15E4F64B2C2097B4001DA7C9 /* CheckboxFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxFieldTest.swift; sourceTree = "<group>"; };
 		15E4F64D2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCheckboxFieldTest.swift; sourceTree = "<group>"; };
 		15E4F64F2C2097F7001DA7C9 /* SwitchFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchFieldTest.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 				154872C62C20A7F400038189 /* HintLabelTest.swift */,
 				1547EFCC2C20C00500229365 /* ListFieldTest.swift */,
 				1508CF382C231A4100DCE1FA /* CoordinatesFieldTest.swift */,
+				1583B0292C236FC600B5B9C7 /* OtpFieldTest.swift */,
 			);
 			path = Fields;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				26594A0C2C222E83002D094F /* FieldUpdaterTest.swift in Sources */,
 				26594A102C223171002D094F /* DeviceInfoTest.swift in Sources */,
 				4AD82D492C0253FD0065CC37 /* FailureMessageComponentTest.swift in Sources */,
+				1583B02A2C236FC600B5B9C7 /* OtpFieldTest.swift in Sources */,
 				15E4F6502C2097F7001DA7C9 /* SwitchFieldTest.swift in Sources */,
 				154872C52C20A40600038189 /* KhipuLabelTest.swift in Sources */,
 				4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTest.swift in Sources */,
