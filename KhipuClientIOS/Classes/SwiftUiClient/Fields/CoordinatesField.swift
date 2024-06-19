@@ -62,8 +62,10 @@ struct CoordinatesField: View {
     var body: some View {
         VStack {
             HStack(spacing: 16) {
+                var a = 0
                 ForEach(0..<3, id: \.self) { index in
-                    VStack(alignment: .center) {
+                    a = a + 1
+                    return VStack(alignment: .center) {
                         FieldLabel(text: formItem.labels?[index])
                         
                         CoordinateInputField(formItem: formItem,
@@ -77,9 +79,11 @@ struct CoordinatesField: View {
                             focusedIndex = index
                             focusedField = FieldUtils.getElement(FocusableField.self, at: focusedIndex)
                         }
-                        )
+                        ).accessibilityIdentifier("coordinateInput\(a)")
+                       
                         .focused($focusedField, equals: FieldUtils.getElement(FocusableField.self, at: index))
                     }
+                    .accessibilityIdentifier("coordinateItem\(a)")
                 }
             }
             HintLabel(text: formItem.hint)

@@ -29,7 +29,7 @@ struct ListField: View {
                             VStack {
                                 OptionLabel(image:option.image, text:option.name)
                                
-                                if let dataTable = option.dataTable, !dataTable.rows.isEmpty {
+                                if let dataTable = option.dataTable, FieldUtils.getMaxDataTableCells(dataTable) > 0 {
                                     DataTableCommon(dataTable: dataTable).accessibilityIdentifier("dataTable" )
                                 }
                             }
@@ -71,6 +71,43 @@ struct KhipuListField_Previews: PreviewProvider {
            
          """
         )
+        
+        return ListField(
+            formItem: formItem1,
+            isValid: isValid,
+            returnValue: returnValue,
+            submitFunction: submitFunction
+        )
+        .padding()
+        .environmentObject(ThemeManager())
+    }
+}
+
+
+
+@available(iOS 15.0, *)
+struct KhipuListFieldNoImage_Previews: PreviewProvider {
+    static var previews: some View {
+        let isValid: (Bool) -> Void = { param in }
+        let returnValue: (String) -> Void = { param in }
+        let submitFunction: () -> Void = {}
+        let formItem1 = try! FormItem(
+         """
+           {
+            "id": "item1",
+            "label": "Select an option",
+            "placeholder": "placeholder",
+            "type": "\(FormItemTypes.list.rawValue)",
+            "options":[
+                    { "name": "Option 1", "value": "1" },
+                    { "name": "Option 2", "value": "2" },
+                    { "name": "Option with datatable", "value": "3", "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}}
+            ]
+            }
+           
+         """
+        )
+        
         return ListField(
             formItem: formItem1,
             isValid: isValid,

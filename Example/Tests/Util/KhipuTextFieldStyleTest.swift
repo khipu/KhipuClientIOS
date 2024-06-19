@@ -8,7 +8,6 @@ final class KhipuTextFieldStyleTest: XCTestCase {
     func testKhipuTextFieldStyle() throws {
         let themeManager = ThemeManager()
         let view = ContentView().environmentObject(themeManager)
-        let inspectView = try view.inspect()
         let textFields = try view.inspect().findAll(ViewType.TextField.self)
         
         XCTAssertEqual(textFields.count, 2)

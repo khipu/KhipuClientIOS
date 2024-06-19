@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1508CF392C231A4100DCE1FA /* CoordinatesFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1508CF382C231A4100DCE1FA /* CoordinatesFieldTest.swift */; };
 		1547EFCD2C20C00500229365 /* ListFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1547EFCC2C20C00500229365 /* ListFieldTest.swift */; };
 		154872C52C20A40600038189 /* KhipuLabelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154872C42C20A40600038189 /* KhipuLabelTest.swift */; };
 		154872C72C20A7F400038189 /* HintLabelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 154872C62C20A7F400038189 /* HintLabelTest.swift */; };
@@ -81,6 +82,7 @@
 /* Begin PBXFileReference section */
 		02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		05E56BC0EA511A1210CC3A4E /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		1508CF382C231A4100DCE1FA /* CoordinatesFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatesFieldTest.swift; sourceTree = "<group>"; };
 		1547EFCC2C20C00500229365 /* ListFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListFieldTest.swift; sourceTree = "<group>"; };
 		154872C42C20A40600038189 /* KhipuLabelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KhipuLabelTest.swift; sourceTree = "<group>"; };
 		154872C62C20A7F400038189 /* HintLabelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintLabelTest.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				154872C42C20A40600038189 /* KhipuLabelTest.swift */,
 				154872C62C20A7F400038189 /* HintLabelTest.swift */,
 				1547EFCC2C20C00500229365 /* ListFieldTest.swift */,
+				1508CF382C231A4100DCE1FA /* CoordinatesFieldTest.swift */,
 			);
 			path = Fields;
 			sourceTree = "<group>";
@@ -539,6 +542,7 @@
 				15E4F64C2C2097B4001DA7C9 /* CheckboxFieldTest.swift in Sources */,
 				264E0D8B2C20E384001C1BB8 /* ValidationUtilTest.swift in Sources */,
 				C5DB1B062C08C6110061351A /* EndToEndEncryptionTest.swift in Sources */,
+				1508CF392C231A4100DCE1FA /* CoordinatesFieldTest.swift in Sources */,
 				26594A082C222093002D094F /* FieldUtilTest.swift in Sources */,
 				26594A0A2C222E2F002D094F /* ExecuteCodeTest.swift in Sources */,
 				BDD4455E2C04D68500098056 /* FormTitleTest.swift in Sources */,

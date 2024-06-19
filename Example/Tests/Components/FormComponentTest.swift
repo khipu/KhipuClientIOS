@@ -101,7 +101,6 @@ final class FormComponentTest: XCTestCase {
             viewModel: KhipuViewModel())
         .environmentObject(ThemeManager())
         
-
         let inspectView = try view.inspect()
         let inspectView2 = try view2.inspect()
         
