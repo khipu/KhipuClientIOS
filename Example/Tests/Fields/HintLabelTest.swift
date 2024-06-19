@@ -8,7 +8,7 @@ import KhenshinProtocol
 @available(iOS 15.0.0, *)
 final class HintLabelTest: XCTestCase {
     
-    func testSwitchFieldView_Fill() throws {
+    func testHintLabelView_Fill() throws {
         let view = HintLabel(text: "Some stuff")
         
         let instected = try view.environmentObject(ThemeManager()).inspect()
@@ -17,7 +17,7 @@ final class HintLabelTest: XCTestCase {
         XCTAssertEqual(text, "Some stuff")
     }
     
-    func testSwitchFieldView_Empty() throws {
+    func testHintLabelView_Empty() throws {
         let view = HintLabel()
         
         let instected = try view.environmentObject(ThemeManager()).inspect()
