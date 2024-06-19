@@ -50,11 +50,11 @@ final class FormComponentTest: XCTestCase {
         
         let inspectView = try view.inspect()
         let titles = inspectView.findAll(FormTitle.self)
-        let texts = inspectView.findAll(KhipuTextField.self)
+        let texts = inspectView.findAll(SimpleTextField.self)
         
         XCTAssertEqual(titles.count, 1)
         XCTAssertEqual(texts.count, 2)
-        XCTAssertThrowsError(try inspectView.find(KhipuDataTableField.self))
+        XCTAssertThrowsError(try inspectView.find(DataTableField.self))
     }
     
     func testDrawComponentReturnsExpectedComponent() throws {
@@ -105,10 +105,10 @@ final class FormComponentTest: XCTestCase {
         let inspectView = try view.inspect()
         let inspectView2 = try view2.inspect()
         
-        XCTAssertNoThrow(try inspectView.find(KhipuDataTableField.self))
-        XCTAssertThrowsError(try inspectView.find(KhipuOtpField.self))
+        XCTAssertNoThrow(try inspectView.find(DataTableField.self))
+        XCTAssertThrowsError(try inspectView.find(OtpField.self))
         
-        XCTAssertNoThrow(try inspectView2.find(KhipuOtpField.self))
-        XCTAssertThrowsError(try inspectView2.find(KhipuDataTableField.self))
+        XCTAssertNoThrow(try inspectView2.find(OtpField.self))
+        XCTAssertThrowsError(try inspectView2.find(DataTableField.self))
     }
 }
