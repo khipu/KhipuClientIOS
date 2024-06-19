@@ -24,10 +24,10 @@ public struct FormComponent: View {
     public var body: some View {
         VStack {
             FormTitle(text: formRequest.title!)
-            if(!viewModel.uiState.bank.isEmpty) {
+            if !viewModel.uiState.bank.isEmpty {
                 FormPill(text: viewModel.uiState.bank)
             }
-            if(formRequest.info != nil && !formRequest.info!.isEmpty) {
+            if formRequest.info != nil && !formRequest.info!.isEmpty {
                 FormInfo(text: formRequest.info!)
             }
             ForEach(formRequest.items.indices, id: \.self) { index in
@@ -39,15 +39,18 @@ public struct FormComponent: View {
                     viewModel: viewModel
                 )
             }
+            
+            FormError(text: formRequest.errorMessage)
+            
             RememberValues(
                 formRequest: formRequest,
                 viewModel: viewModel)
             
-            if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
+            if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
                 TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
             }
 
-            if(getShouldShowContinueButton(formRequest: formRequest)) {
+            if getShouldShowContinueButton(formRequest: formRequest) {
                 MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                            enabled: validForm(),
                            onClick: {
@@ -72,11 +75,10 @@ public struct FormComponent: View {
     }
     
     private func getMainButtonText(formRequest: FormRequest, khipuUiState: KhipuUiState) -> String {
-        if formRequest.continueLabel == nil || formRequest.continueLabel?.isEmpty ?? true {
-            return khipuUiState.translator.t("default.continue.label")
-        } else {
+        if !(formRequest.continueLabel?.isEmpty ?? true) {
             return formRequest.continueLabel ?? ""
         }
+        return khipuUiState.translator.t("default.continue.label")
     }
     
     private func validForm() -> Bool {
@@ -130,7 +132,7 @@ private struct RememberValues: View {
     @AppStorage("storedBankCredentials") private var storedBankForms: String = ""
     
     public var body: some View {
-        if(formRequest.rememberValues ?? false) {
+        if formRequest.rememberValues ?? false {
             HStack{
                 Toggle(isOn: $storedForm) {
                     Text("Recordar credenciales")
@@ -297,7 +299,7 @@ public struct FormComponent_Previews: PreviewProvider {
         let request = FormRequest(
             alternativeAction: nil,
             continueLabel: "Continue",
-            errorMessage: "error message",
+            errorMessage: "There are some errors",
             id: "id",
             info: "This is an info alert",
             items: [formItem1, formItem2],
