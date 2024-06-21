@@ -11,10 +11,23 @@ import SwiftUI
 import KhenshinProtocol
 import LocalAuthentication
 
+@available(iOS 13.0, *)
+class AlertManager: ObservableObject {
+    @Published var showAlert = false
+    func displayAlert() {
+        showAlert = true
+    }
+
+    func dismissAlert() {
+        showAlert = false
+    }
+}
 
 @available(iOS 15.0.0, *)
 public struct FormComponent: View {
     
+    @StateObject private var alertManager = AlertManager()
+    @State var countDown: Int = 300
     @State private var submittedForm: Bool = false
     @State private var formValues: [String: String] = [:]
     public var formRequest: FormRequest
@@ -22,54 +35,86 @@ public struct FormComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     public var body: some View {
-        VStack {
-            FormTitle(text: formRequest.title!)
-            if !viewModel.uiState.bank.isEmpty {
-                FormPill(text: viewModel.uiState.bank)
-            }
-            if formRequest.info != nil && !formRequest.info!.isEmpty {
-                FormInfo(text: formRequest.info!)
-            }
-            ForEach(formRequest.items.indices, id: \.self) { index in
-                DrawComponent(
-                    item: formRequest.items[index],
-                    hasNextField: index < formRequest.items.count - 1,
-                    formValues: $formValues,
-                    submitFunction: submitForm,
-                    viewModel: viewModel
-                )
-            }
+        ZStack {
+            VStack {
+                FormTitle(text: formRequest.title!)
+                if !viewModel.uiState.bank.isEmpty {
+                    FormPill(text: viewModel.uiState.bank)
+                }
+                if formRequest.info != nil && !formRequest.info!.isEmpty {
+                    FormInfo(text: formRequest.info!)
+                }
+                ForEach(formRequest.items.indices, id: \.self) { index in
+                    DrawComponent(
+                        item: formRequest.items[index],
+                        hasNextField: index < formRequest.items.count - 1,
+                        formValues: $formValues,
+                        submitFunction: submitForm,
+                        viewModel: viewModel
+                    )
+                }
             
-            FormError(text: formRequest.errorMessage)
-            
-            RememberValues(
-                formRequest: formRequest,
-                viewModel: viewModel)
-            
-            if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
-                TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
-            }
-            
-            if getShouldShowContinueButton(formRequest: formRequest) {
-                MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
-                           enabled: validForm(),
-                           onClick: {
-                    submittedForm = true
-                    submitForm()
-                },
-                           foregroundColor: themeManager.selectedTheme.colors.onPrimary,
-                           backgroundColor: themeManager.selectedTheme.colors.primary
-                )
-            }
-        }
-        .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
-        .onAppear {
-            if let progress = viewModel.uiState.currentForm!.progress,
-               let current = progress.current,
-               let total = progress.total {
+                FormError(text: formRequest.errorMessage)
                 
-                let currentProgress = Float(current) / Float(total)
-                viewModel.setCurrentProgress(currentProgress: currentProgress)
+                RememberValues(
+                    formRequest: formRequest,
+                    viewModel: viewModel)
+                
+                if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
+                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
+                }
+            
+                if getShouldShowContinueButton(formRequest: formRequest) {
+                    MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
+                            enabled: validForm(),
+                            onClick: {
+                        submittedForm = true
+                        submitForm()
+                    },
+                            foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                            backgroundColor: themeManager.selectedTheme.colors.primary
+                    )
+                }
+            }
+            .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
+            .onAppear {
+            startTimer()
+                if let progress = viewModel.uiState.currentForm!.progress,
+                let current = progress.current,
+                let total = progress.total {
+
+                    
+                    if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
+                        TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
+                    }
+                    
+                    if(getShouldShowContinueButton(formRequest: formRequest)) {
+                        MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
+                            enabled: validForm(),
+                            onClick: {
+                                submittedForm = true
+                                submitForm()
+                            },
+                            foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                            backgroundColor: themeManager.selectedTheme.colors.primary
+                        )
+                    }
+                }
+            }
+            
+            InactivityModal(isPresented: $alertManager.showAlert, onDismiss: {}, viewModel: viewModel)
+        }
+    }
+    
+    
+    func startTimer() {
+        if formRequest.timeout != nil {
+            countDown = formRequest.timeout!
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
+                countDown -= 1
+                if countDown == 60 {
+                    alertManager.showAlert = true
+                }
             }
         }
     }
@@ -308,6 +353,12 @@ public struct FormComponent_Previews: PreviewProvider {
         )
         let viewModel = KhipuViewModel()
         viewModel.uiState = KhipuUiState(currentForm: request)
+        viewModel.uiState.translator = KhipuTranslator(translations: [
+            "page.are.you.there.title": "¿Sigues ahí?",
+            "page.are.you.there.continue.operation": "Continua con tu pago,",
+            "page.are.you.there.session.about.to.end": "¡La sesión está a punto de cerrarse!",
+            "page.are.you.there.continue.button": "Continuar pago",
+        ])
         return FormComponent(
             formRequest: request,
             viewModel: viewModel
