@@ -1,7 +1,22 @@
 import KhenshinProtocol
+import Foundation
+import SwiftUI
 
 class FieldUtils {
-
+ 
+    static func loadImageFromBase64(_ imageData: String?) -> UIImage {
+        var data = imageData ?? ""
+        if let commaIndex = data.firstIndex(of: ",") {
+            let startIndex = data.index(after: commaIndex)
+            data = String(data[startIndex...])
+        }
+        if let data = Data(base64Encoded: data),
+           let uiImage = UIImage(data: data) {
+          return uiImage
+        }
+        return UIImage()
+    }
+    
     static func isEmpty(_ string: String?) -> Bool {
         return string?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true
     }
@@ -91,7 +106,6 @@ class FieldUtils {
 
     }
 
-    
     static func getElement<N: RawRepresentable & CaseIterable>(_ type: N.Type, at index: Int) -> N? where N.AllCases: RandomAccessCollection {
         let allCases = type.allCases
         guard index >= 0 && index < allCases.count else { return nil }

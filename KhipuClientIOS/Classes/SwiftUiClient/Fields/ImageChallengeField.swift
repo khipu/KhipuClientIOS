@@ -14,22 +14,18 @@ struct ImageChallengeField: View {
     @State var lastModificationTime: TimeInterval = 0
     @EnvironmentObject private var themeManager: ThemeManager
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
-    
-    
     @State private var image: UIImage? = nil
-    
-    
+     
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
             FieldLabel(text: formItem.label)
             
-            VStack {
-                if let uiImage = image {
-                    Image(uiImage: uiImage)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 200, height: 200)
-                }
+            VStack {              
+             Image(uiImage:  FieldUtils.loadImageFromBase64(formItem.imageData))
+                .resizable()
+                .scaledToFit()
+                .frame(width: 200, height: 200)
+                
             }
             .frame(maxWidth: .infinity, alignment: .center)
             
@@ -50,23 +46,6 @@ struct ImageChallengeField: View {
             }
         }
         .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
-        .onAppear {
-            loadImageFromBase64()
-        }
-    }
-    
-    private func loadImageFromBase64() {
-        var data = formItem.imageData ?? ""
-        if let commaIndex = data.firstIndex(of: ",") {
-            let startIndex = data.index(after: commaIndex)
-            data = String(data[startIndex...])
-        }
-        if let data = Data(base64Encoded: data),
-           let uiImage = UIImage(data: data) {
-            self.image = uiImage
-        } else {
-            print("Failed to decode Base64 string")
-        }
     }
     
     func shouldDisplayError() -> Bool {
