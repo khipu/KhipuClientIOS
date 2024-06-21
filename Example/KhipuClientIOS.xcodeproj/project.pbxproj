@@ -30,6 +30,10 @@
 		26594A0E2C222F52002D094F /* DimensTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A0D2C222F52002D094F /* DimensTest.swift */; };
 		26594A102C223171002D094F /* DeviceInfoTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A0F2C223171002D094F /* DeviceInfoTest.swift */; };
 		26594A122C223493002D094F /* CredentialsStorageUtilTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A112C223493002D094F /* CredentialsStorageUtilTest.swift */; };
+		26594A352C26181A002D094F /* SVGImageRendererTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A342C261819002D094F /* SVGImageRendererTest.swift */; };
+		26594A372C261E33002D094F /* SVGImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A362C261E33002D094F /* SVGImageTest.swift */; };
+		26594A3A2C2623C0002D094F /* ModalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A392C2623C0002D094F /* ModalTest.swift */; };
+		26594A3C2C2623D1002D094F /* InactivityModalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A3B2C2623D1002D094F /* InactivityModalTest.swift */; };
 		4AD82D472C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */; };
 		4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTest.swift */; };
 		4AD82D492C0253FD0065CC37 /* FailureMessageComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D432C0253FD0065CC37 /* FailureMessageComponentTest.swift */; };
@@ -103,6 +107,10 @@
 		26594A0D2C222F52002D094F /* DimensTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DimensTest.swift; sourceTree = "<group>"; };
 		26594A0F2C223171002D094F /* DeviceInfoTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfoTest.swift; sourceTree = "<group>"; };
 		26594A112C223493002D094F /* CredentialsStorageUtilTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CredentialsStorageUtilTest.swift; sourceTree = "<group>"; };
+		26594A342C261819002D094F /* SVGImageRendererTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageRendererTest.swift; sourceTree = "<group>"; };
+		26594A362C261E33002D094F /* SVGImageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SVGImageTest.swift; sourceTree = "<group>"; };
+		26594A392C2623C0002D094F /* ModalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalTest.swift; sourceTree = "<group>"; };
+		26594A3B2C2623D1002D094F /* InactivityModalTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InactivityModalTest.swift; sourceTree = "<group>"; };
 		29506C8577AD33C3B29C428F /* Pods-KhipuClientIOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.release.xcconfig"; sourceTree = "<group>"; };
 		4AD82D412C0253FD0065CC37 /* AuthorizationRequestComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestComponentTest.swift; sourceTree = "<group>"; };
 		4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToClipboardComponentTest.swift; sourceTree = "<group>"; };
@@ -181,8 +189,18 @@
 				26594A032C21ED7D002D094F /* KhipuTranslatorTest.swift */,
 				26594A052C21EF3C002D094F /* KhipuTextFieldStyleTest.swift */,
 				26594A112C223493002D094F /* CredentialsStorageUtilTest.swift */,
+				26594A342C261819002D094F /* SVGImageRendererTest.swift */,
 			);
 			path = Util;
+			sourceTree = "<group>";
+		};
+		26594A382C26238D002D094F /* Modal */ = {
+			isa = PBXGroup;
+			children = (
+				26594A392C2623C0002D094F /* ModalTest.swift */,
+				26594A3B2C2623D1002D094F /* InactivityModalTest.swift */,
+			);
+			path = Modal;
 			sourceTree = "<group>";
 		};
 		4AD82D452C0253FD0065CC37 /* Components */ = {
@@ -209,6 +227,7 @@
 				BDAE5D832C0A153100B6DDD4 /* SuccessMessageComponentTest.swift */,
 				264E0D8E2C21C504001C1BB8 /* TimeoutMessageComponentTest.swift */,
 				264E0D8C2C21C486001C1BB8 /* WarningMessageComponentTest.swift */,
+				26594A362C261E33002D094F /* SVGImageTest.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -258,6 +277,7 @@
 		607FACE81AFB9204008FA782 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				26594A382C26238D002D094F /* Modal */,
 				264E0D852C20DB96001C1BB8 /* Util */,
 				15551B8B2C20944900B45348 /* Fields */,
 				4AD82D452C0253FD0065CC37 /* Components */,
@@ -535,12 +555,16 @@
 				BDD445602C04D89B00098056 /* FormWarningTest.swift in Sources */,
 				264E0D912C21C541001C1BB8 /* SkeletonHeaderComponentTest.swift in Sources */,
 				264E0D8D2C21C486001C1BB8 /* WarningMessageComponentTest.swift in Sources */,
+				26594A372C261E33002D094F /* SVGImageTest.swift in Sources */,
 				26594A062C21EF3C002D094F /* KhipuTextFieldStyleTest.swift in Sources */,
 				15E4F64C2C2097B4001DA7C9 /* CheckboxFieldTest.swift in Sources */,
+				26594A352C26181A002D094F /* SVGImageRendererTest.swift in Sources */,
 				264E0D8B2C20E384001C1BB8 /* ValidationUtilTest.swift in Sources */,
 				C5DB1B062C08C6110061351A /* EndToEndEncryptionTest.swift in Sources */,
+				26594A3A2C2623C0002D094F /* ModalTest.swift in Sources */,
 				26594A082C222093002D094F /* FieldUtilTest.swift in Sources */,
 				26594A0A2C222E2F002D094F /* ExecuteCodeTest.swift in Sources */,
+				26594A3C2C2623D1002D094F /* InactivityModalTest.swift in Sources */,
 				BDD4455E2C04D68500098056 /* FormTitleTest.swift in Sources */,
 				26594A002C21D7F8002D094F /* FormComponentTest.swift in Sources */,
 				264E0D952C21C5C9001C1BB8 /* MustContinueComponentTest.swift in Sources */,
