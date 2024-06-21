@@ -29,7 +29,7 @@ struct RutField: View {
                 }
                 .customKeyboard(.rutKeyboard)
                 .onAppear {
-                    if(viewModel.uiState.currentForm?.rememberValues ?? false) {
+                    if viewModel.uiState.currentForm?.rememberValues ?? false {
                         rutValue = viewModel.uiState.storedUsername
                     }  
                 }
@@ -57,62 +57,12 @@ struct RutField: View {
     
     private func onChange(newValue: String) {
         rutValue = newValue
-        error = validateRutField(value: newValue, formItem: formItem)
+        error = ValidationUtils.validateRut(newValue, viewModel.uiState.translator)
         isValid(error.isEmpty)
         returnValue(newValue)
         lastModificationTime = Date().timeIntervalSince1970
     }
-    
-    private func validateRutField(value: String, formItem: FormItem) -> String {
-        if value.isEmpty {
-            return viewModel.uiState.translator.t("form.validation.error.rut.nullable")
-        }
-        if (!ValidationUtils.isValidRut(value)){
-            return viewModel.uiState.translator.t("form.validation.error.rut.invalid")
-        }
-        return ""
-    }
 }
-
-
-@available(iOS 15.0, *)
-extension CustomKeyboard {
-    static var rutKeyboard: CustomKeyboard {
-        CustomKeyboardBuilder { textDocumentProxy, submit, playSystemFeedback in
-            HStack {
-                VStack {
-                    LabeledButton(text: "1", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    LabeledButton(text: "4", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    LabeledButton(text: "7", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    LabeledButton(text: "K", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                VStack {
-                    LabeledButton(text: "2", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    LabeledButton(text: "5", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    LabeledButton(text: "8", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    LabeledButton(text: "0", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                VStack {
-                    LabeledButton(text: "3", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    LabeledButton(text: "6", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    LabeledButton(text: "9", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    ImageButton(imageName: "delete.left", textDocumentProxy: textDocumentProxy, playSystemFeedback: playSystemFeedback)
-                    
-                }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-            }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding(.all, 6)
-            .padding(.bottom, 36)
-        }
-            
-        
-    }
-}
-
 
 @available(iOS 15.0.0, *)
 struct LabeledButton: View {
