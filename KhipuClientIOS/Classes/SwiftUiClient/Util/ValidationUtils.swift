@@ -1,6 +1,12 @@
 import Foundation
+import KhenshinProtocol
 
 class ValidationUtils {
+
+    enum NumberFormatError: Error {
+        case invalidNumber
+    }
+    
     static let decimalNumberRegex = "^-?\\d+(\\.\\d*)?$"
     static let numberRegex = "^-?\\d+$"
     
@@ -58,13 +64,55 @@ class ValidationUtils {
         return numberPredicate.evaluate(with: string)
     }
     
-    static func valiateCheckRequiredState(_ isChecked: Bool, _ requiredState: String?, _ translator: KhipuTranslator) -> String {
+    static func validateCheckRequiredState(_ isChecked: Bool, _ requiredState: String?, _ translator: KhipuTranslator) -> String {
         if requiredState == "on" && !isChecked {
             return translator.t("form.validation.error.switch.accept.required")
         }
-
+        
         if requiredState == "off" && isChecked {
             return translator.t("form.validation.error.switch.decline.required")
+        }
+        return ""
+    }
+    
+    static func validateTextField(_ value: String, _ formItem: FormItem, _ translator: KhipuTranslator) -> String {
+        if value.isEmpty {
+            return translator.t("form.validation.error.default.empty")
+        }
+        if !ValidationUtils.validMinLength(value, minLength: formItem.minLength) {
+            let minLengthString = formItem.minLength.map { String(Int($0)) } ?? "nil"
+            return translator.t("form.validation.error.default.minLength.not.met").replacingOccurrences(of: "{{min}}", with: minLengthString)
+        }
+        if !ValidationUtils.validMaxLength(value, maxLength: formItem.maxLength) {
+            let maxLengthString = formItem.maxLength.map { String(Int($0)) } ?? "nil"
+            return translator.t("form.validation.error.default.maxLength.exceeded").replacingOccurrences(of: "{{max}}", with: maxLengthString)
+        }
+        
+        if formItem.email == true && !ValidationUtils.isValidEmail(value) {
+            return translator.t("form.validation.error.default.email.invalid")
+        }
+        
+        if !FieldUtils.isEmpty(formItem.pattern) && !FieldUtils.matches(value, regex: formItem.pattern!) {
+            return translator.t("form.validation.error.default.pattern.invalid")
+        }
+        
+        if formItem.number == true {
+            do {
+                guard let number = Double(value) else {
+                    throw NumberFormatError.invalidNumber
+                }
+                
+                if !ValidationUtils.validMinValue(number, minValue: formItem.minValue) {
+                    let minValue = formItem.minValue.map { String(Int($0)) } ?? "nil"
+                    return translator.t("form.validation.error.default.minValue.not.met").replacingOccurrences(of: "{{min}}", with: minValue)
+                }
+                if !ValidationUtils.validMaxValue(number, maxValue: formItem.maxValue) {
+                    let maxValue = formItem.maxValue.map { String(Int($0)) } ?? "nil"
+                    return translator.t("form.validation.error.default.maxValue.exceeded").replacingOccurrences(of: "{{max}}", with: maxValue)
+                }
+            } catch {
+                return translator.t("form.validation.error.default.number.invalid")
+            }
         }
         return ""
     }
