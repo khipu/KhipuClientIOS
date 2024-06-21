@@ -116,4 +116,14 @@ class ValidationUtils {
         }
         return ""
     }
+    
+    static func validateRut(_ value: String, _ translator: KhipuTranslator) -> String {
+        if value.isEmpty {
+            return translator.t("form.validation.error.default.empty")
+        }
+        if (!ValidationUtils.isValidRut(value)){
+            return translator.t("form.validation.error.rut.invalid")
+        }
+        return ""
+    }
 }
