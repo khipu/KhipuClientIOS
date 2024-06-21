@@ -77,9 +77,8 @@ struct HeaderComponent: View {
 
     private var footerContent: some View {
         HStack {
-            Text(viewModel.uiState.translator.t("header.code.label", default: "").uppercased()+" • \(viewModel.uiState.operationInfo?.operationID ?? "")")
+            formattedCode()
                 .font(.caption)
-                .foregroundColor(Color.gray)
 
             Spacer()
 
@@ -90,6 +89,13 @@ struct HeaderComponent: View {
                     .bold()
             }
         }
+    }
+    private func formattedCode() -> Text {
+        var text = Text("")
+        text = text + Text(viewModel.uiState.translator.t("header.code.label", default: "").uppercased()).foregroundColor(Color.gray)
+        text = text + Text(" • \(viewModel.uiState.operationInfo?.operationID ?? "")").foregroundColor(Color.primary)
+
+        return text
     }
 }
 
