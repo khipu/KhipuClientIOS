@@ -8,13 +8,10 @@ final class MainButtonTest: XCTestCase {
     
     func testMainButtonRendersCorrectly() throws {
         let themeManager = ThemeManager()
-        var clicked = false
         let button = MainButton(
             text: "Click Me",
             enabled: true,
-            onClick: {
-                clicked = true
-            },
+            onClick: {},
             foregroundColor: .white,
             backgroundColor: .blue
         ).environmentObject(themeManager)

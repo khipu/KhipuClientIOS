@@ -50,6 +50,8 @@ final class ValidationUtilTest: XCTestCase {
         XCTAssertTrue(ValidationUtils.isValidRut("22222222-2"))
         XCTAssertTrue(ValidationUtils.isValidRut("77777777-7"))
         XCTAssertTrue(ValidationUtils.isValidRut("88.888.888-8"))
+        XCTAssertTrue(ValidationUtils.isValidRut("19.797.379-K"))
+        XCTAssertTrue(ValidationUtils.isValidRut("19.797.379-k"))
         
         XCTAssertFalse(ValidationUtils.isValidRut("99999999999999"))
         XCTAssertFalse(ValidationUtils.isValidRut("1-9"))
@@ -433,5 +435,11 @@ final class ValidationUtilTest: XCTestCase {
         assert(ValidationUtils.validateTextField("10", formItem, translator).isEmpty)
         assert(ValidationUtils.validateTextField("9", formItem, translator).isEmpty)
         
+    }
+    
+    func testValidateRut() {
+        XCTAssertEqual(ValidationUtils.validateRut("", translator), "campo obligatorio")
+        XCTAssertEqual(ValidationUtils.validateRut("23423", translator), "form.validation.error.rut.invalid")
+        XCTAssertEqual(ValidationUtils.validateRut("12.872.346-3", translator), "")
     }
 }
