@@ -49,7 +49,7 @@ public struct FormComponent: View {
             if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
                 TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
             }
-
+            
             if getShouldShowContinueButton(formRequest: formRequest) {
                 MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                            enabled: validForm(),
@@ -245,12 +245,7 @@ struct DrawComponent: View {
                 viewModel: viewModel
             )
         case FormItemTypes.separator:
-            SeparatorField(
-                formItem: item,
-                hasNextField: hasNextField,
-                isValid: validationFun,
-                returnValue: getValueFun
-            )
+            SeparatorField(formItem: item)
         case FormItemTypes.formItemTypesSWITCH:
             SwitchField(
                 formItem: item,
@@ -383,7 +378,7 @@ struct DrawComponent_Previews: PreviewProvider {
         let submitFunction: () -> Void = {}
         let getFunction: () -> [String: String] = { ["key":"value"]}
         let setFunction: ([String: String]) -> Void = { param in }
-                
+        
         return VStack {
             Text("DataTable:").underline().padding()
             DrawComponent(
