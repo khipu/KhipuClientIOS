@@ -1,7 +1,38 @@
 import XCTest
+import KhenshinProtocol
+
 @testable import KhipuClientIOS
 
+func randomString(_ length: Int) -> String {
+    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    return String((0..<length).map{ _ in letters.randomElement()! })
+}
+
+func randomNumeric(_ length: Int) -> String {
+    let numbers = "0123456789"
+    return String((0..<length).map{ _ in numbers.randomElement()! })
+}
+
+func randomAlphabetic(_ length: Int) -> String {
+    let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    return String((0..<length).map{ _ in letters.randomElement()! })
+}
+
 final class ValidationUtilTest: XCTestCase {
+    let translator = KhipuTranslator(
+        translations: [
+            "form.validation.error.default.empty": "value empty",
+            "form.validation.error.switch.accept.required": "must accept",
+            "form.validation.error.switch.decline.required": "must decline",
+            "form.validation.error.default.email.invalid": "invalid email",
+            "form.validation.error.default.pattern.invalid": "invalid pattern",
+            "form.validation.error.default.number.invalid": "invalid number",
+            "form.validation.error.default.minValue.not.met": "min value not met",
+            "form.validation.error.default.maxValue.exceeded": "max value exceeded",
+            "form.validation.error.default.minLength.not.met": "min length not met",
+            "form.validation.error.default.maxLength.exceeded": "max length exceeded"
+        ])
+    
     func testValidEmail() throws {
         XCTAssertTrue(ValidationUtils.isValidEmail("khipu@khipu.com"))
         XCTAssertTrue(ValidationUtils.isValidEmail("prueba@khipu.cl"))
@@ -74,9 +105,333 @@ final class ValidationUtilTest: XCTestCase {
                 "form.validation.error.switch.accept.required": "Debe aceptar",
                 "form.validation.error.switch.decline.required": "Debe declinar"
             ])
-        XCTAssertEqual(ValidationUtils.valiateCheckRequiredState(true, "on", translator), "")
-        XCTAssertEqual(ValidationUtils.valiateCheckRequiredState(false, "off", translator), "")
-        XCTAssertEqual(ValidationUtils.valiateCheckRequiredState(true, "off", translator), "Debe declinar")
-        XCTAssertEqual(ValidationUtils.valiateCheckRequiredState(false, "on", translator), "Debe aceptar")
+        XCTAssertEqual(ValidationUtils.validateCheckRequiredState(true, "on", translator), "")
+        XCTAssertEqual(ValidationUtils.validateCheckRequiredState(false, "off", translator), "")
+        XCTAssertEqual(ValidationUtils.validateCheckRequiredState(true, "off", translator), "Debe declinar")
+        XCTAssertEqual(ValidationUtils.validateCheckRequiredState(false, "on", translator), "Debe aceptar")
+    }
+    
+    func testValidateTextField_validateEmpty() {
+        let formItem = try! FormItem(
+                 """
+                     {
+                       "id": "Some text",
+                       "type": "\(FormItemTypes.text.rawValue)"
+                     }
+                 """
+        )
+        
+        let error = ValidationUtils.validateTextField("", formItem, translator)
+        XCTAssertEqual(error, "value empty")
+    }
+    
+    func testValidateTextField_validateMinLength() {
+        let formItem = try! FormItem(
+                            """
+                                {
+                                  "id": "Some text",
+                                  "type": "\(FormItemTypes.text.rawValue)",
+                                   "minLength": 10
+                                }
+                            """
+        )
+        
+        let error = ValidationUtils.validateTextField(randomAlphabetic(9), formItem, translator)
+        XCTAssertEqual(error, "min length not met")
+    }
+    
+    func testValidateTextField_validateMinLengthZero() {
+        let formItem = try! FormItem(
+                    """
+                        {
+                          "id": "Some text",
+                          "type": "\(FormItemTypes.text.rawValue)",
+                           "minLength": 0
+                        }
+                    """
+        )
+        
+        let error = ValidationUtils.validateTextField(randomAlphabetic(9), formItem, translator        )
+        XCTAssertTrue(error.isEmpty)
+    }
+    
+    func testValidateTextField_validMinLength() {
+        let formItem = try! FormItem(
+                      """
+                          {
+                            "id": "Some text",
+                            "type": "\(FormItemTypes.text.rawValue)",
+                             "minLength": 10
+                          }
+                      """
+        )
+        
+        XCTAssertTrue(
+            ValidationUtils.validateTextField(
+                randomAlphabetic(10), formItem, translator
+            ).isEmpty
+        )
+        XCTAssertTrue(
+            ValidationUtils.validateTextField(
+                randomAlphabetic(11), formItem, translator
+            ).isEmpty
+        )
+    }
+    
+    func testValidateTextField_validateMaxLength() {
+        let formItem = try! FormItem(
+             """
+                 {
+                   "id": "Some text",
+                   "type": "\(FormItemTypes.text.rawValue)",
+                    "maxLength": 10
+                 }
+             """
+        )
+        
+        let error = ValidationUtils.validateTextField(
+            randomAlphabetic(11), formItem, translator
+        )
+        XCTAssertEqual(error, "max length exceeded")
+    }
+    
+    func testValidateTextField_validateMaxLengthZero() {
+        let formItem = try! FormItem(
+              """
+                  {
+                    "id": "Some text",
+                    "type": "\(FormItemTypes.text.rawValue)",
+                     "maxLength": 0
+                  }
+              """
+        )
+        
+        let error = ValidationUtils.validateTextField(
+            randomAlphabetic(11), formItem, translator
+        )
+        assert(error.isEmpty)
+    }
+    
+    func testValidateTextField_validMaxLength() {
+        let formItem = try! FormItem(
+              """
+                  {
+                    "id": "Some text",
+                    "type": "\(FormItemTypes.text.rawValue)",
+                     "maxLength": 10
+                  }
+              """
+        )
+        
+        assert(ValidationUtils.validateTextField(randomAlphabetic(10), formItem, translator ).isEmpty)
+        
+        assert( ValidationUtils.validateTextField( randomAlphabetic(9), formItem, translator).isEmpty)
+        
+    }
+    
+    func testValidateTextField_notEmailInvalidEmail() {
+        let formItem = try! FormItem(
+              """
+                  {
+                    "id": "Some text",
+                    "type": "\(FormItemTypes.text.rawValue)",
+                     "email": false
+                  }
+              """
+        )
+        
+        let error = ValidationUtils.validateTextField( randomAlphabetic(11), formItem, translator)
+        assert(error.isEmpty)
+    }
+    
+    func testValidateTextField_emailInvalidEmail() {
+        let formItem = try! FormItem(
+              """
+                  {
+                    "id": "Some text",
+                    "type": "\(FormItemTypes.text.rawValue)",
+                     "email": true
+                  }
+              """
+        )
+        
+        let error = ValidationUtils.validateTextField(randomAlphabetic(11), formItem, translator)
+        XCTAssertEqual(error, "invalid email")
+    }
+    
+    func testValidateTextField_notPatternAndInvalid() {
+        let formItem = try! FormItem(
+               """
+                   {
+                     "id": "Some text",
+                     "type": "\(FormItemTypes.text.rawValue)"
+                   }
+               """
+        )
+        
+        let error = ValidationUtils.validateTextField( randomAlphabetic(10), formItem, translator)
+        assert(error.isEmpty)
+    }
+    
+    func testValidateTextField_patternAndInvalid() {
+        let formItem = try! FormItem(
+            """
+                 {
+                   "id": "Some text",
+                   "type": "\(FormItemTypes.text.rawValue)",
+                    "pattern": "^A.*B$"
+                 }
+            """
+        )
+        
+        let error = ValidationUtils.validateTextField("abc", formItem, translator)
+        XCTAssertEqual(error, "invalid pattern")
+    }
+    
+    func testValidateTextField_patternAndValid() {
+        let formItem = try! FormItem(
+              """
+                  {
+                    "id": "Some text",
+                    "type": "\(FormItemTypes.text.rawValue)",
+                     "pattern": "^A.*B$"
+                  }
+              """
+        )
+        
+        let error = ValidationUtils.validateTextField("AxyzB", formItem, translator)
+        XCTAssertTrue(error.isEmpty)
+    }
+    
+    func testValidateTextField_stringNotNumber() {
+        let formItem = try! FormItem(
+              """
+                  {
+                    "id": "Some text",
+                    "type": "\(FormItemTypes.text.rawValue)",
+                     "number": false
+                  }
+              """
+        )
+        
+        let error = ValidationUtils.validateTextField("ABC", formItem, translator)
+        XCTAssertTrue(error.isEmpty)
+    }
+    
+    func testValidateTextField_stringInvalidNumber() {
+        let formItem = try! FormItem(
+              """
+                  {
+                    "id": "Some text",
+                    "type": "\(FormItemTypes.text.rawValue)",
+                     "number": true
+                  }
+              """
+        )
+        
+        let error = ValidationUtils.validateTextField("ABC", formItem, translator)
+        XCTAssertEqual(error, "invalid number")
+    }
+    
+    func testValidateTextField_validateMinValue() {
+        let formItem = try! FormItem(
+               """
+                   {
+                     "id": "Some text",
+                     "type": "\(FormItemTypes.text.rawValue)",
+                     "number": true,
+                      "minValue": 20
+                   }
+               """
+        )
+        
+        let error = ValidationUtils.validateTextField("9", formItem, translator)
+        XCTAssertEqual(error, "min value not met")
+    }
+    
+    func testValidateTextField_validateMinValueZero() {
+        let formItem = try! FormItem(
+                """
+                      {
+                        "id": "Some text",
+                        "type": "\(FormItemTypes.text.rawValue)",
+                         "minValue": 0,
+                        "number": true
+                      }
+                """
+        )
+        
+        XCTAssert(ValidationUtils.validateTextField("11", formItem, translator).isEmpty)
+    }
+    
+    func testValidateTextField_validMinValue() {
+        let formItem = try! FormItem(
+              """
+                  {
+                    "id": "Some text",
+                    "type": "\(FormItemTypes.text.rawValue)",
+                     "minValue": 10,
+                    "number": true
+                  }
+              """
+        )
+        
+        XCTAssertTrue(
+            ValidationUtils.validateTextField(
+                "10", formItem, translator
+            ).isEmpty
+        )
+        XCTAssertTrue(
+            ValidationUtils.validateTextField(
+                "11", formItem, translator
+            ).isEmpty
+        )
+    }
+    
+    func testValidateTextField_validateMaxValue() {
+        let formItem = try! FormItem(
+               """
+                   {
+                     "id": "Some text",
+                     "type": "\(FormItemTypes.text.rawValue)",
+                      "maxValue": 10,
+                     "number": true
+                   }
+               """
+        )
+        
+        let error = ValidationUtils.validateTextField("11", formItem, translator)
+        XCTAssertEqual(error, "max value exceeded")
+    }
+    
+    func testValidateTextField_validateMaxValueZero() {
+        let formItem = try! FormItem(
+            """
+               {
+                 "id": "Some text",
+                 "type": "\(FormItemTypes.text.rawValue)",
+                  "maxValue": 0
+               }
+           """
+        )
+        
+        let error = ValidationUtils.validateTextField("11", formItem, translator)
+        assert(error.isEmpty)
+    }
+    
+    func testValidateTextField_validMaxValue() {
+        let formItem = try! FormItem(
+             """
+                 {
+                   "id": "Some text",
+                   "type": "\(FormItemTypes.text.rawValue)",
+                    "maxValue": 10
+                 }
+             """
+        )
+        
+        assert(ValidationUtils.validateTextField("10", formItem, translator).isEmpty)
+        assert(ValidationUtils.validateTextField("9", formItem, translator).isEmpty)
+        
     }
 }

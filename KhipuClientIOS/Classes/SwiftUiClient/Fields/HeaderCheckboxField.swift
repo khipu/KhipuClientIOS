@@ -83,7 +83,7 @@ struct HeaderCheckboxField: View {
     
     func onChange(newValue: Bool) {
         isChecked = newValue
-        error = ValidationUtils.valiateCheckRequiredState(isChecked,
+        error = ValidationUtils.validateCheckRequiredState(isChecked,
                                                           formItem.requiredState,
                                                           viewModel.uiState.translator)
         isValid(error.isEmpty)

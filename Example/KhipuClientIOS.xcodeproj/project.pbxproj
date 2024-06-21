@@ -14,6 +14,7 @@
 		1583B0282C236AE600B5B9C7 /* FormErrorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1583B0272C236AE600B5B9C7 /* FormErrorTest.swift */; };
 		1583B02A2C236FC600B5B9C7 /* OtpFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1583B0292C236FC600B5B9C7 /* OtpFieldTest.swift */; };
 		15E391622C23873B00EA396E /* SeparatorFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E391612C23873B00EA396E /* SeparatorFieldTest.swift */; };
+		15E3917C2C260AF600EA396E /* SimpleTextFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E3917B2C260AF600EA396E /* SimpleTextFieldTest.swift */; };
 		15E4F64C2C2097B4001DA7C9 /* CheckboxFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64B2C2097B4001DA7C9 /* CheckboxFieldTest.swift */; };
 		15E4F64E2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64D2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift */; };
 		15E4F6502C2097F7001DA7C9 /* SwitchFieldTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15E4F64F2C2097F7001DA7C9 /* SwitchFieldTest.swift */; };
@@ -92,6 +93,7 @@
 		1583B0272C236AE600B5B9C7 /* FormErrorTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormErrorTest.swift; sourceTree = "<group>"; };
 		1583B0292C236FC600B5B9C7 /* OtpFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtpFieldTest.swift; sourceTree = "<group>"; };
 		15E391612C23873B00EA396E /* SeparatorFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SeparatorFieldTest.swift; sourceTree = "<group>"; };
+		15E3917B2C260AF600EA396E /* SimpleTextFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTextFieldTest.swift; sourceTree = "<group>"; };
 		15E4F64B2C2097B4001DA7C9 /* CheckboxFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxFieldTest.swift; sourceTree = "<group>"; };
 		15E4F64D2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCheckboxFieldTest.swift; sourceTree = "<group>"; };
 		15E4F64F2C2097F7001DA7C9 /* SwitchFieldTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchFieldTest.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				1508CF382C231A4100DCE1FA /* CoordinatesFieldTest.swift */,
 				1583B0292C236FC600B5B9C7 /* OtpFieldTest.swift */,
 				15E391612C23873B00EA396E /* SeparatorFieldTest.swift */,
+				15E3917B2C260AF600EA396E /* SimpleTextFieldTest.swift */,
 			);
 			path = Fields;
 			sourceTree = "<group>";
@@ -553,6 +556,7 @@
 				26594A062C21EF3C002D094F /* KhipuTextFieldStyleTest.swift in Sources */,
 				15E4F64C2C2097B4001DA7C9 /* CheckboxFieldTest.swift in Sources */,
 				264E0D8B2C20E384001C1BB8 /* ValidationUtilTest.swift in Sources */,
+				15E3917C2C260AF600EA396E /* SimpleTextFieldTest.swift in Sources */,
 				C5DB1B062C08C6110061351A /* EndToEndEncryptionTest.swift in Sources */,
 				1508CF392C231A4100DCE1FA /* CoordinatesFieldTest.swift in Sources */,
 				26594A082C222093002D094F /* FieldUtilTest.swift in Sources */,
