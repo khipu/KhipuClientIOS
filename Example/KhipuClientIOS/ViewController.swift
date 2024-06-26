@@ -26,9 +26,9 @@ class ViewController: UIViewController {
 
                 
 
-        sampleTextField.text = "8tchz1i5gvgf"
-        sampleTextField.font = UIFont.systemFont(ofSize: 15)
-        sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        sampleTextField.text = "lwhallcputoj"
+        //sampleTextField.font = UIFont.systemFont(ofSize: 15)
+        //sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
         sampleTextField.keyboardType = UIKeyboardType.default
         sampleTextField.returnKeyType = UIReturnKeyType.done

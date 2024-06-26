@@ -8,7 +8,7 @@ struct FormTitle: View {
     var body: some View {
         HStack {
             Text(text)
-                .font(.title2)
+                .font(themeManager.selectedTheme.fonts.semiBold20)
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .multilineTextAlignment(.center)
         }

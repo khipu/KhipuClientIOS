@@ -9,10 +9,10 @@ struct FieldLabel: View {
         if !(text?.isEmpty ?? true) {
             VStack {
                 Text(text ?? "")
-                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                    .font(.subheadline)
+                    .font(themeManager.selectedTheme.fonts.regular14)
                     .accessibilityIdentifier("labelText")
-                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+                    .lineSpacing(themeManager.selectedTheme.dimens.medium)
+                    .padding(.bottom, themeManager.selectedTheme.dimens.extraSmall)
             }
         }
     }
