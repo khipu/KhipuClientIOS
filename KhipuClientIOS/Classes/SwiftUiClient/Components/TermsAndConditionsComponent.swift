@@ -16,9 +16,10 @@ struct TermsAndConditionsComponent: View {
         let link = LocalizedStringKey(stringLiteral: "\(components[0])[ \(components[1])](\(termsURL))")
         
         return VStack {
-                Spacer().frame(height: 16)
                 Text(link)
-                    .font(.system(size: 12))
+                .frame(maxWidth: .infinity, alignment: .topLeading)
+                .font(themeManager.selectedTheme.fonts.medium12)
+                .foregroundColor(Color(red: 0.51, green: 0.52, blue: 0.56))
                     .environment(\.openURL, OpenURLAction(handler: handleURL))
                     .sheet(isPresented: $showingWebView) {
                         VStack{
@@ -34,7 +35,6 @@ struct TermsAndConditionsComponent: View {
                             WebView(url: URL(string: termsURL)!)
                         }
                     }
-                Spacer().frame(height: 16)
             }
     }
     

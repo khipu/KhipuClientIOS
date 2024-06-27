@@ -9,20 +9,30 @@ struct MainButton: View {
     let backgroundColor: Color
     @EnvironmentObject private var themeManager: ThemeManager
     @State private var submitted = false
-    
+
     var body: some View {
-        Button(action: {
-            submitted = true
-            onClick()
-        }) {
-            Text(text)
-                .foregroundColor(enabled && !submitted ? foregroundColor : .secondary.opacity(0.3))
-                .padding()
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .background(enabled && !submitted ? backgroundColor : .gray.opacity(0.5))
-                .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
+        HStack(alignment: .center, spacing: 8) {
+
+            Button(action: {
+                submitted = true
+                onClick()
+            }) {
+                Text(text)
+                    .foregroundColor(enabled && !submitted ? foregroundColor :Color(red: 0.59, green: 0.59, blue: 0.65))
+                    .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
+                    .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .background(enabled && !submitted ? backgroundColor : Color(red: 0.95, green: 0.95, blue: 0.96))
+                    .font(themeManager.selectedTheme.fonts.medium18)
+            }
+            .disabled(!enabled && !submitted)
+
         }
-        .disabled(!enabled && !submitted)
+        .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
+        .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
+        .frame(maxWidth: .infinity, alignment: .center)
+        .background(enabled && !submitted ? backgroundColor : Color(red: 0.95, green: 0.95, blue: 0.96))
+        .cornerRadius(themeManager.selectedTheme.dimens.moderatelySmall)
     }
 }
 

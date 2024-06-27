@@ -17,6 +17,7 @@ struct iOSCheckboxToggleStyle: ToggleStyle {
                 Image(systemName: configuration.isOn ? "checkmark.square" : "square")
                 configuration.label
             }
+            .foregroundColor(.black)
         })
     }
 }

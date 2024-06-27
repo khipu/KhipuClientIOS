@@ -17,7 +17,6 @@ public class FontLoader {
         fontNames.forEach { fontName in
             if !isFontRegistered(fontName: fontName) {
                 guard let url = resourceBundle?.url(forResource: fontName, withExtension: "ttf") else {
-                    print("Failed to find font: \(fontName)")
                     return
                 }
                 let result = CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
@@ -26,8 +25,6 @@ public class FontLoader {
                 } else {
                     print("Successfully registered font: \(fontName)")
                 }
-            } else {
-                print("Font \(fontName) is already registered.")
             }
         }
     }

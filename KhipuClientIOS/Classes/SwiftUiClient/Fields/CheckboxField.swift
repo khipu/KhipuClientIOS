@@ -12,14 +12,20 @@ struct CheckboxField: View {
     @State var lastModificationTime: TimeInterval = 0
     @State var error: String = ""
     @State var isChecked: Bool = false
-    
+    @EnvironmentObject private var themeManager: ThemeManager
+
     internal var didAppear: ((Self) -> Void)?
 
+    
     var body: some View {
-        VStack(alignment: .leading, spacing:0) {
+        VStack(alignment: .leading, spacing:themeManager.selectedTheme.dimens.extraMedium) 
+        {
             HStack {
                 Toggle(isOn: $isChecked) {
-                    FieldLabel(text: formItem.label)
+                    Text("Recordar credenciales")
+                        .font(themeManager.selectedTheme.fonts.regular14)
+                        .foregroundColor(.black)
+                      .frame(width: 196, height: 17, alignment: .topLeading)
                 }
                 .accessibilityIdentifier("checkbox")
                 .onAppear {
@@ -30,11 +36,9 @@ struct CheckboxField: View {
                 .onChange(of: isChecked) { newValue in
                     onChange(newValue: newValue)
                 }
-                Spacer()
             }
-            .padding()
-            .frame(maxWidth: .infinity, alignment: .leading)
-            
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
             if shouldDisplayError() {
                 ErrorLabel(text: error)
             }
