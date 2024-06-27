@@ -18,11 +18,11 @@ struct MainButton: View {
                 onClick()
             }) {
                 Text(text)
-                    .foregroundColor(enabled && !submitted ? foregroundColor :Color(red: 0.59, green: 0.59, blue: 0.65))
+                    .foregroundColor(enabled && !submitted ? foregroundColor :themeManager.selectedTheme.colors.buttonForeground)
                     .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
                     .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
                     .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(enabled && !submitted ? backgroundColor : Color(red: 0.95, green: 0.95, blue: 0.96))
+                    .background(enabled && !submitted ? backgroundColor : themeManager.selectedTheme.colors.buttonBackground)
                     .font(themeManager.selectedTheme.fonts.medium18)
             }
             .disabled(!enabled && !submitted)
@@ -31,7 +31,7 @@ struct MainButton: View {
         .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
         .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
         .frame(maxWidth: .infinity, alignment: .center)
-        .background(enabled && !submitted ? backgroundColor : Color(red: 0.95, green: 0.95, blue: 0.96))
+        .background(enabled && !submitted ? backgroundColor :themeManager.selectedTheme.colors.buttonBackground)
         .cornerRadius(themeManager.selectedTheme.dimens.moderatelySmall)
     }
 }
@@ -42,14 +42,14 @@ struct MainButton_Previews: PreviewProvider {
         let onClick: () -> Void = {}
         return VStack {
             MainButton(
-                text: "Enabled buton",
+                text: "Ingresar",
                 enabled: true,
                 onClick: onClick,
                 foregroundColor: Color(hexString: "#FFFFFF")!,
                 backgroundColor: Color(hexString: "#8347AC")!
             )
             MainButton(
-                text: "Disabled buton",
+                text: "Ingresar buton",
                 enabled: false,
                 onClick: onClick,
                 foregroundColor: Color(hexString: "#FFFFFF")!,

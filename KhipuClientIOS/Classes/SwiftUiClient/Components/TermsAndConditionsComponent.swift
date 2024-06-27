@@ -35,7 +35,7 @@ struct TermsAndConditionsComponent: View {
                             WebView(url: URL(string: termsURL)!)
                         }
                     }
-            }
+        }.padding(.vertical, themeManager.selectedTheme.dimens.extraMedium)
     }
     
     func handleURL(_ url: URL) -> OpenURLAction.Result {

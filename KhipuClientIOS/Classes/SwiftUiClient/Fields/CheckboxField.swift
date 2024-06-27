@@ -13,7 +13,7 @@ struct CheckboxField: View {
     @State var error: String = ""
     @State var isChecked: Bool = false
     @EnvironmentObject private var themeManager: ThemeManager
-
+    let bundle = KhipuClientBundleHelper.podBundle
     internal var didAppear: ((Self) -> Void)?
 
     
@@ -24,7 +24,7 @@ struct CheckboxField: View {
                 Toggle(isOn: $isChecked) {
                     Text("Recordar credenciales")
                         .font(themeManager.selectedTheme.fonts.regular14)
-                        .foregroundColor(.black)
+                        .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                       .frame(width: 196, height: 17, alignment: .topLeading)
                 }
                 .accessibilityIdentifier("checkbox")
