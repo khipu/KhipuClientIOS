@@ -16,6 +16,9 @@ struct Fonts {
         }
     }
 
+    var regular10: Font {
+        customFont(name: "PublicSans-Regular", size: 10, weight: .regular)
+    }
     var regular12: Font {
         customFont(name: "PublicSans-Regular", size: 12, weight: .regular)
     }
@@ -27,6 +30,9 @@ struct Fonts {
     }
     var regular20: Font {
         customFont(name: "PublicSans-Regular", size: 20, weight: .regular)
+    }
+    var medium10: Font {
+        customFont(name: "PublicSans-Medium", size: 10, weight: .medium)
     }
     var medium12: Font {
         customFont(name: "PublicSans-Medium", size: 12, weight: .medium)
@@ -40,6 +46,9 @@ struct Fonts {
     var medium20: Font {
         customFont(name: "PublicSans-Medium", size: 20, weight: .medium)
     }
+    var semiBold10: Font {
+        customFont(name: "PublicSans-SemiBold", size: 10, weight: .semibold)
+    }
     var semiBold12: Font {
         customFont(name: "PublicSans-SemiBold", size: 12, weight: .semibold)
     }
@@ -51,6 +60,9 @@ struct Fonts {
     }
     var semiBold20: Font {
         customFont(name: "PublicSans-SemiBold", size: 20, weight: .semibold)
+    }
+    var bold10: Font {
+        customFont(name: "PublicSans-Bold", size: 10, weight: .bold)
     }
     var bold12: Font {
         customFont(name: "PublicSans-Bold", size: 12, weight: .bold)

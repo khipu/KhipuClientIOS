@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  khenshinClientIos
-//
-//  Created by mauriciocastillo on 02/19/2024.
-//  Copyright (c) 2024 mauriciocastillo. All rights reserved.
-//
-
 import UIKit
 import KhipuClientIOS
 
@@ -53,9 +45,9 @@ class ViewController: UIViewController {
             options: KhipuOptions.Builder()
                 .topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
                 .build()
-                ) { result in
-                    print("Operation result \(result.asJson())")
-                }
+        ) { result in
+            print("Operation result \(result.asJson())")
+        }
 
     }
 
