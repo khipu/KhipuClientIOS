@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 struct EndToEndEncryption: View {
     
     @EnvironmentObject private var themeManager: ThemeManager
@@ -27,7 +27,7 @@ struct EndToEndEncryption: View {
 }
 
 
-@available(iOS 14.0, *)
+@available(iOS 13.0, *)
 struct EndToEndEncryption_Previews: PreviewProvider {
     static var previews: some View {
         EndToEndEncryption(viewModel: KhipuViewModel())

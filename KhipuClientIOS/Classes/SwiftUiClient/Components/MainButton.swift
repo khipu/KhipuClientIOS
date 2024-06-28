@@ -42,14 +42,14 @@ struct MainButton_Previews: PreviewProvider {
         let onClick: () -> Void = {}
         return VStack {
             MainButton(
-                text: "Ingresar",
+                text: "Enabled buton",
                 enabled: true,
                 onClick: onClick,
                 foregroundColor: Color(hexString: "#FFFFFF")!,
                 backgroundColor: Color(hexString: "#8347AC")!
             )
             MainButton(
-                text: "Ingresar buton",
+                text: "Disabled buton",
                 enabled: false,
                 onClick: onClick,
                 foregroundColor: Color(hexString: "#FFFFFF")!,

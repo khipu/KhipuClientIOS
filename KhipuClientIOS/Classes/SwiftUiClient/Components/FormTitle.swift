@@ -22,7 +22,7 @@ struct FormTitle: View {
 @available(iOS 14.0, *)
 struct FormTitle_Previews: PreviewProvider {
     static var previews: some View {
-        FormTitle(text: "Ingresa un email para recibir tu comprobante de pago")
+        FormTitle(text: "Title")
             .environmentObject(ThemeManager())
     }
 }
