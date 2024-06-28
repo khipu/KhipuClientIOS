@@ -15,9 +15,9 @@ struct RutField: View {
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     
     var body: some View {
-              
+        
         VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
             TextField(formItem.placeHolder ?? "", text: $rutValue)
                 .textFieldStyle(KhipuTextFieldStyle())
                 .autocorrectionDisabled(true)
@@ -76,17 +76,17 @@ struct LabeledButton: View {
             textDocumentProxy.insertText(text)
             playSystemFeedback?()
         }
-        label: {
-            Text(text)
-                .font(.system(size: 24))
-                .padding(.all, 9)
-                .background(Color("buttonBackground", bundle: bundle))
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color("buttonBackground", bundle: bundle))
-        .foregroundColor(Color("buttonForeground", bundle: bundle))
-        .cornerRadius(6)
-        .shadow(radius: 0, y: 1)
+    label: {
+        Text(text)
+            .font(.system(size: 24))
+            .padding(.all, 9)
+            .background(Color("buttonBackground", bundle: bundle))
+    }
+    .frame(maxWidth: .infinity, maxHeight: .infinity)
+    .background(Color("buttonBackground", bundle: bundle))
+    .foregroundColor(Color("buttonForeground", bundle: bundle))
+    .cornerRadius(6)
+    .shadow(radius: 0, y: 1)
     }
 }
 

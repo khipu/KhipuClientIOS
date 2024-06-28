@@ -4,12 +4,13 @@ import KhenshinProtocol
 @available(iOS 15.0, *)
 struct OtpField: View {
     @State private var states: [String] = ["","","", "", "", ""]
-    
+    @EnvironmentObject private var themeManager: ThemeManager
+    @State private var focusedIndex: Int = 0
+    @FocusState private var focusedField: FocusableField?
+
     let formItem: FormItem
     let isValid: (Bool) -> Void
     let returnValue: (String) -> Void
-    
-    @EnvironmentObject private var themeManager: ThemeManager
     
     enum FocusableField: Int, CaseIterable {
         case coord1 = 0
@@ -20,13 +21,10 @@ struct OtpField: View {
         case coord6 = 5
     }
     
-    @State private var focusedIndex: Int = 0
-    @FocusState private var focusedField: FocusableField?
-    
     var body: some View {
         let count: Int = min(Int(formItem.length ?? 0), 6)
         VStack {
-            FieldLabel(text: formItem.label)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
             HStack(spacing: 16) {
                 var a = 0
                 ForEach(0..<count, id: \.self) { index in

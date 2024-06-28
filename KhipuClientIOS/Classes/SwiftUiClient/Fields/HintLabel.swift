@@ -8,13 +8,13 @@ struct HintLabel: View {
     var body: some View {
         if !(text?.isEmpty ?? true) {
             HStack {
-                Spacer()
                 Text(text ?? "")
-                    .font(.caption)
-                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                    .font(themeManager.selectedTheme.fonts.regular12)
+                    .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
                     .accessibilityIdentifier("hintText")
+                Spacer()
             }
-            .padding(.top, 5)
+            .padding(.top, themeManager.selectedTheme.dimens.verySmall)
         }
     }
 }

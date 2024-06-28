@@ -19,7 +19,7 @@ struct TermsAndConditionsComponent: View {
                 Text(link)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
                 .font(themeManager.selectedTheme.fonts.medium12)
-                .foregroundColor(Color(red: 0.51, green: 0.52, blue: 0.56))
+                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
                     .environment(\.openURL, OpenURLAction(handler: handleURL))
                     .sheet(isPresented: $showingWebView) {
                         VStack{

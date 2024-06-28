@@ -27,8 +27,8 @@ class ViewController: UIViewController {
 
 
         sampleTextField.text = "lwhallcputoj"
-        //sampleTextField.font = UIFont.systemFont(ofSize: 15)
-        //sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        sampleTextField.font = UIFont.systemFont(ofSize: 15)
+        sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
         sampleTextField.keyboardType = UIKeyboardType.default
         sampleTextField.returnKeyType = UIReturnKeyType.done
@@ -52,7 +52,6 @@ class ViewController: UIViewController {
             operationId: sampleInput.text!,
             options: KhipuOptions.Builder()
                 .topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
-                //.theme(.dark)
                 .build()
                 ) { result in
                     print("Operation result \(result.asJson())")

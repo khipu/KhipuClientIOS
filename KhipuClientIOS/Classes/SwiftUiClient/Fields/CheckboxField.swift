@@ -23,7 +23,7 @@ struct CheckboxField: View {
             HStack {
                 Toggle(isOn: $isChecked) {
                     Text("Recordar credenciales")
-                        .font(themeManager.selectedTheme.fonts.regular14)
+                        .font(themeManager.selectedTheme.fonts.regular12)
                         .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                       .frame(width: 196, height: 17, alignment: .topLeading)
                 }

@@ -14,14 +14,14 @@ struct SelectableOption<Content: View>: View  {
             content()
         }
         .padding(.horizontal, themeManager.selectedTheme.dimens.large)
-           .padding(.vertical, themeManager.selectedTheme.dimens.medium)
-           .frame(maxWidth: .infinity, minHeight: 65, maxHeight: 65, alignment: .leading)
-           .background(themeManager.selectedTheme.colors.background)
-           .cornerRadius(6)
-           .overlay(
-               RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
-                   .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 0.5)
-           )
+        .padding(.vertical, themeManager.selectedTheme.dimens.medium)
+        .frame(maxWidth: .infinity, minHeight: 65, maxHeight: 65, alignment: .leading)
+        .background(themeManager.selectedTheme.colors.background)
+        .cornerRadius(6)
+        .overlay(
+            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
+                .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 0.5)
+        )
     }
 }
 

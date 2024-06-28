@@ -18,7 +18,7 @@ struct ImageChallengeField: View {
      
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
             
             VStack {              
              Image(uiImage:  FieldUtils.loadImageFromBase64(formItem.imageData))

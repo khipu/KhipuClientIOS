@@ -185,4 +185,8 @@ struct Colors {
     var buttonBackground: Color {
         return Color("buttonBackground", bundle: bundle)
     }
+    
+    var labelForeground: Color {
+        return Color("labelForeground", bundle: bundle)
+    }
 }

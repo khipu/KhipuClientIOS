@@ -12,14 +12,15 @@ struct SwitchField: View {
     @State var lastModificationTime: TimeInterval = 0
     @State var error: String = ""
     @State var isChecked: Bool = false
+    @EnvironmentObject private var themeManager: ThemeManager
     
     internal var didAppear: ((Self) -> Void)?
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
             HStack {
                 Toggle(isOn: $isChecked) {
-                    FieldLabel(text: formItem.label).accessibilityIdentifier("toggleText")
+                    FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall).accessibilityIdentifier("toggleText")
                 }
                 .accessibilityIdentifier("toggle")
                 .onAppear {
@@ -55,8 +56,8 @@ struct SwitchField: View {
     func onChange(newValue: Bool) {
         isChecked = newValue
         error = ValidationUtils.validateCheckRequiredState(isChecked,
-                                                          formItem.requiredState,
-                                                          viewModel.uiState.translator)
+                                                           formItem.requiredState,
+                                                           viewModel.uiState.translator)
         isValid(error.isEmpty)
         returnValue(String(newValue))
         lastModificationTime = Date().timeIntervalSince1970

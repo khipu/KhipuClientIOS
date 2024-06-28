@@ -3,16 +3,26 @@ import SwiftUI
 @available(iOS 15.0, *)
 struct FieldLabel: View {
     var text: String?
+    var font: Font
+    var lineSpacing: CGFloat?
+    var paddingBottom: CGFloat?
+    var paddingTop: CGFloat?
+    var paddingHorizontal: CGFloat?
+    var paddingVertical: CGFloat?
+
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         if !(text?.isEmpty ?? true) {
             VStack {
                 Text(text ?? "")
-                    .font(themeManager.selectedTheme.fonts.regular14)
+                    .font(font)
                     .accessibilityIdentifier("labelText")
-                    .lineSpacing(themeManager.selectedTheme.dimens.medium)
-                    .padding(.bottom, themeManager.selectedTheme.dimens.extraSmall)
+                    .lineSpacing(lineSpacing ?? 0)
+                    .padding(.bottom, paddingBottom ?? 0)
+                    .padding(.top, paddingTop ?? 0)
+                    .padding(.horizontal, paddingHorizontal ?? 0)
+                    .padding(.vertical, paddingVertical ?? 0)
             }
         }
     }
@@ -21,7 +31,7 @@ struct FieldLabel: View {
 @available(iOS 15.0, *)
 struct FieldLabel_Previews: PreviewProvider {
     static var previews: some View {
-        return FieldLabel(text: "Field label")
+        return FieldLabel(text: "Field label", font: .body)
             .environmentObject(ThemeManager())
             .previewLayout(.sizeThatFits)
             .padding()

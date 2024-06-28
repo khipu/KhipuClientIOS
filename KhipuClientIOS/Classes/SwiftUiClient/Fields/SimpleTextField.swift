@@ -37,7 +37,7 @@ struct SimpleTextField: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
             HStack {
                 Group {
                     if formItem.secure != true || passwordVisible {
@@ -91,7 +91,7 @@ struct SimpleTextField: View {
             currentTime = Date().timeIntervalSince1970
         }
     }
-
+    
 }
 
 @available(iOS 15.0, *)
