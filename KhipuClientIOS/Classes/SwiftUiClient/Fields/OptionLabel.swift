@@ -11,9 +11,7 @@ var text: String?
 var body: some View {
     HStack {
         OptionImage(image: image)
-        Text(text ?? "")
-            .font(themeManager.selectedTheme.fonts.bold14)
-            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+        FieldLabel(text:text ?? "", font:themeManager.selectedTheme.fonts.bold14, foregroundColor: themeManager.selectedTheme.colors.onSurface)
             .frame(maxWidth: .infinity, alignment: .topLeading)
         }
     .background(themeManager.selectedTheme.colors.background)

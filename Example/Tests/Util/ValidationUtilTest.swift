@@ -438,7 +438,7 @@ final class ValidationUtilTest: XCTestCase {
     }
     
     func testValidateRut() {
-        XCTAssertEqual(ValidationUtils.validateRut("", translator), "campo obligatorio")
+        XCTAssertEqual(ValidationUtils.validateRut("", translator), "value empty")
         XCTAssertEqual(ValidationUtils.validateRut("23423", translator), "form.validation.error.rut.invalid")
         XCTAssertEqual(ValidationUtils.validateRut("12.872.346-3", translator), "")
     }

@@ -1,18 +1,11 @@
-//
-//  EndToEndEncryption.swift
-//  KhipuClientIOS
-//
-//  Created by Mauricio Castillo on 29-05-24.
-//
-
 import SwiftUI
 
 @available(iOS 13.0, *)
 struct EndToEndEncryption: View {
-    
+
     @EnvironmentObject private var themeManager: ThemeManager
     @ObservedObject public var viewModel: KhipuViewModel
-    
+
     var body: some View {
         VStack {
             CircularProgressView()

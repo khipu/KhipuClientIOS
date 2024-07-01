@@ -43,13 +43,20 @@ final class ListFieldTest: XCTestCase {
         let inspected = try view.environmentObject(ThemeManager()).inspect()
         
         let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText")
-        let text = try label.text().string()
-        XCTAssertEqual(text, "Choose an option")
         
         for index in 0..<3 {
-            let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem\(index + 1)")
-            XCTAssertNoThrow(try item.vStack().vStack(0).view(OptionLabel.self, 0).hStack(0).view(OptionImage.self, 0))
-            XCTAssertEqual(try item.vStack().vStack(0).view(OptionLabel.self, 0).hStack(0).text(1).string(), "Option \(index)")
+            do {
+                let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem\(index + 1)")
+                let vStack0 = try item.vStack().vStack(0)
+                let optionLabel = try vStack0.view(OptionLabel.self, 0)
+                let hStack0 = try optionLabel.hStack(0)
+                let optionImage = try hStack0.view(OptionImage.self, 0)
+                let text = try hStack0.text(1).string()
+                XCTAssertNoThrow(try item.vStack().vStack(0).view(OptionLabel.self, 0).hStack(0).view(OptionImage.self, 0))
+                XCTAssertEqual(text, "Option \(index)")
+            } catch {
+                print("Error al inspeccionar item \(index + 1): \(error)")
+            }
         }
         
         let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem3")

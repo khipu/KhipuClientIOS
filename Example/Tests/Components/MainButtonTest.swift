@@ -17,7 +17,7 @@ final class MainButtonTest: XCTestCase {
         ).environmentObject(themeManager)
         
         let inspectedView = try button.inspect().view(MainButton.self)
-        let buttonView = try inspectedView.button()
+        let buttonView = try inspectedView.hStack().button(0)
         XCTAssertEqual(try buttonView.labelView().text().string(), "Click Me")
         XCTAssertEqual(buttonView.isDisabled(), false)
         XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), Color.white)
@@ -37,9 +37,9 @@ final class MainButtonTest: XCTestCase {
         ViewHosting.host(view: button)
         
         let inspectedView = try button.inspect().view(MainButton.self)
-        let buttonView = try inspectedView.button()
+        let buttonView = try inspectedView.hStack().button(0)
         XCTAssertEqual(try buttonView.labelView().text().string(), "Click Me")
         XCTAssertEqual(buttonView.isDisabled(), true)
-        XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), .secondary.opacity(0.3))
+        XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), themeManager.selectedTheme.colors.buttonForeground)
     }
 }

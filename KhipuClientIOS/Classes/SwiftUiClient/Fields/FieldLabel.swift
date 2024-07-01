@@ -9,6 +9,7 @@ struct FieldLabel: View {
     var paddingTop: CGFloat?
     var paddingHorizontal: CGFloat?
     var paddingVertical: CGFloat?
+    var foregroundColor: Color?
 
     @EnvironmentObject private var themeManager: ThemeManager
     
@@ -23,6 +24,7 @@ struct FieldLabel: View {
                     .padding(.top, paddingTop ?? 0)
                     .padding(.horizontal, paddingHorizontal ?? 0)
                     .padding(.vertical, paddingVertical ?? 0)
+                    .foregroundColor(foregroundColor)
             }
         }
     }
