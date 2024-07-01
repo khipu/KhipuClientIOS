@@ -12,7 +12,8 @@ struct HeaderCheckboxField: View {
     @State var lastModificationTime: TimeInterval = 0
     @State var error: String = ""
     @State var isChecked: Bool = false
-    
+    @EnvironmentObject private var themeManager: ThemeManager
+
     internal var didAppear: ((Self) -> Void)?
 
     var body: some View {
@@ -26,8 +27,7 @@ struct HeaderCheckboxField: View {
             }
             HStack {
                 Toggle(isOn: $isChecked) {
-                    FieldLabel(text: formItem.label)
-                }
+                    FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)                }
                 .accessibilityIdentifier("toggle")
                 .onAppear {
                     isChecked = formItem.defaultState == "on"
@@ -40,7 +40,7 @@ struct HeaderCheckboxField: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
             if shouldDisplayError() {
                 ErrorLabel(text: error)
             }
@@ -58,14 +58,14 @@ struct HeaderCheckboxField: View {
                 .accessibilityIdentifier("items")
                 .padding()
             }
-            
+
             if !(formItem.bottomText?.isEmpty ?? false) {
                 HStack {
                     Text(formItem.bottomText ?? "") .accessibilityIdentifier("bottomText")
                     Spacer()
                 }
             }
-            
+
 
         }
         .padding(.horizontal)
@@ -73,14 +73,14 @@ struct HeaderCheckboxField: View {
             startTimer()
         }
     }
-    
+
     func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             currentTime = Date().timeIntervalSince1970
         }
     }
-    
-    
+
+
     func onChange(newValue: Bool) {
         isChecked = newValue
         error = ValidationUtils.validateCheckRequiredState(isChecked,
@@ -90,11 +90,11 @@ struct HeaderCheckboxField: View {
         returnValue(String(newValue))
         lastModificationTime = Date().timeIntervalSince1970
     }
-    
+
     func shouldDisplayError() -> Bool {
         return !error.isEmpty && (currentTime - lastModificationTime > 1)
     }
-    
+
 }
 
 @available(iOS 15.0, *)

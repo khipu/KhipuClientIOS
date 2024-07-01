@@ -48,7 +48,7 @@ class CustomHeaderUIVIew: UIView, KhipuHeaderProtocol {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-
+    
     
     init() {
         super.init(frame: CGRect.zero)
@@ -80,7 +80,7 @@ class CustomHeaderUIVIew: UIView, KhipuHeaderProtocol {
             amountLabel.topAnchor.constraint(equalTo: subjectLabel.bottomAnchor, constant: 10),
             amountLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             amountLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
-
+            
             merchantNameLabel.topAnchor.constraint(equalTo: amountLabel.bottomAnchor, constant: 10),
             merchantNameLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
             merchantNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),

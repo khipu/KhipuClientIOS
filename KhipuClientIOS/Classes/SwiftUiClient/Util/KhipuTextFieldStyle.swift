@@ -6,8 +6,8 @@ struct KhipuTextFieldStyle: TextFieldStyle {
     
     func _body(configuration: TextField<Self._Label>) -> some View {
         configuration
-            .padding(.vertical, 16)
-            .padding(.horizontal, 10)
+            .padding(.vertical, themeManager.selectedTheme.dimens.extraMedium)
+            .padding(.horizontal, themeManager.selectedTheme.dimens.veryMedium)
             .overlay(
                 RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
                     .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 0.2))

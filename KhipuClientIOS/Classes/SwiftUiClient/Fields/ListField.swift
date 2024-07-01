@@ -12,8 +12,7 @@ struct ListField: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .leading, spacing: Dimensions.small) {
-            FieldLabel(text: formItem.label)
+        VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.small) {
             var a = 0
             ForEach(formItem.options ?? [], id: \.value) { option in
                 a = a + 1
@@ -39,14 +38,6 @@ struct ListField: View {
             }
         }
     }
-}
-
-struct Dimensions {
-    static let small: CGFloat = 8
-    static let medium: CGFloat = 16
-    static let large: CGFloat = 24
-    static let extraLarge: CGFloat = 48
-    static let veryLarge: CGFloat = 64
 }
 
 @available(iOS 15.0, *)

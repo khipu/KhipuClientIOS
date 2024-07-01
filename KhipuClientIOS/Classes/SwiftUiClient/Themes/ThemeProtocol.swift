@@ -18,4 +18,6 @@ protocol ThemeProtocol {
     
     var dimens: Dimens { get }
     
+    var fonts: Fonts { get }
+    
 }

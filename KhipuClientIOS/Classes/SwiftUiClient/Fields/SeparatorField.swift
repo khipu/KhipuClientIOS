@@ -4,7 +4,7 @@ import KhenshinProtocol
 @available(iOS 13.0, *)
 struct SeparatorField: View {
     var formItem: FormItem
-   
+    
     var body: some View {
         Line()
             .stroke(style: StrokeStyle(lineWidth: 1))

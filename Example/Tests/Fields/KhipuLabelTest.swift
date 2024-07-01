@@ -9,7 +9,7 @@ import KhenshinProtocol
 final class KhipuLabelTest: XCTestCase {
     
     func testSwitchFieldView_Fill() throws {
-        let view = FieldLabel(text: "Some stuff")
+        let view = FieldLabel(text: "Some stuff", font: .body)
         
         let instected = try view.environmentObject(ThemeManager()).inspect()
         
@@ -18,7 +18,7 @@ final class KhipuLabelTest: XCTestCase {
     }
     
     func testSwitchFieldView_Empty() throws {
-        let view = FieldLabel()
+        let view = FieldLabel(font: .body)
         
         let instected = try view.environmentObject(ThemeManager()).inspect()
         

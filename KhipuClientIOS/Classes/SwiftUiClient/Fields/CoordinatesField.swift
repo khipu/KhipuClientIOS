@@ -66,7 +66,7 @@ struct CoordinatesField: View {
                 ForEach(0..<3, id: \.self) { index in
                     a = a + 1
                     return VStack(alignment: .center) {
-                        FieldLabel(text: formItem.labels?[index])
+                        FieldLabel(text: formItem.labels?[index], font:themeManager.selectedTheme.fonts.medium14)
                         
                         CoordinateInputField(formItem: formItem,
                                              coordValue: $states[index],
