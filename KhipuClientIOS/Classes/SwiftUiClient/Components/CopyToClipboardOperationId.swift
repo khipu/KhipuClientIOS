@@ -6,17 +6,17 @@ struct CopyToClipboardOperationId: View {
     var textToCopy: String
     var background: Color
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     var body: some View {
         Button(action: {
             UIPasteboard.general.string = textToCopy
         }) {
             HStack {
                 Text(text)
-                    .font(.system(size: themeManager.selectedTheme.dimens.veryMedium))
-                Image(systemName: "doc.on.doc")
-                    .resizable()
-                    .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
+                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                
+                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width: 20, height: 20))
+                Image(uiImage: image)
             }
             .padding(.all, 8)
             .background(background)
@@ -32,7 +32,7 @@ struct CopyToClipboardLink: View {
     var textToCopy: String
     var background: Color
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     var body: some View {
         Button(action: {
             UIPasteboard.general.string = textToCopy

@@ -1,7 +1,7 @@
 import SwiftUI
 import KhenshinProtocol
 import SwiftUI
-
+import FontAwesome_swift
 
 @available(iOS 15.0.0, *)
 struct WarningMessageComponent: View {
@@ -10,26 +10,41 @@ struct WarningMessageComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
-            Image(systemName: "clock.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: themeManager.selectedTheme.dimens.larger, height: themeManager.selectedTheme.dimens.larger)
-                .foregroundColor(Color(red: 234/255, green: 197/255, blue: 79/255))
-            Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
-                .foregroundColor(Color(.label))
-                .font(.title2)
-                .multilineTextAlignment(.center)
+        
+        VStack(alignment: .center, spacing: 20) {
+            VStack(alignment: .center, spacing: 10) {
+                
+                let image = UIImage.fontAwesomeIcon(name: .clock, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width: 40, height: 40))
+                Image(uiImage: image)
+                
+            }
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .top)
+            .cornerRadius(8)
             
-            Text((operationWarning.title)!)
-                .foregroundColor(Color(.label))
-                .font(.title3)
-                .multilineTextAlignment(.center)
+            VStack(alignment: .center, spacing: 10) {
+                Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
+                    .font(themeManager.selectedTheme.fonts.semiBold24)
+                    .multilineTextAlignment(.center)
+                
+            }
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .top)
+            .cornerRadius(8)
+            
+            HStack(alignment: .center, spacing: 10) {
+                Text((operationWarning.title)!)
+                    .font(themeManager.selectedTheme.fonts.semiBold16)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 0)
+            .frame(maxWidth: .infinity, alignment: .center)
             
             FormWarning(text: operationWarning.body ?? "")
-            Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
+            Spacer().frame(height: themeManager.selectedTheme.dimens.large)
             DetailSectionWarning(operationWarning: operationWarning,operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel)
-            Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
+            
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
@@ -40,7 +55,9 @@ struct WarningMessageComponent: View {
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
+        .padding(.horizontal, 20)
+        .padding(.vertical, 32)
+        .frame(maxWidth: .infinity, alignment: .top)
     }
 }
 
@@ -52,15 +69,19 @@ struct DetailSectionWarning: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
+        VStack(alignment: .center, spacing: 20) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
-                .foregroundColor(Color(.label))
-                .font(.headline)
-                .fontWeight(.bold)
+                .font(themeManager.selectedTheme.fonts.semiBold16)
+            
             DetailItemWarning(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
+            
             DetailItemWarning(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")
+            DashedLine()
             DetailItemWarning(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationWarning.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationWarning.reason),shouldCopyValue: true)
         }
+        .padding(20)
+        .frame(maxWidth: .infinity, alignment: .top)
+        .cornerRadius(6)
     }
 }
 
@@ -74,15 +95,15 @@ struct DetailItemWarning: View {
     var body: some View {
         HStack {
             Text(label)
-                .foregroundColor(Color(.label))
-                .font(.body)
+                .font(themeManager.selectedTheme.fonts.medium14)
+                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
             Spacer()
             if !shouldCopyValue {
                 Text(value)
-                    .foregroundColor(Color(.label))
-                    .font(.body)
+                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                
             } else {
-                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:Color(red: 60/255, green: 180/255, blue: 229/255))
+                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
             }
         }
         .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
@@ -93,16 +114,16 @@ struct DetailItemWarning: View {
 struct WarningMessageComponent_Previews:PreviewProvider{
     static var previews: some View{
         return WarningMessageComponent(operationWarning:
-            OperationWarning(
-                type: MessageType.operationWarning,
-                body: "body",
-                events: nil,
-                exitURL: "exitUrl",
-                operationID: "operationID",
-                resultMessage: "resultMessage",
-                title: "Title",
-                reason: FailureReasonType.taskDumped
-            ), viewModel: KhipuViewModel()
+                                        OperationWarning(
+                                            type: MessageType.operationWarning,
+                                            body: "body",
+                                            events: nil,
+                                            exitURL: "exitUrl",
+                                            operationID: "operationID",
+                                            resultMessage: "resultMessage",
+                                            title: "Title",
+                                            reason: FailureReasonType.taskDumped
+                                        ), viewModel: KhipuViewModel()
         )
         .environmentObject(ThemeManager())
         .padding()

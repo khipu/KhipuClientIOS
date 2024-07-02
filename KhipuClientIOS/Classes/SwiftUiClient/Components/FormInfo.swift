@@ -37,7 +37,7 @@ struct FormInfo: View {
         .overlay(
             RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.verySmall)
                 .inset(by: 0.5)
-                .stroke(Color(red: 0.01, green: 0.53, blue: 0.82), lineWidth: 1)
+                .stroke(themeManager.selectedTheme.colors.secondary, lineWidth: 1)
         )
         
     }
