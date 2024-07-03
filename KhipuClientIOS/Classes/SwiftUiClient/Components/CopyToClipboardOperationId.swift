@@ -11,19 +11,19 @@ struct CopyToClipboardOperationId: View {
         Button(action: {
             UIPasteboard.general.string = textToCopy
         }) {
-            HStack(alignment: .center, spacing: 4) {
+            HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
                 
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                 
-                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width: 20, height: 20))
+                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large))
                 Image(uiImage: image)
             }
         }
-        .padding(.horizontal, 10)
+        .padding(.horizontal, themeManager.selectedTheme.dimens.medium)
         .padding(.vertical, 0)
         .background(themeManager.selectedTheme.colors.onSecondaryContainer)
-        .cornerRadius(8)
+        .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
         .buttonStyle(PlainButtonStyle())
     }
 }
@@ -39,17 +39,17 @@ struct CopyToClipboardLink: View {
         Button(action: {
             UIPasteboard.general.string = textToCopy
         }) {
-            HStack {
+            HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
                 Text(text)
-                    .font(.system(size: themeManager.selectedTheme.dimens.extraMedium))
-                Image(systemName: "doc.on.doc")
-                    .resizable()
-                    .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                
+                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large))
+                Image(uiImage: image)
             }
-            .padding()
-            .background(background)
-            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
-        }
+            .padding(.horizontal, themeManager.selectedTheme.dimens.medium)
+            .padding(.vertical, 0)
+            .background(themeManager.selectedTheme.colors.onSecondaryContainer)
+            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)        }
         .buttonStyle(PlainButtonStyle())
     }
 }

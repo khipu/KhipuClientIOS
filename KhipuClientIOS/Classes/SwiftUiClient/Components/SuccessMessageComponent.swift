@@ -8,26 +8,26 @@ struct SuccessMessageComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
-            VStack(alignment: .center, spacing: 10) {
-                let image = UIImage.fontAwesomeIcon(name: .checkCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.success), size: CGSize(width: 40, height: 40))
+        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
+            VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+                let image = UIImage.fontAwesomeIcon(name: .checkCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.success), size: CGSize(width: themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger))
                 Image(uiImage: image)
                 
-                HStack(alignment: .top, spacing: 10) {   Text(operationSuccess.title ?? "")
+                HStack(alignment: .top, spacing: themeManager.selectedTheme.dimens.medium) {   Text(operationSuccess.title ?? "")
                         .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 20))
                     .foregroundColor(themeManager.selectedTheme.colors.onBackground)}
                 .padding(.horizontal, 10)
                 .padding(.vertical, 0)
                 .frame(maxWidth: .infinity, alignment: .top)
                 
-                VStack(alignment: .center, spacing: 10) {
+                VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
                     Text(operationSuccess.body ?? "")
                         .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                         .foregroundColor(themeManager.selectedTheme.colors.onBackground)
                         .multilineTextAlignment(.center)
                 }
                 .padding(.horizontal, 0)
-                .padding(.vertical, 10)
+                .padding(.vertical, themeManager.selectedTheme.dimens.medium)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .cornerRadius(8)
                 
@@ -43,9 +43,9 @@ struct SuccessMessageComponent: View {
                 
             }
             .padding(.horizontal, 0)
-            .padding(.vertical, 10)
+            .padding(.vertical, themeManager.selectedTheme.dimens.medium)
             .frame(maxWidth: .infinity, alignment: .center)
-            .cornerRadius(8)
+            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
             
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
@@ -58,8 +58,8 @@ struct SuccessMessageComponent: View {
             )
             
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 32)
+        .padding(.horizontal, themeManager.selectedTheme.dimens.large)
+        .padding(.vertical, themeManager.selectedTheme.dimens.quiteLarge)
         .frame(maxWidth: .infinity, alignment: .center)
         
     }

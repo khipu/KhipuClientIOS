@@ -11,10 +11,10 @@ struct WarningMessageComponent: View {
     
     var body: some View {
         
-        VStack(alignment: .center, spacing: 20) {
-            VStack(alignment: .center, spacing: 10) {
+        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
+            VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
                 
-                let image = UIImage.fontAwesomeIcon(name: .clock, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width: 40, height: 40))
+                let image = UIImage.fontAwesomeIcon(name: .clock, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width: themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger))
                 Image(uiImage: image)
                 
             }
@@ -22,7 +22,7 @@ struct WarningMessageComponent: View {
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(8)
             
-            VStack(alignment: .center, spacing: 10) {
+            VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
                 Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
@@ -32,12 +32,12 @@ struct WarningMessageComponent: View {
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(8)
             
-            HStack(alignment: .center, spacing: 10) {
+            HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
                 Text((operationWarning.title)!)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
             }
-            .padding(.horizontal, 24)
+            .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
             .padding(.vertical, 0)
             .frame(maxWidth: .infinity, alignment: .center)
             
@@ -55,8 +55,8 @@ struct WarningMessageComponent: View {
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(.horizontal, 20)
-        .padding(.vertical, 32)
+        .padding(.horizontal, themeManager.selectedTheme.dimens.large)
+        .padding(.vertical, themeManager.selectedTheme.dimens.quiteLarge)
         .frame(maxWidth: .infinity, alignment: .top)
     }
 }
@@ -69,7 +69,7 @@ struct DetailSectionWarning: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: 20) {
+        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
                 .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
             

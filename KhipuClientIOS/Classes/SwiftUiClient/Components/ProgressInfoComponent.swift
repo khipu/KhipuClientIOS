@@ -16,7 +16,7 @@ struct ProgressInfoComponent: View {
                     .padding(.top, themeManager.selectedTheme.dimens.massive)
                 Spacer().frame(height: 30)
                 Text(message)
-                    .font(.system(size: themeManager.selectedTheme.dimens.large))
+                    .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                     .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
             }
             Spacer()

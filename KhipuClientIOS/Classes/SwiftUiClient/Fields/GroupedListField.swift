@@ -10,7 +10,8 @@ public struct GroupedListField: View {
     @State private var selectedTabIndex = 0
     @State private var selectedOption: GroupedOption? = nil
     @State private var textFieldValue = ""
-    
+    @EnvironmentObject private var themeManager: ThemeManager
+
     var tabs: [String] {
         formItem.groupedOptions?.tagsOrder?.components(separatedBy: ",") ?? []
     }
@@ -36,16 +37,16 @@ public struct GroupedListField: View {
             
             TextField(formItem.placeHolder ?? "", text: $textFieldValue)
                 .padding(.vertical)
-                .padding(.horizontal, 36)
+                .padding(.horizontal, themeManager.selectedTheme.dimens.veryLarge)
                 .overlay(
-                    RoundedRectangle(cornerRadius: 8)
+                    RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
                         .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                 )
                 .padding(.horizontal)
                 .overlay(
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
-                        .padding(.horizontal, 24)
+                        .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
                     ,
                     alignment: .leading
                 )

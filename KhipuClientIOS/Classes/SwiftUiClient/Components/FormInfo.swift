@@ -11,7 +11,7 @@ struct FormInfo: View {
             HStack(alignment: .top, spacing: 0) {
                 Image(systemName: "info.circle")
                     .foregroundColor(themeManager.selectedTheme.colors.secondary)
-                    .frame(width: 22, height: 22)
+                    .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
             }
             .padding(.leading, 0)
             .padding(.trailing, themeManager.selectedTheme.dimens.veryMedium)

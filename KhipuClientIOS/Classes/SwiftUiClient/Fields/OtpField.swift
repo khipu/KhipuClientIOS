@@ -25,7 +25,7 @@ struct OtpField: View {
         let count: Int = min(Int(formItem.length ?? 0), 6)
         VStack {
             FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
-            HStack(spacing: 16) {
+            HStack(spacing: themeManager.selectedTheme.dimens.extraMedium) {
                 var a = 0
                 ForEach(0..<count, id: \.self) { index in
                     a = a + 1
@@ -50,7 +50,7 @@ struct OtpField: View {
             HintLabel(text: formItem.hint)
         }
         
-        .padding(.horizontal, 16)
+        .padding(.horizontal, themeManager.selectedTheme.dimens.extraMedium)
         .onChange(of: states) { _ in
             isValid(states.prefix(count).allSatisfy { $0.count == 1 })
             returnValue(states.prefix(count).joined(separator: "|"))

@@ -17,7 +17,6 @@ struct ListField: View {
             ForEach(formItem.options ?? [], id: \.value) { option in
                 a = a + 1
                 return VStack() {
-                    Spacer().frame(height: 3)
                     Button(action: {
                         selectedOption = option
                         isValid(true)

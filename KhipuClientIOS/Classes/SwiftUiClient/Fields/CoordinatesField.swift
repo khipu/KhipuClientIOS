@@ -5,6 +5,8 @@ import KhenshinProtocol
 struct CoordinateInputField: View {
     var formItem: FormItem
     @Binding var coordValue: String
+    @EnvironmentObject private var themeManager: ThemeManager
+    
     var length: Int
     let nextField: () -> Void
     let updateIndex: () -> Void
@@ -17,8 +19,8 @@ struct CoordinateInputField: View {
                 TextField("", text: $coordValue)
             }
         }
-        .frame(minWidth: 30, maxWidth: 80)
-        .padding(.trailing, 8)
+        .frame(minWidth: themeManager.selectedTheme.dimens.quiteLarge, maxWidth: themeManager.selectedTheme.dimens.muchLarger)
+        .padding(.trailing, themeManager.selectedTheme.dimens.extraSmall)
         .multilineTextAlignment(.center)
         .textFieldStyle(KhipuTextFieldStyle())
         .autocorrectionDisabled(true)
@@ -78,14 +80,14 @@ struct CoordinatesField: View {
                             focusedField = FieldUtils.getElement(FocusableField.self, at: focusedIndex)
                         }
                         ).accessibilityIdentifier("coordinateInput\(index + 1)")
-                        .focused($focusedField, equals: FieldUtils.getElement(FocusableField.self, at: index))
+                            .focused($focusedField, equals: FieldUtils.getElement(FocusableField.self, at: index))
                     }
                     .accessibilityIdentifier("coordinateItem\(index + 1)")
                 }
             }
             HintLabel(text: formItem.hint)
         }
-        .padding(.horizontal, 16)
+        .padding(.horizontal, themeManager.selectedTheme.dimens.extraMedium)
         .onChange(of: states) { _ in
             isValid(states.prefix(3).allSatisfy { $0.count == 2 })
             returnValue(states.prefix(3).joined(separator: "|"))

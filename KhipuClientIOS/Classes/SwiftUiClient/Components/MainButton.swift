@@ -11,7 +11,7 @@ struct MainButton: View {
     @State private var submitted = false
 
     var body: some View {
-        HStack(alignment: .center, spacing: 8) {
+        HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.extraSmall) {
 
             Button(action: {
                 submitted = true

@@ -24,7 +24,7 @@ struct ImageChallengeField: View {
                 Image(uiImage:  FieldUtils.loadImageFromBase64(formItem.imageData))
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 200, height: 200)
+                    .frame(width: themeManager.selectedTheme.dimens.gigantic, height: themeManager.selectedTheme.dimens.gigantic)
                 
             }
             .frame(maxWidth: .infinity, alignment: .center)

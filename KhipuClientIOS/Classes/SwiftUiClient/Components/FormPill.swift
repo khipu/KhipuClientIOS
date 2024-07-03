@@ -10,7 +10,7 @@ struct FormPill: View {
             Text(text)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .frame(width: 89,height: 32)
+                .frame(width: themeManager.selectedTheme.dimens.extremelyLarge,height: themeManager.selectedTheme.dimens.quiteLarge)
             
         }
         .padding(.horizontal, themeManager.selectedTheme.dimens.veryMedium)

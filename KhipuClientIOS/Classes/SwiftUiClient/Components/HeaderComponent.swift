@@ -41,13 +41,13 @@ struct HeaderComponent: View {
                 image
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .frame(width: themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger)
+                    .clipShape(RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.verySmall))
             } placeholder: {
                 ProgressView()
             }
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.verySmall) {
                 Text(viewModel.uiState.operationInfo?.merchant?.name ?? "")
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
@@ -61,7 +61,7 @@ struct HeaderComponent: View {
             
             Spacer()
             
-            VStack(alignment: .trailing, spacing: 4) {
+            VStack(alignment: .trailing, spacing: themeManager.selectedTheme.dimens.verySmall) {
                 Text(viewModel.uiState.translator.t("header.amount", default: "").uppercased())
                     .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 10))
                     .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
@@ -78,7 +78,7 @@ struct HeaderComponent: View {
     private var footerContent: some View {
         HStack {
             formattedCode()
-                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 10))
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: themeManager.selectedTheme.dimens.medium))
             
             Spacer()
             
