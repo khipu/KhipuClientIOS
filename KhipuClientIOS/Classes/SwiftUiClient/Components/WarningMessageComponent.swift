@@ -24,7 +24,7 @@ struct WarningMessageComponent: View {
             
             VStack(alignment: .center, spacing: 10) {
                 Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
-                    .font(themeManager.selectedTheme.fonts.semiBold24)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
                 
             }
@@ -34,7 +34,7 @@ struct WarningMessageComponent: View {
             
             HStack(alignment: .center, spacing: 10) {
                 Text((operationWarning.title)!)
-                    .font(themeManager.selectedTheme.fonts.semiBold16)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 24)
@@ -71,7 +71,7 @@ struct DetailSectionWarning: View {
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
-                .font(themeManager.selectedTheme.fonts.semiBold16)
+                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
             
             DetailItemWarning(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
             
@@ -95,12 +95,12 @@ struct DetailItemWarning: View {
     var body: some View {
         HStack {
             Text(label)
-                .font(themeManager.selectedTheme.fonts.medium14)
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
             Spacer()
             if !shouldCopyValue {
                 Text(value)
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                 
             } else {
                 CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)

@@ -19,8 +19,7 @@ struct FormInfo: View {
             
             VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.verySmall) {
                 Text(text)
-                    .font(themeManager.selectedTheme.fonts.medium14
-                    )
+                    .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.secondary)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }

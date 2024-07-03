@@ -21,7 +21,7 @@ struct FailureMessageComponent: View {
             
             VStack(alignment: .center, spacing: 10) {
                 Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
-                    .font(themeManager.selectedTheme.fonts.semiBold24)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
                 
             }
@@ -31,7 +31,7 @@ struct FailureMessageComponent: View {
             
             HStack(alignment: .center, spacing: 10) {
                 Text((operationFailure.title)!)
-                    .font(themeManager.selectedTheme.fonts.semiBold16)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
             }
             .padding(.horizontal, 24)
@@ -56,7 +56,7 @@ struct FailureMessageComponent: View {
         .padding(.vertical, 32)
         .frame(maxWidth: .infinity, alignment: .top)
     }
-        
+    
 }
 
 @available(iOS 15.0.0, *)
@@ -67,10 +67,10 @@ struct DetailSectionFailure: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-
+        
         VStack(alignment: .center, spacing: 20) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
-                .font(themeManager.selectedTheme.fonts.semiBold16)
+                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
             
             DetailItemFailure(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
             
@@ -94,12 +94,12 @@ struct DetailItemFailure: View {
     var body: some View {
         HStack {
             Text(label)
-                .font(themeManager.selectedTheme.fonts.medium14)
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
             Spacer()
             if !shouldCopyValue {
                 Text(value)
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                 
             } else {
                 CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
@@ -124,7 +124,7 @@ struct FailureMessageComponent_Previews: PreviewProvider {
                     resultMessage: "resultMessage",
                     title: "Title",
                     reason: FailureReasonType.taskExecutionError
-        ), viewModel: KhipuViewModel())
+                ), viewModel: KhipuViewModel())
         .environmentObject(ThemeManager())
         .padding()
     }
@@ -144,7 +144,7 @@ struct DetailSectionFailure_Previews: PreviewProvider {
                     resultMessage: "resultMessage",
                     title: "Title",
                     reason: FailureReasonType.taskExecutionError
-        ), viewModel: KhipuViewModel())
+                ), viewModel: KhipuViewModel())
         .environmentObject(ThemeManager())
         .padding()
     }

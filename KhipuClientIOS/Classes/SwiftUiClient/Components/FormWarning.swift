@@ -17,7 +17,7 @@ struct FormWarning: View {
             
             VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.verySmall) {
                 Text(text)
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .kerning(0.17)
                     .foregroundColor(themeManager.selectedTheme.colors.onTertiary)
                 .frame(maxWidth: .infinity, alignment: .topLeading) }

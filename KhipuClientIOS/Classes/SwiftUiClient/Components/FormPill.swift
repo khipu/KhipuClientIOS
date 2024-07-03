@@ -8,7 +8,7 @@ struct FormPill: View {
     var body: some View {
         HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.moderatelySmall) {
             Text(text)
-                .font(themeManager.selectedTheme.fonts.medium14)
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .frame(width: 89,height: 32)
             

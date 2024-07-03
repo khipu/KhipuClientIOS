@@ -23,7 +23,7 @@ struct MainButton: View {
                     .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .background(enabled && !submitted ? backgroundColor : themeManager.selectedTheme.colors.buttonBackground)
-                    .font(themeManager.selectedTheme.fonts.medium18)
+                    .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 18))
             }
             .disabled(!enabled && !submitted)
 

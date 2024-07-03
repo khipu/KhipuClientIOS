@@ -13,9 +13,9 @@ struct HeaderCheckboxField: View {
     @State var error: String = ""
     @State var isChecked: Bool = false
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     internal var didAppear: ((Self) -> Void)?
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
             if !(formItem.title?.isEmpty ?? false) {
@@ -27,7 +27,7 @@ struct HeaderCheckboxField: View {
             }
             HStack {
                 Toggle(isOn: $isChecked) {
-                    FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)                }
+                    FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)                }
                 .accessibilityIdentifier("toggle")
                 .onAppear {
                     isChecked = formItem.defaultState == "on"
@@ -40,11 +40,11 @@ struct HeaderCheckboxField: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-
+            
             if shouldDisplayError() {
                 ErrorLabel(text: error)
             }
-
+            
             if !(formItem.items?.isEmpty ?? true) {
                 VStack {
                     ForEach(formItem.items ?? [], id: \.self) {
@@ -58,43 +58,43 @@ struct HeaderCheckboxField: View {
                 .accessibilityIdentifier("items")
                 .padding()
             }
-
+            
             if !(formItem.bottomText?.isEmpty ?? false) {
                 HStack {
                     Text(formItem.bottomText ?? "") .accessibilityIdentifier("bottomText")
                     Spacer()
                 }
             }
-
-
+            
+            
         }
         .padding(.horizontal)
         .onAppear {
             startTimer()
         }
     }
-
+    
     func startTimer() {
         Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { timer in
             currentTime = Date().timeIntervalSince1970
         }
     }
-
-
+    
+    
     func onChange(newValue: Bool) {
         isChecked = newValue
         error = ValidationUtils.validateCheckRequiredState(isChecked,
-                                                          formItem.requiredState,
-                                                          viewModel.uiState.translator)
+                                                           formItem.requiredState,
+                                                           viewModel.uiState.translator)
         isValid(error.isEmpty)
         returnValue(String(newValue))
         lastModificationTime = Date().timeIntervalSince1970
     }
-
+    
     func shouldDisplayError() -> Bool {
         return !error.isEmpty && (currentTime - lastModificationTime > 1)
     }
-
+    
 }
 
 @available(iOS 15.0, *)

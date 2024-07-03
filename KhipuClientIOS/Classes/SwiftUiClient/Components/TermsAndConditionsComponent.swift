@@ -16,32 +16,32 @@ struct TermsAndConditionsComponent: View {
         let link = LocalizedStringKey(stringLiteral: "\(components[0])[ \(components[1])](\(termsURL))")
         
         return VStack {
-                Text(link)
+            Text(link)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
-                .font(themeManager.selectedTheme.fonts.medium12)
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 12))
                 .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
-                    .environment(\.openURL, OpenURLAction(handler: handleURL))
-                    .sheet(isPresented: $showingWebView) {
-                        VStack{
-                            HStack {
-                                Spacer()
-                                Button {
-                                    showingWebView = false
-                                } label: {
-                                    Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
-                                }
-                                .padding()
+                .environment(\.openURL, OpenURLAction(handler: handleURL))
+                .sheet(isPresented: $showingWebView) {
+                    VStack{
+                        HStack {
+                            Spacer()
+                            Button {
+                                showingWebView = false
+                            } label: {
+                                Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
                             }
-                            WebView(url: URL(string: termsURL)!)
+                            .padding()
                         }
+                        WebView(url: URL(string: termsURL)!)
                     }
+                }
         }.padding(.vertical, themeManager.selectedTheme.dimens.extraMedium)
     }
     
     func handleURL(_ url: URL) -> OpenURLAction.Result {
-            showingWebView = true
-            return .handled
-        }
+        showingWebView = true
+        return .handled
+    }
 }
 
 

@@ -49,11 +49,11 @@ struct HeaderComponent: View {
             
             VStack(alignment: .leading, spacing: 4) {
                 Text(viewModel.uiState.operationInfo?.merchant?.name ?? "")
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
                 
                 Text(viewModel.uiState.operationInfo?.subject ?? "")
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(Color.primary)
                     .lineLimit(1)
                     .truncationMode(.tail)
@@ -63,11 +63,11 @@ struct HeaderComponent: View {
             
             VStack(alignment: .trailing, spacing: 4) {
                 Text(viewModel.uiState.translator.t("header.amount", default: "").uppercased())
-                    .font(themeManager.selectedTheme.fonts.medium10)
+                    .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 10))
                     .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
                 
                 Text(viewModel.uiState.operationInfo?.amount ?? "")
-                    .font(themeManager.selectedTheme.fonts.bold20)
+                    .font(themeManager.selectedTheme.fonts.font(style: .bold, size: 20))
                     .foregroundColor(Color.primary)
                 
             }
@@ -78,13 +78,13 @@ struct HeaderComponent: View {
     private var footerContent: some View {
         HStack {
             formattedCode()
-                .font(themeManager.selectedTheme.fonts.medium10)
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 10))
             
             Spacer()
             
             Button(action: { showMerchantDialog = true }) {
                 Text("Ver detalle")
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.secondary)
                     .bold()
             }

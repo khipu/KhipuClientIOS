@@ -9,7 +9,7 @@ struct ErrorLabel: View {
         HStack {
             Spacer()
             Text(text)
-                .font(themeManager.selectedTheme.fonts.regular12)
+                .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 12))
                 .foregroundColor(themeManager.selectedTheme.colors.error)
         }
         .padding(.top, themeManager.selectedTheme.dimens.verySmall)

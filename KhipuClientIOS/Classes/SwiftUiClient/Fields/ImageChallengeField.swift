@@ -8,23 +8,23 @@ struct ImageChallengeField: View {
     var isValid: (Bool) -> Void
     var returnValue: (String) -> Void
     @ObservedObject var viewModel: KhipuViewModel
-   
+    
     @State var value: String = ""
     @State var error: String = ""
     @State var lastModificationTime: TimeInterval = 0
     @EnvironmentObject private var themeManager: ThemeManager
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     @State private var image: UIImage? = nil
-     
+    
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
             
-            VStack {              
-             Image(uiImage:  FieldUtils.loadImageFromBase64(formItem.imageData))
-                .resizable()
-                .scaledToFit()
-                .frame(width: 200, height: 200)
+            VStack {
+                Image(uiImage:  FieldUtils.loadImageFromBase64(formItem.imageData))
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 200, height: 200)
                 
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -83,7 +83,7 @@ struct ImageChallengeField: View {
         }
         return ""
     }
-
+    
 }
 
 @available(iOS 15.0, *)

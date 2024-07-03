@@ -17,7 +17,7 @@ struct RutField: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
             TextField(formItem.placeHolder ?? "", text: $rutValue)
                 .textFieldStyle(KhipuTextFieldStyle())
                 .autocorrectionDisabled(true)
@@ -31,7 +31,7 @@ struct RutField: View {
                 .onAppear {
                     if viewModel.uiState.currentForm?.rememberValues ?? false {
                         rutValue = viewModel.uiState.storedUsername
-                    }  
+                    }
                 }
             HintLabel(text: formItem.hint)
             

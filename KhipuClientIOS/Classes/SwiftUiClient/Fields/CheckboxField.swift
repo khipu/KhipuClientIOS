@@ -15,14 +15,14 @@ struct CheckboxField: View {
     @EnvironmentObject private var themeManager: ThemeManager
     let bundle = KhipuClientBundleHelper.podBundle
     internal var didAppear: ((Self) -> Void)?
-
+    
     
     var body: some View {
         VStack(alignment: .leading, spacing:themeManager.selectedTheme.dimens.extraMedium) 
         {
             HStack {
                 Toggle(isOn: $isChecked) {
-                    FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular12, foregroundColor: themeManager.selectedTheme.colors.onSurface)
+                    FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 12), foregroundColor: themeManager.selectedTheme.colors.onSurface)
                 }
                 .accessibilityIdentifier("checkbox")
                 .onAppear {
@@ -55,8 +55,8 @@ struct CheckboxField: View {
     func onChange(newValue: Bool) {
         isChecked = newValue
         error = ValidationUtils.validateCheckRequiredState(isChecked,
-                                                          formItem.requiredState,
-                                                          viewModel.uiState.translator)
+                                                           formItem.requiredState,
+                                                           viewModel.uiState.translator)
         isValid(error.isEmpty)
         returnValue(String(newValue))
         lastModificationTime = Date().timeIntervalSince1970

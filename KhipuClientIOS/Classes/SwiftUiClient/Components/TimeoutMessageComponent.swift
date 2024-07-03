@@ -9,13 +9,13 @@ struct TimeoutMessageComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: 0) {
+        VStack(alignment: .center, spacing: 20) {
             Text(viewModel.uiState.translator.t("page.timeout.session.closed"))
-                .font(themeManager.selectedTheme.fonts.semiBold24)
+                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .top)
             
-            VStack(alignment: .center, spacing: 20) {
+            VStack(alignment: .center, spacing: 10) {
                 FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"))
                 
                 VStack(alignment: .center, spacing: 20) {
@@ -25,7 +25,7 @@ struct TimeoutMessageComponent: View {
                         HStack(alignment: .center, spacing: 10) {
                             Text(viewModel.uiState.translator.t("page.timeout.end"))
                                 .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
-                                .font(themeManager.selectedTheme.fonts.medium16)
+                                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 16))
                                 .multilineTextAlignment(.center)
                         }
                         .padding(10)
@@ -37,8 +37,8 @@ struct TimeoutMessageComponent: View {
                     .cornerRadius(6)
                     
                     Text(viewModel.uiState.translator.t("default.operation.code.label"))
-                        .foregroundColor(Color(.label))
-                        .font(themeManager.selectedTheme.fonts.regular14)
+                        .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                        .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                         .multilineTextAlignment(.center)
                     CopyToClipboardOperationId(
                         text: operationFailure.operationID ?? "",

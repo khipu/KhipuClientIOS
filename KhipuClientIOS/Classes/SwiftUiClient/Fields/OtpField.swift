@@ -7,7 +7,7 @@ struct OtpField: View {
     @EnvironmentObject private var themeManager: ThemeManager
     @State private var focusedIndex: Int = 0
     @FocusState private var focusedField: FocusableField?
-
+    
     let formItem: FormItem
     let isValid: (Bool) -> Void
     let returnValue: (String) -> Void
@@ -24,7 +24,7 @@ struct OtpField: View {
     var body: some View {
         let count: Int = min(Int(formItem.length ?? 0), 6)
         VStack {
-            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
             HStack(spacing: 16) {
                 var a = 0
                 ForEach(0..<count, id: \.self) { index in

@@ -4,7 +4,7 @@ import SwiftUI
 struct FormError: View {
     var text: String?
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     var body: some View {
         
         if !(text?.isEmpty ?? true) {
@@ -22,7 +22,7 @@ struct FormError: View {
                 VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.verySmall) {
                     
                     Text(text!)
-                        .font(themeManager.selectedTheme.fonts.regular14)
+                        .font(themeManager.selectedTheme.fonts.font(style: .regular, size:14))
                         .kerning(0.17)
                         .foregroundColor(themeManager.selectedTheme.colors.onTertiary)
                         .frame(maxWidth: .infinity, alignment: .topLeading)
