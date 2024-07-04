@@ -61,7 +61,6 @@ struct TimeoutMessageComponent: View {
                 .frame(maxWidth: .infinity, alignment: .top)
             }
             .padding(.horizontal,Dimens.Padding.large)
-            .padding(.vertical,Dimens.Padding.quiteLarge)
             .frame(maxWidth: .infinity, alignment: .top)
         }
         .padding(.horizontal,Dimens.Padding.large)

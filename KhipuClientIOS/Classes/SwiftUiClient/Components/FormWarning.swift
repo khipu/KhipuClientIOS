@@ -10,7 +10,7 @@ struct FormWarning: View {
         HStack(alignment: .center) {
             HStack(alignment: .top, spacing: 0) {
                 Image(systemName: "exclamationmark.triangle")
-                .foregroundColor(themeManager.selectedTheme.colors.tertiary) }
+                .foregroundColor(themeManager.selectedTheme.colors.warning) }
             .padding(.leading, 0)
             .padding(.trailing,Dimens.Padding.veryMedium)
             .padding(.vertical,Dimens.Padding.extraSmall)
@@ -19,7 +19,7 @@ struct FormWarning: View {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .kerning(0.17)
-                    .foregroundColor(themeManager.selectedTheme.colors.onTertiary)
+                    .foregroundColor(themeManager.selectedTheme.colors.onWarning)
                 .frame(maxWidth: .infinity, alignment: .topLeading) }
             .padding(.horizontal, 0)
             .padding(.vertical,Dimens.Padding.extraSmall)
@@ -29,7 +29,7 @@ struct FormWarning: View {
         .overlay(
             Rectangle()
                 .inset(by: 0.5)
-                .stroke(themeManager.selectedTheme.colors.tertiary, lineWidth: 1)
+                .stroke(themeManager.selectedTheme.colors.warning, lineWidth: 1)
         )
     }
 }

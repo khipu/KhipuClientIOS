@@ -189,4 +189,12 @@ struct Colors {
     var labelForeground: Color {
         return Color("labelForeground", bundle: bundle)
     }
+    
+    var warning: Color {
+        return Color("warning", bundle: bundle)
+    }
+    
+    var onWarning: Color {
+        return Color("onWarning", bundle: bundle)
+    }
 }
