@@ -6,22 +6,24 @@ struct CopyToClipboardOperationId: View {
     var textToCopy: String
     var background: Color
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     var body: some View {
         Button(action: {
             UIPasteboard.general.string = textToCopy
         }) {
-            HStack {
+            HStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
+                
                 Text(text)
-                    .font(.system(size: themeManager.selectedTheme.dimens.veryMedium))
-                Image(systemName: "doc.on.doc")
-                    .resizable()
-                    .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                
+                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width:Dimens.Image.small, height:Dimens.Image.small))
+                Image(uiImage: image)
             }
-            .padding(.all, 8)
-            .background(background)
-            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
         }
+        .padding(.horizontal,Dimens.Padding.medium)
+        .padding(.vertical, 0)
+        .background(themeManager.selectedTheme.colors.onSecondaryContainer)
+        .cornerRadius(Dimens.CornerRadius.extraSmall)
         .buttonStyle(PlainButtonStyle())
     }
 }
@@ -32,22 +34,22 @@ struct CopyToClipboardLink: View {
     var textToCopy: String
     var background: Color
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     var body: some View {
         Button(action: {
             UIPasteboard.general.string = textToCopy
         }) {
-            HStack {
+            HStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
                 Text(text)
-                    .font(.system(size: themeManager.selectedTheme.dimens.extraMedium))
-                Image(systemName: "doc.on.doc")
-                    .resizable()
-                    .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                
+                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width:Dimens.Image.small, height:Dimens.Image.small))
+                Image(uiImage: image)
             }
-            .padding()
-            .background(background)
-            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
-        }
+            .padding(.horizontal,Dimens.Padding.medium)
+            .padding(.vertical, 0)
+            .background(themeManager.selectedTheme.colors.onSecondaryContainer)
+            .cornerRadius(Dimens.CornerRadius.extraSmall)        }
         .buttonStyle(PlainButtonStyle())
     }
 }
@@ -70,7 +72,7 @@ struct CopyToClipboardOperationId_Previews: PreviewProvider {
 struct CopyToClipboardLink_Previews: PreviewProvider {
     static var previews: some View {
         CopyToClipboardLink(
-            text: "Copy", 
+            text: "Copy",
             textToCopy: "Copied text",
             background: Color(hexString: "#a6c6e5")!
         )

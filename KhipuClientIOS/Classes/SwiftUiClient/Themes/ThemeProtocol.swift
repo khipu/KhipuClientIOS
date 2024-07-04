@@ -15,9 +15,7 @@ protocol ThemeProtocol {
     func setColorSchemeAndCustomColors(colorScheme: ColorScheme, colors: KhipuColors?)
     
     var colors: Colors { get }
-    
-    var dimens: Dimens { get }
-    
+        
     var fonts: Fonts { get }
     
 }

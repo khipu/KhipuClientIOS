@@ -11,72 +11,36 @@ struct Fonts {
         if let _ = UIFont(name: name, size: size) {
             return Font.custom(name, size: size).weight(weight)
         } else {
-            print("Warning: Font \(name) not found. Using system font as fallback.")
             return Font.system(size: size, weight: weight)
         }
     }
 
-    var regular10: Font {
-        customFont(name: "PublicSans-Regular", size: 10, weight: .regular)
+    func font(style: FontStyle, size: CGFloat) -> Font {
+        let fontName: String
+        let weight: Font.Weight
+        
+        switch style {
+        case .regular:
+            fontName = "PublicSans-Regular"
+            weight = .regular
+        case .medium:
+            fontName = "PublicSans-Medium"
+            weight = .medium
+        case .semiBold:
+            fontName = "PublicSans-SemiBold"
+            weight = .semibold
+        case .bold:
+            fontName = "PublicSans-Bold"
+            weight = .bold
+        }
+        
+        return customFont(name: fontName, size: size, weight: weight)
     }
-    var regular12: Font {
-        customFont(name: "PublicSans-Regular", size: 12, weight: .regular)
-    }
-    var regular14: Font {
-        customFont(name: "PublicSans-Regular", size: 14, weight: .regular)
-    }
-    var regular18: Font {
-        customFont(name: "PublicSans-Regular", size: 18, weight: .regular)
-    }
-    var regular20: Font {
-        customFont(name: "PublicSans-Regular", size: 20, weight: .regular)
-    }
-    var medium10: Font {
-        customFont(name: "PublicSans-Medium", size: 10, weight: .medium)
-    }
-    var medium12: Font {
-        customFont(name: "PublicSans-Medium", size: 12, weight: .medium)
-    }
-    var medium14: Font {
-        customFont(name: "PublicSans-Medium", size: 14, weight: .medium)
-    }
-    var medium18: Font {
-        customFont(name: "PublicSans-Medium", size: 18, weight: .medium)
-    }
-    var medium20: Font {
-        customFont(name: "PublicSans-Medium", size: 20, weight: .medium)
-    }
-    var semiBold10: Font {
-        customFont(name: "PublicSans-SemiBold", size: 10, weight: .semibold)
-    }
-    var semiBold12: Font {
-        customFont(name: "PublicSans-SemiBold", size: 12, weight: .semibold)
-    }
-    var semiBold14: Font {
-        customFont(name: "PublicSans-SemiBold", size: 14, weight: .semibold)
-    }
-    var semiBold18: Font {
-        customFont(name: "PublicSans-SemiBold", size: 18, weight: .semibold)
-    }
-    var semiBold20: Font {
-        customFont(name: "PublicSans-SemiBold", size: 20, weight: .semibold)
-    }
-    var bold10: Font {
-        customFont(name: "PublicSans-Bold", size: 10, weight: .bold)
-    }
-    var bold12: Font {
-        customFont(name: "PublicSans-Bold", size: 12, weight: .bold)
-    }
-    var bold14: Font {
-        customFont(name: "PublicSans-Bold", size: 14, weight: .bold)
-    }
-    var bold18: Font {
-        customFont(name: "PublicSans-Bold", size: 18, weight: .bold)
-    }
-    var bold20: Font {
-        customFont(name: "PublicSans-Bold", size: 20, weight: .bold)
+    
+    enum FontStyle {
+        case regular
+        case medium
+        case semiBold
+        case bold
     }
 }
-
-
-

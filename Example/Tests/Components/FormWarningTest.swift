@@ -17,10 +17,6 @@ final class FormWarningTest: XCTestCase {
         let hStack = try inspectedView.hStack()
 
         XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(hStack, expectedText: "Warning message"), "Failed to find the text: Warning message")
-        
-        let image = try hStack.image(1)
-        let imageColor = try image.foregroundColor()
-        XCTAssertEqual(imageColor, themeManager.selectedTheme.colors.tertiary)
     }
 
 }

@@ -1,4 +1,3 @@
-
 import XCTest
 import SwiftUI
 import ViewInspector
@@ -13,45 +12,33 @@ final class CheckboxFieldTest: XCTestCase {
         let viewModel = KhipuViewModel()
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
-
+        
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
-
+        
         let formItem = try! FormItem(
-                 """
-                     {
-                       "id": "item",
-                       "label": "Some stuff",
-                       "type": "\(FormItemTypes.checkbox.rawValue)",
-                       "defaultState": "on"
-                     }
-                 """
-         )
-
-        var view = CheckboxField(
+                     """
+                         {
+                           "id": "item1",
+                           "label": "item1",
+                           "type": "\(FormItemTypes.checkbox.rawValue)",
+                           "defaultState": "off",
+                           "requiredState": "on"
+                         }
+                     """
+        )
+        
+        let view = CheckboxField(
             formItem: formItem,
             hasNextField: false,
-            isValid:  isValid,
+            isValid: isValid,
             returnValue: returnValue,
             viewModel: viewModel
         )
-
         let inspected = try view.environmentObject(ThemeManager()).inspect()
-
-        let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText")
-        let text = try label.text().string()
-        XCTAssertEqual(text, "Some stuff")
-
-        let expectation = view.on(\.didAppear) { view in
-            let toggle = try view
-                .vStack()
-                .hStack(0)
-                .toggle(0)
-            XCTAssertTrue(try toggle.isOn())
-        }
-
-        ViewHosting.host(view: view.environmentObject(ThemeManager()))
-
-        wait(for: [expectation], timeout: 0.1)
+        
+        let checkbox = try inspected.find(viewWithAccessibilityIdentifier: "checkbox").toggle()
+        XCTAssertFalse(try checkbox.isOn())
+        
     }
 }

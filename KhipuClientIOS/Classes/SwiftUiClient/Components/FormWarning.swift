@@ -6,27 +6,31 @@ struct FormWarning: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        HStack(alignment: .center) {
-            Spacer()
-                .frame(width: themeManager.selectedTheme.dimens.small)
-            Image(systemName: "exclamationmark.triangle")
-                .resizable()
-                .scaledToFit()
-                .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
-                .foregroundColor(themeManager.selectedTheme.colors.tertiary)
-            Text(text)
-                .padding(.all, themeManager.selectedTheme.dimens.medium)
-                .foregroundColor(themeManager.selectedTheme.colors.onTertiary)
-                .font(.system(size: 16, weight: .regular))
-            Spacer()
-        }
-        .padding(.all, themeManager.selectedTheme.dimens.verySmall)
-        .background(themeManager.selectedTheme.colors.surface)
-        .overlay(
-            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
-                .stroke(themeManager.selectedTheme.colors.tertiary, lineWidth: 0.3)
-                )
         
+        HStack(alignment: .center) {
+            HStack(alignment: .top, spacing: 0) {
+                Image(systemName: "exclamationmark.triangle")
+                .foregroundColor(themeManager.selectedTheme.colors.warning) }
+            .padding(.leading, 0)
+            .padding(.trailing,Dimens.Padding.veryMedium)
+            .padding(.vertical,Dimens.Padding.extraSmall)
+            
+            VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
+                Text(text)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                    .kerning(0.17)
+                    .foregroundColor(themeManager.selectedTheme.colors.onWarning)
+                .frame(maxWidth: .infinity, alignment: .topLeading) }
+            .padding(.horizontal, 0)
+            .padding(.vertical,Dimens.Padding.extraSmall)
+        }
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.moderatelySmall)
+        .overlay(
+            Rectangle()
+                .inset(by: 0.5)
+                .stroke(themeManager.selectedTheme.colors.warning, lineWidth: 1)
+        )
     }
 }
 

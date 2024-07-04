@@ -1,7 +1,6 @@
 import SwiftUI
 import KhenshinProtocol
 
-
 @available(iOS 15.0.0, *)
 struct FailureMessageComponent: View {
     let operationFailure: OperationFailure
@@ -9,27 +8,40 @@ struct FailureMessageComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
-            Image(systemName: "info.circle.fill")
-                .resizable()
-                .scaledToFit()
-                .frame(width: themeManager.selectedTheme.dimens.larger, height: themeManager.selectedTheme.dimens.larger)
-                .foregroundColor(themeManager.selectedTheme.colors.tertiary)
-            Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.title2)
-                .multilineTextAlignment(.center)
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
+                
+                let image = UIImage.fontAwesomeIcon(name: .infoCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
+                Image(uiImage: image)
+                
+            }
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .top)
+            .cornerRadius(8)
             
-            Text((operationFailure.title)!)
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.title3)
-                .multilineTextAlignment(.center)
+            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
+                Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
+                    .multilineTextAlignment(.center)
+                
+            }
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .top)
+            .cornerRadius(8)
+            
+            HStack(alignment: .center, spacing:Dimens.Spacing.medium) {
+                Text((operationFailure.title)!)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
+                    .multilineTextAlignment(.center)
+            }
+            .padding(.horizontal,Dimens.Padding.moderatelyLarge)
+            .padding(.vertical, 0)
+            .frame(maxWidth: .infinity, alignment: .center)
             
             FormWarning(text: operationFailure.body ?? "")
+            Spacer().frame(height:Dimens.Spacing.large)
+            DetailSectionFailure(operationFailure: operationFailure,operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel)
             
-            Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
-            DetailSectionFailure(operationFailure: operationFailure, operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel)
-            Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
@@ -40,8 +52,11 @@ struct FailureMessageComponent: View {
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.quiteLarge)
+        .frame(maxWidth: .infinity, alignment: .top)
     }
+    
 }
 
 @available(iOS 15.0.0, *)
@@ -52,15 +67,20 @@ struct DetailSectionFailure: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
+        
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.headline)
-                .fontWeight(.bold)
+                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
+            
             DetailItemFailure(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
+            
             DetailItemFailure(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")
+            DashedLine()
             DetailItemFailure(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationFailure.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationFailure.reason),shouldCopyValue: true)
         }
+        .padding(Dimens.Padding.large)
+        .frame(maxWidth: .infinity, alignment: .top)
+        .cornerRadius(Dimens.CornerRadius.moderatelySmall)
     }
 }
 
@@ -74,18 +94,18 @@ struct DetailItemFailure: View {
     var body: some View {
         HStack {
             Text(label)
-                .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-                .font(.body)
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
+                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
             Spacer()
             if !shouldCopyValue {
                 Text(value)
-                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                    .font(.body)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                
             } else {
-                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background: themeManager.selectedTheme.colors.secondaryContainer)
+                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
             }
         }
-        .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
+        .padding(.vertical,Dimens.Padding.verySmall)
     }
 }
 
@@ -104,7 +124,7 @@ struct FailureMessageComponent_Previews: PreviewProvider {
                     resultMessage: "resultMessage",
                     title: "Title",
                     reason: FailureReasonType.taskExecutionError
-        ), viewModel: KhipuViewModel())
+                ), viewModel: KhipuViewModel())
         .environmentObject(ThemeManager())
         .padding()
     }
@@ -124,7 +144,7 @@ struct DetailSectionFailure_Previews: PreviewProvider {
                     resultMessage: "resultMessage",
                     title: "Title",
                     reason: FailureReasonType.taskExecutionError
-        ), viewModel: KhipuViewModel())
+                ), viewModel: KhipuViewModel())
         .environmentObject(ThemeManager())
         .padding()
     }

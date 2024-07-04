@@ -5,9 +5,11 @@ import KhenshinProtocol
 struct CoordinateInputField: View {
     var formItem: FormItem
     @Binding var coordValue: String
+    @EnvironmentObject private var themeManager: ThemeManager
+    
     var length: Int
     let nextField: () -> Void
-    let updateIndex:() -> Void
+    let updateIndex: () -> Void
     
     var body: some View {
         Group {
@@ -17,8 +19,8 @@ struct CoordinateInputField: View {
                 TextField("", text: $coordValue)
             }
         }
-        .frame(minWidth: 30, maxWidth: 80)
-        .padding(.trailing, 8)
+        .frame(minWidth:Dimens.Frame.quiteLarge, maxWidth:Dimens.Frame.muchLarger)
+        .padding(.trailing,Dimens.Padding.extraSmall)
         .multilineTextAlignment(.center)
         .textFieldStyle(KhipuTextFieldStyle())
         .autocorrectionDisabled(true)
@@ -62,11 +64,9 @@ struct CoordinatesField: View {
     var body: some View {
         VStack {
             HStack(spacing: 16) {
-                var a = 0
                 ForEach(0..<3, id: \.self) { index in
-                    a = a + 1
-                    return VStack(alignment: .center) {
-                        FieldLabel(text: formItem.labels?[index], font:themeManager.selectedTheme.fonts.medium14)
+                    VStack(alignment: .center) {
+                        FieldLabel(text: formItem.labels?[index], font: themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                         
                         CoordinateInputField(formItem: formItem,
                                              coordValue: $states[index],
@@ -79,22 +79,19 @@ struct CoordinatesField: View {
                             focusedIndex = index
                             focusedField = FieldUtils.getElement(FocusableField.self, at: focusedIndex)
                         }
-                        ).accessibilityIdentifier("coordinateInput\(a)")
-                       
-                        .focused($focusedField, equals: FieldUtils.getElement(FocusableField.self, at: index))
+                        ).accessibilityIdentifier("coordinateInput\(index + 1)")
+                            .focused($focusedField, equals: FieldUtils.getElement(FocusableField.self, at: index))
                     }
-                    .accessibilityIdentifier("coordinateItem\(a)")
+                    .accessibilityIdentifier("coordinateItem\(index + 1)")
                 }
             }
             HintLabel(text: formItem.hint)
         }
-        
-        .padding(.horizontal, 16)
+        .padding(.horizontal,Dimens.Padding.extraMedium)
         .onChange(of: states) { _ in
             isValid(states.prefix(3).allSatisfy { $0.count == 2 })
             returnValue(states.prefix(3).joined(separator: "|"))
         }
-        
     }
 }
 

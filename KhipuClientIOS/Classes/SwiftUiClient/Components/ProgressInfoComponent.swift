@@ -10,19 +10,19 @@ struct ProgressInfoComponent: View {
         VStack {
             VStack(alignment: .center) {
                 CircularProgressView()
-                    .frame(width: themeManager.selectedTheme.dimens.extraLarge,
-                           height: themeManager.selectedTheme.dimens.extraLarge,
+                    .frame(width: Dimens.Frame.extraLarge,
+                           height:Dimens.Frame.extraLarge,
                            alignment: .center)
-                    .padding(.top, themeManager.selectedTheme.dimens.massive)
+                    .padding(.top,Dimens.Padding.massive)
                 Spacer().frame(height: 30)
                 Text(message)
-                    .font(.system(size: themeManager.selectedTheme.dimens.large))
-                    .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
+                    .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
+                    .padding(.horizontal,Dimens.Padding.moderatelyLarge)
             }
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
+        .padding(.horizontal,Dimens.Padding.moderatelyLarge)
     }
 }
 

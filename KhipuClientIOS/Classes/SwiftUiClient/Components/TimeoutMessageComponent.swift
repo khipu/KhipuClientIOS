@@ -9,74 +9,81 @@ struct TimeoutMessageComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
-            Group {
-                Text(viewModel.uiState.translator.t("page.timeout.session.closed"))
-                    .foregroundColor(Color(.label))
-                    .font(.title2)
-                    .multilineTextAlignment(.center)
-                Spacer()
-                    .frame(height: themeManager.selectedTheme.dimens.extraSmall)
-            }
-            Group {
-                FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"))
-                Spacer()
-                    .frame(height: themeManager.selectedTheme.dimens.extraLarge)
-            }
-            Group {
-                Image(systemName: "clock.arrow.circlepath")
-                    .font(.system(size: themeManager.selectedTheme.dimens.huge))
-                    .foregroundColor(Color.gray.opacity(0.7))
-                
-                Text(viewModel.uiState.translator.t("page.timeout.end"))
-                    .foregroundColor(Color(.label))
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
-                
-                Spacer()
-                    .frame(height: themeManager.selectedTheme.dimens.extraLarge)
-            }
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+            Text(viewModel.uiState.translator.t("page.timeout.session.closed"))
+                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .top)
             
-            Group {
-                Text(viewModel.uiState.translator.t("default.operation.code.label"))
-                    .foregroundColor(Color(.label))
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
-                CopyToClipboardOperationId(
-                    text: operationFailure.operationID ?? "",
-                    textToCopy: FieldUtils.formatOperationId(operationId: operationFailure.operationID ?? ""),
-                    background:Color(red: 60/255, green: 180/255, blue: 229/255)
-                )
-            }
+            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
+                FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"))
                 
-            MainButton(
-                text: viewModel.uiState.translator.t("page.redirectManual.redirecting"),
-                enabled: true,
-                onClick: {
-                    viewModel.uiState.returnToApp = true
-                },
-                foregroundColor: themeManager.selectedTheme.colors.onTertiary,
-                backgroundColor: themeManager.selectedTheme.colors.tertiary
-            )
+                VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+                    VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+                        let image = UIImage.fontAwesomeIcon(name: .clock, style: .light, textColor: UIColor(themeManager.selectedTheme.colors.labelForeground), size: CGSize(width:Dimens.Image.huge, height:Dimens.Image.huge))
+                        Image(uiImage: image)
+                        HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
+                            Text(viewModel.uiState.translator.t("page.timeout.end"))
+                                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 16))
+                                .multilineTextAlignment(.center)
+                        }
+                        .padding(10)
+                        .frame(maxWidth: .infinity, minHeight: Dimens.Frame.larger, maxHeight:Dimens.Frame.larger, alignment: .center)
+                    }
+                    .padding(.horizontal, 0)
+                    .padding(.vertical,Dimens.Padding.larger)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .cornerRadius(Dimens.CornerRadius.moderatelySmall)
+                    
+                    Text(viewModel.uiState.translator.t("default.operation.code.label"))
+                        .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                        .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+                        .multilineTextAlignment(.center)
+                    CopyToClipboardOperationId(
+                        text: operationFailure.operationID ?? "",
+                        textToCopy: FieldUtils.formatOperationId(operationId: operationFailure.operationID ?? ""),
+                        background:themeManager.selectedTheme.colors.onSecondaryContainer)
+                    
+                    
+                    MainButton(
+                        text: viewModel.uiState.translator.t("page.redirectManual.redirecting"),
+                        enabled: true,
+                        onClick: {
+                            viewModel.uiState.returnToApp = true
+                        },
+                        foregroundColor: themeManager.selectedTheme.colors.onTertiary,
+                        backgroundColor: themeManager.selectedTheme.colors.tertiary
+                    )
+                }
+                .padding(.horizontal,Dimens.Padding.large)
+                .padding(.vertical,Dimens.Padding.quiteLarge)
+                .frame(maxWidth: .infinity, alignment: .top)
+            }
+            .padding(.horizontal,Dimens.Padding.large)
+            .frame(maxWidth: .infinity, alignment: .top)
         }
-        .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.quiteLarge)
+        .frame(maxWidth: .infinity, alignment: .top)
     }
+    
 }
 
 @available(iOS 15.0, *)
 struct TimeoutMessageComponent_Previews: PreviewProvider{
     static var previews: some View{
         return TimeoutMessageComponent(operationFailure:
-            OperationFailure(
-                type: MessageType.operationWarning,
-                body: "body",
-                events: nil,
-                exitURL: "exitUrl",
-                operationID: "operationID",
-                resultMessage: "resultMessage",
-                title: "Title",
-                reason: FailureReasonType.formTimeout
-            ), viewModel: KhipuViewModel()
+                                        OperationFailure(
+                                            type: MessageType.operationWarning,
+                                            body: "body",
+                                            events: nil,
+                                            exitURL: "exitUrl",
+                                            operationID: "operationID",
+                                            resultMessage: "resultMessage",
+                                            title: "Title",
+                                            reason: FailureReasonType.formTimeout
+                                        ), viewModel: KhipuViewModel()
         )
         .environmentObject(ThemeManager())
         .padding()

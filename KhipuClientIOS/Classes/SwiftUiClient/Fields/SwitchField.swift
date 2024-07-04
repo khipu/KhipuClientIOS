@@ -20,7 +20,7 @@ struct SwitchField: View {
         VStack(alignment: .leading, spacing:0) {
             HStack {
                 Toggle(isOn: $isChecked) {
-                    FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.regular14, lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall).accessibilityIdentifier("toggleText")
+                    FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing:Dimens.Spacing.medium, paddingBottom:Dimens.Spacing.extraSmall).accessibilityIdentifier("toggleText")
                 }
                 .accessibilityIdentifier("toggle")
                 .onAppear {

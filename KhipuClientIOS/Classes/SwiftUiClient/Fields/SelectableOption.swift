@@ -10,16 +10,16 @@ struct SelectableOption<Content: View>: View  {
     
     var body: some View {
         
-        HStack(alignment: .center, spacing: 16) {
+        HStack(alignment: .center, spacing:Dimens.Spacing.extraMedium) {
             content()
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.large)
-        .padding(.vertical, themeManager.selectedTheme.dimens.medium)
-        .frame(maxWidth: .infinity, minHeight: 65, maxHeight: 65, alignment: .leading)
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.medium)
+        .frame(maxWidth: .infinity, minHeight:Dimens.Frame.substantiallyLarge, maxHeight: Dimens.Frame.substantiallyLarge, alignment: .leading)
         .background(themeManager.selectedTheme.colors.background)
-        .cornerRadius(6)
+        .cornerRadius(Dimens.CornerRadius.moderatelySmall)
         .overlay(
-            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
+            RoundedRectangle(cornerRadius:Dimens.CornerRadius.extraSmall)
                 .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 0.5)
         )
     }

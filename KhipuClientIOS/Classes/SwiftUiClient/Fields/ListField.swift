@@ -12,12 +12,11 @@ struct ListField: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.small) {
+        VStack(alignment: .leading, spacing:Dimens.Spacing.small) {
             var a = 0
             ForEach(formItem.options ?? [], id: \.value) { option in
                 a = a + 1
                 return VStack() {
-                    Spacer().frame(height: 3)
                     Button(action: {
                         selectedOption = option
                         isValid(true)

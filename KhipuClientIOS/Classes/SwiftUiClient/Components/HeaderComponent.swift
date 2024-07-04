@@ -13,11 +13,11 @@ struct HeaderComponent: View {
         if (viewModel.uiState.operationInfo?.merchant) != nil {
             VStack(spacing: 0) {
                 headerContent
-                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+                Spacer().frame(height:Dimens.Spacing.extraSmall)
                 Divider()
-                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+                Spacer().frame(height:Dimens.Spacing.extraSmall)
                 footerContent
-                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+                Spacer().frame(height:Dimens.Spacing.extraSmall)
                 Divider()
             }
             .sheet(isPresented: $showMerchantDialog) {
@@ -41,19 +41,19 @@ struct HeaderComponent: View {
                 image
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 40, height: 40)
-                    .clipShape(RoundedRectangle(cornerRadius: 4))
+                    .frame(width:Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
+                    .clipShape(RoundedRectangle(cornerRadius: Dimens.CornerRadius.verySmall))
             } placeholder: {
                 ProgressView()
             }
             
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
                 Text(viewModel.uiState.operationInfo?.merchant?.name ?? "")
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
                 
                 Text(viewModel.uiState.operationInfo?.subject ?? "")
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(Color.primary)
                     .lineLimit(1)
                     .truncationMode(.tail)
@@ -61,35 +61,35 @@ struct HeaderComponent: View {
             
             Spacer()
             
-            VStack(alignment: .trailing, spacing: 4) {
+            VStack(alignment: .trailing, spacing:Dimens.Spacing.verySmall) {
                 Text(viewModel.uiState.translator.t("header.amount", default: "").uppercased())
-                    .font(themeManager.selectedTheme.fonts.medium10)
+                    .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 10))
                     .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
                 
                 Text(viewModel.uiState.operationInfo?.amount ?? "")
-                    .font(themeManager.selectedTheme.fonts.bold20)
+                    .font(themeManager.selectedTheme.fonts.font(style: .bold, size: 20))
                     .foregroundColor(Color.primary)
                 
             }
-        }.padding(.horizontal, themeManager.selectedTheme.dimens.large)
-            .padding(.vertical,themeManager.selectedTheme.dimens.veryMedium)
+        }.padding(.horizontal,Dimens.Spacing.large)
+            .padding(.vertical,Dimens.Padding.veryMedium)
     }
     
     private var footerContent: some View {
         HStack {
             formattedCode()
-                .font(themeManager.selectedTheme.fonts.medium10)
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size:10))
             
             Spacer()
             
             Button(action: { showMerchantDialog = true }) {
                 Text("Ver detalle")
-                    .font(themeManager.selectedTheme.fonts.semiBold14)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.secondary)
                     .bold()
             }
             
-        }.padding(.horizontal, themeManager.selectedTheme.dimens.large)
+        }.padding(.horizontal,Dimens.Padding.large)
         
     }
     private func formattedCode() -> Text {

@@ -15,14 +15,14 @@ struct CircularProgressView: View {
             Circle()
                 .stroke(
                     themeManager.selectedTheme.colors.surface,
-                    lineWidth: themeManager.selectedTheme.dimens.small
+                    lineWidth:Dimens.Spacing.small
                 )
             Circle()
                 .trim(from: 0, to: drawingStroke ? 1 : 0)
                 .stroke(
                     themeManager.selectedTheme.colors.primary,
                     style: StrokeStyle(
-                        lineWidth: themeManager.selectedTheme.dimens.small,
+                        lineWidth:Dimens.Spacing.small,
                         lineCap: .round
                     )
                 )

@@ -5,7 +5,6 @@ import SwiftUI
 class KhipuTheme: ThemeProtocol {
     
     var colors: Colors = Colors()
-    var dimens: Dimens = Dimens()
     var fonts: Fonts = Fonts()
 
     public func setColorSchemeAndCustomColors(colorScheme: ColorScheme, colors: KhipuColors?) {
