@@ -11,30 +11,30 @@ struct FormInfo: View {
             HStack(alignment: .top, spacing: 0) {
                 Image(systemName: "info.circle")
                     .foregroundColor(themeManager.selectedTheme.colors.secondary)
-                    .frame(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large)
+                    .frame(width:Dimens.Frame.medium, height:Dimens.Frame.medium)
             }
             .padding(.leading, 0)
-            .padding(.trailing, themeManager.selectedTheme.dimens.veryMedium)
-            .padding(.vertical, themeManager.selectedTheme.dimens.extraSmall)
+            .padding(.trailing,Dimens.Padding.veryMedium)
+            .padding(.vertical,Dimens.Padding.extraSmall)
             
-            VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.verySmall) {
+            VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.secondary)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .padding(.horizontal, 0)
-            .padding(.vertical, themeManager.selectedTheme.dimens.extraSmall)
+            .padding(.vertical,Dimens.Padding.extraSmall)
             .frame(maxWidth: .infinity, alignment: .topLeading)
             
             
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.extraMedium)
-        .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
+        .padding(.horizontal,Dimens.Padding.extraMedium)
+        .padding(.vertical,Dimens.Padding.moderatelySmall)
         .frame(maxWidth: .infinity, alignment: .topLeading)
-        .cornerRadius(themeManager.selectedTheme.dimens.verySmall)
+        .cornerRadius(Dimens.CornerRadius.verySmall)
         .overlay(
-            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.verySmall)
+            RoundedRectangle(cornerRadius:Dimens.CornerRadius.verySmall)
                 .inset(by: 0.5)
                 .stroke(themeManager.selectedTheme.colors.secondary, lineWidth: 1)
         )

@@ -37,16 +37,16 @@ public struct GroupedListField: View {
             
             TextField(formItem.placeHolder ?? "", text: $textFieldValue)
                 .padding(.vertical)
-                .padding(.horizontal, themeManager.selectedTheme.dimens.veryLarge)
+                .padding(.horizontal,Dimens.Padding.veryLarge)
                 .overlay(
-                    RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.extraSmall)
+                    RoundedRectangle(cornerRadius:Dimens.CornerRadius.extraSmall)
                         .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                 )
                 .padding(.horizontal)
                 .overlay(
                     Image(systemName: "magnifyingglass")
                         .foregroundColor(.gray)
-                        .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
+                        .padding(.horizontal,Dimens.Padding.moderatelyLarge)
                     ,
                     alignment: .leading
                 )

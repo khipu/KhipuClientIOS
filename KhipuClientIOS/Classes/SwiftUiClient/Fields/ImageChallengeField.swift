@@ -18,13 +18,13 @@ struct ImageChallengeField: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing:Dimens.Spacing.medium, paddingBottom:Dimens.Spacing.extraSmall)
             
             VStack {
                 Image(uiImage:  FieldUtils.loadImageFromBase64(formItem.imageData))
                     .resizable()
                     .scaledToFit()
-                    .frame(width: themeManager.selectedTheme.dimens.gigantic, height: themeManager.selectedTheme.dimens.gigantic)
+                    .frame(width:Dimens.Image.gigantic, height:Dimens.Image.gigantic)
                 
             }
             .frame(maxWidth: .infinity, alignment: .center)
@@ -45,7 +45,7 @@ struct ImageChallengeField: View {
                 ErrorLabel(text: error)
             }
         }
-        .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
+        .padding(.vertical,Dimens.Padding.verySmall)
     }
     
     func shouldDisplayError() -> Bool {

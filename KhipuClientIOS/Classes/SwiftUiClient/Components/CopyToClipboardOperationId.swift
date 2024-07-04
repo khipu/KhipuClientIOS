@@ -11,19 +11,19 @@ struct CopyToClipboardOperationId: View {
         Button(action: {
             UIPasteboard.general.string = textToCopy
         }) {
-            HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
+            HStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
                 
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                 
-                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large))
+                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width:Dimens.Image.small, height:Dimens.Image.small))
                 Image(uiImage: image)
             }
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.medium)
+        .padding(.horizontal,Dimens.Padding.medium)
         .padding(.vertical, 0)
         .background(themeManager.selectedTheme.colors.onSecondaryContainer)
-        .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)
+        .cornerRadius(Dimens.CornerRadius.extraSmall)
         .buttonStyle(PlainButtonStyle())
     }
 }
@@ -39,17 +39,17 @@ struct CopyToClipboardLink: View {
         Button(action: {
             UIPasteboard.general.string = textToCopy
         }) {
-            HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
+            HStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                 
-                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width: themeManager.selectedTheme.dimens.large, height: themeManager.selectedTheme.dimens.large))
+                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width:Dimens.Image.small, height:Dimens.Image.small))
                 Image(uiImage: image)
             }
-            .padding(.horizontal, themeManager.selectedTheme.dimens.medium)
+            .padding(.horizontal,Dimens.Padding.medium)
             .padding(.vertical, 0)
             .background(themeManager.selectedTheme.colors.onSecondaryContainer)
-            .cornerRadius(themeManager.selectedTheme.dimens.extraSmall)        }
+            .cornerRadius(Dimens.CornerRadius.extraSmall)        }
         .buttonStyle(PlainButtonStyle())
     }
 }

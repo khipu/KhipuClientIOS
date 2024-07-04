@@ -76,7 +76,7 @@ public struct FormComponent: View {
                     )
                 }
             }
-            .padding(.all, themeManager.selectedTheme.dimens.extraMedium)
+            .padding(.all,Dimens.Padding.extraMedium)
             .onAppear {
             startTimer()
                 if let progress = viewModel.uiState.currentForm!.progress,

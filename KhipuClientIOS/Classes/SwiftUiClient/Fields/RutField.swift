@@ -17,7 +17,7 @@ struct RutField: View {
     var body: some View {
         
         VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: themeManager.selectedTheme.dimens.medium, paddingBottom: themeManager.selectedTheme.dimens.extraSmall)
+            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing:Dimens.Spacing.medium, paddingBottom: Dimens.Spacing.extraSmall)
             TextField(formItem.placeHolder ?? "", text: $rutValue)
                 .textFieldStyle(KhipuTextFieldStyle())
                 .autocorrectionDisabled(true)
@@ -39,7 +39,7 @@ struct RutField: View {
                 ErrorLabel(text: error)
             }
         }
-        .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
+        .padding(.vertical,Dimens.Padding.verySmall)
         .onAppear {
             startTimer()
         }

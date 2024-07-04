@@ -9,10 +9,10 @@ struct EndToEndEncryption: View {
     var body: some View {
         VStack {
             CircularProgressView()
-                .frame(width: themeManager.selectedTheme.dimens.extraLarge,
-                       height: themeManager.selectedTheme.dimens.extraLarge,
+                .frame(width:Dimens.Frame.extraLarge,
+                       height:Dimens.Frame.extraLarge,
                        alignment: .center)
-                .padding([.top], themeManager.selectedTheme.dimens.massive)
+                .padding([.top],Dimens.Padding.massive)
             Text(viewModel.uiState.translator.t("default.end.to.end.encryption", default: ""))
                 .frame(alignment: .center)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)

@@ -9,32 +9,32 @@ struct TimeoutMessageComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             Text(viewModel.uiState.translator.t("page.timeout.session.closed"))
                 .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .top)
             
-            VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"))
                 
-                VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
-                    VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
-                        let image = UIImage.fontAwesomeIcon(name: .clock, style: .light, textColor: UIColor(themeManager.selectedTheme.colors.labelForeground), size: CGSize(width: themeManager.selectedTheme.dimens.huge, height: themeManager.selectedTheme.dimens.huge))
+                VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+                    VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+                        let image = UIImage.fontAwesomeIcon(name: .clock, style: .light, textColor: UIColor(themeManager.selectedTheme.colors.labelForeground), size: CGSize(width:Dimens.Image.huge, height:Dimens.Image.huge))
                         Image(uiImage: image)
-                        HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+                        HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
                             Text(viewModel.uiState.translator.t("page.timeout.end"))
                                 .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
                                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 16))
                                 .multilineTextAlignment(.center)
                         }
                         .padding(10)
-                        .frame(maxWidth: .infinity, minHeight: themeManager.selectedTheme.dimens.larger, maxHeight: themeManager.selectedTheme.dimens.larger, alignment: .center)
+                        .frame(maxWidth: .infinity, minHeight: Dimens.Frame.larger, maxHeight:Dimens.Frame.larger, alignment: .center)
                     }
                     .padding(.horizontal, 0)
-                    .padding(.vertical, themeManager.selectedTheme.dimens.larger)
+                    .padding(.vertical,Dimens.Padding.larger)
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .cornerRadius(themeManager.selectedTheme.dimens.moderatelySmall)
+                    .cornerRadius(Dimens.CornerRadius.moderatelySmall)
                     
                     Text(viewModel.uiState.translator.t("default.operation.code.label"))
                         .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
@@ -56,16 +56,16 @@ struct TimeoutMessageComponent: View {
                         backgroundColor: themeManager.selectedTheme.colors.tertiary
                     )
                 }
-                .padding(.horizontal, themeManager.selectedTheme.dimens.large)
-                .padding(.vertical, themeManager.selectedTheme.dimens.quiteLarge)
+                .padding(.horizontal,Dimens.Padding.large)
+                .padding(.vertical,Dimens.Padding.quiteLarge)
                 .frame(maxWidth: .infinity, alignment: .top)
             }
-            .padding(.horizontal, themeManager.selectedTheme.dimens.large)
-            .padding(.vertical, themeManager.selectedTheme.dimens.quiteLarge)
+            .padding(.horizontal,Dimens.Padding.large)
+            .padding(.vertical,Dimens.Padding.quiteLarge)
             .frame(maxWidth: .infinity, alignment: .top)
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.large)
-        .padding(.vertical, themeManager.selectedTheme.dimens.quiteLarge)
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.quiteLarge)
         .frame(maxWidth: .infinity, alignment: .top)
     }
     

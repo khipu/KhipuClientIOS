@@ -13,11 +13,11 @@ struct HeaderComponent: View {
         if (viewModel.uiState.operationInfo?.merchant) != nil {
             VStack(spacing: 0) {
                 headerContent
-                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+                Spacer().frame(height:Dimens.Spacing.extraSmall)
                 Divider()
-                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+                Spacer().frame(height:Dimens.Spacing.extraSmall)
                 footerContent
-                Spacer().frame(height: themeManager.selectedTheme.dimens.extraSmall)
+                Spacer().frame(height:Dimens.Spacing.extraSmall)
                 Divider()
             }
             .sheet(isPresented: $showMerchantDialog) {
@@ -41,13 +41,13 @@ struct HeaderComponent: View {
                 image
                     .resizable()
                     .scaledToFit()
-                    .frame(width: themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger)
-                    .clipShape(RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.verySmall))
+                    .frame(width:Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
+                    .clipShape(RoundedRectangle(cornerRadius: Dimens.CornerRadius.verySmall))
             } placeholder: {
                 ProgressView()
             }
             
-            VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.verySmall) {
+            VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
                 Text(viewModel.uiState.operationInfo?.merchant?.name ?? "")
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
@@ -61,7 +61,7 @@ struct HeaderComponent: View {
             
             Spacer()
             
-            VStack(alignment: .trailing, spacing: themeManager.selectedTheme.dimens.verySmall) {
+            VStack(alignment: .trailing, spacing:Dimens.Spacing.verySmall) {
                 Text(viewModel.uiState.translator.t("header.amount", default: "").uppercased())
                     .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 10))
                     .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
@@ -71,14 +71,14 @@ struct HeaderComponent: View {
                     .foregroundColor(Color.primary)
                 
             }
-        }.padding(.horizontal, themeManager.selectedTheme.dimens.large)
-            .padding(.vertical,themeManager.selectedTheme.dimens.veryMedium)
+        }.padding(.horizontal,Dimens.Spacing.large)
+            .padding(.vertical,Dimens.Padding.veryMedium)
     }
     
     private var footerContent: some View {
         HStack {
             formattedCode()
-                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: themeManager.selectedTheme.dimens.medium))
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size:10))
             
             Spacer()
             
@@ -89,7 +89,7 @@ struct HeaderComponent: View {
                     .bold()
             }
             
-        }.padding(.horizontal, themeManager.selectedTheme.dimens.large)
+        }.padding(.horizontal,Dimens.Padding.large)
         
     }
     private func formattedCode() -> Text {

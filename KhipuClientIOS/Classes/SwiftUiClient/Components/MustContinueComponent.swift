@@ -15,28 +15,28 @@ struct MustContinueComponent: View {
     let operationMustContinue: OperationMustContinue
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.extraSmall) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.extraSmall) {
             Image(systemName: "clock.fill")
                 .foregroundColor(themeManager.selectedTheme.colors.tertiary)
-                .font(.system(size: themeManager.selectedTheme.dimens.larger))
+                .font(.system(size:Dimens.Padding.larger))
             
             Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.system(size: themeManager.selectedTheme.dimens.large))
+                .font(.system(size:Dimens.Padding.large))
                 .multilineTextAlignment(.center)
             
             Text(operationMustContinue.title ?? "")
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.system(size: themeManager.selectedTheme.dimens.large))
+                .font(.system(size:Dimens.Padding.large))
                 .multilineTextAlignment(.center)
             
             FormWarning(text: operationMustContinue.body ?? "")
             
-            Spacer(minLength: themeManager.selectedTheme.dimens.veryMedium)
+            Spacer(minLength:Dimens.Spacing.veryMedium)
             InformationSection(operationMustContinue: operationMustContinue, khipuViewModel: viewModel, khipuUiState: viewModel.uiState)
-            Spacer(minLength: themeManager.selectedTheme.dimens.veryMedium)
+            Spacer(minLength:Dimens.Spacing.veryMedium)
             DetailSection(operationMustContinue: operationMustContinue)
-            Spacer(minLength: themeManager.selectedTheme.dimens.veryMedium)
+            Spacer(minLength:Dimens.Spacing.veryMedium)
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
@@ -47,7 +47,7 @@ struct MustContinueComponent: View {
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(themeManager.selectedTheme.dimens.extraMedium)
+        .padding(Dimens.Padding.extraMedium)
         .background(themeManager.selectedTheme.colors.surface)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
@@ -61,13 +61,13 @@ struct InformationSection: View {
     let khipuUiState: KhipuUiState
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
             Text(khipuUiState.translator.t("page.operationMustContinue.share.description"))
                 .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-                .font(.system(size: themeManager.selectedTheme.dimens.extraMedium))
+                .font(.system(size:Dimens.Padding.extraMedium))
                 .multilineTextAlignment(.center)
             
-            Spacer().frame(height: themeManager.selectedTheme.dimens.extraMedium)
+            Spacer().frame(height:Dimens.Spacing.extraMedium)
             
             CopyToClipboardLink(
                 text: khipuUiState.operationInfo?.urls?.info ?? "",
@@ -75,7 +75,7 @@ struct InformationSection: View {
                 background: themeManager.selectedTheme.colors.secondaryContainer
             )
             
-            Spacer().frame(height: themeManager.selectedTheme.dimens.extraMedium)
+            Spacer().frame(height:Dimens.Spacing.extraMedium)
             
             if #available(iOS 16.0, *) {
                 ShareLink(item: URL(string: khipuUiState.operationInfo?.urls?.info ?? "")!,
@@ -86,7 +86,7 @@ struct InformationSection: View {
         }
         .padding()
         .overlay(
-            RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.moderatelySmall)
+            RoundedRectangle(cornerRadius:Dimens.CornerRadius.moderatelySmall)
                 .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 0.3)
         )
     }
@@ -135,7 +135,7 @@ struct DetailSection: View {
     }
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.verySmall) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
             Text(khipuViewModel.uiState.translator.t("default.detail.label"))
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .font(Font.body.bold())

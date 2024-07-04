@@ -11,7 +11,7 @@ struct MainButton: View {
     @State private var submitted = false
 
     var body: some View {
-        HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.extraSmall) {
+        HStack(alignment: .center, spacing:Dimens.Spacing.extraSmall) {
 
             Button(action: {
                 submitted = true
@@ -19,8 +19,8 @@ struct MainButton: View {
             }) {
                 Text(text)
                     .foregroundColor(enabled && !submitted ? foregroundColor :themeManager.selectedTheme.colors.buttonForeground)
-                    .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
-                    .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
+                    .padding(.horizontal,Dimens.Padding.moderatelyLarge)
+                    .padding(.vertical,Dimens.Padding.moderatelySmall)
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .background(enabled && !submitted ? backgroundColor : themeManager.selectedTheme.colors.buttonBackground)
                     .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 18))
@@ -28,11 +28,11 @@ struct MainButton: View {
             .disabled(!enabled && !submitted)
 
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
-        .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
+        .padding(.horizontal,Dimens.Padding.moderatelyLarge)
+        .padding(.vertical,Dimens.Padding.moderatelySmall)
         .frame(maxWidth: .infinity, alignment: .center)
         .background(enabled && !submitted ? backgroundColor :themeManager.selectedTheme.colors.buttonBackground)
-        .cornerRadius(themeManager.selectedTheme.dimens.moderatelySmall)
+        .cornerRadius(Dimens.CornerRadius.moderatelySmall)
     }
 }
 

@@ -18,7 +18,7 @@ struct CheckboxField: View {
     
     
     var body: some View {
-        VStack(alignment: .leading, spacing:themeManager.selectedTheme.dimens.extraMedium) 
+        VStack(alignment: .leading, spacing:Dimens.Spacing.extraMedium)
         {
             HStack {
                 Toggle(isOn: $isChecked) {

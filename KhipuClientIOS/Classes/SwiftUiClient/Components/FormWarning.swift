@@ -12,20 +12,20 @@ struct FormWarning: View {
                 Image(systemName: "exclamationmark.triangle")
                 .foregroundColor(themeManager.selectedTheme.colors.tertiary) }
             .padding(.leading, 0)
-            .padding(.trailing, themeManager.selectedTheme.dimens.veryMedium)
-            .padding(.vertical, themeManager.selectedTheme.dimens.extraSmall)
+            .padding(.trailing,Dimens.Padding.veryMedium)
+            .padding(.vertical,Dimens.Padding.extraSmall)
             
-            VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.verySmall) {
+            VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .kerning(0.17)
                     .foregroundColor(themeManager.selectedTheme.colors.onTertiary)
                 .frame(maxWidth: .infinity, alignment: .topLeading) }
             .padding(.horizontal, 0)
-            .padding(.vertical, themeManager.selectedTheme.dimens.extraSmall)
+            .padding(.vertical,Dimens.Padding.extraSmall)
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.large)
-        .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.moderatelySmall)
         .overlay(
             Rectangle()
                 .inset(by: 0.5)

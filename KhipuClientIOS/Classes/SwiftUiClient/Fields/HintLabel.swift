@@ -14,7 +14,7 @@ struct HintLabel: View {
                     .accessibilityIdentifier("hintText")
                 Spacer()
             }
-            .padding(.top, themeManager.selectedTheme.dimens.verySmall)
+            .padding(.top,Dimens.Padding.verySmall)
         }
     }
 }

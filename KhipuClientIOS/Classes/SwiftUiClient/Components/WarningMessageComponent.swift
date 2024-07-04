@@ -11,10 +11,10 @@ struct WarningMessageComponent: View {
     
     var body: some View {
         
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
-            VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 
-                let image = UIImage.fontAwesomeIcon(name: .clock, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width: themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger))
+                let image = UIImage.fontAwesomeIcon(name: .clock, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
                 Image(uiImage: image)
                 
             }
@@ -22,7 +22,7 @@ struct WarningMessageComponent: View {
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(8)
             
-            VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
@@ -32,17 +32,17 @@ struct WarningMessageComponent: View {
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(8)
             
-            HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+            HStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 Text((operationWarning.title)!)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
             }
-            .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
+            .padding(.horizontal,Dimens.Padding.moderatelyLarge)
             .padding(.vertical, 0)
             .frame(maxWidth: .infinity, alignment: .center)
             
             FormWarning(text: operationWarning.body ?? "")
-            Spacer().frame(height: themeManager.selectedTheme.dimens.large)
+            Spacer().frame(height:Dimens.Spacing.large)
             DetailSectionWarning(operationWarning: operationWarning,operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel)
             
             MainButton(
@@ -55,8 +55,8 @@ struct WarningMessageComponent: View {
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.large)
-        .padding(.vertical, themeManager.selectedTheme.dimens.quiteLarge)
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.quiteLarge)
         .frame(maxWidth: .infinity, alignment: .top)
     }
 }
@@ -69,7 +69,7 @@ struct DetailSectionWarning: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
                 .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
             
@@ -106,7 +106,7 @@ struct DetailItemWarning: View {
                 CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
             }
         }
-        .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
+        .padding(.vertical,Dimens.Padding.verySmall)
     }
 }
 

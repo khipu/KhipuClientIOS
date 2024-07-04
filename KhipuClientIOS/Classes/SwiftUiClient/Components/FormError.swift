@@ -12,14 +12,14 @@ struct FormError: View {
                 HStack(alignment: .top, spacing: 0) {
                     Image(systemName: "exclamationmark.octagon.fill")
                         .foregroundColor(themeManager.selectedTheme.colors.error)
-                        .frame(width: themeManager.selectedTheme.dimens.moderatelyLarge, height: themeManager.selectedTheme.dimens.moderatelyLarge)
+                        .frame(width:Dimens.Frame.large, height:Dimens.Frame.large)
                 }
                 .padding(.leading, 0)
-                .padding(.trailing, themeManager.selectedTheme.dimens.veryMedium)
-                .padding(.vertical, themeManager.selectedTheme.dimens.extraSmall)
+                .padding(.trailing,Dimens.Padding.veryMedium)
+                .padding(.vertical,Dimens.Padding.extraSmall)
                 
                 
-                VStack(alignment: .leading, spacing: themeManager.selectedTheme.dimens.verySmall) {
+                VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
                     
                     Text(text!)
                         .font(themeManager.selectedTheme.fonts.font(style: .regular, size:14))
@@ -30,17 +30,17 @@ struct FormError: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .padding(.horizontal, 0)
-                .padding(.vertical, themeManager.selectedTheme.dimens.extraSmall)
+                .padding(.vertical,Dimens.Padding.extraSmall)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
                 
                 
             }
-            .padding(.horizontal, themeManager.selectedTheme.dimens.extraMedium)
-            .padding(.vertical, themeManager.selectedTheme.dimens.moderatelySmall)
+            .padding(.horizontal,Dimens.Padding.extraMedium)
+            .padding(.vertical,Dimens.Padding.moderatelySmall)
             .frame(maxWidth: .infinity, alignment: .topLeading)
-            .cornerRadius(themeManager.selectedTheme.dimens.verySmall)
+            .cornerRadius(Dimens.CornerRadius.verySmall)
             .overlay(
-                RoundedRectangle(cornerRadius: themeManager.selectedTheme.dimens.verySmall)
+                RoundedRectangle(cornerRadius:Dimens.CornerRadius.verySmall)
                     .inset(by: 0.5)
                     .stroke(themeManager.selectedTheme.colors.error, lineWidth: 1)
             )

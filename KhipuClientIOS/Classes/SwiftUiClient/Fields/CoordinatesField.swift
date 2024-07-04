@@ -19,8 +19,8 @@ struct CoordinateInputField: View {
                 TextField("", text: $coordValue)
             }
         }
-        .frame(minWidth: themeManager.selectedTheme.dimens.quiteLarge, maxWidth: themeManager.selectedTheme.dimens.muchLarger)
-        .padding(.trailing, themeManager.selectedTheme.dimens.extraSmall)
+        .frame(minWidth:Dimens.Frame.quiteLarge, maxWidth:Dimens.Frame.muchLarger)
+        .padding(.trailing,Dimens.Padding.extraSmall)
         .multilineTextAlignment(.center)
         .textFieldStyle(KhipuTextFieldStyle())
         .autocorrectionDisabled(true)
@@ -87,7 +87,7 @@ struct CoordinatesField: View {
             }
             HintLabel(text: formItem.hint)
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.extraMedium)
+        .padding(.horizontal,Dimens.Padding.extraMedium)
         .onChange(of: states) { _ in
             isValid(states.prefix(3).allSatisfy { $0.count == 2 })
             returnValue(states.prefix(3).joined(separator: "|"))

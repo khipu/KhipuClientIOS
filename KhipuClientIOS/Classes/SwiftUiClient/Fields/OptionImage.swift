@@ -12,15 +12,15 @@ struct OptionImage: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width:themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger)
+                        .frame(width:Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
                         .clipShape(Circle())
                 } else if phase.error != nil {
                     Color.red
-                        .frame(width: themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger)
+                        .frame(width: Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
                         .clipShape(Circle())
                 } else {
                     Color.gray
-                        .frame(width: themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger)
+                        .frame(width: Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
                         .clipShape(Circle())
                 }
             }

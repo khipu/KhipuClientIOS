@@ -8,10 +8,10 @@ struct FailureMessageComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
-            VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 
-                let image = UIImage.fontAwesomeIcon(name: .infoCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width: themeManager.selectedTheme.dimens.slightlyLarger, height: themeManager.selectedTheme.dimens.slightlyLarger))
+                let image = UIImage.fontAwesomeIcon(name: .infoCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
                 Image(uiImage: image)
                 
             }
@@ -19,7 +19,7 @@ struct FailureMessageComponent: View {
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(8)
             
-            VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
@@ -29,17 +29,17 @@ struct FailureMessageComponent: View {
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(8)
             
-            HStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.medium) {
+            HStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 Text((operationFailure.title)!)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
             }
-            .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
+            .padding(.horizontal,Dimens.Padding.moderatelyLarge)
             .padding(.vertical, 0)
             .frame(maxWidth: .infinity, alignment: .center)
             
             FormWarning(text: operationFailure.body ?? "")
-            Spacer().frame(height: themeManager.selectedTheme.dimens.large)
+            Spacer().frame(height:Dimens.Spacing.large)
             DetailSectionFailure(operationFailure: operationFailure,operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel)
             
             MainButton(
@@ -52,8 +52,8 @@ struct FailureMessageComponent: View {
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.large)
-        .padding(.vertical, themeManager.selectedTheme.dimens.quiteLarge)
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.quiteLarge)
         .frame(maxWidth: .infinity, alignment: .top)
     }
     
@@ -68,7 +68,7 @@ struct DetailSectionFailure: View {
     
     var body: some View {
         
-        VStack(alignment: .center, spacing: themeManager.selectedTheme.dimens.large) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             Text(viewModel.uiState.translator.t("default.detail.label"))
                 .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
             
@@ -78,9 +78,9 @@ struct DetailSectionFailure: View {
             DashedLine()
             DetailItemFailure(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationFailure.operationID)+" "+FieldUtils.getFailureReasonCode(reason: operationFailure.reason),shouldCopyValue: true)
         }
-        .padding(themeManager.selectedTheme.dimens.large)
+        .padding(Dimens.Padding.large)
         .frame(maxWidth: .infinity, alignment: .top)
-        .cornerRadius(themeManager.selectedTheme.dimens.moderatelySmall)
+        .cornerRadius(Dimens.CornerRadius.moderatelySmall)
     }
 }
 
@@ -105,7 +105,7 @@ struct DetailItemFailure: View {
                 CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
             }
         }
-        .padding(.vertical, themeManager.selectedTheme.dimens.verySmall)
+        .padding(.vertical,Dimens.Padding.verySmall)
     }
 }
 

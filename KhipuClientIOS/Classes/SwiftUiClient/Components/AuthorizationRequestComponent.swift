@@ -24,7 +24,7 @@ struct QrAuthorizationRequestView: View {
     @EnvironmentObject private var themeManager: ThemeManager
 
     var body: some View {
-        VStack(spacing: themeManager.selectedTheme.dimens.extraSmall) {
+        VStack(spacing:Dimens.Spacing.extraSmall) {
             if let base64String = authorizationRequest.imageData?.split(separator: ",").last,
                let imageData = Data(base64Encoded: String(base64String)) {
                 if let uiImage = UIImage(data: imageData) {
@@ -42,7 +42,7 @@ struct QrAuthorizationRequestView: View {
 
             Text(authorizationRequest.message)
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.extraMedium)
+        .padding(.horizontal,Dimens.Padding.extraMedium)
         .frame(maxWidth: .infinity, alignment: .center)
     }
 }
@@ -55,7 +55,7 @@ struct MobileAuthorizationRequestView: View {
     
     var body: some View {
         
-        VStack(spacing: themeManager.selectedTheme.dimens.extraSmall) {
+        VStack(spacing:Dimens.Spacing.extraSmall) {
             FormTitle(text: viewModel.uiState.translator.t("modal.authorization.use.app"))
             
             if !viewModel.uiState.bank.isEmpty {
@@ -65,7 +65,7 @@ struct MobileAuthorizationRequestView: View {
                     .cornerRadius(8)
             }
             
-            Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
+            Spacer().frame(height:Dimens.Frame.large)
             
             AsyncImage(url: URL(string: "https://s3.amazonaws.com/static.khipu.com/khipu-client/authorize.png")) { image in
                 image
@@ -75,19 +75,19 @@ struct MobileAuthorizationRequestView: View {
                 ProgressView()
             }
             
-            Spacer().frame(height: themeManager.selectedTheme.dimens.moderatelyLarge)
+            Spacer().frame(height:Dimens.Frame.large)
             
             Text(authorizationRequest.message)
                 .multilineTextAlignment(.center)
             
-            Spacer().frame(height: themeManager.selectedTheme.dimens.extraMedium)
+            Spacer().frame(height:Dimens.Spacing.extraMedium)
             
             Button(action: {}) {
                 Text(viewModel.uiState.translator.t("modal.authorization.wait"))
             }
             .disabled(true)
         }
-        .padding(.horizontal, themeManager.selectedTheme.dimens.moderatelyLarge)
+        .padding(.horizontal,Dimens.Padding.moderatelyLarge)
         .frame(maxWidth: .infinity, alignment: .center)
     }
 }
