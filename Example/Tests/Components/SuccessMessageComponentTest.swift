@@ -25,7 +25,7 @@ final class SuccessMessageComponentTest: XCTestCase {
         let inspectView = try view.inspect().view(SuccessMessageComponent.self)
         let images = inspectView.findAll(ViewType.Image.self)
         
-        XCTAssertEqual(images.count, 1)
+        XCTAssertEqual(images.count, 2)
         XCTAssertNoThrow(try inspectView.find(text: "Success"))
         XCTAssertNoThrow(try inspectView.find(text: "Operation completed successfully"))
         XCTAssertNoThrow(try inspectView.find(text: "default.operation.code.label"))

@@ -10,11 +10,9 @@ final class FormErrorTest: XCTestCase {
     
     func testFormError_Fill() throws {
         let view = FormError(text: "Some stuff")
-        
-        let inspected = try view.environmentObject(ThemeManager()).inspect()
-        
-        let text = try inspected.hStack().text(0).string()
-        XCTAssertEqual(text, "Some stuff")
+        let inspectedView = try view.environmentObject(ThemeManager()).inspect()
+        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Some stuff"), "Failed to find the text: Information")
+
     }
     
     func testFormErrorView_Empty() throws {
