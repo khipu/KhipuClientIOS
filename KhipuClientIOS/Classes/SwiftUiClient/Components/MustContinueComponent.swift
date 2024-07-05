@@ -15,28 +15,25 @@ struct MustContinueComponent: View {
     let operationMustContinue: OperationMustContinue
     
     var body: some View {
-        VStack(alignment: .center, spacing:Dimens.Spacing.extraSmall) {
-            Image(systemName: "clock.fill")
-                .foregroundColor(themeManager.selectedTheme.colors.tertiary)
-                .font(.system(size:Dimens.Padding.larger))
-            
-            Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.system(size:Dimens.Padding.large))
-                .multilineTextAlignment(.center)
-            
-            Text(operationMustContinue.title ?? "")
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(.system(size:Dimens.Padding.large))
-                .multilineTextAlignment(.center)
+        VStack(alignment: .center, spacing: Dimens.Spacing.large) {
+            VStack(alignment: .center, spacing: Dimens.Spacing.extraMedium) {
+                let image = UIImage.fontAwesomeIcon(name: .infoCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
+                Image(uiImage: image)
+                Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
+                    .multilineTextAlignment(.center)
+                Text((operationMustContinue.title)!)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
+                    .multilineTextAlignment(.center)
+                
+            }
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .top)
             
             FormWarning(text: operationMustContinue.body ?? "")
-            
-            Spacer(minLength:Dimens.Spacing.veryMedium)
             InformationSection(operationMustContinue: operationMustContinue, khipuViewModel: viewModel, khipuUiState: viewModel.uiState)
-            Spacer(minLength:Dimens.Spacing.veryMedium)
-            DetailSection(operationMustContinue: operationMustContinue)
-            Spacer(minLength:Dimens.Spacing.veryMedium)
+            DetailSectionMustContinue(operationMustContinue: operationMustContinue, operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel)
+
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
                 enabled: true,
@@ -47,9 +44,14 @@ struct MustContinueComponent: View {
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(Dimens.Padding.extraMedium)
-        .background(themeManager.selectedTheme.colors.surface)
+        .padding(.horizontal, Dimens.Padding.large)
+        .padding(.vertical, Dimens.Padding.quiteLarge)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .overlay(
+          Rectangle()
+            .inset(by: 0.5)
+            .stroke(Color(red: 0.85, green: 0.85, blue: 0.85), lineWidth: 1)
+        )
     }
 }
 
@@ -64,7 +66,7 @@ struct InformationSection: View {
         VStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
             Text(khipuUiState.translator.t("page.operationMustContinue.share.description"))
                 .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-                .font(.system(size:Dimens.Padding.extraMedium))
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .multilineTextAlignment(.center)
             
             Spacer().frame(height:Dimens.Spacing.extraMedium)
@@ -72,10 +74,10 @@ struct InformationSection: View {
             CopyToClipboardLink(
                 text: khipuUiState.operationInfo?.urls?.info ?? "",
                 textToCopy: khipuUiState.operationInfo?.urls?.info ?? "",
-                background: themeManager.selectedTheme.colors.secondaryContainer
-            )
+                background:themeManager.selectedTheme.colors.onSecondaryContainer)
             
             Spacer().frame(height:Dimens.Spacing.extraMedium)
+
             
             if #available(iOS 16.0, *) {
                 ShareLink(item: URL(string: khipuUiState.operationInfo?.urls?.info ?? "")!,
@@ -92,76 +94,63 @@ struct InformationSection: View {
     }
 }
 
-@available(iOS 15.0, *)
-struct DetailItemMustContinue: View {
-    @EnvironmentObject private var themeManager: ThemeManager
-    let label: String
-    let value: String
-    let shouldCopyValue: Bool
-    
-    var body: some View {
-        HStack(spacing: 0) {
-            Text(label)
-                .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-                .font(.body)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            if !shouldCopyValue {
-                Text(value)
-                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                    .font(.body)
-            } else {
-                CopyToClipboardOperationId(text: formatOperationId(value), textToCopy: value, background: themeManager.selectedTheme.colors.secondaryContainer)
-            }
-        }
-        .padding(.vertical, 4)
-        .frame(maxWidth: .infinity)
-    }
-    
-    private func formatOperationId(_ value: String) -> String {
-        // Implement your custom formatting logic here
-        return value
-    }
-}
 
-@available(iOS 15.0, *)
-struct DetailSection: View {
+@available(iOS 15.0.0, *)
+struct DetailSectionMustContinue: View {
+    var operationMustContinue: OperationMustContinue
+    var operationInfo: OperationInfo?
+    @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
-    @StateObject private var khipuViewModel: KhipuViewModel
-    let operationMustContinue: OperationMustContinue
-    
-    init(operationMustContinue: OperationMustContinue) {
-        self._khipuViewModel = StateObject(wrappedValue: KhipuViewModel())
-        self.operationMustContinue = operationMustContinue
-    }
     
     var body: some View {
-        VStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
-            Text(khipuViewModel.uiState.translator.t("default.detail.label"))
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                .font(Font.body.bold())
+        
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
+            Text(viewModel.uiState.translator.t("default.detail.label"))
+                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
             
-            DetailItemMustContinue(
-                label: khipuViewModel.uiState.translator.t("default.amount.label"),
-                value: khipuViewModel.uiState.operationInfo?.amount ?? "",
-                shouldCopyValue: false
-            )
+            DetailItemFailure(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
             
-            DetailItemMustContinue(
-                label: khipuViewModel.uiState.translator.t("default.merchant.label"),
-                value: khipuViewModel.uiState.operationInfo?.merchant?.name ?? "",
-                shouldCopyValue: false
-            )
-            
+            DetailItemFailure(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")
             DashedLine()
-            
             DetailItemMustContinue(
-                label: khipuViewModel.uiState.translator.t("default.operation.code.short.label"),
+                label: viewModel.uiState.translator.t("default.operation.code.short.label"),
                 value: operationMustContinue.operationID ?? "",
                 shouldCopyValue: true
             )
+            
+
         }
+        .padding(Dimens.Padding.large)
+        .frame(maxWidth: .infinity, alignment: .top)
+        .cornerRadius(Dimens.CornerRadius.moderatelySmall)
     }
 }
+
+@available(iOS 15.0.0, *)
+struct DetailItemMustContinue: View {
+    var label: String
+    var value: String
+    var shouldCopyValue: Bool = false
+    @EnvironmentObject private var themeManager: ThemeManager
+    
+    var body: some View {
+        HStack {
+            Text(label)
+                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
+                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+            Spacer()
+            if !shouldCopyValue {
+                Text(value)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                
+            } else {
+                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
+            }
+        }
+        .padding(.vertical,Dimens.Padding.verySmall)
+    }
+}
+
 
 @available(iOS 15.0, *)
 struct MustContinueComponent_Previews: PreviewProvider {
@@ -266,27 +255,6 @@ struct DetailItemMustContinue_Previews: PreviewProvider {
             label: "Label",
             value: "Value",
             shouldCopyValue: true
-        )
-        .environmentObject(ThemeManager())
-        .previewLayout(.sizeThatFits)
-        .padding()
-    }
-}
-
-@available(iOS 15.0, *)
-struct DetailSection_Previews: PreviewProvider {
-    static var previews: some View {
-        return DetailSection(
-            operationMustContinue: OperationMustContinue(
-                type: MessageType.operationMustContinue,
-                body: "body",
-                events: nil,
-                exitURL: "exitUrl",
-                operationID: "operationID",
-                resultMessage: "resultMessage",
-                title: "Title",
-                reason: nil
-            )
         )
         .environmentObject(ThemeManager())
         .previewLayout(.sizeThatFits)

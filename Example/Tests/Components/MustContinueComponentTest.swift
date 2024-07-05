@@ -47,7 +47,7 @@ final class MustContinueComponentTest: XCTestCase {
         viewModel.uiState = uiState
         
         viewModel.uiState.translator = KhipuTranslator(translations: [
-            "page.operationWarning.failure.after.notify.pre.header": "Pago en verificación",
+            "page.operationFailure.header.text.operation.task.finished": "Pago en verificación",
             "default.end.and.go.back": "Finalizar y volver",
         ])
         
@@ -129,32 +129,5 @@ final class MustContinueComponentTest: XCTestCase {
         XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectView, expectedText: "Value two"), "Failed to find the text: Value two")
         XCTAssertThrowsError(try inspectView.find(CopyToClipboardOperationId.self))
     }
-    
-    func testDetailSectionRendersCorrectly() throws {
-        let themeManager = ThemeManager()
-        
-        let operationMustContinue = OperationMustContinue(
-            type: MessageType.operationMustContinue,
-            body: "body",
-            events: nil,
-            exitURL: "exitUrl",
-            operationID: "operationID",
-            resultMessage: "resultMessage",
-            title: "Title",
-            reason: nil
-        )
-        
-        let view = DetailSection(operationMustContinue: operationMustContinue).environmentObject(themeManager)
 
-        let inspectView = try view.inspect().view(DetailSection.self)
-        let vStack = try inspectView.vStack()
-        
-        let detailItemMustContinues = inspectView.findAll(DetailItemMustContinue.self)
-        let dashLines = inspectView.findAll(DashedLine.self)
-        
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "default.detail.label"), "Failed to find the text: default.detail.label")
-        XCTAssertEqual(detailItemMustContinues.count, 3, "Detail items not exactly 3")
-        XCTAssertEqual(dashLines.count, 1, "Dashed lines not exactly 1")
-
-    }
 }
