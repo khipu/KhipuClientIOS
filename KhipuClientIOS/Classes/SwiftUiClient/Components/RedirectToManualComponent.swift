@@ -7,16 +7,16 @@ struct RedirectToManualComponent: View {
     let operationFailure: OperationFailure
     @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
-    
+
     @State private var remainingSeconds = 25
     private var timer: Publishers.Autoconnect<Timer.TimerPublisher> {
         Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     }
-    
+
     private var redirectText: String {
         viewModel.uiState.translator.t("default.redirect.n.seconds").replacingOccurrences(of: "{{time}}", with: "\(remainingSeconds)")
     }
-    
+
     private func openManualUrl() {
         if let url = URL(string: "\(viewModel.uiState.operationInfo?.urls?.manualTransfer ?? "")?fallback=true") {
             DispatchQueue.main.async {
@@ -26,29 +26,29 @@ struct RedirectToManualComponent: View {
             print("Invalid URL")
         }
     }
-    
+
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                
+
                 let image = UIImage.fontAwesomeIcon(name: .infoCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
                 Image(uiImage: image)
-                
+
             }
             .padding(0)
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(Dimens.CornerRadius.extraSmall)
-            
+
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 Text(viewModel.uiState.translator.t("page.redirectManual.redirecting"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
-                
+
             }
             .padding(0)
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(8)
-            
+
             HStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 Text(viewModel.uiState.translator.t("page.redirectManual.only.regular"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
@@ -57,15 +57,15 @@ struct RedirectToManualComponent: View {
             .padding(.horizontal,Dimens.Padding.moderatelyLarge)
             .padding(.vertical, 0)
             .frame(maxWidth: .infinity, alignment: .center)
-            
+
             FormWarning(text: viewModel.uiState.translator.t("default.user.regular.transfer") + " " + viewModel.uiState.translator.t("page.redirectManual.other.bank"))
-            
+
             VStack(alignment: .center, spacing:Dimens.Spacing.large) {
                 Image(systemName: "paperplane.fill")
                     .resizable()
                     .frame(width: Dimens.Image.huge, height: Dimens.Image.huge)
                     .foregroundColor(.secondary)
-                
+
                 HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
                     Text(redirectText)
                         .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
@@ -74,7 +74,7 @@ struct RedirectToManualComponent: View {
                 }
                 .padding(10)
                 .frame(maxWidth: .infinity, minHeight: Dimens.Frame.larger, maxHeight:Dimens.Frame.larger, alignment: .center)
-                
+
             }
             .padding(.horizontal, 0)
             .padding(.vertical,Dimens.Padding.larger)
@@ -87,7 +87,7 @@ struct RedirectToManualComponent: View {
                     openManualUrl()
                 }
             }
-            
+
             MainButton(
                 text: viewModel.uiState.translator.t("default.user.regular.transfer"),
                 enabled: true,
@@ -97,6 +97,20 @@ struct RedirectToManualComponent: View {
                 foregroundColor: themeManager.selectedTheme.colors.onTertiary,
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
+            
+            
+            MainButton(
+                text: viewModel.uiState.translator.t("default.user.other.bank"),
+                enabled: true,
+                onClick: {
+                    viewModel.uiState.returnToApp = true                },
+                foregroundColor: .black,
+                backgroundColor: .white
+            ).cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius:Dimens.CornerRadius.extraSmall)
+                        .inset(by: 0.5)
+                        .stroke(themeManager.selectedTheme.colors.labelForeground, lineWidth: 1))
         }
         .padding(.horizontal,Dimens.Padding.large)
         .padding(.vertical,Dimens.Padding.quiteLarge)
