@@ -49,7 +49,9 @@ public struct KhipuView: View {
                     FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
                 case MessageType.operationFailure.rawValue:
                     if (!options.skipExitPage) {
-                        if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
+                        if(viewModel.uiState.operationFailure?.reason == FailureReasonType.bankWithoutAutomaton){
+                            RedirectToManualComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                        }else if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
                             TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
                         } else {
                             FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)

@@ -12,7 +12,6 @@ Pod::Spec.new do |s|
   DESC
 
   s.homepage         = 'https://github.com/khipu/KhipuClientIOS'
-  # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Khipu' => 'developers@khipu.com' }
   s.source           = { :git => 'https://github.com/khipu/KhipuClientIOS.git', :tag => s.version.to_s }
@@ -29,6 +28,6 @@ Pod::Spec.new do |s|
   s.dependency 'Starscream', '4.0.6'
   s.dependency 'KhenshinSecureMessage', '1.3.0'
   s.dependency 'KhenshinProtocol', '1.0.44'
-  s.dependency 'FontAwesome.swift'
+  s.dependency 'FontAwesome.swift', '1.9.1'
   s.swift_versions = "5.0"
 end
