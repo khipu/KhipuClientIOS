@@ -37,7 +37,7 @@ struct RedirectToManualComponent: View {
             }
             .padding(0)
             .frame(maxWidth: .infinity, alignment: .top)
-            .cornerRadius(8)
+            .cornerRadius(Dimens.CornerRadius.extraSmall)
             
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 Text(viewModel.uiState.translator.t("page.redirectManual.redirecting"))
@@ -63,7 +63,7 @@ struct RedirectToManualComponent: View {
             VStack(alignment: .center, spacing:Dimens.Spacing.large) {
                 Image(systemName: "paperplane.fill")
                     .resizable()
-                    .frame(width: 100, height: 100)
+                    .frame(width: Dimens.Image.huge, height: Dimens.Image.huge)
                     .foregroundColor(.secondary)
                 
                 HStack(alignment: .center, spacing: Dimens.Spacing.medium) {

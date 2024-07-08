@@ -61,6 +61,7 @@
 		BDD445602C04D89B00098056 /* FormWarningTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD4455F2C04D89B00098056 /* FormWarningTest.swift */; };
 		BDD445622C04DD7F00098056 /* HeaderComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD445612C04DD7F00098056 /* HeaderComponentTest.swift */; };
 		BDD445642C04F73A00098056 /* MainButtonTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDD445632C04F73A00098056 /* MainButtonTest.swift */; };
+		BDF2EF822C3C1C88000D3FFA /* RedirectToManualComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF2EF812C3C1C88000D3FFA /* RedirectToManualComponentTest.swift */; };
 		C55C20ED2C07CC4B0015A732 /* DashedLineTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C55C20EC2C07CC4B0015A732 /* DashedLineTest.swift */; };
 		C5DB1B062C08C6110061351A /* EndToEndEncryptionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5DB1B052C08C6110061351A /* EndToEndEncryptionTest.swift */; };
 /* End PBXBuildFile section */
@@ -152,6 +153,7 @@
 		BDD4455F2C04D89B00098056 /* FormWarningTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormWarningTest.swift; sourceTree = "<group>"; };
 		BDD445612C04DD7F00098056 /* HeaderComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderComponentTest.swift; sourceTree = "<group>"; };
 		BDD445632C04F73A00098056 /* MainButtonTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButtonTest.swift; sourceTree = "<group>"; };
+		BDF2EF812C3C1C88000D3FFA /* RedirectToManualComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedirectToManualComponentTest.swift; sourceTree = "<group>"; };
 		C55C20EC2C07CC4B0015A732 /* DashedLineTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashedLineTest.swift; sourceTree = "<group>"; };
 		C5DB1B052C08C6110061351A /* EndToEndEncryptionTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EndToEndEncryptionTest.swift; sourceTree = "<group>"; };
 		CC0A43F03CFB34C330043D48 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
@@ -249,6 +251,7 @@
 				264E0D8C2C21C486001C1BB8 /* WarningMessageComponentTest.swift */,
 				1583B0272C236AE600B5B9C7 /* FormErrorTest.swift */,
 				26594A362C261E33002D094F /* SVGImageTest.swift */,
+				BDF2EF812C3C1C88000D3FFA /* RedirectToManualComponentTest.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				1547EFCD2C20C00500229365 /* ListFieldTest.swift in Sources */,
 				264E0D932C21C5B0001C1BB8 /* NavigationBarComponentTest.swift in Sources */,
 				BDD445642C04F73A00098056 /* MainButtonTest.swift in Sources */,
+				BDF2EF822C3C1C88000D3FFA /* RedirectToManualComponentTest.swift in Sources */,
 				BDAE5D842C0A153100B6DDD4 /* SuccessMessageComponentTest.swift in Sources */,
 				BDD4455C2C04D3B000098056 /* FormPillTest.swift in Sources */,
 				264E0D8F2C21C504001C1BB8 /* TimeoutMessageComponentTest.swift in Sources */,
