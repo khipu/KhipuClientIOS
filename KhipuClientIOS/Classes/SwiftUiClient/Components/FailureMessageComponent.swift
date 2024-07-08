@@ -51,6 +51,7 @@ struct FailureMessageComponent: View {
                 foregroundColor: themeManager.selectedTheme.colors.onTertiary,
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
+        
         }
         .padding(.horizontal,Dimens.Padding.large)
         .padding(.vertical,Dimens.Padding.quiteLarge)
