@@ -15,9 +15,11 @@ struct CopyToClipboardOperationId: View {
                 
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-                
-                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width:Dimens.Image.small, height:Dimens.Image.small))
-                Image(uiImage: image)
+                Image(systemName: "doc.on.doc.fill")
+                      .resizable()
+                      .aspectRatio(contentMode: .fit)
+                      .frame(width: Dimens.Image.small, height: Dimens.Image.small)
+                      .foregroundColor(.white)
             }
         }
         .padding(.horizontal,Dimens.Padding.medium)
@@ -42,9 +44,11 @@ struct CopyToClipboardLink: View {
             HStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-                
-                let image = UIImage.fontAwesomeIcon(name: .copy, style: .solid, textColor: UIColor(.white), size: CGSize(width:Dimens.Image.small, height:Dimens.Image.small))
-                Image(uiImage: image)
+              Image(systemName: "doc.on.doc.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: Dimens.Image.small, height: Dimens.Image.small)
+                    .foregroundColor(.white)
             }
             .padding(.horizontal,Dimens.Padding.medium)
             .padding(.vertical, 0)
