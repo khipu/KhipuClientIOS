@@ -51,6 +51,19 @@ struct FailureMessageComponent: View {
                 foregroundColor: themeManager.selectedTheme.colors.onTertiary,
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
+            
+            MainButton(
+                text: viewModel.uiState.translator.t("default.user.other.bank"),
+                enabled: true,
+                onClick: {
+                    viewModel.uiState.returnToApp = true                },
+                foregroundColor: .black,
+                backgroundColor: .white
+            ).cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius:Dimens.CornerRadius.extraSmall)
+                        .inset(by: 0.5)
+                        .stroke(themeManager.selectedTheme.colors.labelForeground, lineWidth: 1))
         }
         .padding(.horizontal,Dimens.Padding.large)
         .padding(.vertical,Dimens.Padding.quiteLarge)
