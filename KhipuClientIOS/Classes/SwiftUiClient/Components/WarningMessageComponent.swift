@@ -1,7 +1,6 @@
 import SwiftUI
 import KhenshinProtocol
 import SwiftUI
-import FontAwesome_swift
 
 @available(iOS 15.0.0, *)
 struct WarningMessageComponent: View {
@@ -14,8 +13,11 @@ struct WarningMessageComponent: View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 
-                let image = UIImage.fontAwesomeIcon(name: .clock, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
-                Image(uiImage: image)
+                Image(systemName: "clock.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: Dimens.Image.slightlyLarger, height: Dimens.Image.slightlyLarger)
+                    .foregroundColor(themeManager.selectedTheme.colors.tertiary)
                 
             }
             .padding(0)

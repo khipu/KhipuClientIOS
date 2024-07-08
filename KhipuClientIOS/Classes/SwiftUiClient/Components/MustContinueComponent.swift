@@ -1,10 +1,3 @@
-//
-//  MustContinueComponent.swift
-//  KhipuClientIOS
-//
-//  Created by Mauricio Castillo on 28-05-24.
-//
-
 import SwiftUI
 import KhenshinProtocol
 
@@ -17,8 +10,11 @@ struct MustContinueComponent: View {
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.Spacing.large) {
             VStack(alignment: .center, spacing: Dimens.Spacing.extraMedium) {
-                let image = UIImage.fontAwesomeIcon(name: .infoCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
-                Image(uiImage: image)
+                Image(systemName: "info.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: Dimens.Image.slightlyLarger, height: Dimens.Image.slightlyLarger)
+                    .foregroundColor(themeManager.selectedTheme.colors.tertiary)
                 Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)

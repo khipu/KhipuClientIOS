@@ -10,8 +10,11 @@ struct SuccessMessageComponent: View {
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                let image = UIImage.fontAwesomeIcon(name: .checkCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.success), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
-                Image(uiImage: image)
+                Image(systemName: "checkmark.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: Dimens.Image.slightlyLarger, height: Dimens.Image.slightlyLarger)
+                    .foregroundColor(themeManager.selectedTheme.colors.success)
                 
                 HStack(alignment: .top, spacing:Dimens.Spacing.medium) {   Text(operationSuccess.title ?? "")
                         .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 20))

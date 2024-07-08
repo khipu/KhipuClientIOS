@@ -11,8 +11,11 @@ struct FailureMessageComponent: View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 
-                let image = UIImage.fontAwesomeIcon(name: .infoCircle, style: .solid, textColor: UIColor(themeManager.selectedTheme.colors.tertiary), size: CGSize(width:Dimens.Image.slightlyLarger, height:Dimens.Image.slightlyLarger))
-                Image(uiImage: image)
+                Image(systemName: "info.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: Dimens.Image.slightlyLarger, height: Dimens.Image.slightlyLarger)
+                    .foregroundColor(themeManager.selectedTheme.colors.tertiary)
                 
             }
             .padding(0)

@@ -20,8 +20,11 @@ struct TimeoutMessageComponent: View {
                 
                 VStack(alignment: .center, spacing:Dimens.Spacing.large) {
                     VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-                        let image = UIImage.fontAwesomeIcon(name: .clock, style: .light, textColor: UIColor(themeManager.selectedTheme.colors.labelForeground), size: CGSize(width:Dimens.Image.huge, height:Dimens.Image.huge))
-                        Image(uiImage: image)
+                        Image(systemName: "clock")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: Dimens.Image.huge, height: Dimens.Image.huge)
+                            .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
                         HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
                             Text(viewModel.uiState.translator.t("page.timeout.end"))
                                 .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
