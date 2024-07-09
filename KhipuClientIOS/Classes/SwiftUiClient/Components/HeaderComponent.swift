@@ -27,8 +27,11 @@ struct HeaderComponent: View {
                     merchant: (viewModel.uiState.operationInfo?.merchant?.name)!,
                     subject: (viewModel.uiState.operationInfo?.subject)! ,
                     description:(viewModel.uiState.operationInfo?.body)!,
-                    amount: (viewModel.uiState.operationInfo?.amount)!
-                )
+                    amount: (viewModel.uiState.operationInfo?.amount)!,
+                    image: (viewModel.uiState.operationInfo?.urls?.image)!
+                ).environmentObject(themeManager)
+                    .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme) 
+
             }
         } else {
             SkeletonHeaderComponent()

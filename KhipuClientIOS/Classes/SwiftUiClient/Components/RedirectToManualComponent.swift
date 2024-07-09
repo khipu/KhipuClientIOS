@@ -107,8 +107,8 @@ struct RedirectToManualComponent: View {
                 enabled: true,
                 onClick: {
                     viewModel.uiState.returnToApp = true                },
-                foregroundColor: .black,
-                backgroundColor: .white
+                foregroundColor: themeManager.selectedTheme.colors.onSecondary,
+                backgroundColor: themeManager.selectedTheme.colors.secondary
             ).cornerRadius(8)
                 .overlay(
                     RoundedRectangle(cornerRadius:Dimens.CornerRadius.extraSmall)

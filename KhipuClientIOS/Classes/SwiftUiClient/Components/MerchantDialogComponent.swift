@@ -8,50 +8,99 @@ struct MerchantDialogComponent: View {
     var subject: String
     var description: String
     var amount: String
-
+    var image: String?
+    
+    @EnvironmentObject private var themeManager: ThemeManager
+    
     var body: some View {
-        NavigationView {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text(translator.t("modal.merchant.info.title"))
-                        .font(.subheadline)
-                        .foregroundColor(.primary)
-
-                    Text(translator.t("modal.merchant.info.destinatary.label"))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                    Text(merchant)
-                        .font(.footnote)
-
-                    Text(translator.t("modal.merchant.info.subject.label"))
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                        .padding(.top, 4)
-                    Text(subject)
-                        .font(.footnote)
-
-                    if !description.isEmpty {
-                        Text(translator.t("modal.merchant.info.description.label"))
-                            .font(.caption)
-                            .padding(.top, 4)
-                            .foregroundColor(.secondary)
-                        Text(description)
-                            .font(.footnote)
+        ZStack {
+            VStack {
+                Spacer()
+                
+                VStack(alignment: .center, spacing: 0) {
+                    HStack {
+                        Spacer()
+                        Button(action: onDismissRequest) {
+                            Image(systemName: "xmark")
+                                .padding()
+                        }
                     }
-
-                    Text(translator.t("modal.merchant.info.amount.label"))
-                        .font(.caption)
-                        .padding(.top, 4)
-                        .foregroundColor(.secondary)
-                    Text(amount)
-                        .font(.footnote)
+                    .padding(.trailing, Dimens.Padding.medium)
+                    .padding(.top, Dimens.Padding.medium)
+                    
+                    VStack(alignment: .center, spacing: Dimens.Spacing.large) {
+                        Text(translator.t("modal.merchant.info.title"))
+                            .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 20))
+                            .padding(.top, Dimens.Padding.medium)
+                        
+                        InfoView(title: translator.t("modal.merchant.info.destinatary.label"), value: merchant)
+                        InfoView(title: translator.t("modal.merchant.info.subject.label"), value: subject)
+                        
+                        
+                        if let imageUrl = image, let url = URL(string: imageUrl) {
+                            VStack(alignment: .leading, spacing: 0) {
+                                AsyncImage(url: url) { phase in
+                                    switch phase {
+                                    case .empty, .failure:
+                                        EmptyView()
+                                    case .success(let image):
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: Dimens.Image.huge, height: Dimens.Image.huge)
+                                    @unknown default:
+                                        EmptyView()
+                                    }
+                                }
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal, Dimens.Padding.extraMedium)
+                                .padding(.vertical, Dimens.Padding.medium)
+                            }
+                        }
+                        
+                        
+                        if !description.isEmpty {
+                            InfoView(title: translator.t("modal.merchant.info.description.label"), value: description)
+                        }
+                        
+                        InfoView(title: translator.t("modal.merchant.info.amount.label"), value: amount)
+                        
+                        MainButton(
+                            text: translator.t("modal.merchant.info.close.button"),
+                            enabled: true,
+                            onClick: onDismissRequest,
+                            foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                            backgroundColor: themeManager.selectedTheme.colors.primary
+                        )
+                    }
+                    .padding(.horizontal, Dimens.Padding.large)
+                    .padding(.bottom, Dimens.Padding.quiteLarge)
                 }
-                .padding()
-                .frame(maxWidth: 300) 
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .cornerRadius(Dimens.CornerRadius.medium)
+                .shadow(radius: Dimens.Padding.medium)
+                Spacer()
             }
-            .navigationTitle(translator.t("modal.merchant.info.title"))
-            .navigationBarItems(trailing: Button(translator.t("modal.merchant.info.close.button"), action: onDismissRequest))
         }
+    }
+}
+
+@available(iOS 15.0.0, *)
+struct InfoView: View {
+    let title: String
+    let value: String
+    @EnvironmentObject private var themeManager: ThemeManager
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            Text(title)
+                .font(themeManager.selectedTheme.fonts.font(style: .bold, size: 14))
+            Text(value)
+                .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+        }
+        .padding(.horizontal, Dimens.Padding.extraMedium)
+        .padding(.vertical, Dimens.Padding.medium)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -65,7 +114,9 @@ struct MerchantDialogComponent_Previews: PreviewProvider {
             merchant: "Merchant",
             subject: "Subject",
             description: "Description",
-            amount: "$ 1.000"
+            amount: "$ 1.000",
+            image: ""
         ).padding()
+            .environmentObject(ThemeManager())
     }
 }

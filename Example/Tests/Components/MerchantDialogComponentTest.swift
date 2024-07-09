@@ -1,13 +1,15 @@
 import XCTest
 import SwiftUI
 import ViewInspector
-
+import KhenshinProtocol
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
 final class MerchantDialogComponentTest: XCTestCase {
     
+    
     func testMerchantDialogComponentRendering() throws {
+        
         let translations: [String: String] = [
             "modal.merchant.info.title": "Detalles del Pago",
             "modal.merchant.info.destinatary.label": "Destinatario",
@@ -23,57 +25,37 @@ final class MerchantDialogComponentTest: XCTestCase {
         let description = "Descripción de la operación"
         let amount = "$100.00"
         
-        let component = MerchantDialogComponent(
+        
+        let view = MerchantDialogComponent(
             onDismissRequest: { },
             translator: translator,
             merchant: merchant,
             subject: subject,
             description: description,
-            amount: amount
-        )
+            amount: amount).environmentObject(ThemeManager())
         
-        let hostingController = UIHostingController(rootView: component)
-        XCTAssertNotNil(hostingController.view, "La vista debe inicializarse correctamente.")
+        let inspectedView = try view.inspect().view(MerchantDialogComponent.self)
+
+        XCTAssertNotNil(try? inspectedView.find(text: "Detalles del Pago"), "Failed to find the text: Detalles del Pago")
         
-        hostingController.view.accessibilityIdentifier = "MerchantDialogComponent"
-        XCTAssertEqual(hostingController.view.accessibilityIdentifier, "MerchantDialogComponent")
+        XCTAssertNotNil(try? inspectedView.find(text: "Destinatario"), "Failed to find the text: Destinatario")
         
-        do {
-            let view = try component.inspect()
-            
-            let vStack = try view.navigationView().scrollView().vStack()
-            
-            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Detalles del Pago"), "Failed to find the text: Detalles del Pago")
-            
-            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Destinatario"), "Failed to find the text: Destinatario")
-            
-            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: merchant), "Failed to find the text:"+merchant)
-            
-            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Asunto"), "Failed to find the text: Asunto")
-            
-            XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: subject), "Failed to find the text:"+subject)
-            
-            if !description.isEmpty {
-                let descriptionLabelText = try vStack.tupleView(5).text(0)
-                XCTAssertEqual(try descriptionLabelText.string(), "Descripción")
-                
-                let descriptionText = try vStack.tupleView(5).text(1)
-                XCTAssertEqual(try descriptionText.string(), description)
-                
-                let amountLabelText = try vStack.text(6)
-                XCTAssertEqual(try amountLabelText.string(), "Monto a Pagar")
-                
-                let amountText = try vStack.text(7)
-                XCTAssertEqual(try amountText.string(), amount)
-            } else {
-                let amountLabelText = try vStack.text(5)
-                XCTAssertEqual(try amountLabelText.string(), "Monto a Pagar")
-                
-                let amountText = try vStack.text(6)
-                XCTAssertEqual(try amountText.string(), amount)
-            }
-        } catch {
-            XCTFail("Error al intentar inspeccionar la vista: \(error)")
-        }
+        XCTAssertNotNil(try? inspectedView.find(text: merchant), "Failed to find the text:"+merchant)
+        
+        XCTAssertNotNil(try? inspectedView.find(text: "Asunto"), "Failed to find the text: Asunto")
+        
+        XCTAssertNotNil(try? inspectedView.find(text: subject), "Failed to find the text:"+subject)
+        
+        
+        XCTAssertNotNil(try? inspectedView.find(text: "Descripción"), "Failed to find the text: Descripción")
+        
+        XCTAssertNotNil(try? inspectedView.find(text: description), "Failed to find the text:"+description)
+        
+        
+        XCTAssertNotNil(try? inspectedView.find(text: "Monto a Pagar"), "Failed to find the text: Monto a Pagar")
+        
+        XCTAssertNotNil(try? inspectedView.find(text: amount), "Failed to find the text:"+amount)
+        
     }
+    
 }
