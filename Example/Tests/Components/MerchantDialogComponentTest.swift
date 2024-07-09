@@ -35,7 +35,8 @@ final class MerchantDialogComponentTest: XCTestCase {
             amount: amount).environmentObject(ThemeManager())
         
         let inspectedView = try view.inspect().view(MerchantDialogComponent.self)
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Detalles del Pago"), "Failed to find the text: Detalles del Pago")
+
+        XCTAssertNotNil(try? inspectedView.find(text: "Detalles del Pago"), "Failed to find the text: Detalles del Pago")
         
         XCTAssertNotNil(try? inspectedView.find(text: "Destinatario"), "Failed to find the text: Destinatario")
         
