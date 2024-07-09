@@ -84,6 +84,7 @@ struct Dimens {
         static let slightlyLarger = Dimens.slightlyLarger // 40
         static let larger = Dimens.larger // 48
         static let huge = Dimens.huge // 100
+        static let extraHuge = Dimens.extraHuge // 150
         static let gigantic = Dimens.gigantic // 200
     }
 }
