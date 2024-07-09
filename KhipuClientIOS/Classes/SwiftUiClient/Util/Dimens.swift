@@ -25,6 +25,8 @@ struct Dimens {
     static let extraHuge: CGFloat = 150
     static let massive: CGFloat = 180
     static let gigantic: CGFloat = 200
+    static let colossal: CGFloat = 300
+
 
     struct Spacing {
         static let small = Dimens.small // 2
@@ -58,6 +60,7 @@ struct Dimens {
         static let verySmall = Dimens.verySmall // 4
         static let moderatelySmall = Dimens.moderatelySmall // 6
         static let extraSmall = Dimens.extraSmall // 8
+        static let medium = Dimens.medium // 10
         static let large = Dimens.large // 20
     }
 
@@ -73,6 +76,7 @@ struct Dimens {
         static let extremelyLarge = Dimens.extremelyLarge // 90
         static let slightlyLarger = Dimens.slightlyLarger // 40
         static let gigantic = Dimens.gigantic // 200
+        static let colossal = Dimens.colossal // 300
     }
 
     struct Image {
