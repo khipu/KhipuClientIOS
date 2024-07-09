@@ -54,41 +54,71 @@ struct MobileAuthorizationRequestView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        
-        VStack(spacing:Dimens.Spacing.extraSmall) {
-            FormTitle(text: viewModel.uiState.translator.t("modal.authorization.use.app"))
-            
-            if !viewModel.uiState.bank.isEmpty {
-                Text(viewModel.uiState.bank)
-                    .padding()
-                    .background(Color.gray.opacity(0.2))
-                    .cornerRadius(8)
+        VStack(alignment: .center, spacing: Dimens.Spacing.large) {
+            HStack(alignment: .top, spacing: Dimens.Spacing.medium) {
+                FormTitle(text: viewModel.uiState.translator.t("modal.authorization.use.app"))
+                
             }
+            .padding(.horizontal, Dimens.Padding.medium)
+            .padding(.vertical, 0)
+            .frame(maxWidth: .infinity, alignment: .top)
             
-            Spacer().frame(height:Dimens.Frame.large)
-            
-            AsyncImage(url: URL(string: "https://s3.amazonaws.com/static.khipu.com/khipu-client/authorize.png")) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-            } placeholder: {
-                ProgressView()
+            VStack(alignment: .center, spacing: Dimens.Spacing.medium) {
+                
+                if !viewModel.uiState.bank.isEmpty {
+                    FormPill(text: viewModel.uiState.bank)
+                }
+                
             }
+            .padding(.horizontal, 24)
+            .padding(.vertical, 0)
+            .frame(maxWidth: .infinity, alignment: .center)
+            .cornerRadius(40)
             
-            Spacer().frame(height:Dimens.Frame.large)
             
-            Text(authorizationRequest.message)
-                .multilineTextAlignment(.center)
-            
-            Spacer().frame(height:Dimens.Spacing.extraMedium)
-            
-            Button(action: {}) {
-                Text(viewModel.uiState.translator.t("modal.authorization.wait"))
+            VStack(alignment: .center, spacing: Dimens.Spacing.large) {
+                
+                AsyncImage(url: URL(string: "https://s3.amazonaws.com/static.khipu.com/khipu-client/authorize.png")) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: Dimens.Image.extraHuge, height: Dimens.Image.extraHuge)
+
+                } placeholder: {
+                    ProgressView()
+                }
             }
-            .disabled(true)
+            .padding(.horizontal, Dimens.Padding.large)
+            .padding(.vertical, Dimens.Padding.quiteLarge)
+            .frame(maxWidth: .infinity, alignment: .top)
+            .cornerRadius(Dimens.CornerRadius.moderatelySmall)
+            
+            
+            VStack(alignment: .center, spacing: Dimens.Spacing.large) {
+                Text(authorizationRequest.message)
+                    .multilineTextAlignment(.center)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
+                
+            }
+            .padding(.horizontal, Dimens.Padding.large)
+            .padding(.vertical, Dimens.Padding.quiteLarge)
+            .frame(maxWidth: .infinity, alignment: .top)
+            .cornerRadius(Dimens.CornerRadius.moderatelySmall)
+
+            
+            MainButton(
+                text: viewModel.uiState.translator.t("modal.authorization.wait"),
+                enabled: false,
+                onClick: {},
+                foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                backgroundColor: themeManager.selectedTheme.colors.primary
+            )
         }
-        .padding(.horizontal,Dimens.Padding.moderatelyLarge)
-        .frame(maxWidth: .infinity, alignment: .center)
+        .padding(.horizontal, Dimens.Padding.large)
+        .padding(.vertical, Dimens.Padding.quiteLarge)
+        .frame(maxWidth: .infinity, alignment: .top)
+        .cornerRadius(Dimens.CornerRadius.moderatelySmall)
+
     }
 }
 

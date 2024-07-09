@@ -20,11 +20,10 @@ final class AuthorizationRequestComponentTests: XCTestCase {
             .environmentObject(themeManager)
         
         let inspectedView = try view.inspect().view(AuthorizationRequestView.self).view(MobileAuthorizationRequestView.self)
-        
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Please authorize using the app"), "Failed to find the text: Please authorize using the app")
-        
-        XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(inspectedView, expectedButtonText: "Esperando autorización"), "Failed to find the button with text: Esperando autorización")
 
+
+        XCTAssertNotNil(try? inspectedView.find(text: "Please authorize using the app"), "Failed to find the text: Please authorize using the app")
+        XCTAssertNotNil(try? inspectedView.find(text: "Esperando autorización"), "Failed to find the text: Esperando autorización")
     }
     
     
