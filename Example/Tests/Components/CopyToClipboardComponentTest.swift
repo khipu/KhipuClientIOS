@@ -13,7 +13,7 @@ final class CopyToClipboardComponentTest: XCTestCase {
         
         let inspectedView = try view.inspect().view(CopyToClipboardOperationId.self)
         let button = try inspectedView.button()
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(button.labelView(), expectedText: "Copy this"), "Failed to find the text: Copy this")
+        XCTAssertNotNil(try? inspectedView.find(text: "Copy this"), "Failed to find the text: Copy this")
                 
     }
     
@@ -24,7 +24,6 @@ final class CopyToClipboardComponentTest: XCTestCase {
         
         let inspectedView = try view.inspect().view(CopyToClipboardLink.self)
         let button = try inspectedView.button()
-        
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(button.labelView(), expectedText: "Copy this link"), "Failed to find the text: Copy this link")
+        XCTAssertNotNil(try? inspectedView.find(text: "Copy this link"), "Failed to find the text: Copy this link")
     }
 }

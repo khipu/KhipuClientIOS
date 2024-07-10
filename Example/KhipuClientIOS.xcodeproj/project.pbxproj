@@ -45,13 +45,13 @@
 		4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTest.swift */; };
 		4AD82D492C0253FD0065CC37 /* FailureMessageComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D432C0253FD0065CC37 /* FailureMessageComponentTest.swift */; };
 		4AD82D4A2C0253FD0065CC37 /* MerchantDialogComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D442C0253FD0065CC37 /* MerchantDialogComponentTest.swift */; };
-		4AD82D4B2C0253FD0065CC37 /* ViewInspectorUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D462C0253FD0065CC37 /* ViewInspectorUtils.swift */; };
 		4AD82D4E2C0256A70065CC37 /* CustomHeaderUIVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D4C2C0256A70065CC37 /* CustomHeaderUIVIew.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7E059F83A1C5E6B5684C3BAA /* Pods_KhipuClientIOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */; };
+		BD1568F42C3ED05E00B1CA1B /* DetailSectionComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1568F32C3ED05E00B1CA1B /* DetailSectionComponentTest.swift */; };
 		BDAE5D802C0A100400B6DDD4 /* ProgressComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE5D7F2C0A100400B6DDD4 /* ProgressComponentTest.swift */; };
 		BDAE5D822C0A10AE00B6DDD4 /* ProgressInfoComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE5D812C0A10AE00B6DDD4 /* ProgressInfoComponentTest.swift */; };
 		BDAE5D842C0A153100B6DDD4 /* SuccessMessageComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE5D832C0A153100B6DDD4 /* SuccessMessageComponentTest.swift */; };
@@ -131,7 +131,6 @@
 		4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToClipboardComponentTest.swift; sourceTree = "<group>"; };
 		4AD82D432C0253FD0065CC37 /* FailureMessageComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailureMessageComponentTest.swift; sourceTree = "<group>"; };
 		4AD82D442C0253FD0065CC37 /* MerchantDialogComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerchantDialogComponentTest.swift; sourceTree = "<group>"; };
-		4AD82D462C0253FD0065CC37 /* ViewInspectorUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewInspectorUtils.swift; sourceTree = "<group>"; };
 		4AD82D4C2C0256A70065CC37 /* CustomHeaderUIVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeaderUIVIew.swift; sourceTree = "<group>"; };
 		5A2884C75050EA9150A4E3E7 /* Pods-KhipuClientIOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* KhipuClientIOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KhipuClientIOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,6 +143,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7E23CC4D2962148772A3CEAA /* Pods-KhipuClientIOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B25A47703EA0D6EF73A46C0B /* Pods_KhipuClientIOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD1568F32C3ED05E00B1CA1B /* DetailSectionComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSectionComponentTest.swift; sourceTree = "<group>"; };
 		BDAE5D7F2C0A100400B6DDD4 /* ProgressComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressComponentTest.swift; sourceTree = "<group>"; };
 		BDAE5D812C0A10AE00B6DDD4 /* ProgressInfoComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressInfoComponentTest.swift; sourceTree = "<group>"; };
 		BDAE5D832C0A153100B6DDD4 /* SuccessMessageComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessMessageComponentTest.swift; sourceTree = "<group>"; };
@@ -252,6 +252,7 @@
 				1583B0272C236AE600B5B9C7 /* FormErrorTest.swift */,
 				26594A362C261E33002D094F /* SVGImageTest.swift */,
 				BDF2EF812C3C1C88000D3FFA /* RedirectToManualComponentTest.swift */,
+				BD1568F32C3ED05E00B1CA1B /* DetailSectionComponentTest.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -305,7 +306,6 @@
 				264E0D852C20DB96001C1BB8 /* Util */,
 				15551B8B2C20944900B45348 /* Fields */,
 				4AD82D452C0253FD0065CC37 /* Components */,
-				4AD82D462C0253FD0065CC37 /* ViewInspectorUtils.swift */,
 				607FACEB1AFB9204008FA782 /* Tests.swift */,
 				607FACE91AFB9204008FA782 /* Supporting Files */,
 			);
@@ -567,6 +567,7 @@
 				26594A0C2C222E83002D094F /* FieldUpdaterTest.swift in Sources */,
 				26594A102C223171002D094F /* DeviceInfoTest.swift in Sources */,
 				4AD82D492C0253FD0065CC37 /* FailureMessageComponentTest.swift in Sources */,
+				BD1568F42C3ED05E00B1CA1B /* DetailSectionComponentTest.swift in Sources */,
 				1583B02A2C236FC600B5B9C7 /* OtpFieldTest.swift in Sources */,
 				15E4F6502C2097F7001DA7C9 /* SwitchFieldTest.swift in Sources */,
 				154872C52C20A40600038189 /* KhipuLabelTest.swift in Sources */,
@@ -574,7 +575,6 @@
 				15E391812C26177B00EA396E /* RutFieldTest.swift in Sources */,
 				154872C72C20A7F400038189 /* HintLabelTest.swift in Sources */,
 				26594A0E2C222F52002D094F /* DimensTest.swift in Sources */,
-				4AD82D4B2C0253FD0065CC37 /* ViewInspectorUtils.swift in Sources */,
 				BDAE5D822C0A10AE00B6DDD4 /* ProgressInfoComponentTest.swift in Sources */,
 				15E4F64E2C2097DF001DA7C9 /* HeaderCheckboxFieldTest.swift in Sources */,
 				BDAE5D802C0A100400B6DDD4 /* ProgressComponentTest.swift in Sources */,

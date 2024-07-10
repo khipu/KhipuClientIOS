@@ -11,7 +11,7 @@ final class FormErrorTest: XCTestCase {
     func testFormError_Fill() throws {
         let view = FormError(text: "Some stuff")
         let inspectedView = try view.environmentObject(ThemeManager()).inspect()
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Some stuff"), "Failed to find the text: Information")
+        XCTAssertNotNil(try? inspectedView.find(text: "Some stuff"), "Failed to find the text: Some stuff")
 
     }
     

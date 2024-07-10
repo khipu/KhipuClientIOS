@@ -12,8 +12,6 @@ final class FormPillTest: XCTestCase {
             .environmentObject(themeManager)
         
         let inspectedView = try view.inspect()
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Nombre Banco"), "Failed to find the text: Nombre Banco")
-
-
+        XCTAssertNotNil(try? inspectedView.find(text: "Nombre Banco"), "Failed to find the text: Nombre Banco")
     }
 }

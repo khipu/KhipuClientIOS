@@ -21,9 +21,9 @@ final class ProgressInfoComponentTest: XCTestCase {
         let inspectedView = try view.inspect().view(
             ProgressInfoComponent.self
         )
-        XCTAssertTrue(
-            try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: message), "Failed to find the text: \( message)"
-        )
+        
+        
+        XCTAssertNotNil(try? inspectedView.find(text: message), "Failed to find the text:"+message)
 
     }
 }

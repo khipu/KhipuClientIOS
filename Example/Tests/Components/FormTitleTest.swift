@@ -12,7 +12,6 @@ final class FormTitleTest: XCTestCase {
             .environmentObject(themeManager)
         
         let inspectedView = try view.inspect()
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Title"), "Failed to find the text: Title")
-
+        XCTAssertNotNil(try? inspectedView.find(text: "Title"), "Failed to find the text: Title")
     }
 }
