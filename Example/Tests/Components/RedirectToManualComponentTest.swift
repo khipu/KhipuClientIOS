@@ -26,7 +26,8 @@ final class RedirectToManualComponentTest: XCTestCase {
         
         let inspectedView = try view.inspect().view(RedirectToManualComponent.self)
         
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "page.redirectManual.redirecting"), "Failed to find the text: Operation Failed")
+        XCTAssertNotNil(try? inspectedView.find(text: "page.redirectManual.redirecting"), "Failed to find the text:page.redirectManual.redirecting")
+
     }
 
 }

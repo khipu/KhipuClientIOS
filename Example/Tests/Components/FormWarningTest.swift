@@ -15,8 +15,8 @@ final class FormWarningTest: XCTestCase {
 
         let inspectedView = try view.inspect().view(FormWarning.self)
         let hStack = try inspectedView.hStack()
+        XCTAssertNotNil(try? inspectedView.find(text: "Warning message"), "Failed to find the text: Warning message")
 
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(hStack, expectedText: "Warning message"), "Failed to find the text: Warning message")
     }
 
 }

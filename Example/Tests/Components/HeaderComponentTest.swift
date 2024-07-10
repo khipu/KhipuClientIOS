@@ -45,12 +45,11 @@ final class HeaderComponentTest: XCTestCase {
         let inspectedView = try view.inspect().view(HeaderComponent.self)
         let vStack = try inspectedView.vStack()
         
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Merchant Name"), "Failed to find the text: Merchant Name")
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "Transaction Subject"), "Failed to find the text: Transaction Subject")
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "MONTO A PAGAR"), "Failed to find the text: MONTO A PAGAR")
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "1000"), "Failed to find the text: 1000")
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(vStack, expectedText: "CÓDIGO • 12345"), "Failed to find the text: Código • 12345")
-        XCTAssertTrue(try ViewInspectorUtils.verifyButtonInStack(vStack, expectedButtonText: "Ver detalle"), "Failed to find the button with text: Ver detalle")
-
+        XCTAssertNotNil(try? inspectedView.find(text: "Merchant Name"), "Failed to find the text: Merchant Name")
+        XCTAssertNotNil(try? inspectedView.find(text: "Transaction Subject"), "Failed to find the text: Transaction Subject")
+        XCTAssertNotNil(try? inspectedView.find(text: "MONTO A PAGAR"), "Failed to find the text: MONTO A PAGAR")
+        XCTAssertNotNil(try? inspectedView.find(text: "1000"), "Failed to find the text: 1000")
+        XCTAssertNotNil(try? inspectedView.find(text: "CÓDIGO • 12345"), "Failed to find the text: CÓDIGO • 12345")
+        XCTAssertNotNil(try? inspectedView.find(text: "Ver detalle"), "Failed to find the text: Ver detalle")
     }
 }

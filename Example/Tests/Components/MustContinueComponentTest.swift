@@ -6,6 +6,7 @@ import KhenshinProtocol
 
 @available(iOS 15.0, *)
 final class MustContinueComponentTest: XCTestCase {
+    
     func testMustContinueComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -55,7 +56,8 @@ final class MustContinueComponentTest: XCTestCase {
             .environmentObject(themeManager)
         
         let inspectedView = try view.inspect().view(MustContinueComponent.self)
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: "Pago en verificación"), "Failed to find the text: Pago en verificación")
+        
+        XCTAssertNotNil(try? inspectedView.find(text: "Pago en verificación"), "Failed to find the text: Pago en verificación")
         XCTAssertNoThrow(try inspectedView.find(MainButton.self))
     }
     
@@ -104,30 +106,9 @@ final class MustContinueComponentTest: XCTestCase {
         
         let inspectedView = try view.inspect().view(InformationSection.self)
         let shareText = "Comparte el siguiente enlace con los firmantes para completar el pago."
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectedView, expectedText: shareText), "Failed to find the text: \(shareText)")
+        XCTAssertNotNil(try? inspectedView.find(text: shareText), "Failed to find the text:"+shareText)
+
         XCTAssertNoThrow(try inspectedView.find(CopyToClipboardLink.self))
     }
     
-    func testDetailItemMustContinueWithCopy() throws {
-        let themeManager = ThemeManager()
-        let view = DetailItemMustContinue(label: "Label", value: "Value", shouldCopyValue: true).environmentObject(themeManager)
-
-        let inspectView = try view.inspect().view(DetailItemMustContinue.self)
-        
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectView, expectedText: "Label"), "Failed to find the text: Label one")
-        XCTAssertFalse(try ViewInspectorUtils.verifyTextInStack(inspectView, expectedText: "Value"))
-        XCTAssertNoThrow(try inspectView.find(CopyToClipboardOperationId.self))
-    }
-    
-    func testDetailItemMustContinueNoCopy() throws {
-        let themeManager = ThemeManager()
-        let view = DetailItemMustContinue(label: "Label two", value: "Value two", shouldCopyValue: false).environmentObject(themeManager)
-        
-        let inspectView = try view.inspect().view(DetailItemMustContinue.self)
-        
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectView, expectedText: "Label two"), "Failed to find the text: Label two")
-        XCTAssertTrue(try ViewInspectorUtils.verifyTextInStack(inspectView, expectedText: "Value two"), "Failed to find the text: Value two")
-        XCTAssertThrowsError(try inspectView.find(CopyToClipboardOperationId.self))
-    }
-
 }

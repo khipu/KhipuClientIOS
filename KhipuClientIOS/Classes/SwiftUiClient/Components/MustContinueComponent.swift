@@ -28,7 +28,8 @@ struct MustContinueComponent: View {
             
             FormWarning(text: operationMustContinue.body ?? "")
             InformationSection(operationMustContinue: operationMustContinue, khipuViewModel: viewModel, khipuUiState: viewModel.uiState)
-            DetailSectionMustContinue(operationMustContinue: operationMustContinue, operationInfo: viewModel.uiState.operationInfo, viewModel: viewModel)
+            
+            DetailSectionComponent(reason: "", operationId: operationMustContinue.operationID!,operationInfo: viewModel.uiState.operationInfo,viewModel: viewModel)
 
             MainButton(
                 text: viewModel.uiState.translator.t("default.end.and.go.back"),
@@ -91,61 +92,6 @@ struct InformationSection: View {
 }
 
 
-@available(iOS 15.0.0, *)
-struct DetailSectionMustContinue: View {
-    var operationMustContinue: OperationMustContinue
-    var operationInfo: OperationInfo?
-    @ObservedObject public var viewModel: KhipuViewModel
-    @EnvironmentObject private var themeManager: ThemeManager
-    
-    var body: some View {
-        
-        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-            Text(viewModel.uiState.translator.t("default.detail.label"))
-                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
-            
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
-            
-            DetailItemFailure(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")
-            DashedLine()
-            DetailItemMustContinue(
-                label: viewModel.uiState.translator.t("default.operation.code.short.label"),
-                value: operationMustContinue.operationID ?? "",
-                shouldCopyValue: true
-            )
-            
-
-        }
-        .padding(Dimens.Padding.large)
-        .frame(maxWidth: .infinity, alignment: .top)
-        .cornerRadius(Dimens.CornerRadius.moderatelySmall)
-    }
-}
-
-@available(iOS 15.0.0, *)
-struct DetailItemMustContinue: View {
-    var label: String
-    var value: String
-    var shouldCopyValue: Bool = false
-    @EnvironmentObject private var themeManager: ThemeManager
-    
-    var body: some View {
-        HStack {
-            Text(label)
-                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
-                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
-            Spacer()
-            if !shouldCopyValue {
-                Text(value)
-                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-                
-            } else {
-                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
-            }
-        }
-        .padding(.vertical,Dimens.Padding.verySmall)
-    }
-}
 
 
 @available(iOS 15.0, *)
@@ -194,6 +140,7 @@ struct MustContinueComponent_Previews: PreviewProvider {
     }
 }
 
+/*
 
 @available(iOS 15.0, *)
 struct InformationSection_Previews: PreviewProvider {
@@ -242,18 +189,4 @@ struct InformationSection_Previews: PreviewProvider {
                 .padding()
     }
 }
-
-
-@available(iOS 15.0, *)
-struct DetailItemMustContinue_Previews: PreviewProvider {
-    static var previews: some View {
-        return DetailItemMustContinue(
-            label: "Label",
-            value: "Value",
-            shouldCopyValue: true
-        )
-        .environmentObject(ThemeManager())
-        .previewLayout(.sizeThatFits)
-        .padding()
-    }
-}
+*/
