@@ -18,9 +18,11 @@ struct MustContinueComponent: View {
                 Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
                 Text((operationMustContinue.title)!)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
                 
             }
             .padding(0)
@@ -62,7 +64,7 @@ struct InformationSection: View {
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
             Text(khipuUiState.translator.t("page.operationMustContinue.share.description"))
-                .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .multilineTextAlignment(.center)
             

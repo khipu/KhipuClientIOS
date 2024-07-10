@@ -57,7 +57,7 @@ struct HeaderComponent: View {
                 
                 Text(viewModel.uiState.operationInfo?.subject ?? "")
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-                    .foregroundColor(Color.primary)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                     .lineLimit(1)
                     .truncationMode(.tail)
             }
@@ -71,8 +71,7 @@ struct HeaderComponent: View {
                 
                 Text(viewModel.uiState.operationInfo?.amount ?? "")
                     .font(themeManager.selectedTheme.fonts.font(style: .bold, size: 20))
-                    .foregroundColor(Color.primary)
-                
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
             }
         }.padding(.horizontal,Dimens.Spacing.large)
             .padding(.vertical,Dimens.Padding.veryMedium)

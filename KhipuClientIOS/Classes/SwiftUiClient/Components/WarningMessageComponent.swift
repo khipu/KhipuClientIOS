@@ -28,6 +28,7 @@ struct WarningMessageComponent: View {
                 Text(viewModel.uiState.translator.t("page.operationWarning.failure.after.notify.pre.header"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 
             }
             .padding(0)
@@ -37,6 +38,7 @@ struct WarningMessageComponent: View {
             HStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 Text((operationWarning.title)!)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                     .multilineTextAlignment(.center)
             }
             .padding(.horizontal,Dimens.Padding.moderatelyLarge)

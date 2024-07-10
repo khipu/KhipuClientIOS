@@ -46,6 +46,7 @@ struct RedirectToManualComponent: View {
                 Text(viewModel.uiState.translator.t("page.redirectManual.redirecting"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
 
             }
             .padding(0)
@@ -56,6 +57,7 @@ struct RedirectToManualComponent: View {
                 Text(viewModel.uiState.translator.t("page.redirectManual.only.regular"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
             }
             .padding(.horizontal,Dimens.Padding.moderatelyLarge)
             .padding(.vertical, 0)
@@ -67,7 +69,7 @@ struct RedirectToManualComponent: View {
                 Image(systemName: "paperplane.fill")
                     .resizable()
                     .frame(width: Dimens.Image.huge, height: Dimens.Image.huge)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurfaceVariant)
 
                 HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
                     Text(redirectText)

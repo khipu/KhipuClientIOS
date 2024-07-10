@@ -16,11 +16,11 @@ struct CopyToClipboardOperationId: View {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
-                Image(systemName: "doc.on.doc.fill")
+                Image(systemName: "doc.on.doc")
                       .resizable()
                       .aspectRatio(contentMode: .fit)
                       .frame(width: Dimens.Image.small, height: Dimens.Image.small)
-                      .foregroundColor(.white)
+                      .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
             }
         }
         .padding(.horizontal,Dimens.Padding.medium)
@@ -45,15 +45,16 @@ struct CopyToClipboardLink: View {
             HStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-              Image(systemName: "doc.on.doc.fill")
+                    .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
+              Image(systemName: "doc.on.doc")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: Dimens.Image.small, height: Dimens.Image.small)
-                    .foregroundColor(.white)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
             }
             .padding(.horizontal,Dimens.Padding.medium)
             .padding(.vertical, 0)
-            .background(themeManager.selectedTheme.colors.onSecondaryContainer)
+            .background(themeManager.selectedTheme.colors.secondary)
             .cornerRadius(Dimens.CornerRadius.extraSmall)        }
         .buttonStyle(PlainButtonStyle())
     }

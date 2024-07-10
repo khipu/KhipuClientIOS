@@ -26,6 +26,7 @@ struct FailureMessageComponent: View {
                 Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
+                    .foregroundColor(themeManager.selectedTheme.colors.onBackground)
                 
             }
             .padding(0)
@@ -36,6 +37,7 @@ struct FailureMessageComponent: View {
                 Text((operationFailure.title)!)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
+                    .foregroundColor(themeManager.selectedTheme.colors.onBackground)
             }
             .padding(.horizontal,Dimens.Padding.moderatelyLarge)
             .padding(.vertical, 0)

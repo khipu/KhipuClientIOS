@@ -153,4 +153,19 @@ struct Colors {
         return Color("onSecondary", bundle: bundle)
     }
     
+    //info
+    var info: Color {
+        return Color("info", bundle: bundle)
+    }
+    
+    //error
+    var error: Color {
+        return Color("error", bundle: bundle)
+    }
+    
+    //warning
+    var warning: Color {
+        return Color("warning", bundle: bundle)
+    }
+    
 }

@@ -12,9 +12,8 @@ struct DetailSectionComponent: View {
     
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-            Text(viewModel.uiState.translator.t("default.detail.label"))
-                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
-            
+
+
             DetailItem(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
             
             DetailItem(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")

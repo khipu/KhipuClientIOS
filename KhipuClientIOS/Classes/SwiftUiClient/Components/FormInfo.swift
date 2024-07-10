@@ -10,7 +10,7 @@ struct FormInfo: View {
         HStack(alignment: .top, spacing: 0) {
             HStack(alignment: .top, spacing: 0) {
                 Image(systemName: "info.circle")
-                    .foregroundColor(themeManager.selectedTheme.colors.secondary)
+                    .foregroundColor(themeManager.selectedTheme.colors.info)
                     .frame(width:Dimens.Frame.medium, height:Dimens.Frame.medium)
             }
             .padding(.leading, 0)
@@ -20,7 +20,7 @@ struct FormInfo: View {
             VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
-                    .foregroundColor(themeManager.selectedTheme.colors.secondary)
+                    .foregroundColor(themeManager.selectedTheme.colors.info)
                     .frame(maxWidth: .infinity, alignment: .topLeading)
             }
             .padding(.horizontal, 0)
@@ -36,7 +36,7 @@ struct FormInfo: View {
         .overlay(
             RoundedRectangle(cornerRadius:Dimens.CornerRadius.verySmall)
                 .inset(by: 0.5)
-                .stroke(themeManager.selectedTheme.colors.secondary, lineWidth: 1)
+                .stroke(themeManager.selectedTheme.colors.info, lineWidth: 1)
         )
         
     }

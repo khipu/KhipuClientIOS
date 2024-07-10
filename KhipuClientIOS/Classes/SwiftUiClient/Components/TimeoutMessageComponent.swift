@@ -14,6 +14,7 @@ struct TimeoutMessageComponent: View {
                 .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .top)
+                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
             
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"))
@@ -40,7 +41,7 @@ struct TimeoutMessageComponent: View {
                     .cornerRadius(Dimens.CornerRadius.moderatelySmall)
                     
                     Text(viewModel.uiState.translator.t("default.operation.code.label"))
-                        .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                        .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                         .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                         .multilineTextAlignment(.center)
                     CopyToClipboardOperationId(

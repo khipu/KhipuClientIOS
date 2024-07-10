@@ -95,8 +95,10 @@ struct InfoView: View {
         VStack(alignment: .leading, spacing: 0) {
             Text(title)
                 .font(themeManager.selectedTheme.fonts.font(style: .bold, size: 14))
+                .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
             Text(value)
                 .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+                .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
         }
         .padding(.horizontal, Dimens.Padding.extraMedium)
         .padding(.vertical, Dimens.Padding.medium)
