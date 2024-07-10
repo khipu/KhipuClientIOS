@@ -14,7 +14,7 @@ struct SuccessMessageComponent: View {
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: Dimens.Image.slightlyLarger, height: Dimens.Image.slightlyLarger)
-                    .foregroundColor(themeManager.selectedTheme.colors.success)
+                    .foregroundColor(themeManager.selectedTheme.colors.sucess)
                 
                 HStack(alignment: .top, spacing:Dimens.Spacing.medium) {   Text(operationSuccess.title ?? "")
                         .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 20))
@@ -35,7 +35,7 @@ struct SuccessMessageComponent: View {
                 .cornerRadius(8)
                 
                 Text(viewModel.uiState.translator.t("default.operation.code.label"))
-                    .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                     .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                     .multilineTextAlignment(.center)
                 CopyToClipboardOperationId(
@@ -56,8 +56,8 @@ struct SuccessMessageComponent: View {
                 onClick: {
                     viewModel.uiState.returnToApp = true
                 },
-                foregroundColor: themeManager.selectedTheme.colors.onSuccess,
-                backgroundColor: themeManager.selectedTheme.colors.success
+                foregroundColor: themeManager.selectedTheme.colors.onSucess,
+                backgroundColor: themeManager.selectedTheme.colors.sucess
             )
             
         }

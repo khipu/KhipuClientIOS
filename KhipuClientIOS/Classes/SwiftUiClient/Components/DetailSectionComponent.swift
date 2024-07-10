@@ -39,11 +39,12 @@ struct DetailItem: View {
         HStack {
             Text(label)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
-                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
             Spacer()
             if !shouldCopyValue {
                 Text(value)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 
             } else {
                 CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)

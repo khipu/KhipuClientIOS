@@ -24,10 +24,10 @@ struct TimeoutMessageComponent: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(width: Dimens.Image.huge, height: Dimens.Image.huge)
-                            .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                         HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
                             Text(viewModel.uiState.translator.t("page.timeout.end"))
-                                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 16))
                                 .multilineTextAlignment(.center)
                         }
@@ -40,7 +40,7 @@ struct TimeoutMessageComponent: View {
                     .cornerRadius(Dimens.CornerRadius.moderatelySmall)
                     
                     Text(viewModel.uiState.translator.t("default.operation.code.label"))
-                        .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                        .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                         .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                         .multilineTextAlignment(.center)
                     CopyToClipboardOperationId(

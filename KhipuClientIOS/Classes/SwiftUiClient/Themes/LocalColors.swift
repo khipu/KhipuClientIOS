@@ -9,6 +9,7 @@ class LocalColors {
     var lightOnPrimary: Color?
     var lightTopBarContainer: Color?
     var lightOnTopBarContainer: Color?
+    
     var darkBackground: Color?
     var darkOnBackground: Color?
     var darkPrimary: Color?

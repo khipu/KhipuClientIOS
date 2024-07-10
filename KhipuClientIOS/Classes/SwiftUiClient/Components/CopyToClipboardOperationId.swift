@@ -15,6 +15,7 @@ struct CopyToClipboardOperationId: View {
                 
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                    .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
                 Image(systemName: "doc.on.doc.fill")
                       .resizable()
                       .aspectRatio(contentMode: .fit)
@@ -24,7 +25,7 @@ struct CopyToClipboardOperationId: View {
         }
         .padding(.horizontal,Dimens.Padding.medium)
         .padding(.vertical, 0)
-        .background(themeManager.selectedTheme.colors.onSecondaryContainer)
+        .background(themeManager.selectedTheme.colors.secondary)
         .cornerRadius(Dimens.CornerRadius.extraSmall)
         .buttonStyle(PlainButtonStyle())
     }

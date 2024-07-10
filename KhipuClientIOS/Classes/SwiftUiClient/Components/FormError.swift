@@ -11,7 +11,7 @@ struct FormError: View {
             HStack(alignment: .top, spacing: 0) {
                 HStack(alignment: .top, spacing: 0) {
                     Image(systemName: "exclamationmark.octagon.fill")
-                        .foregroundColor(themeManager.selectedTheme.colors.error)
+                        .foregroundColor(.red)
                         .frame(width:Dimens.Frame.large, height:Dimens.Frame.large)
                 }
                 .padding(.leading, 0)
@@ -42,7 +42,7 @@ struct FormError: View {
             .overlay(
                 RoundedRectangle(cornerRadius:Dimens.CornerRadius.verySmall)
                     .inset(by: 0.5)
-                    .stroke(themeManager.selectedTheme.colors.error, lineWidth: 1)
+                    .stroke(.red, lineWidth: 1)
             )
         }}
 }

@@ -18,11 +18,11 @@ struct MainButton: View {
                 onClick()
             }) {
                 Text(text)
-                    .foregroundColor(enabled && !submitted ? foregroundColor :themeManager.selectedTheme.colors.buttonForeground)
+                    .foregroundColor(enabled && !submitted ? foregroundColor :themeManager.selectedTheme.colors.onDisabled)
                     .padding(.horizontal,Dimens.Padding.moderatelyLarge)
                     .padding(.vertical,Dimens.Padding.moderatelySmall)
                     .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(enabled && !submitted ? backgroundColor : themeManager.selectedTheme.colors.buttonBackground)
+                    .background(enabled && !submitted ? backgroundColor : themeManager.selectedTheme.colors.disabled)
                     .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 18))
             }
             .disabled(!enabled && !submitted)
@@ -31,7 +31,7 @@ struct MainButton: View {
         .padding(.horizontal,Dimens.Padding.moderatelyLarge)
         .padding(.vertical,Dimens.Padding.moderatelySmall)
         .frame(maxWidth: .infinity, alignment: .center)
-        .background(enabled && !submitted ? backgroundColor :themeManager.selectedTheme.colors.buttonBackground)
+        .background(enabled && !submitted ? backgroundColor :themeManager.selectedTheme.colors.disabled)
         .cornerRadius(Dimens.CornerRadius.moderatelySmall)
     }
 }

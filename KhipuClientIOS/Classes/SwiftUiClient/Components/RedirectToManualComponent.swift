@@ -71,7 +71,7 @@ struct RedirectToManualComponent: View {
 
                 HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
                     Text(redirectText)
-                        .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                        .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                         .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 16))
                         .multilineTextAlignment(.center)
                 }
@@ -107,13 +107,13 @@ struct RedirectToManualComponent: View {
                 enabled: true,
                 onClick: {
                     viewModel.uiState.returnToApp = true                },
-                foregroundColor: themeManager.selectedTheme.colors.onSecondary,
-                backgroundColor: themeManager.selectedTheme.colors.secondary
+                foregroundColor: themeManager.selectedTheme.colors.onSurface,
+                backgroundColor: themeManager.selectedTheme.colors.surface
             ).cornerRadius(8)
                 .overlay(
                     RoundedRectangle(cornerRadius:Dimens.CornerRadius.extraSmall)
                         .inset(by: 0.5)
-                        .stroke(themeManager.selectedTheme.colors.labelForeground, lineWidth: 1))
+                        .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 1))
         }
         .padding(.horizontal,Dimens.Padding.large)
         .padding(.vertical,Dimens.Padding.quiteLarge)
