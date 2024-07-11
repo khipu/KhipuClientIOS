@@ -59,33 +59,33 @@ class FieldUtils {
     static func getFailureReasonCode(reason: FailureReasonType?) -> String {
            switch reason {
            case .acquirePageError:
-               return "ap"
+               return "-ap"
            case .bankWithoutAutomaton:
-               return "bwa"
+               return "-bwa"
            case .formTimeout:
-               return "ft"
+               return "-ft"
            case .invalidOperationID:
-               return "ioi"
+               return "-ioi"
            case .noBackendAvailable:
-               return "nba"
+               return "-nba"
            case .realTimeout:
-               return "rt"
+               return "-rt"
            case .serverDisconnected:
-               return "sd"
+               return "-sd"
            case .succeededDelayedNotAllowed:
-               return "sdna"
+               return "-sdna"
            case .taskDownloadError:
-               return "tde"
+               return "-tde"
            case .taskDumped:
-               return "td"
+               return "-td"
            case .taskExecutionError:
-               return "tee"
+               return "-tee"
            case .taskFinished:
-               return "tf"
+               return "-tf"
            case .taskNotificationError:
-               return "tne"
+               return "-tne"
            case .userCanceled:
-               return "uc"
+               return "-uc"
            case .none:
                return ""
            }

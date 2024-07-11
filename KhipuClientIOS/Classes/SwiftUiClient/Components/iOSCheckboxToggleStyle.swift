@@ -1,10 +1,3 @@
-//
-//  iOSCheckboxToggleStyle.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 23-05-24.
-//
-
 import SwiftUI
 
 @available(iOS 13.0, *)

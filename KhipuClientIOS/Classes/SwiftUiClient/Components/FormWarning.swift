@@ -19,7 +19,7 @@ struct FormWarning: View {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .kerning(0.17)
-                    .foregroundColor(themeManager.selectedTheme.colors.onWarning)
+                    .foregroundColor(themeManager.selectedTheme.colors.warning)
                 .frame(maxWidth: .infinity, alignment: .topLeading) }
             .padding(.horizontal, 0)
             .padding(.vertical,Dimens.Padding.extraSmall)

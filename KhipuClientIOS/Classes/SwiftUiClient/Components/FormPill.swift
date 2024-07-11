@@ -9,7 +9,7 @@ struct FormPill: View {
         HStack(alignment: .center, spacing:Dimens.Spacing.moderatelySmall) {
             Text(text)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                .foregroundColor(themeManager.selectedTheme.colors.onBackground)
                 .frame(width:Dimens.Frame.extremelyLarge,height: Dimens.Frame.quiteLarge)
             
         }
@@ -17,7 +17,7 @@ struct FormPill: View {
         .cornerRadius(Dimens.CornerRadius.large)
         .overlay(
             RoundedRectangle(cornerRadius:Dimens.CornerRadius.large)
-                .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth:0.5)
+                .stroke(themeManager.selectedTheme.colors.onBackground, lineWidth:0.5)
             
         )
     }

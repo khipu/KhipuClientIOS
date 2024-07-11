@@ -10,7 +10,7 @@ struct HintLabel: View {
             HStack {
                 Text(text ?? "")
                     .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 12))
-                    .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                     .accessibilityIdentifier("hintText")
                 Spacer()
             }

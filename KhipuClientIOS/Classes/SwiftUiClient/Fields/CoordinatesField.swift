@@ -20,7 +20,6 @@ struct CoordinateInputField: View {
             }
         }
         .frame(minWidth:Dimens.Frame.quiteLarge, maxWidth:Dimens.Frame.muchLarger)
-        .padding(.trailing,Dimens.Padding.extraSmall)
         .multilineTextAlignment(.center)
         .textFieldStyle(KhipuTextFieldStyle())
         .autocorrectionDisabled(true)
@@ -108,7 +107,7 @@ struct CoordinatesField_Previews: PreviewProvider {
                  """
                      {
                        "id": "item1",
-                       "labels": ["Coord1", "Coord2", "Coord2"],
+                       "labels": ["A1", "A1", "A1"],
                        "type": "\(FormItemTypes.coordinates.rawValue)",
                        "hint": "Give me the answer",
                         "number": false,

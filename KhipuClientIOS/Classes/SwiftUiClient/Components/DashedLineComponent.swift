@@ -2,9 +2,12 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 struct DashedLine: View {
+    @EnvironmentObject private var themeManager: ThemeManager
+
     var body: some View {
         Line()
             .stroke(style: StrokeStyle(lineWidth: 1, dash: [5]))
+            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
             .frame(height: 1)
     }
 }
@@ -22,6 +25,7 @@ struct Line: Shape {
 @available(iOS 13.0, *)
 struct DashedLine_Previews: PreviewProvider {
     static var previews: some View {
-        DashedLine()
+        DashedLine().environmentObject(ThemeManager())
+
     }
 }

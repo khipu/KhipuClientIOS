@@ -19,7 +19,7 @@ struct TermsAndConditionsComponent: View {
             Text(link)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 12))
-                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .environment(\.openURL, OpenURLAction(handler: handleURL))
                 .sheet(isPresented: $showingWebView) {
                     VStack{
@@ -28,7 +28,7 @@ struct TermsAndConditionsComponent: View {
                             Button {
                                 showingWebView = false
                             } label: {
-                                Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
+                                Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onSurfaceVariant)
                             }
                             .padding()
                         }

@@ -12,7 +12,7 @@ final class DetailSectionComponentTest: XCTestCase {
             let themeManager = ThemeManager()
             let viewModel = KhipuViewModel()
             viewModel.uiState.translator = KhipuTranslator(translations: [
-                "default.detail.label": "Detalle",
+                "default.amount.label": "Monto",
             ])
 
             let operationInfo = OperationInfo(
@@ -40,7 +40,7 @@ final class DetailSectionComponentTest: XCTestCase {
             let view = DetailSectionComponent(reason:FieldUtils.getFailureReasonCode(reason: .noBackendAvailable), operationId: "12345", operationInfo: operationInfo, viewModel: viewModel).environmentObject(themeManager)
 
             let inspectedView = try view.inspect().view(DetailSectionComponent.self)
-            XCTAssertNotNil(try? inspectedView.find(text: "Detalle"), "Failed to find the text: Detalle")
+            XCTAssertNotNil(try? inspectedView.find(text: "Monto"), "Failed to find the text: Monto")
         }
 
         func testDetailItemRendersCorrectly() throws {

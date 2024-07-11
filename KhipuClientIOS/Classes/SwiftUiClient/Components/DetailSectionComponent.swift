@@ -12,9 +12,8 @@ struct DetailSectionComponent: View {
     
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-            Text(viewModel.uiState.translator.t("default.detail.label"))
-                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
-            
+
+
             DetailItem(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
             
             DetailItem(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")
@@ -39,11 +38,12 @@ struct DetailItem: View {
         HStack {
             Text(label)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
-                .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
             Spacer()
             if !shouldCopyValue {
                 Text(value)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 
             } else {
                 CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)

@@ -3,30 +3,35 @@ import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
 struct DataTableCommon: View {
+    
+    @EnvironmentObject private var themeManager: ThemeManager
+
     let dataTable: DataTable
     
     var body: some View {
         let maxCells = FieldUtils.getMaxDataTableCells(dataTable)
-        VStack {
+        VStack(alignment: .leading, spacing: 0) {
             ForEach(Array(dataTable.rows.enumerated()), id: \.offset) { row in
-                HStack {
+                HStack(spacing: 0) {
                     ForEach(0..<maxCells, id: \.self) { index in
                         if index < row.element.cells.count {
                             let cell = row.element.cells[index]
                             Text(cell.text)
-                                .foregroundColor(Color(uiColor: .secondaryLabel))
-                                .font(.body)
+                                .foregroundColor(themeManager.selectedTheme.colors.secondary)
+                                .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         } else {
-                            Text("").font(.body)
+                            Text("").font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                             .frame(maxWidth: .infinity)                        }
                     }
                 }
             }
         }
-        .padding()
-    }
+        .padding(0)
+        .frame(maxWidth: .infinity, alignment: .topLeading)    }
 }
+
+
 
 @available(iOS 15.0, *)
 struct DataTableCommon_Previews: PreviewProvider {
@@ -48,7 +53,7 @@ struct DataTableCommon_Previews: PreviewProvider {
         ], rowSeparator: mockRowSeparator)
         
         return DataTableCommon(dataTable: mockDataTable)
-            .previewLayout(.sizeThatFits)
+            .environmentObject(ThemeManager())
             .padding()
     }
 }

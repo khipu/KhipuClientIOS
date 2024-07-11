@@ -34,8 +34,41 @@ struct SuccessMessageComponent: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .cornerRadius(8)
                 
+                if let operationInfo = viewModel.uiState.operationInfo {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(viewModel.uiState.translator.t("default.amount.label"))
+                            .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                        
+                        Text(operationInfo.amount ?? "")
+                            .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                        
+                        Text(viewModel.uiState.translator.t("default.merchant.label"))
+                            .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                        
+                        Text(operationInfo.merchant?.name ?? "")
+                            .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                        
+                    }
+                    .padding(.horizontal, 0)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
+                }
+
+            
                 Text(viewModel.uiState.translator.t("default.operation.code.label"))
-                    .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                     .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                     .multilineTextAlignment(.center)
                 CopyToClipboardOperationId(
@@ -73,6 +106,37 @@ struct SuccessMessageComponent: View {
 struct SuccessMessageComponent_Previews: PreviewProvider{
     static var previews: some View{
         
+        let viewModel = KhipuViewModel()
+        viewModel.uiState.translator = KhipuTranslator(translations: [
+            "default.amount.label": "Monto",
+            "default.operation.code.label": "Código operación",
+            "default.merchant.label": "Destinatario",
+        ])
+        let operationInfo = OperationInfo(
+            acceptManualTransfer: true,
+            amount: "1000",
+            body: "Transaction Body",
+            email: "example@example.com",
+            merchant: Merchant(logo: "merchant_logo", name: "Merchant Name"),
+            operationID: "12345",
+            subject: "Transaction Subject",
+            type: .operationInfo,
+            urls: Urls(
+                attachment: ["https://example.com/attachment"],
+                cancel: "https://example.com/cancel",
+                changePaymentMethod: "https://example.com/changePaymentMethod",
+                fallback: "https://example.com/fallback",
+                image: "https://example.com/image",
+                info: "https://example.com/info",
+                manualTransfer: "https://example.com/manualTransfer",
+                urlsReturn: "https://example.com/return"
+            ),
+            welcomeScreen: WelcomeScreen(enabled: true, ttl: 3600)
+        )
+        
+        viewModel.uiState.operationInfo = operationInfo
+
+        
         return SuccessMessageComponent(operationSuccess: OperationSuccess(
             canUpdateEmail: false,
             type: MessageType.operationSuccess,
@@ -82,7 +146,7 @@ struct SuccessMessageComponent_Previews: PreviewProvider{
             operationID: "operationID",
             resultMessage: "resultMessage",
             title: "Title"
-        ), viewModel: KhipuViewModel()
+        ), viewModel: viewModel
         )
         .environmentObject(ThemeManager())
         .padding()

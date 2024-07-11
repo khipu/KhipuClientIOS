@@ -10,7 +10,7 @@ struct ErrorLabel: View {
             Spacer()
             Text(text)
                 .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 12))
-                .foregroundColor(themeManager.selectedTheme.colors.error)
+                .foregroundColor(.red)
         }
         .padding(.top, Dimens.Padding.verySmall)
     }

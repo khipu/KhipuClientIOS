@@ -24,7 +24,7 @@ struct FormError: View {
                     Text(text!)
                         .font(themeManager.selectedTheme.fonts.font(style: .regular, size:14))
                         .kerning(0.17)
-                        .foregroundColor(themeManager.selectedTheme.colors.onTertiary)
+                        .foregroundColor(themeManager.selectedTheme.colors.error)
                         .frame(maxWidth: .infinity, alignment: .topLeading)
                         .multilineTextAlignment(.leading)
                         .fixedSize(horizontal: false, vertical: true)

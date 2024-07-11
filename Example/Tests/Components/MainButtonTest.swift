@@ -40,6 +40,6 @@ final class MainButtonTest: XCTestCase {
         let buttonView = try inspectedView.hStack().button(0)
         XCTAssertEqual(try buttonView.labelView().text().string(), "Click Me")
         XCTAssertEqual(buttonView.isDisabled(), true)
-        XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), themeManager.selectedTheme.colors.buttonForeground)
+        XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), themeManager.selectedTheme.colors.onDisabled)
     }
 }

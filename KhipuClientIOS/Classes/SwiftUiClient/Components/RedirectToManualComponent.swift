@@ -46,6 +46,7 @@ struct RedirectToManualComponent: View {
                 Text(viewModel.uiState.translator.t("page.redirectManual.redirecting"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
 
             }
             .padding(0)
@@ -56,6 +57,7 @@ struct RedirectToManualComponent: View {
                 Text(viewModel.uiState.translator.t("page.redirectManual.only.regular"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
             }
             .padding(.horizontal,Dimens.Padding.moderatelyLarge)
             .padding(.vertical, 0)
@@ -67,11 +69,11 @@ struct RedirectToManualComponent: View {
                 Image(systemName: "paperplane.fill")
                     .resizable()
                     .frame(width: Dimens.Image.huge, height: Dimens.Image.huge)
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurfaceVariant)
 
                 HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
                     Text(redirectText)
-                        .foregroundColor(themeManager.selectedTheme.colors.labelForeground)
+                        .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                         .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 16))
                         .multilineTextAlignment(.center)
                 }
@@ -107,13 +109,13 @@ struct RedirectToManualComponent: View {
                 enabled: true,
                 onClick: {
                     viewModel.uiState.returnToApp = true                },
-                foregroundColor: themeManager.selectedTheme.colors.onSecondary,
-                backgroundColor: themeManager.selectedTheme.colors.secondary
+                foregroundColor: themeManager.selectedTheme.colors.onSurface,
+                backgroundColor: themeManager.selectedTheme.colors.surface
             ).cornerRadius(8)
                 .overlay(
                     RoundedRectangle(cornerRadius:Dimens.CornerRadius.extraSmall)
                         .inset(by: 0.5)
-                        .stroke(themeManager.selectedTheme.colors.labelForeground, lineWidth: 1))
+                        .stroke(themeManager.selectedTheme.colors.onSurface, lineWidth: 1))
         }
         .padding(.horizontal,Dimens.Padding.large)
         .padding(.vertical,Dimens.Padding.quiteLarge)
