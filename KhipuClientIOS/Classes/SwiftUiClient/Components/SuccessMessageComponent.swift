@@ -34,34 +34,38 @@ struct SuccessMessageComponent: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .cornerRadius(8)
                 
-                VStack(alignment: .leading, spacing: 10) {
-                    Text(viewModel.uiState.translator.t("default.amount.label"))
-                        .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))                      .multilineTextAlignment(.center)
-                      .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)                      .frame(maxWidth: .infinity, alignment: .top)
-                    
-                    Text(viewModel.uiState.operationInfo?.amount ?? "")
-                        .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14)
-                      )
-                      .multilineTextAlignment(.center)
-                      .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-                      .frame(maxWidth: .infinity, alignment: .top)
-                    
-                    Text(viewModel.uiState.translator.t("default.merchant.label"))
-                        .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))                      .multilineTextAlignment(.center)
-                      .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)                      .frame(maxWidth: .infinity, alignment: .top)
-                    
-                    Text(viewModel.uiState.operationInfo?.merchant?.name ?? "")
-                      .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14)
-                      )
-                      .multilineTextAlignment(.center)
-                      .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                      .frame(maxWidth: .infinity, alignment: .top)
-                    
-                    
+                if let operationInfo = viewModel.uiState.operationInfo {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(viewModel.uiState.translator.t("default.amount.label"))
+                            .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                        
+                        Text(operationInfo.amount ?? "")
+                            .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                        
+                        Text(viewModel.uiState.translator.t("default.merchant.label"))
+                            .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                        
+                        Text(operationInfo.merchant?.name ?? "")
+                            .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                            .multilineTextAlignment(.center)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                            .frame(maxWidth: .infinity, alignment: .top)
+                        
+                    }
+                    .padding(.horizontal, 0)
+                    .padding(.vertical, 10)
+                    .frame(maxWidth: .infinity, alignment: .topLeading)
                 }
-                .padding(.horizontal, 0)
-                .padding(.vertical, 10)
-                .frame(maxWidth: .infinity, alignment: .topLeading)
+
             
                 Text(viewModel.uiState.translator.t("default.operation.code.label"))
                     .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
