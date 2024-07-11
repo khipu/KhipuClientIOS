@@ -42,7 +42,6 @@ final class ListFieldTest: XCTestCase {
         )
         let inspected = try view.environmentObject(ThemeManager()).inspect()
         
-        let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText")
         
         for index in 0..<3 {
             do {
