@@ -45,7 +45,7 @@ struct SuccessMessageComponent: View {
                         Text(operationInfo.amount ?? "")
                             .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                             .multilineTextAlignment(.center)
-                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                             .frame(maxWidth: .infinity, alignment: .top)
                         
                         Text(viewModel.uiState.translator.t("default.merchant.label"))
