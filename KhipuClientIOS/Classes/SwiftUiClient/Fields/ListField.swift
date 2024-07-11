@@ -24,14 +24,15 @@ struct ListField: View {
                         submitFunction()
                     }) {
                         SelectableOption(selected: selectedOption?.value == option.value) {
-                            VStack {
+                            VStack(alignment: .leading, spacing: 0) {
                                 OptionLabel(image:option.image, text:option.name)
                                
                                 if let dataTable = option.dataTable, FieldUtils.getMaxDataTableCells(dataTable) > 0 {
                                     DataTableCommon(dataTable: dataTable).accessibilityIdentifier("dataTable" )
                                 }
                             }
-                        }.accessibilityIdentifier("listItem\(a)")
+                        }.padding(0)
+                            .frame(maxWidth: .infinity, alignment: .topLeading).accessibilityIdentifier("listItem\(a)")
                     }
                 }
             }

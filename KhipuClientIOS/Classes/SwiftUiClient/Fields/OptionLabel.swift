@@ -8,10 +8,24 @@ struct OptionLabel: View  {
     
     @EnvironmentObject private var themeManager: ThemeManager
     var body: some View {
+        
+        
+        
         HStack {
             OptionImage(image: image)
-            FieldLabel(text:text ?? "", font:themeManager.selectedTheme.fonts.font(style: .bold, size: 14), foregroundColor: themeManager.selectedTheme.colors.onSurface)
+            
+            VStack(alignment: .leading, spacing: 0) {
+                
+                Text(text ?? "")
+                    .font(themeManager.selectedTheme.fonts.font(style: .bold, size: 14)
+                )
+                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
+                
+            }
+            .padding(0)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+        
         }
         .background(themeManager.selectedTheme.colors.background)
     }
