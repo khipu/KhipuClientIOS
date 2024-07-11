@@ -78,9 +78,9 @@ struct Colors {
     var onSecondaryContainer: Color {
         return Color("onSecondaryContainer", bundle: bundle)
     }
-    //onSucess
-    var onSucess: Color {
-        return Color("onSucess", bundle: bundle)
+    //onSuccess
+    var onSuccess: Color {
+        return Color("onSuccess", bundle: bundle)
     }
     
     //onSurface
@@ -129,8 +129,8 @@ struct Colors {
     }
     
     //sucess
-    var sucess: Color {
-        return Color("sucess", bundle: bundle)
+    var success: Color {
+        return Color("success", bundle: bundle)
     }
     
     //surface
