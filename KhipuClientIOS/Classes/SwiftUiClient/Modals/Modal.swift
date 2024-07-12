@@ -18,26 +18,28 @@ struct ModalView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack (spacing: 20) {
+        VStack (spacing: Dimens.Spacing.large) {
 
             if let icon = icon {
                 icon
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 40, height: 40)
+                    .frame(width: Dimens.Frame.slightlyLarger, height: Dimens.Frame.slightlyLarger)
                     .foregroundColor(iconColor)
                     .padding(.top)
             }
             if let title = title{
                 Text(title)
-                    .font(.headline)
+                    .font(themeManager.selectedTheme.fonts.font(style: .bold, size: 20))
                     .multilineTextAlignment(.center)
                     .padding(.top)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
             }
             if let message = message {
                 Text(message)
-                    .font(.subheadline)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
+                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                     .padding()
             }
             if let imageSrc = imageSrc {
@@ -56,16 +58,15 @@ struct ModalView: View {
                 TimerView(time: timer).padding(.top)
             }
             
-            HStack(spacing: 16) {
+            HStack(spacing: Dimens.Spacing.extraMedium) {
                 Button(action: {
                     self.primaryButtonAction()
                 }, label: {
                     Text(primaryButtonLabel)
-                        .font(.headline)
-                        .foregroundColor(.white)
+                        .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 18))                       .foregroundColor(themeManager.selectedTheme.colors.onPrimary)
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(primaryButtonColor ?? Color.blue)
+                        .background(themeManager.selectedTheme.colors.primary )
                         .cornerRadius(12)
                 })
                 if let secondaryButtonLabel = secondaryButtonLabel {
@@ -73,14 +74,13 @@ struct ModalView: View {
                         self.secondaryButtonAction?()
                     }, label: {
                         Text(secondaryButtonLabel)
-                            .font(.headline)
-                            .foregroundColor(Color.blue)
+                            .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 18))                            .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
                             .padding()
                             .frame(maxWidth: .infinity)
-                            .background(secondaryButtonColor ?? Color.white)
-                            .cornerRadius(12)
+                            .background(themeManager.selectedTheme.colors.secondary)
+                            .cornerRadius(Dimens.CornerRadius.medium)
                             .overlay(
-                                RoundedRectangle(cornerRadius: 12)
+                                RoundedRectangle(cornerRadius: Dimens.CornerRadius.medium)
                                     .stroke(Color.blue, lineWidth: 2)
                             )
                     })
@@ -88,8 +88,7 @@ struct ModalView: View {
             }
         }
         .padding()
-        .background(Color.white)
-        .cornerRadius(20)
+        .cornerRadius(Dimens.CornerRadius.large)
         .shadow(radius: 20)
         .fixedSize(horizontal: false, vertical: true)
     }

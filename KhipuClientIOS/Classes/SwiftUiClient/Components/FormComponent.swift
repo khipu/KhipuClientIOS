@@ -102,7 +102,9 @@ public struct FormComponent: View {
                 }
             }
 
-            InactivityModal(isPresented: $alertManager.showAlert, onDismiss: {}, viewModel: viewModel)
+            InactivityModal(isPresented: $alertManager.showAlert, onDismiss: {}, viewModel: viewModel).environmentObject(themeManager)
+                .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
+
         }
     }
 
