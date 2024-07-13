@@ -88,6 +88,7 @@ struct ModalView: View {
             }
         }
         .padding()
+        .background(themeManager.selectedTheme.colors.background)
         .cornerRadius(Dimens.CornerRadius.large)
         .shadow(radius: 20)
         .fixedSize(horizontal: false, vertical: true)
