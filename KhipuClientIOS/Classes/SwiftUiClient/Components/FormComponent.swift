@@ -66,22 +66,24 @@ public struct FormComponent: View {
 
                 if getShouldShowContinueButton(formRequest: formRequest) {
                     MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
-                            enabled: validForm(),
-                            onClick: {
+                               enabled: validForm(),
+                               onClick: {
                         submittedForm = true
                         submitForm()
                     },
-                            foregroundColor: themeManager.selectedTheme.colors.onPrimary,
-                            backgroundColor: themeManager.selectedTheme.colors.primary
+                               foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                               backgroundColor: themeManager.selectedTheme.colors.primary
                     )
                 }
+                FooterComponent(showFooter: viewModel.uiState.showFooter)
+
             }
             .padding(.all,Dimens.Padding.extraMedium)
             .onAppear {
-            startTimer()
+                startTimer()
                 if let progress = viewModel.uiState.currentForm!.progress,
-                let current = progress.current,
-                let total = progress.total {
+                   let current = progress.current,
+                   let total = progress.total {
 
 
                     if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
@@ -90,13 +92,13 @@ public struct FormComponent: View {
 
                     if(getShouldShowContinueButton(formRequest: formRequest)) {
                         MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
-                            enabled: validForm(),
-                            onClick: {
-                                submittedForm = true
-                                submitForm()
-                            },
-                            foregroundColor: themeManager.selectedTheme.colors.onPrimary,
-                            backgroundColor: themeManager.selectedTheme.colors.primary
+                                   enabled: validForm(),
+                                   onClick: {
+                            submittedForm = true
+                            submitForm()
+                        },
+                                   foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                                   backgroundColor: themeManager.selectedTheme.colors.primary
                         )
                     }
                 }

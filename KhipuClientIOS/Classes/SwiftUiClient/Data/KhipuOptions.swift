@@ -11,6 +11,7 @@ public class KhipuOptions {
     let theme: Theme
     let colors: KhipuColors?
     let locale: String?
+    let showFooter: Bool
 
     private init(
         serverUrl: String,
@@ -22,7 +23,8 @@ public class KhipuOptions {
         skipExitPage: Bool,
         theme: Theme,
         colors: KhipuColors?,
-        locale: String?
+        locale: String?,
+        showFooter: Bool
     ) {
         self.serverUrl = serverUrl
         self.serverPublicKey = serverPublicKey
@@ -34,6 +36,7 @@ public class KhipuOptions {
         self.theme = theme
         self.colors = colors
         self.locale = locale
+        self.showFooter = showFooter
     }
 
     public enum Theme: String, Codable {
@@ -51,9 +54,10 @@ public class KhipuOptions {
         var _theme: Theme = .system
         var _colors: KhipuColors?
         var _locale: String = "es_CL"
-        
+        var _showFooter: Bool = true
+
         public init() {
-            
+
         }
 
         public func serverPublicKey(_ serverPublicKey: String) -> Builder {
@@ -75,7 +79,7 @@ public class KhipuOptions {
             self._topBarTitle = topBarTitle
             return self
         }
-        
+
         public func topBarImageUrl(_ topBarImageUrl: String) -> Builder {
             self._topBarImageUrl = topBarImageUrl
             return self
@@ -106,6 +110,11 @@ public class KhipuOptions {
             return self
         }
 
+        public func showFooter(_ showFooter: Bool) -> Builder {
+            self._showFooter = showFooter
+            return self
+        }
+
         public func build() -> KhipuOptions {
             return KhipuOptions(
                 serverUrl: _serverUrl,
@@ -117,7 +126,8 @@ public class KhipuOptions {
                 skipExitPage: _skipExitPage,
                 theme: _theme,
                 colors: _colors,
-                locale: _locale
+                locale: _locale,
+                showFooter: _showFooter
             )
         }
     }

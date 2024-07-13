@@ -14,8 +14,9 @@ public class KhipuSocketIOClient {
     private var receivedMessages: [String]
     private var viewModel: KhipuViewModel
     private var skipExitPage: Bool
+    private var showFooter: Bool
     
-    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, viewModel: KhipuViewModel) {
+    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
@@ -40,9 +41,14 @@ public class KhipuSocketIOClient {
         self.socket = socketManager?.defaultSocket
         self.viewModel = viewModel
         self.skipExitPage = skipExitPage
+        self.showFooter = showFooter
         self.clearKhssCookies()
         self.addListeners()
-        
+        self.addParametersUiState()
+    }
+    
+    private func addParametersUiState(){
+        self.viewModel.uiState.showFooter=self.showFooter
     }
     
     private func addListeners() {

@@ -12,20 +12,18 @@ struct CopyToClipboardOperationId: View {
             UIPasteboard.general.string = textToCopy
         }) {
             HStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
-                
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-                    .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
+                    .foregroundColor(themeManager.selectedTheme.colors.secondary)
                 Image(systemName: "doc.on.doc")
                       .resizable()
                       .aspectRatio(contentMode: .fit)
-                      .frame(width: Dimens.Image.small, height: Dimens.Image.small)
-                      .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
+                      .frame(width: Dimens.Image.veryMedium, height: Dimens.Image.veryMedium)
+                      .foregroundColor(themeManager.selectedTheme.colors.secondary)
             }
         }
         .padding(.horizontal,Dimens.Padding.medium)
         .padding(.vertical, 0)
-        .background(themeManager.selectedTheme.colors.secondary)
         .cornerRadius(Dimens.CornerRadius.extraSmall)
         .buttonStyle(PlainButtonStyle())
     }
@@ -45,16 +43,15 @@ struct CopyToClipboardLink: View {
             HStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
                 Text(text)
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-                    .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
+                    .foregroundColor(themeManager.selectedTheme.colors.secondary)
               Image(systemName: "doc.on.doc")
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(width: Dimens.Image.small, height: Dimens.Image.small)
-                    .foregroundColor(themeManager.selectedTheme.colors.onSecondary)
+                    .frame(width: Dimens.Image.veryMedium, height: Dimens.Image.veryMedium)
+                    .foregroundColor(themeManager.selectedTheme.colors.secondary)
             }
             .padding(.horizontal,Dimens.Padding.medium)
             .padding(.vertical, 0)
-            .background(themeManager.selectedTheme.colors.secondary)
             .cornerRadius(Dimens.CornerRadius.extraSmall)        }
         .buttonStyle(PlainButtonStyle())
     }
