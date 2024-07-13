@@ -36,7 +36,7 @@ public struct FormComponent: View {
 
     public var body: some View {
         ZStack {
-            VStack {
+            VStack(alignment: .center, spacing: 20) {
                 FormTitle(text: formRequest.title!)
                 if !viewModel.uiState.bank.isEmpty {
                     FormPill(text: viewModel.uiState.bank)
@@ -78,7 +78,8 @@ public struct FormComponent: View {
                 FooterComponent(showFooter: viewModel.uiState.showFooter)
 
             }
-            .padding(.all,Dimens.Padding.extraMedium)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 32)
             .onAppear {
                 startTimer()
                 if let progress = viewModel.uiState.currentForm!.progress,
