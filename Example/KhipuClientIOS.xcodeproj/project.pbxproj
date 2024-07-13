@@ -51,6 +51,7 @@
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
 		7E059F83A1C5E6B5684C3BAA /* Pods_KhipuClientIOS_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 02A551250C2F71698B7D53AF /* Pods_KhipuClientIOS_Example.framework */; };
+		BD0D0E1E2C4200FC000C7121 /* FooterComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0D0E1D2C4200FC000C7121 /* FooterComponentTest.swift */; };
 		BD1568F42C3ED05E00B1CA1B /* DetailSectionComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1568F32C3ED05E00B1CA1B /* DetailSectionComponentTest.swift */; };
 		BDAE5D802C0A100400B6DDD4 /* ProgressComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE5D7F2C0A100400B6DDD4 /* ProgressComponentTest.swift */; };
 		BDAE5D822C0A10AE00B6DDD4 /* ProgressInfoComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE5D812C0A10AE00B6DDD4 /* ProgressInfoComponentTest.swift */; };
@@ -143,6 +144,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		7E23CC4D2962148772A3CEAA /* Pods-KhipuClientIOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		B25A47703EA0D6EF73A46C0B /* Pods_KhipuClientIOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BD0D0E1D2C4200FC000C7121 /* FooterComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FooterComponentTest.swift; sourceTree = "<group>"; };
 		BD1568F32C3ED05E00B1CA1B /* DetailSectionComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailSectionComponentTest.swift; sourceTree = "<group>"; };
 		BDAE5D7F2C0A100400B6DDD4 /* ProgressComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressComponentTest.swift; sourceTree = "<group>"; };
 		BDAE5D812C0A10AE00B6DDD4 /* ProgressInfoComponentTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressInfoComponentTest.swift; sourceTree = "<group>"; };
@@ -253,6 +255,7 @@
 				26594A362C261E33002D094F /* SVGImageTest.swift */,
 				BDF2EF812C3C1C88000D3FFA /* RedirectToManualComponentTest.swift */,
 				BD1568F32C3ED05E00B1CA1B /* DetailSectionComponentTest.swift */,
+				BD0D0E1D2C4200FC000C7121 /* FooterComponentTest.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -564,6 +567,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BDD4455A2C04D25300098056 /* FormInfoTest.swift in Sources */,
+				BD0D0E1E2C4200FC000C7121 /* FooterComponentTest.swift in Sources */,
 				26594A0C2C222E83002D094F /* FieldUpdaterTest.swift in Sources */,
 				26594A102C223171002D094F /* DeviceInfoTest.swift in Sources */,
 				4AD82D492C0253FD0065CC37 /* FailureMessageComponentTest.swift in Sources */,

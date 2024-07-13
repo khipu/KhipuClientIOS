@@ -57,18 +57,19 @@ public struct KhipuView: View {
                         } else {
                             FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
                         }
-                        FooterComponent(showFooter: viewModel.uiState.showFooter)
+                        FooterComponent(viewModel: viewModel)
+
 
                     }
                 case MessageType.operationWarning.rawValue:
                     if (!options.skipExitPage) {
                         WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
-                        FooterComponent(showFooter: viewModel.uiState.showFooter)
+                        FooterComponent(viewModel: viewModel)
                     }
                 case MessageType.operationSuccess.rawValue:
                     if (!options.skipExitPage){
                         SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
-                        FooterComponent(showFooter: viewModel.uiState.showFooter)
+                        FooterComponent(viewModel: viewModel)
                     }
                 case MessageType.progressInfo.rawValue:
                     ProgressComponent(viewModel: viewModel)
@@ -76,11 +77,11 @@ public struct KhipuView: View {
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(viewModel: viewModel)
                     AuthorizationRequestView(viewModel: viewModel)
-                    FooterComponent(showFooter: viewModel.uiState.showFooter)
+                    FooterComponent(viewModel: viewModel)
                 case MessageType.operationMustContinue.rawValue:
                     if (!options.skipExitPage) {
                         MustContinueComponent(viewModel: viewModel, operationMustContinue: viewModel.uiState.operationMustContinue!)
-                        FooterComponent(showFooter: viewModel.uiState.showFooter)
+                        FooterComponent(viewModel: viewModel)
                     }
 
                 default:

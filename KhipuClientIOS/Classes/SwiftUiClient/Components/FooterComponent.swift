@@ -2,14 +2,14 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct FooterComponent: View {
-    var showFooter: Bool
-
+    @ObservedObject var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        if showFooter {
+        if viewModel.uiState.showFooter {
             HStack(alignment: .center, spacing: 1) {
-                Text("Impulsado por ")
+                
+                Text(viewModel.uiState.translator.t("footer.powered.by"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 12))
                     .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                 
@@ -31,7 +31,7 @@ struct FooterComponent: View {
 @available(iOS 15.0, *)
 struct FooterComponent_Previews: PreviewProvider {
     static var previews: some View {
-        FooterComponent(showFooter: true)
+        FooterComponent(viewModel: KhipuViewModel())
             .environmentObject(ThemeManager())
     }
 }
