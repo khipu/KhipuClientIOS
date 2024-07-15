@@ -19,7 +19,7 @@ public struct KhipuView: View {
     let options: KhipuOptions
     let completitionHandler: ((KhipuResult) -> Void)?
     let hostingControllerContainer: HostingControllerContainer
-    
+
     init(operationId: String,
          options: KhipuOptions,
          onComplete: ((KhipuResult) -> Void)?,
@@ -53,17 +53,23 @@ public struct KhipuView: View {
                             RedirectToManualComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
                         }else if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
                             TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+
                         } else {
                             FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
                         }
+                        FooterComponent(viewModel: viewModel)
+
+
                     }
                 case MessageType.operationWarning.rawValue:
                     if (!options.skipExitPage) {
                         WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
+                        FooterComponent(viewModel: viewModel)
                     }
                 case MessageType.operationSuccess.rawValue:
                     if (!options.skipExitPage){
                         SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
+                        FooterComponent(viewModel: viewModel)
                     }
                 case MessageType.progressInfo.rawValue:
                     ProgressComponent(viewModel: viewModel)
@@ -71,11 +77,13 @@ public struct KhipuView: View {
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(viewModel: viewModel)
                     AuthorizationRequestView(viewModel: viewModel)
+                    FooterComponent(viewModel: viewModel)
                 case MessageType.operationMustContinue.rawValue:
                     if (!options.skipExitPage) {
                         MustContinueComponent(viewModel: viewModel, operationMustContinue: viewModel.uiState.operationMustContinue!)
+                        FooterComponent(viewModel: viewModel)
                     }
-                    
+
                 default:
                     EndToEndEncryption(viewModel: viewModel)
                 }
@@ -108,7 +116,8 @@ public struct KhipuView: View {
                 appName: appName(),
                 appVersion: appVersion(),
                 locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")",
-                skipExitPage: options.skipExitPage
+                skipExitPage: options.skipExitPage, 
+                showFooter: options.showFooter
             )
             viewModel.connectClient()
             themeManager.selectedTheme.setColorSchemeAndCustomColors(colorScheme: colorScheme, colors: options.colors)
@@ -116,8 +125,11 @@ public struct KhipuView: View {
                 .map { String($0) }
         })
         .environmentObject(themeManager)
+
+
+
     }
-    
+
     func buildResult(_ state: KhipuUiState) -> KhipuResult {
         if (viewModel.uiState.operationSuccess != nil) {
             return KhipuResult(
@@ -164,7 +176,7 @@ public struct KhipuView: View {
                 continueUrl: cleanString(viewModel.uiState.operationInfo?.urls?.info)
             )
         }
-        
+
         return KhipuResult(
             operationId: cleanString(getOperationId(viewModel.uiState)),
             exitTitle: cleanString(viewModel.uiState.translator.t("page.operationFailure.operation.user.canceled.title", default: "")),
@@ -176,7 +188,7 @@ public struct KhipuView: View {
             continueUrl: nil
         )
     }
-    
+
     func getOperationId(_ uiState: KhipuUiState) -> String? {
         if (uiState.operationInfo?.operationID == nil || uiState.operationInfo!.operationID!.isEmpty) {
             return uiState.operationId
@@ -184,18 +196,18 @@ public struct KhipuView: View {
             return uiState.operationInfo?.operationID
         }
     }
-    
+
     func cleanString(_ toClean: String?) -> String {
         return toClean ?? ""
     }
-    
+
     func cleanEvents(_ events: [OperationEvent]?) -> [KhipuEvent] {
         if (events == nil) {
             return [KhipuEvent]()
         }
         return events!.map { KhipuEvent(name: $0.name, timestamp: $0.timestamp, type: $0.type)}
     }
-    
+
     func shouldShowHeader(currentMessageType: String) -> Bool {
         let excludedTypes = [
             MessageType.operationSuccess.rawValue,
@@ -203,7 +215,7 @@ public struct KhipuView: View {
             MessageType.operationMustContinue.rawValue,
             MessageType.operationWarning.rawValue
         ]
-        
+
         return !excludedTypes.contains(currentMessageType)
     }
 }

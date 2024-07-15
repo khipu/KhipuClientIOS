@@ -36,7 +36,7 @@ public struct FormComponent: View {
 
     public var body: some View {
         ZStack {
-            VStack {
+            VStack(alignment: .center, spacing: 20) {
                 FormTitle(text: formRequest.title!)
                 if !viewModel.uiState.bank.isEmpty {
                     FormPill(text: viewModel.uiState.bank)
@@ -66,22 +66,25 @@ public struct FormComponent: View {
 
                 if getShouldShowContinueButton(formRequest: formRequest) {
                     MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
-                            enabled: validForm(),
-                            onClick: {
+                               enabled: validForm(),
+                               onClick: {
                         submittedForm = true
                         submitForm()
                     },
-                            foregroundColor: themeManager.selectedTheme.colors.onPrimary,
-                            backgroundColor: themeManager.selectedTheme.colors.primary
+                               foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                               backgroundColor: themeManager.selectedTheme.colors.primary
                     )
                 }
+                FooterComponent(viewModel: viewModel)
+
             }
-            .padding(.all,Dimens.Padding.extraMedium)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 32)
             .onAppear {
-            startTimer()
+                startTimer()
                 if let progress = viewModel.uiState.currentForm!.progress,
-                let current = progress.current,
-                let total = progress.total {
+                   let current = progress.current,
+                   let total = progress.total {
 
 
                     if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
@@ -90,19 +93,21 @@ public struct FormComponent: View {
 
                     if(getShouldShowContinueButton(formRequest: formRequest)) {
                         MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
-                            enabled: validForm(),
-                            onClick: {
-                                submittedForm = true
-                                submitForm()
-                            },
-                            foregroundColor: themeManager.selectedTheme.colors.onPrimary,
-                            backgroundColor: themeManager.selectedTheme.colors.primary
+                                   enabled: validForm(),
+                                   onClick: {
+                            submittedForm = true
+                            submitForm()
+                        },
+                                   foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                                   backgroundColor: themeManager.selectedTheme.colors.primary
                         )
                     }
                 }
             }
 
-            InactivityModal(isPresented: $alertManager.showAlert, onDismiss: {}, viewModel: viewModel)
+            InactivityModal(isPresented: $alertManager.showAlert, onDismiss: {}, viewModel: viewModel).environmentObject(themeManager)
+                .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
+
         }
     }
 
