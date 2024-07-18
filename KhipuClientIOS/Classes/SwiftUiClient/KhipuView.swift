@@ -1,10 +1,3 @@
-//
-//  KhenshinView.swift
-//  APNGKit
-//
-//  Created by Mauricio Castillo on 02-05-24.
-//
-
 import SwiftUI
 import KhenshinProtocol
 
@@ -132,6 +125,7 @@ public struct KhipuView: View {
 
     func buildResult(_ state: KhipuUiState) -> KhipuResult {
         if (viewModel.uiState.operationSuccess != nil) {
+
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationSuccess?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationSuccess?.title),
@@ -143,6 +137,7 @@ public struct KhipuView: View {
                 continueUrl: nil
             )
         } else if (viewModel.uiState.operationFailure != nil) {
+
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationFailure?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationFailure?.title),
@@ -165,6 +160,7 @@ public struct KhipuView: View {
                 continueUrl: nil
             )
         } else if (viewModel.uiState.operationMustContinue != nil) {
+
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationMustContinue?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationMustContinue?.title),

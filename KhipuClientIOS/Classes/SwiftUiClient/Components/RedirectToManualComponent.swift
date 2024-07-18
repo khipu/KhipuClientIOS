@@ -102,13 +102,14 @@ struct RedirectToManualComponent: View {
                 foregroundColor: themeManager.selectedTheme.colors.onTertiary,
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
-            
-            
+
+
             MainButton(
                 text: viewModel.uiState.translator.t("default.user.other.bank"),
                 enabled: true,
                 onClick: {
-                    viewModel.uiState.returnToApp = true                },
+                    viewModel.restartPayment()
+                },
                 foregroundColor: themeManager.selectedTheme.colors.onSurface,
                 backgroundColor: themeManager.selectedTheme.colors.surface
             ).cornerRadius(8)

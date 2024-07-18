@@ -12,6 +12,16 @@ public class KhipuViewModel: ObservableObject {
         }
     }
     
+    func restartPayment(){
+        uiState.bank = ""
+        khipuSocketIOClient?.reconnect()
+        notifyViewUpdate()
+    }
+    
+    func notifyViewUpdate() {
+        objectWillChange.send()
+    }
+    
     func connectClient() {
         khipuSocketIOClient?.connect()
     }
