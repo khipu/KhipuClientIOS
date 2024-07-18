@@ -17,7 +17,7 @@ class AlertManager: ObservableObject {
     func displayAlert() {
         showAlert = true
     }
-
+    
     func dismissAlert() {
         showAlert = false
     }
@@ -25,7 +25,7 @@ class AlertManager: ObservableObject {
 
 @available(iOS 15.0.0, *)
 public struct FormComponent: View {
-
+    
     @StateObject private var alertManager = AlertManager()
     @State var countDown: Int = 300
     @State private var submittedForm: Bool = false
@@ -33,7 +33,7 @@ public struct FormComponent: View {
     public var formRequest: FormRequest
     @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     public var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 20) {
@@ -53,17 +53,17 @@ public struct FormComponent: View {
                         viewModel: viewModel
                     )
                 }
-
+                
                 FormError(text: formRequest.errorMessage)
-
+                
                 RememberValues(
                     formRequest: formRequest,
                     viewModel: viewModel)
-
+                
                 if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
                     TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
                 }
-
+                
                 if getShouldShowContinueButton(formRequest: formRequest) {
                     MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                                enabled: validForm(),
@@ -76,42 +76,43 @@ public struct FormComponent: View {
                     )
                 }
                 FooterComponent(viewModel: viewModel)
-
+                
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 32)
             .onAppear {
                 startTimer()
-                if let progress = viewModel.uiState.currentForm!.progress,
+                if let progress = formRequest.progress,
                    let current = progress.current,
                    let total = progress.total {
-
-
-                    if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
-                        TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
-                    }
-
-                    if(getShouldShowContinueButton(formRequest: formRequest)) {
-                        MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
-                                   enabled: validForm(),
-                                   onClick: {
-                            submittedForm = true
-                            submitForm()
-                        },
-                                   foregroundColor: themeManager.selectedTheme.colors.onPrimary,
-                                   backgroundColor: themeManager.selectedTheme.colors.primary
-                        )
-                    }
+                    viewModel.setCurrentProgress(currentProgress: Float(1*Float(current)/Float(total)))
                 }
+                
+                if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
+                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
+                }
+                
+                if(getShouldShowContinueButton(formRequest: formRequest)) {
+                    MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
+                               enabled: validForm(),
+                               onClick: {
+                        submittedForm = true
+                        submitForm()
+                    },
+                               foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                               backgroundColor: themeManager.selectedTheme.colors.primary
+                    )
+                }
+                
             }
-
+            
             InactivityModal(isPresented: $alertManager.showAlert, onDismiss: {}, viewModel: viewModel).environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
-
+            
         }
     }
-
-
+    
+    
     func startTimer() {
         if formRequest.timeout != nil {
             countDown = formRequest.timeout!
@@ -123,24 +124,24 @@ public struct FormComponent: View {
             }
         }
     }
-
+    
     private func getMainButtonText(formRequest: FormRequest, khipuUiState: KhipuUiState) -> String {
         if !(formRequest.continueLabel?.isEmpty ?? true) {
             return formRequest.continueLabel ?? ""
         }
         return khipuUiState.translator.t("default.continue.label")
     }
-
+    
     private func validForm() -> Bool {
         return viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter { !$0.value }.isEmpty
     }
-
+    
     private func submitForm() -> Void {
         if validForm() {
             submitNovalidate(formRequest: formRequest, viewModel: viewModel)
         }
     }
-
+    
     func submitNovalidate(formRequest: FormRequest, viewModel: KhipuViewModel) -> Void {
         let answers = formRequest.items.map {
             FormItemAnswer(
@@ -166,12 +167,12 @@ public struct FormComponent: View {
             try! CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)
         }
     }
-
+    
     private func getShouldShowContinueButton(formRequest: FormRequest) -> Bool {
         return !(formRequest.items.count == 1 && (formRequest.items.first?.type == FormItemTypes.groupedList || formRequest.items.first?.type == FormItemTypes.list))
     }
-
-
+    
+    
 }
 
 @available(iOS 15.0, *)
@@ -180,7 +181,7 @@ private struct RememberValues: View {
     @ObservedObject var viewModel: KhipuViewModel
     @State private var storedForm: Bool = false
     @AppStorage("storedBankCredentials") private var storedBankForms: String = ""
-
+    
     public var body: some View {
         if formRequest.rememberValues ?? false {
             HStack{
@@ -205,7 +206,7 @@ private struct RememberValues: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-
+            
         }
     }
 }
@@ -213,14 +214,14 @@ private struct RememberValues: View {
 
 @available(iOS 15.0, *)
 struct DrawComponent: View {
-
+    
     var item: FormItem
     var hasNextField: Bool
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
     @ObservedObject var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     public var body: some View {
         let validationFun: (Bool) -> Void = { valid in
             viewModel.uiState.validatedFormItems[item.id] = valid
@@ -375,7 +376,7 @@ public struct FormComponent_Previews: PreviewProvider {
 @available(iOS 15.0, *)
 struct RememberValues_Previews: PreviewProvider {
     static var previews: some View {
-
+        
         let formItem = try! FormItem(
          """
            {
@@ -434,7 +435,7 @@ struct DrawComponent_Previews: PreviewProvider {
         let submitFunction: () -> Void = {}
         let getFunction: () -> [String: String] = { ["key":"value"]}
         let setFunction: ([String: String]) -> Void = { param in }
-
+        
         return VStack {
             Text("DataTable:").underline().padding()
             DrawComponent(
