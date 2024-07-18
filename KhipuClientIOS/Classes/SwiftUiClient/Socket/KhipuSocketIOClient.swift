@@ -15,10 +15,17 @@ public class KhipuSocketIOClient {
     private var viewModel: KhipuViewModel
     private var skipExitPage: Bool
     private var showFooter: Bool
+    private let locale: String
+    private let browserId: String
+    private let url: String
+
     
     public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
+        self.locale = locale
+        self.browserId = browserId
+        self.url = url
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
             //.log(true),
             .compress,
@@ -170,7 +177,11 @@ public class KhipuSocketIOClient {
                 let operationFailure = try OperationFailure(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.operationFailure.rawValue
                 self.viewModel.uiState.operationFailure = operationFailure
-                self.viewModel.disconnectClient()
+                
+                if(self.viewModel.uiState.operationFailure?.reason != FailureReasonType.bankWithoutAutomaton){
+                    self.viewModel.disconnectClient()
+                }
+                
                 if(self.skipExitPage) {
                     self.viewModel.uiState.returnToApp = true
                 }
@@ -356,6 +367,30 @@ public class KhipuSocketIOClient {
         socketManager?.reconnects = false
         socket = nil
         socketManager = nil
+    }
+    
+    public func reconnect() {
+        disconnect()
+        socketManager = SocketManager(socketURL: URL(string: url)!, config: [
+            .compress,
+            .forceNew(true),
+            .secure(true),
+            .reconnectAttempts(-1),
+            .connectParams([
+                "clientId": UUID().uuidString,
+                "clientPublicKey": secureMessage.publicKeyBase64,
+                "locale": locale,
+                "userAgent": UAString(),
+                "uiType": "payment",
+                "browserId": browserId,
+                "appName": appName,
+                "appVersion": appVersion,
+                "appOS": "iOS"
+            ])
+        ])
+        socket = socketManager?.defaultSocket
+        addListeners()
+        connect()
     }
     
     func sendOperationResponse() {
