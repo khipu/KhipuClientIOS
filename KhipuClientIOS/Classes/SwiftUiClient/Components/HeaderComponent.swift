@@ -5,12 +5,13 @@ import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
 struct HeaderComponent: View {
-    @ObservedObject var viewModel: KhipuViewModel
+    var operationInfo: OperationInfo?
+    var translator: KhipuTranslator
     @EnvironmentObject private var themeManager: ThemeManager
     @State private var showMerchantDialog = false
     
     var body: some View {
-        if (viewModel.uiState.operationInfo?.merchant) != nil {
+        if (operationInfo?.merchant) != nil {
             VStack(spacing: 0) {
                 headerContent
                 Spacer().frame(height:Dimens.Spacing.extraSmall)
@@ -23,12 +24,12 @@ struct HeaderComponent: View {
             .sheet(isPresented: $showMerchantDialog) {
                 MerchantDialogComponent(
                     onDismissRequest: { showMerchantDialog = false },
-                    translator: viewModel.uiState.translator,
-                    merchant: (viewModel.uiState.operationInfo?.merchant?.name)!,
-                    subject: (viewModel.uiState.operationInfo?.subject)! ,
-                    description:(viewModel.uiState.operationInfo?.body)!,
-                    amount: (viewModel.uiState.operationInfo?.amount)!,
-                    image: (viewModel.uiState.operationInfo?.urls?.image)!
+                    translator: translator,
+                    merchant: (operationInfo?.merchant?.name)!,
+                    subject: (operationInfo?.subject)! ,
+                    description:(operationInfo?.body)!,
+                    amount: (operationInfo?.amount)!,
+                    image: (operationInfo?.urls?.image)!
                 ).environmentObject(themeManager)
                     .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme) 
 
@@ -40,7 +41,7 @@ struct HeaderComponent: View {
     
     private var headerContent: some View {
         HStack() {
-            AsyncImage(url: URL(string: viewModel.uiState.operationInfo?.merchant?.logo ?? "")) { image in
+            AsyncImage(url: URL(string: operationInfo?.merchant?.logo ?? "")) { image in
                 image
                     .resizable()
                     .scaledToFit()
@@ -51,11 +52,11 @@ struct HeaderComponent: View {
             }
             
             VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
-                Text(viewModel.uiState.operationInfo?.merchant?.name ?? "")
+                Text(operationInfo?.merchant?.name ?? "")
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                 
-                Text(viewModel.uiState.operationInfo?.subject ?? "")
+                Text(operationInfo?.subject ?? "")
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                     .lineLimit(1)
@@ -65,11 +66,11 @@ struct HeaderComponent: View {
             Spacer()
             
             VStack(alignment: .trailing, spacing:Dimens.Spacing.verySmall) {
-                Text(viewModel.uiState.translator.t("header.amount", default: "").uppercased())
+                Text(translator.t("header.amount", default: "").uppercased())
                     .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 10))
                     .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                 
-                Text(viewModel.uiState.operationInfo?.amount ?? "")
+                Text(operationInfo?.amount ?? "")
                     .font(themeManager.selectedTheme.fonts.font(style: .bold, size: 20))
                     .foregroundColor(themeManager.selectedTheme.colors.onSurface)
             }
@@ -85,7 +86,7 @@ struct HeaderComponent: View {
             Spacer()
             
             Button(action: { showMerchantDialog = true }) {
-                Text("Ver detalle")
+                Text(translator.t("header.details.show",default: ""))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                     .foregroundColor(themeManager.selectedTheme.colors.secondary)
                     .bold()
@@ -96,13 +97,14 @@ struct HeaderComponent: View {
     }
     private func formattedCode() -> Text {
         var text = Text("")
-        text = text + Text(viewModel.uiState.translator.t("header.code.label", default: "").uppercased()).foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-        text = text + Text(" • \(viewModel.uiState.operationInfo?.operationID ?? "")").foregroundColor(themeManager.selectedTheme.colors.onSurface)
+        text = text + Text(translator.t("header.code.label", default: "").uppercased()).foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+        text = text + Text(" • \(operationInfo?.operationID ?? "")").foregroundColor(themeManager.selectedTheme.colors.onSurface)
         
         return text
     }
 }
 
+/*
 @available(iOS 15.0.0, *)
 struct HeaderComponent_Previews: PreviewProvider {
     static var previews: some View {
@@ -141,3 +143,4 @@ struct HeaderComponent_Previews: PreviewProvider {
         }
     }
 }
+*/

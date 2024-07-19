@@ -58,8 +58,8 @@ struct SkeletonHeaderComponent: View {
                     .shimmer()
             }
         }
-        .padding(.horizontal, 8) // Ajusta el padding horizontal
-        .padding(.vertical, 4) // Disminuye el padding vertical
+        .padding(.horizontal, 8)
+        .padding(.vertical, 4) 
     }
 }
 

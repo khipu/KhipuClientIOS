@@ -9,7 +9,6 @@ struct MerchantDialogComponent: View {
     var description: String
     var amount: String
     var image: String?
-    
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {

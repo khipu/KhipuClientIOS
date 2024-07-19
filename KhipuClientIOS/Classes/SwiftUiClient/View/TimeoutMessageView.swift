@@ -10,14 +10,10 @@ struct TimeoutMessageView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-            Text(translator.t("page.timeout.session.closed"))
-                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
-                .multilineTextAlignment(.center)
-                .frame(maxWidth: .infinity, alignment: .top)
-                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+            
+            FailureMessageHeaderComponent(title: translator.t("page.timeout.session.closed"),bodyText: translator.t("page.timeout.try.again"))
             
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                FormWarning(text: translator.t("page.timeout.try.again"))
                 
                 VStack(alignment: .center, spacing:Dimens.Spacing.large) {
                     VStack(alignment: .center, spacing:Dimens.Spacing.large) {

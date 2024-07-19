@@ -10,44 +10,9 @@ struct FailureMessageView: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
+        
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                
-                Image(systemName: "info.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: Dimens.Image.slightlyLarger, height: Dimens.Image.slightlyLarger)
-                    .foregroundColor(themeManager.selectedTheme.colors.tertiary)
-                
-            }
-            .padding(0)
-            .frame(maxWidth: .infinity, alignment: .top)
-            .cornerRadius(8)
-            
-            VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                Text(translator.t("page.operationFailure.header.text.operation.task.finished"))
-                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(themeManager.selectedTheme.colors.onBackground)
-                
-            }
-            .padding(0)
-            .frame(maxWidth: .infinity, alignment: .top)
-            .cornerRadius(8)
-            
-            HStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                Text((operationFailure.title)!)
-                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(themeManager.selectedTheme.colors.onBackground)
-            }
-            .padding(.horizontal,Dimens.Padding.moderatelyLarge)
-            .padding(.vertical, 0)
-            .frame(maxWidth: .infinity, alignment: .center)
-            
-            FormWarning(text: operationFailure.body ?? "")
-            Spacer().frame(height:Dimens.Spacing.large)
-            
+            FailureMessageHeaderComponent(icon: "info.circle.fill",title:translator.t("page.operationFailure.header.text.operation.task.finished") ,subtitle: (operationFailure.title)!,bodyText: operationFailure.body)
             DetailSectionComponent(
                 operationId: operationFailure.operationID!,
                                 reason: operationFailure.reason,

@@ -5,8 +5,9 @@ struct NavigationBarComponent: View {
     var title: String?
     var imageName: String?
     var imageUrl: String?
+    var translator: KhipuTranslator
+    var returnToApp: () -> Void
     @State private var isConfirmingClose = false
-    @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
@@ -35,15 +36,14 @@ struct NavigationBarComponent: View {
                 Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
             }
             .padding()
-            .confirmationDialog(
-                viewModel.uiState.translator.t("modal.abortOperation.title"),
+            .confirmationDialog(translator.t("modal.abortOperation.title"),
                 isPresented: $isConfirmingClose,
                 titleVisibility: .visible
             ) {
-                Button(viewModel.uiState.translator.t("modal.abortOperation.cancel.button"), role: .destructive) {
-                    viewModel.uiState.returnToApp = true
+                Button(translator.t("modal.abortOperation.cancel.button"), role: .destructive){
+                    returnToApp()
                 }
-                Button(viewModel.uiState.translator.t("modal.abortOperation.continue.button"), role: .cancel) {
+                Button(translator.t("modal.abortOperation.continue.button"), role: .cancel) {
                     isConfirmingClose = false
                 }
             }
@@ -53,6 +53,7 @@ struct NavigationBarComponent: View {
     }
 }
 
+/*
 @available(iOS 15.0, *)
 struct NavigationBarComponent_Previews: PreviewProvider {
     static var previews: some View {
@@ -77,3 +78,4 @@ struct NavigationBarComponentWithImage_Previews: PreviewProvider {
         .environmentObject(ThemeManager())
     }
 }
+*/
