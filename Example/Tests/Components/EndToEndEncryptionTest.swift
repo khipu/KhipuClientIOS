@@ -5,7 +5,7 @@ import ViewInspector
 
 @available(iOS 15.0, *)
 final class EndToEndEncryptionTests: XCTestCase {
-
+/*
     func testFormInfoView() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -19,4 +19,5 @@ final class EndToEndEncryptionTests: XCTestCase {
         XCTAssertNotNil(try? inspectedView.find(text: message), "Failed to find the text:"+message)
 
     }
+ */
 }

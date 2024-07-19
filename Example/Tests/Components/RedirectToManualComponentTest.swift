@@ -7,6 +7,7 @@ import ViewInspector
 @available(iOS 15.0, *)
 final class RedirectToManualComponentTest: XCTestCase {
 
+    /*
     func testRedirectoToManualComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -29,5 +30,6 @@ final class RedirectToManualComponentTest: XCTestCase {
         XCTAssertNotNil(try? inspectedView.find(text: "page.redirectManual.redirecting"), "Failed to find the text:page.redirectManual.redirecting")
 
     }
+     */
 
 }

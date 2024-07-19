@@ -3,13 +3,16 @@ import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
 struct AuthorizationRequestView: View {
-    @ObservedObject public var viewModel: KhipuViewModel
+    var authorizationRequest: AuthorizationRequest
+    var translator: KhipuTranslator
+    var bank: String
+    
     var body: some View {
-        switch viewModel.uiState.currentAuthorizationRequest?.authorizationType {
+        switch authorizationRequest.authorizationType {
         case .mobile:
-            MobileAuthorizationRequestView(authorizationRequest: viewModel.uiState.currentAuthorizationRequest!,viewModel: viewModel)
+            MobileAuthorizationRequestView(authorizationRequest: authorizationRequest,translator:translator, bank: bank)
         case .qr:
-            QrAuthorizationRequestView(authorizationRequest: viewModel.uiState.currentAuthorizationRequest!,viewModel: viewModel)
+            QrAuthorizationRequestView(authorizationRequest: authorizationRequest)
         default:
             EmptyView()
         }
@@ -20,7 +23,6 @@ struct AuthorizationRequestView: View {
 @available(iOS 15.0.0, *)
 struct QrAuthorizationRequestView: View {
     var authorizationRequest: AuthorizationRequest
-    @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
 
     var body: some View {
@@ -50,13 +52,14 @@ struct QrAuthorizationRequestView: View {
 @available(iOS 15.0.0, *)
 struct MobileAuthorizationRequestView: View {
     var authorizationRequest: AuthorizationRequest
-    @ObservedObject public var viewModel: KhipuViewModel
+    var translator: KhipuTranslator
+    var bank: String
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.Spacing.large) {
             HStack(alignment: .top, spacing: Dimens.Spacing.medium) {
-                FormTitle(text: viewModel.uiState.translator.t("modal.authorization.use.app"))
+                FormTitle(text: translator.t("modal.authorization.use.app"))
                 
             }
             .padding(.horizontal, Dimens.Padding.medium)
@@ -65,8 +68,8 @@ struct MobileAuthorizationRequestView: View {
             
             VStack(alignment: .center, spacing: Dimens.Spacing.medium) {
                 
-                if !viewModel.uiState.bank.isEmpty {
-                    FormPill(text: viewModel.uiState.bank)
+                if !bank.isEmpty {
+                    FormPill(text: bank)
                 }
                 
             }
@@ -107,7 +110,7 @@ struct MobileAuthorizationRequestView: View {
 
             
             MainButton(
-                text: viewModel.uiState.translator.t("modal.authorization.wait"),
+                text: translator.t("modal.authorization.wait"),
                 enabled: false,
                 onClick: {},
                 foregroundColor: themeManager.selectedTheme.colors.onPrimary,
@@ -122,6 +125,7 @@ struct MobileAuthorizationRequestView: View {
     }
 }
 
+/*
 @available(iOS 15.0, *)
 struct AuthorizationRequestView_Previews: PreviewProvider {
     static var previews: some View {
@@ -196,3 +200,6 @@ struct MobileAuthorizationRequestView_Previews: PreviewProvider {
         .environmentObject(ThemeManager())
     }
 }
+
+
+*/

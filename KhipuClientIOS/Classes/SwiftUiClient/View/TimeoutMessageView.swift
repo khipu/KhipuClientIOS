@@ -1,23 +1,23 @@
 import SwiftUI
 import KhenshinProtocol
 
-
 @available(iOS 15.0.0, *)
-struct TimeoutMessageComponent: View {
+struct TimeoutMessageView: View {
     let operationFailure: OperationFailure
-    @ObservedObject public var viewModel: KhipuViewModel
+    var translator: KhipuTranslator
+    var returnToApp: () -> Void
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-            Text(viewModel.uiState.translator.t("page.timeout.session.closed"))
+            Text(translator.t("page.timeout.session.closed"))
                 .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity, alignment: .top)
                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
             
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                FormWarning(text: viewModel.uiState.translator.t("page.timeout.try.again"))
+                FormWarning(text: translator.t("page.timeout.try.again"))
                 
                 VStack(alignment: .center, spacing:Dimens.Spacing.large) {
                     VStack(alignment: .center, spacing:Dimens.Spacing.large) {
@@ -27,7 +27,7 @@ struct TimeoutMessageComponent: View {
                             .frame(width: Dimens.Image.huge, height: Dimens.Image.huge)
                             .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                         HStack(alignment: .center, spacing: Dimens.Spacing.medium) {
-                            Text(viewModel.uiState.translator.t("page.timeout.end"))
+                            Text(translator.t("page.timeout.end"))
                                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 16))
                                 .multilineTextAlignment(.center)
@@ -40,7 +40,7 @@ struct TimeoutMessageComponent: View {
                     .frame(maxWidth: .infinity, alignment: .center)
                     .cornerRadius(Dimens.CornerRadius.moderatelySmall)
                     
-                    Text(viewModel.uiState.translator.t("default.operation.code.label"))
+                    Text(translator.t("default.operation.code.label"))
                         .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                         .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                         .multilineTextAlignment(.center)
@@ -51,11 +51,9 @@ struct TimeoutMessageComponent: View {
                     
                     
                     MainButton(
-                        text: viewModel.uiState.translator.t("page.redirectManual.redirecting"),
+                        text: translator.t("page.redirectManual.redirecting"),
                         enabled: true,
-                        onClick: {
-                            viewModel.uiState.returnToApp = true
-                        },
+                        onClick: returnToApp,
                         foregroundColor: themeManager.selectedTheme.colors.onTertiary,
                         backgroundColor: themeManager.selectedTheme.colors.tertiary
                     )
@@ -74,6 +72,7 @@ struct TimeoutMessageComponent: View {
     
 }
 
+/*
 @available(iOS 15.0, *)
 struct TimeoutMessageComponent_Previews: PreviewProvider{
     static var previews: some View{
@@ -93,3 +92,4 @@ struct TimeoutMessageComponent_Previews: PreviewProvider{
         .padding()
     }
 }
+*/

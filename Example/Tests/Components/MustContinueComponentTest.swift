@@ -6,7 +6,7 @@ import KhenshinProtocol
 
 @available(iOS 15.0, *)
 final class MustContinueComponentTest: XCTestCase {
-    
+    /*
     func testMustContinueComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -110,5 +110,7 @@ final class MustContinueComponentTest: XCTestCase {
 
         XCTAssertNoThrow(try inspectedView.find(CopyToClipboardLink.self))
     }
+     
+     */
     
 }

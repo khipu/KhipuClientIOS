@@ -2,10 +2,13 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct MustContinueComponent: View {
-    @StateObject var viewModel: KhipuViewModel
+struct MustContinueView: View {
+    var operationMustContinue: OperationMustContinue
+    var translator: KhipuTranslator
+    var operationInfo: OperationInfo
+    var returnToApp: () -> Void
     @EnvironmentObject private var themeManager: ThemeManager
-    let operationMustContinue: OperationMustContinue
+
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.Spacing.large) {
@@ -15,7 +18,7 @@ struct MustContinueComponent: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: Dimens.Image.slightlyLarger, height: Dimens.Image.slightlyLarger)
                     .foregroundColor(themeManager.selectedTheme.colors.tertiary)
-                Text(viewModel.uiState.translator.t("page.operationFailure.header.text.operation.task.finished"))
+                Text(translator.t("page.operationFailure.header.text.operation.task.finished"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
                     .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
@@ -29,16 +32,28 @@ struct MustContinueComponent: View {
             .frame(maxWidth: .infinity, alignment: .top)
             
             FormWarning(text: operationMustContinue.body ?? "")
-            InformationSection(operationMustContinue: operationMustContinue, khipuViewModel: viewModel, khipuUiState: viewModel.uiState)
+            InformationSection(translator: translator, operationInfo: operationInfo)
+
+            DetailSectionComponent(
+                operationId: operationMustContinue.operationID!,
+                reason: operationMustContinue.reason,
+                                params: DetailSectionParams(
+                                    amountLabel: translator.t("default.amount.label"),
+                                    amountValue: operationInfo.amount!,
+                                    merchantNameLabel: translator.t("default.merchant.label"),
+                                    merchantNameValue: (operationInfo.merchant?.name!)!,
+                                    codOperacionLabel: translator.t("default.operation.code.short.label")
+                                )
+                            )
             
-            DetailSectionComponent(reason: "", operationId: operationMustContinue.operationID!,operationInfo: viewModel.uiState.operationInfo,viewModel: viewModel)
+            
+            
+            
 
             MainButton(
-                text: viewModel.uiState.translator.t("default.end.and.go.back"),
+                text: translator.t("default.end.and.go.back"),
                 enabled: true,
-                onClick: {
-                    viewModel.uiState.returnToApp = true
-                },
+                onClick: returnToApp,
                 foregroundColor: themeManager.selectedTheme.colors.onTertiary,
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
@@ -56,14 +71,13 @@ struct MustContinueComponent: View {
 
 @available(iOS 15.0, *)
 struct InformationSection: View {
+    var translator: KhipuTranslator
+    var operationInfo: OperationInfo
     @EnvironmentObject private var themeManager: ThemeManager
-    let operationMustContinue: OperationMustContinue
-    let khipuViewModel: KhipuViewModel
-    let khipuUiState: KhipuUiState
     
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.verySmall) {
-            Text(khipuUiState.translator.t("page.operationMustContinue.share.description"))
+            Text(translator.t("page.operationMustContinue.share.description"))
                 .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .multilineTextAlignment(.center)
@@ -71,16 +85,16 @@ struct InformationSection: View {
             Spacer().frame(height:Dimens.Spacing.extraMedium)
             
             CopyToClipboardLink(
-                text: khipuUiState.operationInfo?.urls?.info ?? "",
-                textToCopy: khipuUiState.operationInfo?.urls?.info ?? "",
+                text: operationInfo.urls?.info ?? "",
+                textToCopy: operationInfo.urls?.info ?? "",
                 background:themeManager.selectedTheme.colors.onSecondaryContainer)
             
             Spacer().frame(height:Dimens.Spacing.extraMedium)
 
             
             if #available(iOS 16.0, *) {
-                ShareLink(item: URL(string: khipuUiState.operationInfo?.urls?.info ?? "")!,
-                          message: Text(khipuUiState.translator.t("page.operationMustContinue.share.link.body"))){
+                ShareLink(item: URL(string: operationInfo.urls?.info ?? "")!,
+                          message: Text(translator.t("page.operationMustContinue.share.link.body"))){
                     Label("Compartir", systemImage: "square.and.arrow.up")
                 }
             }
@@ -94,7 +108,7 @@ struct InformationSection: View {
 }
 
 
-
+/*/
 
 @available(iOS 15.0, *)
 struct MustContinueComponent_Previews: PreviewProvider {
@@ -141,3 +155,4 @@ struct MustContinueComponent_Previews: PreviewProvider {
         .previewLayout(.sizeThatFits)
     }
 }
+*/

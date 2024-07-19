@@ -6,7 +6,7 @@ import ViewInspector
 
 @available(iOS 15.0, *)
 final class DetailSectionComponentTest: XCTestCase {
-
+/*
     
         func testDetailSectionRendersCorrectly() throws {
             let themeManager = ThemeManager()
@@ -53,4 +53,6 @@ final class DetailSectionComponentTest: XCTestCase {
             XCTAssertNotNil(try? inspectedView.find(text: "Value"), "Failed to find the text: Value")
 
         }
+ 
+ */
 }

@@ -75,8 +75,8 @@ public struct FormComponent: View {
                                backgroundColor: themeManager.selectedTheme.colors.primary
                     )
                 }
-                FooterComponent(viewModel: viewModel)
-                
+                FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
+
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 32)

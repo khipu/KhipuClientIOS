@@ -43,42 +43,39 @@ public struct KhipuView: View {
                 case MessageType.operationFailure.rawValue:
                     if (!options.skipExitPage) {
                         if(viewModel.uiState.operationFailure?.reason == FailureReasonType.bankWithoutAutomaton){
-                            RedirectToManualComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                            RedirectToManualView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, restartPayment: viewModel.restartPayment)
                         }else if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
-                            TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
-
+                            TimeoutMessageView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
                         } else {
-                            FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                            FailureMessageView(operationFailure: viewModel.uiState.operationFailure!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
                         }
-                        FooterComponent(viewModel: viewModel)
-
-
+                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.operationWarning.rawValue:
                     if (!options.skipExitPage) {
-                        WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
-                        FooterComponent(viewModel: viewModel)
+                        WarningMessageView(operationWarning: viewModel.uiState.operationWarning!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.operationSuccess.rawValue:
                     if (!options.skipExitPage){
-                        SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
-                        FooterComponent(viewModel: viewModel)
+                        SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
+                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.progressInfo.rawValue:
                     ProgressComponent(viewModel: viewModel)
-                    ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
+                    ProgressInfoView(message: viewModel.uiState.progressInfoMessage)
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(viewModel: viewModel)
-                    AuthorizationRequestView(viewModel: viewModel)
-                    FooterComponent(viewModel: viewModel)
+                    AuthorizationRequestView(authorizationRequest: viewModel.uiState.currentAuthorizationRequest!, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
+                    FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                 case MessageType.operationMustContinue.rawValue:
                     if (!options.skipExitPage) {
-                        MustContinueComponent(viewModel: viewModel, operationMustContinue: viewModel.uiState.operationMustContinue!)
-                        FooterComponent(viewModel: viewModel)
+                        MustContinueView(operationMustContinue: viewModel.uiState.operationMustContinue!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
+                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
 
                 default:
-                    EndToEndEncryption(viewModel: viewModel)
+                    EndToEndEncryption(translator: viewModel.uiState.translator)
                 }
                 if(viewModel.uiState.returnToApp) {
                     ExecuteCode {

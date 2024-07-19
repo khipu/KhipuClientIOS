@@ -3,9 +3,11 @@ import SwiftUI
 import Combine
 
 @available(iOS 15.0.0, *)
-struct RedirectToManualComponent: View {
+struct RedirectToManualView: View {
     let operationFailure: OperationFailure
-    @ObservedObject public var viewModel: KhipuViewModel
+    var translator: KhipuTranslator
+    var operationInfo: OperationInfo
+    var restartPayment: () -> Void
     @EnvironmentObject private var themeManager: ThemeManager
 
     @State private var remainingSeconds = 25
@@ -14,11 +16,11 @@ struct RedirectToManualComponent: View {
     }
 
     private var redirectText: String {
-        viewModel.uiState.translator.t("default.redirect.n.seconds").replacingOccurrences(of: "{{time}}", with: "\(remainingSeconds)")
+        translator.t("default.redirect.n.seconds").replacingOccurrences(of: "{{time}}", with: "\(remainingSeconds)")
     }
 
     private func openManualUrl() {
-        if let url = URL(string: "\(viewModel.uiState.operationInfo?.urls?.manualTransfer ?? "")?fallback=true") {
+        if let url = URL(string: "\(operationInfo.urls?.manualTransfer ?? "")?fallback=true") {
             DispatchQueue.main.async {
                 UIApplication.shared.open(url, options: [:], completionHandler: nil)
             }
@@ -43,7 +45,7 @@ struct RedirectToManualComponent: View {
             .cornerRadius(Dimens.CornerRadius.extraSmall)
 
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                Text(viewModel.uiState.translator.t("page.redirectManual.redirecting"))
+                Text(translator.t("page.redirectManual.redirecting"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
                     .multilineTextAlignment(.center)
                     .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
@@ -54,7 +56,7 @@ struct RedirectToManualComponent: View {
             .cornerRadius(8)
 
             HStack(alignment: .center, spacing:Dimens.Spacing.medium) {
-                Text(viewModel.uiState.translator.t("page.redirectManual.only.regular"))
+                Text(translator.t("page.redirectManual.only.regular"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
                     .multilineTextAlignment(.center)
                     .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
@@ -63,7 +65,7 @@ struct RedirectToManualComponent: View {
             .padding(.vertical, 0)
             .frame(maxWidth: .infinity, alignment: .center)
 
-            FormWarning(text: viewModel.uiState.translator.t("default.user.regular.transfer") + " " + viewModel.uiState.translator.t("page.redirectManual.other.bank"))
+            FormWarning(text: translator.t("default.user.regular.transfer") + " " + translator.t("page.redirectManual.other.bank"))
 
             VStack(alignment: .center, spacing:Dimens.Spacing.large) {
                 Image(systemName: "paperplane.fill")
@@ -94,7 +96,7 @@ struct RedirectToManualComponent: View {
             }
 
             MainButton(
-                text: viewModel.uiState.translator.t("default.user.regular.transfer"),
+                text: translator.t("default.user.regular.transfer"),
                 enabled: true,
                 onClick: {
                     openManualUrl()
@@ -105,11 +107,10 @@ struct RedirectToManualComponent: View {
 
 
             MainButton(
-                text: viewModel.uiState.translator.t("default.user.other.bank"),
+                text: translator.t("default.user.other.bank"),
                 enabled: true,
-                onClick: {
-                    viewModel.restartPayment()
-                },
+                onClick: restartPayment
+                ,
                 foregroundColor: themeManager.selectedTheme.colors.onSurface,
                 backgroundColor: themeManager.selectedTheme.colors.surface
             ).cornerRadius(8)
@@ -124,7 +125,7 @@ struct RedirectToManualComponent: View {
     }
 }
 
-
+/*
 @available(iOS 15.0, *)
 struct RedirectToManualComponent_Previews: PreviewProvider{
     static var previews: some View{
@@ -144,3 +145,4 @@ struct RedirectToManualComponent_Previews: PreviewProvider{
         .padding()
     }
 }
+*/

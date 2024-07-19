@@ -2,9 +2,11 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct SuccessMessageComponent: View {
+struct SuccessMessageView: View {
     let operationSuccess: OperationSuccess
-    @ObservedObject public var viewModel: KhipuViewModel
+    var translator: KhipuTranslator
+    var operationInfo: OperationInfo?
+    var returnToApp: () -> Void
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
@@ -34,9 +36,9 @@ struct SuccessMessageComponent: View {
                 .frame(maxWidth: .infinity, alignment: .center)
                 .cornerRadius(8)
                 
-                if let operationInfo = viewModel.uiState.operationInfo {
+                if let operationInfo = operationInfo {
                     VStack(alignment: .leading, spacing: 10) {
-                        Text(viewModel.uiState.translator.t("default.amount.label"))
+                        Text(translator.t("default.amount.label"))
                             .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                             .multilineTextAlignment(.center)
                             .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
@@ -48,7 +50,7 @@ struct SuccessMessageComponent: View {
                             .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                             .frame(maxWidth: .infinity, alignment: .top)
                         
-                        Text(viewModel.uiState.translator.t("default.merchant.label"))
+                        Text(translator.t("default.merchant.label"))
                             .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                             .multilineTextAlignment(.center)
                             .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
@@ -67,7 +69,7 @@ struct SuccessMessageComponent: View {
                 }
 
             
-                Text(viewModel.uiState.translator.t("default.operation.code.label"))
+                Text(translator.t("default.operation.code.label"))
                     .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                     .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                     .multilineTextAlignment(.center)
@@ -84,11 +86,9 @@ struct SuccessMessageComponent: View {
             .cornerRadius(Dimens.CornerRadius.extraSmall)
             
             MainButton(
-                text: viewModel.uiState.translator.t("default.end.and.go.back"),
+                text: translator.t("default.end.and.go.back"),
                 enabled: true,
-                onClick: {
-                    viewModel.uiState.returnToApp = true
-                },
+                onClick:returnToApp,
                 foregroundColor: themeManager.selectedTheme.colors.onSuccess,
                 backgroundColor: themeManager.selectedTheme.colors.success
             )
@@ -102,6 +102,7 @@ struct SuccessMessageComponent: View {
     
 }
 
+/*
 @available(iOS 15.0, *)
 struct SuccessMessageComponent_Previews: PreviewProvider{
     static var previews: some View{
@@ -151,4 +152,5 @@ struct SuccessMessageComponent_Previews: PreviewProvider{
         .environmentObject(ThemeManager())
         .padding()
     }
-}
+ 
+}*/
