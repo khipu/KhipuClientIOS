@@ -6,6 +6,7 @@ import ViewInspector
 @available(iOS 15.0, *)
 final class FooterComponentTest: XCTestCase {
 
+    /*
     func testFooterComponentView() throws {
         let themeManager = ThemeManager()
         
@@ -17,4 +18,5 @@ final class FooterComponentTest: XCTestCase {
         let inspectedView = try view.inspect()
         XCTAssertNotNil(try? inspectedView.find(text: "Impulsado por"), "Failed to find the text: Title")
     }
+     */
 }

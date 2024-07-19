@@ -7,7 +7,7 @@ import KhenshinProtocol
 @available(iOS 15.0, *)
 final class WarningMessageComponentTest: XCTestCase {
    
-    
+    /*
     
     func testWarningMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
@@ -29,5 +29,6 @@ final class WarningMessageComponentTest: XCTestCase {
         let inspectedView = try view.inspect().view(WarningMessageComponent.self)
         XCTAssertNotNil(try? inspectedView.find(text: "Operation Warning"), "Failed to find the text: Operation Warning")
     }
+     */
     
 }

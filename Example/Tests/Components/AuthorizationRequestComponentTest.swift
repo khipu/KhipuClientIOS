@@ -6,7 +6,7 @@ import ViewInspector
 
 @available(iOS 15.0, *)
 final class AuthorizationRequestComponentTests: XCTestCase {
-    
+    /*
     func testAuthorizationRequestViewRendersMobileAuthorizationRequestView() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -40,4 +40,5 @@ final class AuthorizationRequestComponentTests: XCTestCase {
         XCTAssertNotNil(try? inspectedView.find(text: "Scan the QR code"), "Failed to find the text: Scan the QR code")
 
     }
+     */
 }

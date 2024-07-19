@@ -2,24 +2,29 @@ import SwiftUI
 import KhenshinProtocol
 import SwiftUI
 
+
+struct DetailSectionParams {
+    let amountLabel: String
+    let amountValue: String
+    let merchantNameLabel: String
+    let merchantNameValue: String
+    let codOperacionLabel: String
+}
+
 @available(iOS 15.0.0, *)
 struct DetailSectionComponent: View {
-    var reason: String
     var operationId: String
-    var operationInfo: OperationInfo?
-    @ObservedObject public var viewModel: KhipuViewModel
+    var reason: FailureReasonType?
+    var params: DetailSectionParams
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-
-
-            DetailItem(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
             
-            DetailItem(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")
+            DetailItem(label:params.amountLabel, value: params.amountValue)
+            DetailItem(label:params.merchantNameLabel, value: params.merchantNameValue)
             DashedLine()
-                        
-            DetailItem(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationId) + reason ,shouldCopyValue: true)
+            DetailItem(label:params.codOperacionLabel, value:[FieldUtils.formatOperationId(operationId:operationId),FieldUtils.getFailureReasonCode(reason:reason)].joined(separator: " "),shouldCopyValue: true)
         }
         .padding(Dimens.Padding.large)
         .frame(maxWidth: .infinity, alignment: .top)
@@ -53,15 +58,16 @@ struct DetailItem: View {
     }
 }
 
-@available(iOS 15.0, *)
-struct DetailSection_Previews:PreviewProvider{
-    static var previews: some View{
-        return DetailSectionComponent(reason: FieldUtils.getFailureReasonCode(reason: FailureReasonType.formTimeout), operationId: "operationID", viewModel: KhipuViewModel())
-            .environmentObject(ThemeManager())
-            .padding()
-    }
-}
-
+/*
+ @available(iOS 15.0, *)
+ struct DetailSection_Previews:PreviewProvider{
+ static var previews: some View{
+ return DetailSectionComponent(reason: FieldUtils.getFailureReasonCode(reason: FailureReasonType.formTimeout), operationId: "operationID", viewModel: KhipuViewModel())
+ .environmentObject(ThemeManager())
+ .padding()
+ }
+ }
+ */
 
 @available(iOS 15.0, *)
 struct DetailItem_Previews:PreviewProvider{

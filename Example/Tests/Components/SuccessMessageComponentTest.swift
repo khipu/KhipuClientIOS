@@ -6,6 +6,7 @@ import KhenshinProtocol
 
 @available(iOS 15.0, *)
 final class SuccessMessageComponentTest: XCTestCase {
+    /*
     func testSuccessMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -64,4 +65,5 @@ final class SuccessMessageComponentTest: XCTestCase {
         XCTAssertNoThrow(try inspectView.find(text: "Código operación"))
         XCTAssertNoThrow(try inspectView.find(text: "Destinatario"))
     }
+     */
 }

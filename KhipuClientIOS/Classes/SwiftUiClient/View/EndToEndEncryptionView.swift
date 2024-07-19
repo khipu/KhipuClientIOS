@@ -2,9 +2,8 @@ import SwiftUI
 
 @available(iOS 13.0, *)
 struct EndToEndEncryption: View {
-
+    var translator: KhipuTranslator
     @EnvironmentObject private var themeManager: ThemeManager
-    @ObservedObject public var viewModel: KhipuViewModel
 
     var body: some View {
         VStack {
@@ -13,13 +12,13 @@ struct EndToEndEncryption: View {
                        height:Dimens.Frame.extraLarge,
                        alignment: .center)
                 .padding([.top],Dimens.Padding.massive)
-            Text(viewModel.uiState.translator.t("default.end.to.end.encryption", default: ""))
+            Text(translator.t("default.end.to.end.encryption", default: ""))
                 .frame(alignment: .center)
         }.frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
-
+/*
 @available(iOS 13.0, *)
 struct EndToEndEncryption_Previews: PreviewProvider {
     static var previews: some View {
@@ -28,3 +27,4 @@ struct EndToEndEncryption_Previews: PreviewProvider {
             .padding()
     }
 }
+*/

@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 
 @available(iOS 15.0, *)
-struct ProgressInfoComponent: View {
+struct ProgressInfoView: View {
     var message: String
     @EnvironmentObject private var themeManager: ThemeManager
     
@@ -30,7 +30,7 @@ struct ProgressInfoComponent: View {
 @available(iOS 15.0, *)
 struct ProgressInfoComponent_Previews: PreviewProvider {
     static var previews: some View {
-        return ProgressInfoComponent(message: "Progress info message")
+        return ProgressInfoView(message: "Progress info message")
             .environmentObject(ThemeManager())
             .previewLayout(.sizeThatFits)
     }
