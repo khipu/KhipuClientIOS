@@ -73,13 +73,14 @@ struct Dimens {
         static let medium = Dimens.large // 20
         static let large = Dimens.moderatelyLarge // 24
         static let quiteLarge = Dimens.quiteLarge // 32
+        static let slightlyLarger = Dimens.slightlyLarger // 40
         static let almostLarge = Dimens.almostLarge // 45
         static let larger = Dimens.larger // 48
         static let extraLarge = Dimens.extraLarge // 54
         static let substantiallyLarge = Dimens.substantiallyLarge // 65
         static let muchLarger = Dimens.muchLarger // 80
         static let extremelyLarge = Dimens.extremelyLarge // 90
-        static let slightlyLarger = Dimens.slightlyLarger // 40
+        static let veryHuge = Dimens.veryHuge // 120
         static let gigantic = Dimens.gigantic // 200
         static let colossal = Dimens.colossal // 300
     }

@@ -68,24 +68,13 @@ struct TimeoutMessageView: View {
     
 }
 
-/*
 @available(iOS 15.0, *)
 struct TimeoutMessageComponent_Previews: PreviewProvider{
     static var previews: some View{
-        return TimeoutMessageComponent(operationFailure:
-                                        OperationFailure(
-                                            type: MessageType.operationWarning,
-                                            body: "body",
-                                            events: nil,
-                                            exitURL: "exitUrl",
-                                            operationID: "operationID",
-                                            resultMessage: "resultMessage",
-                                            title: "Title",
-                                            reason: FailureReasonType.formTimeout
-                                        ), viewModel: KhipuViewModel()
+        return TimeoutMessageView(operationFailure: MockDataGenerator.createOperationFailure(), translator: MockDataGenerator.createTranslator(), returnToApp: {}
         )
         .environmentObject(ThemeManager())
         .padding()
     }
 }
-*/
+

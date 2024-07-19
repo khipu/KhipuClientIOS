@@ -92,65 +92,19 @@ struct SuccessMessageView: View {
                 foregroundColor: themeManager.selectedTheme.colors.onSuccess,
                 backgroundColor: themeManager.selectedTheme.colors.success
             )
-            
         }
         .padding(.horizontal,Dimens.Padding.large)
         .padding(.vertical,Dimens.Padding.quiteLarge)
         .frame(maxWidth: .infinity, alignment: .center)
-        
     }
-    
 }
 
-/*
 @available(iOS 15.0, *)
 struct SuccessMessageComponent_Previews: PreviewProvider{
     static var previews: some View{
-        
-        let viewModel = KhipuViewModel()
-        viewModel.uiState.translator = KhipuTranslator(translations: [
-            "default.amount.label": "Monto",
-            "default.operation.code.label": "Código operación",
-            "default.merchant.label": "Destinatario",
-        ])
-        let operationInfo = OperationInfo(
-            acceptManualTransfer: true,
-            amount: "1000",
-            body: "Transaction Body",
-            email: "example@example.com",
-            merchant: Merchant(logo: "merchant_logo", name: "Merchant Name"),
-            operationID: "12345",
-            subject: "Transaction Subject",
-            type: .operationInfo,
-            urls: Urls(
-                attachment: ["https://example.com/attachment"],
-                cancel: "https://example.com/cancel",
-                changePaymentMethod: "https://example.com/changePaymentMethod",
-                fallback: "https://example.com/fallback",
-                image: "https://example.com/image",
-                info: "https://example.com/info",
-                manualTransfer: "https://example.com/manualTransfer",
-                urlsReturn: "https://example.com/return"
-            ),
-            welcomeScreen: WelcomeScreen(enabled: true, ttl: 3600)
-        )
-        
-        viewModel.uiState.operationInfo = operationInfo
-
-        
-        return SuccessMessageComponent(operationSuccess: OperationSuccess(
-            canUpdateEmail: false,
-            type: MessageType.operationSuccess,
-            body: "body",
-            events: nil,
-            exitURL: "exitUrl",
-            operationID: "operationID",
-            resultMessage: "resultMessage",
-            title: "Title"
-        ), viewModel: viewModel
-        )
+        return SuccessMessageView(operationSuccess: MockDataGenerator.createOperationSuccess(), translator: MockDataGenerator.createTranslator(), operationInfo: MockDataGenerator.createOperationInfo(amount:"$9.950", merchantName: "NIC CHILE S.A"), returnToApp: {})
         .environmentObject(ThemeManager())
         .padding()
     }
  
-}*/
+}
