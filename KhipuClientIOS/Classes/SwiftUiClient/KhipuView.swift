@@ -24,21 +24,21 @@ public struct KhipuView: View {
     }
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, imageUrl: options.topBarImageUrl, viewModel: viewModel)
+            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, imageUrl: options.topBarImageUrl, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     if(options.header != nil && options.header?.headerUIView != nil){
                         HeaderRepresentableComponent(viewModel: viewModel, baseView: options.header!.headerUIView!)
                             .frame(maxHeight: CGFloat(integerLiteral: options.header?.height ?? 100))
                     } else {
-                        HeaderComponent(viewModel: viewModel)
+                        HeaderComponent(operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator)
                     }
                 }
             }
             ScrollView(.vertical){
                 switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
-                    ProgressComponent(viewModel: viewModel)
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
                     FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
                 case MessageType.operationFailure.rawValue:
                     if (!options.skipExitPage) {
@@ -58,14 +58,14 @@ public struct KhipuView: View {
                     }
                 case MessageType.operationSuccess.rawValue:
                     if (!options.skipExitPage){
-                        SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
+                        SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo, returnToApp: {viewModel.uiState.returnToApp=true})
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.progressInfo.rawValue:
-                    ProgressComponent(viewModel: viewModel)
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
                     ProgressInfoView(message: viewModel.uiState.progressInfoMessage)
                 case MessageType.authorizationRequest.rawValue:
-                    ProgressComponent(viewModel: viewModel)
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
                     AuthorizationRequestView(authorizationRequest: viewModel.uiState.currentAuthorizationRequest!, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
                     FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                 case MessageType.operationMustContinue.rawValue:
@@ -115,9 +115,6 @@ public struct KhipuView: View {
                 .map { String($0) }
         })
         .environmentObject(themeManager)
-
-
-
     }
 
     func buildResult(_ state: KhipuUiState) -> KhipuResult {

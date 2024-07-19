@@ -2,11 +2,11 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct ProgressComponent: View {
-    @ObservedObject var viewModel: KhipuViewModel
+    var currentProgress: Float
     @EnvironmentObject private var themeManager: ThemeManager
 
     var body: some View {
-        ProgressView(value: Double(viewModel.uiState.currentProgress))
+        ProgressView(value: Double(currentProgress))
             .progressViewStyle(.linear)
             .tint(themeManager.selectedTheme.colors.primary)
             .background(themeManager.selectedTheme.colors.surface)
@@ -14,6 +14,8 @@ struct ProgressComponent: View {
             .padding(.all, 0)
     }
 }
+
+/*
 @available(iOS 15.0, *)
 struct ProgressComponent_Previews: PreviewProvider {
     static var previews: some View {
@@ -36,4 +38,4 @@ struct ProgressComponent_Previews: PreviewProvider {
                 .previewLayout(.sizeThatFits)
         }
     }
-}
+}*/

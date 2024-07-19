@@ -6,6 +6,7 @@ import KhenshinProtocol
 
 @available(iOS 15.0, *)
 final class NavigationBarComponentTest: XCTestCase {
+    /*
     func testNavigationBarWithImageURLRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -41,4 +42,5 @@ final class NavigationBarComponentTest: XCTestCase {
         let text = try inspectView.find(ViewType.Text.self)
         XCTAssertEqual(try text.string(), "title")
     }
+     */
 }

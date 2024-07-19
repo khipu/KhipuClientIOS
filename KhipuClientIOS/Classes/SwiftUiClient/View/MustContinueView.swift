@@ -12,26 +12,8 @@ struct MustContinueView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.Spacing.large) {
-            VStack(alignment: .center, spacing: Dimens.Spacing.extraMedium) {
-                Image(systemName: "info.circle.fill")
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: Dimens.Image.slightlyLarger, height: Dimens.Image.slightlyLarger)
-                    .foregroundColor(themeManager.selectedTheme.colors.tertiary)
-                Text(translator.t("page.operationFailure.header.text.operation.task.finished"))
-                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 24))
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
-                Text((operationMustContinue.title)!)
-                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
-                
-            }
-            .padding(0)
-            .frame(maxWidth: .infinity, alignment: .top)
+            FailureMessageHeaderComponent(icon: "info.circle.fill",title:translator.t("page.operationFailure.header.text.operation.task.finished") ,subtitle: (operationMustContinue.title)!,bodyText: operationMustContinue.body)
             
-            FormWarning(text: operationMustContinue.body ?? "")
             InformationSection(translator: translator, operationInfo: operationInfo)
 
             DetailSectionComponent(

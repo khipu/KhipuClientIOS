@@ -61,7 +61,7 @@ public struct FormComponent: View {
                     viewModel: viewModel)
                 
                 if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
-                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
+                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, translator: viewModel.uiState.translator)
                 }
                 
                 if getShouldShowContinueButton(formRequest: formRequest) {
@@ -89,7 +89,7 @@ public struct FormComponent: View {
                 }
                 
                 if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
-                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
+                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, translator: viewModel.uiState.translator)
                 }
                 
                 if(getShouldShowContinueButton(formRequest: formRequest)) {

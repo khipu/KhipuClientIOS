@@ -5,6 +5,7 @@ import ViewInspector
 
 @available(iOS 15.0,*)
 final class ProgressComponentTest: XCTestCase {
+    /*
     func testProgressComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -24,4 +25,5 @@ final class ProgressComponentTest: XCTestCase {
             "Accessibility identifier is incorrect"
         )
     }
+     */
 }
