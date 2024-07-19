@@ -42,24 +42,12 @@ struct WarningMessageView: View {
     }
 }
 
-/*
- @available(iOS 15.0, *)
- struct WarningMessageComponent_Previews:PreviewProvider{
- static var previews: some View{
- return WarningMessageComponent(operationWarning:
- OperationWarning(
- type: MessageType.operationWarning,
- body: "body",
- events: nil,
- exitURL: "exitUrl",
- operationID: "operationID",
- resultMessage: "resultMessage",
- title: "Title",
- reason: FailureReasonType.taskDumped
- ), viewModel: KhipuViewModel()
- )
- .environmentObject(ThemeManager())
- .padding()
- }
- }
- */
+@available(iOS 15.0, *)
+struct WarningMessageComponent_Previews: PreviewProvider{
+    static var previews: some View{
+                
+        return WarningMessageView(operationWarning: MockDataGenerator.createOperationWarning(), operationInfo: MockDataGenerator.createOperationInfo(), translator: MockDataGenerator.createTranslator(), returnToApp: {})
+            .environmentObject(ThemeManager())
+            .padding()
+    }
+}
