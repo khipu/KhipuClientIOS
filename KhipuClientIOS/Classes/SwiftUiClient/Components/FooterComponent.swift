@@ -7,7 +7,7 @@ struct FooterComponent: View {
     
     var body: some View {
         if viewModel.uiState.showFooter {
-            HStack(alignment: .center, spacing: 1) {
+            HStack(alignment: .center, spacing: 5) {
                 
                 Text(viewModel.uiState.translator.t("footer.powered.by"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 12))

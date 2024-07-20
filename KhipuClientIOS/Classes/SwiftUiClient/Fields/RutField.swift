@@ -80,11 +80,11 @@ struct LabeledButton: View {
         Text(text)
             .font(.system(size: 24))
             .padding(.all, 9)
-            .background(Color("buttonBackground", bundle: bundle))
+            .background(Color("background", bundle: bundle))
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color("buttonBackground", bundle: bundle))
-    .foregroundColor(Color("buttonForeground", bundle: bundle))
+    .background(Color("background", bundle: bundle))
+    .foregroundColor(Color("onBackground", bundle: bundle))
     .cornerRadius(6)
     .shadow(radius: 0, y: 1)
     }
@@ -109,7 +109,7 @@ struct ImageButton: View {
             
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundColor(Color("buttonForeground", bundle: bundle))
+        .foregroundColor(Color("onBackground", bundle: bundle))
     }
 }
 
