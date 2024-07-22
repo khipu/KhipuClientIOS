@@ -23,7 +23,6 @@ final class HintLabelTest: XCTestCase {
         let instected = try view.environmentObject(ThemeManager()).inspect()
         
         XCTAssertThrowsError(try instected.find(viewWithAccessibilityIdentifier: "hintText"), "label not found") { error in
-            // Optionally verify the error type or message if needed
             XCTAssertTrue(error is InspectionError, "label not found")
         }
     }

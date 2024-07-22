@@ -4,15 +4,13 @@ import ViewInspector
 @testable import KhipuClientIOS
 
 @available(iOS 15.0,*)
-final class ProgressInfoComponentTest: XCTestCase {
+final class ProgressInfoViewTest: XCTestCase {
     
-    /*
+    
     func testProgressInfoComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let message = "Loading message"
-        let view = ProgressInfoComponent(
-            message: message
-        )
+        let view = ProgressInfoView(message: message)
             .environmentObject(
                 themeManager
             )
@@ -21,12 +19,12 @@ final class ProgressInfoComponentTest: XCTestCase {
         )
 
         let inspectedView = try view.inspect().view(
-            ProgressInfoComponent.self
+            ProgressInfoView.self
         )
         
         
         XCTAssertNotNil(try? inspectedView.find(text: message), "Failed to find the text:"+message)
 
     }
-     */
+     
 }

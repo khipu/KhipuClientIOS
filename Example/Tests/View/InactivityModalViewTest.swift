@@ -3,9 +3,9 @@ import SwiftUI
 @testable import KhipuClientIOS
 
 @available(iOS 15.0, *)
-class InactivityModalTests: XCTestCase {
+class InactivityModalViewTests: XCTestCase {
     
-    /*
+    
     func testModalViewIsPresented() {
         let viewModel = KhipuViewModel()
         let themeManager = ThemeManager()
@@ -13,7 +13,8 @@ class InactivityModalTests: XCTestCase {
         let getFunction: () -> Bool = { true }
         let setFunction: (Bool) -> Void = { param in }
         
-        let view = InactivityModal(isPresented: Binding(get: getFunction, set: setFunction), onDismiss: {}, viewModel: viewModel)
+        
+        let view = InactivityModalView(isPresented: Binding(get: getFunction, set: setFunction), onDismiss: {},translator: MockDataGenerator.createTranslator())
             .environmentObject(themeManager)
         
         let inspectView = try! view.inspect()
@@ -27,7 +28,7 @@ class InactivityModalTests: XCTestCase {
         let getFunction: () -> Bool = { false }
         let setFunction: (Bool) -> Void = { param in }
         
-        let view = InactivityModal(isPresented: Binding(get: getFunction, set: setFunction), onDismiss: {}, viewModel: viewModel)
+        let view = InactivityModalView(isPresented: Binding(get: getFunction, set: setFunction), onDismiss: {}, translator: MockDataGenerator.createTranslator())
             .environmentObject(themeManager)
         
         let inspectView = try! view.inspect()
@@ -42,13 +43,13 @@ class InactivityModalTests: XCTestCase {
         let getFunction: () -> Bool = { true }
         let setFunction: (Bool) -> Void = { param in }
         
-        let view = InactivityModal(isPresented: Binding(get: getFunction, set: setFunction), onDismiss: { onDismissCalled = true }, viewModel: viewModel)
+        let view = InactivityModalView(isPresented: Binding(get: getFunction, set: setFunction), onDismiss: { onDismissCalled = true }, translator: MockDataGenerator.createTranslator())
             .environmentObject(themeManager)
         
-        let inspectView = try! view.inspect().view(InactivityModal.self)
-        let button = try! inspectView.find(button: "page.are.you.there.continue.button")
+        let inspectView = try! view.inspect().view(InactivityModalView.self)
+        let button = try! inspectView.find(button: MockDataGenerator.createTranslator().t("page.are.you.there.continue.button"))
         try! button.tap()
         XCTAssertTrue(onDismissCalled)
     }
-    */
+    
 }
