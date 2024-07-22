@@ -28,7 +28,7 @@ struct ProgressInfoView: View {
 }
 
 @available(iOS 15.0, *)
-struct ProgressInfoComponent_Previews: PreviewProvider {
+struct ProgressInfoView_Previews: PreviewProvider {
     static var previews: some View {
         return ProgressInfoView(message: "Progress info message")
             .environmentObject(ThemeManager())

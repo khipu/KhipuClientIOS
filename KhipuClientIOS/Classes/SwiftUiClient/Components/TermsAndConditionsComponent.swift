@@ -44,19 +44,12 @@ struct TermsAndConditionsComponent: View {
     }
 }
 
-/*
 
 @available(iOS 15.0, *)
 struct TermsAndConditionsComponent_Previews: PreviewProvider {
     static var previews: some View {
-        
-        let viewModel = KhipuViewModel()
-        viewModel.uiState.translator = KhipuTranslator(translations: ["default.terms.continue.description": "Al continuar tu pago estás aceptando las||condiciones de uso del servicio Khipu"])
-        
-        return TermsAndConditionsComponent(termsURL: "https://google.com", viewModel: viewModel)
+        return TermsAndConditionsComponent(termsURL: "https://google.com", translator: MockDataGenerator.createTranslator())
             .environmentObject(ThemeManager())
     }
- 
- 
 }
- */
+

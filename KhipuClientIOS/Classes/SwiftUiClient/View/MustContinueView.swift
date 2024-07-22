@@ -13,9 +13,7 @@ struct MustContinueView: View {
     var body: some View {
         VStack(alignment: .center, spacing: Dimens.Spacing.large) {
             FailureMessageHeaderComponent(icon: "info.circle.fill",title:translator.t("page.operationFailure.header.text.operation.task.finished") ,subtitle: (operationMustContinue.title)!,bodyText: operationMustContinue.body)
-            
             InformationSection(translator: translator, operationInfo: operationInfo)
-
             DetailSectionComponent(
                 operationId: operationMustContinue.operationID!,
                 reason: operationMustContinue.reason,
@@ -27,11 +25,6 @@ struct MustContinueView: View {
                                     codOperacionLabel: translator.t("default.operation.code.short.label")
                                 )
                             )
-            
-            
-            
-            
-
             MainButton(
                 text: translator.t("default.end.and.go.back"),
                 enabled: true,
@@ -63,16 +56,13 @@ struct InformationSection: View {
                 .foregroundStyle(themeManager.selectedTheme.colors.onSurface)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .multilineTextAlignment(.center)
-            
             Spacer().frame(height:Dimens.Spacing.extraMedium)
-            
             CopyToClipboardLink(
                 text: operationInfo.urls?.info ?? "",
                 textToCopy: operationInfo.urls?.info ?? "",
                 background:themeManager.selectedTheme.colors.onSecondaryContainer)
             
             Spacer().frame(height:Dimens.Spacing.extraMedium)
-
             
             if #available(iOS 16.0, *) {
                 ShareLink(item: URL(string: operationInfo.urls?.info ?? "")!,
@@ -90,51 +80,16 @@ struct InformationSection: View {
 }
 
 
-/*/
-
 @available(iOS 15.0, *)
-struct MustContinueComponent_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = KhipuViewModel()
-        let urls = Urls(
-            attachment: ["https://www.khipu.com"],
-            cancel: "https://www.khipu.com",
-            changePaymentMethod: "https://www.khipu.com",
-            fallback: "https://www.khipu.com",
-            image: "https://www.khipu.com",
-            info: "https://www.khipu.com",
-            manualTransfer: "https://www.khipu.com",
-            urlsReturn: "https://www.khipu.com"
-        )
-        let uiState = KhipuUiState(operationInfo: OperationInfo(
-                acceptManualTransfer: true,
-                amount: "$ 1.000",
-                body: "body",
-                email: "khipu@khipu.com",
-                merchant: nil,
-                operationID: "operationID",
-                subject: "Subject",
-                type: MessageType.operationInfo,
-                urls: urls,
-                welcomeScreen: nil
-            )
-        )
-        viewModel.uiState = uiState
-        return MustContinueComponent(
-            viewModel: viewModel,
-            operationMustContinue: OperationMustContinue(
-                type: MessageType.operationMustContinue,
-                body: "body",
-                events: nil,
-                exitURL: "exitUrl",
-                operationID: "operationID",
-                resultMessage: "resultMessage",
-                title: "Title",
-                reason: nil
-            )
-        )
-        .environmentObject(ThemeManager())
-        .previewLayout(.sizeThatFits)
+struct MustContinueView_Previews:PreviewProvider{
+    static var previews: some View{
+        return MustContinueView(operationMustContinue: MockDataGenerator.createOperationMustContinue(),
+                                translator: MockDataGenerator.createTranslator(),
+                                operationInfo: MockDataGenerator.createOperationInfo(),
+                                returnToApp: {  }).environmentObject(ThemeManager())
+            .previewLayout(.sizeThatFits)
+        
     }
 }
-*/
+
+

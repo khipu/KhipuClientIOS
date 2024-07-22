@@ -19,7 +19,7 @@ struct ModalView: View {
     
     var body: some View {
         VStack (spacing: Dimens.Spacing.large) {
-
+            
             if let icon = icon {
                 icon
                     .resizable()
@@ -44,14 +44,16 @@ struct ModalView: View {
             }
             if let imageSrc = imageSrc {
                 Spacer()
-                SVGImage(
-                    url: imageSrc.starts(with: "http") ? imageSrc : nil,
-                    svg: imageSrc.starts(with: "http") ? nil : imageSrc,
-                    width: 100,
-                    height: 103,
-                    percentage: 40
-                )
-                .padding()
+                AsyncImage(url: URL(string:imageSrc)) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: Dimens.Frame.extremelyLarge, height: Dimens.Frame.extremelyLarge)
+                        .clipped()
+                } placeholder: {
+                    ProgressView()
+                }
+                
                 Spacer()
             }
             if let timer = countDown {
@@ -93,7 +95,7 @@ struct ModalView: View {
         .shadow(radius: 20)
         .fixedSize(horizontal: false, vertical: true)
     }
-
+    
 }
 
 @available(iOS 13.0, *)
@@ -101,22 +103,22 @@ struct CountdownTimerView: View {
     @State private var timeRemaining: Int
     @State private var timerActive = false
     @State private var timer: Timer? = nil
-
+    
     init(time: Int) {
         self._timeRemaining = State(initialValue: time)
         startTimer()
     }
-
+    
     var body: some View {
         VStack {
             Text((timeString(time: timeRemaining)))
-            .padding(.bottom)
+                .padding(.bottom)
         }
         .onAppear {
             startTimer()
         }
     }
-
+    
     func startTimer() {
         if timerActive {
             timer?.invalidate()
@@ -134,7 +136,7 @@ struct CountdownTimerView: View {
         }
         timerActive.toggle()
     }
-
+    
     func timeString(time: Int) -> String {
         let minutes = time / 60
         let seconds = time % 60
@@ -161,7 +163,7 @@ struct ModalView_Previews: PreviewProvider {
             primaryButtonColor: ThemeManager().selectedTheme.colors.primary,
             icon: Image(systemName: "clock.fill"),
             iconColor: ThemeManager().selectedTheme.colors.tertiary,
-            imageSrc: "https://khenshin-web.s3.amazonaws.com/img/ufo.svg",
+            imageSrc: "https://s3.amazonaws.com/static.khipu.com/icon/ufo.png",
             countDown: 60)
         .environmentObject(ThemeManager())
         .previewLayout(.sizeThatFits)

@@ -22,8 +22,6 @@ public class FontLoader {
                 let result = CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
                 if !result {
                     print("Failed to register font: \(fontName)")
-                } else {
-                    print("Successfully registered font: \(fontName)")
                 }
             }
         }

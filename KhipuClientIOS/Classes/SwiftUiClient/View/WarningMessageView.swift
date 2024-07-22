@@ -43,7 +43,7 @@ struct WarningMessageView: View {
 }
 
 @available(iOS 15.0, *)
-struct WarningMessageComponent_Previews: PreviewProvider{
+struct WarningMessageView_Previews: PreviewProvider{
     static var previews: some View{
                 
         return WarningMessageView(operationWarning: MockDataGenerator.createOperationWarning(), operationInfo: MockDataGenerator.createOperationInfo(), translator: MockDataGenerator.createTranslator(), returnToApp: {})

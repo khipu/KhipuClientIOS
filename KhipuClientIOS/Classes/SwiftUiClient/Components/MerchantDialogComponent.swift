@@ -111,7 +111,7 @@ struct MerchantDialogComponent_Previews: PreviewProvider {
         let onDismissRequest: () -> Void = {}
         return MerchantDialogComponent(
             onDismissRequest: onDismissRequest,
-            translator: KhipuUiState().translator,
+            translator: MockDataGenerator.createTranslator(),
             merchant: "Merchant",
             subject: "Subject",
             description: "Description",

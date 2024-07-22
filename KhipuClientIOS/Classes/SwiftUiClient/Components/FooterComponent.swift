@@ -8,7 +8,7 @@ struct FooterComponent: View {
     
     var body: some View {
         if showFooter{
-            HStack(alignment: .center, spacing: 1) {
+            HStack(alignment: .center, spacing: Dimens.Spacing.small) {
                 
                 Text(translator.t("footer.powered.by"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 12))
@@ -29,12 +29,12 @@ struct FooterComponent: View {
     }
 }
 
-/*
+
 @available(iOS 15.0, *)
 struct FooterComponent_Previews: PreviewProvider {
     static var previews: some View {
-        FooterComponent(viewModel: KhipuViewModel())
+        FooterComponent(translator: MockDataGenerator.createTranslator(), showFooter: true)
             .environmentObject(ThemeManager())
     }
 }
-*/
+

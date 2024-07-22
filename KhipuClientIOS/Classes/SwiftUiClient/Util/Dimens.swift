@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct Dimens {
-    // Definición de valores comunes
     static let none: CGFloat = 0
     static let small: CGFloat = 2
     static let verySmall: CGFloat = 4
