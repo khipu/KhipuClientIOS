@@ -1,10 +1,3 @@
-//
-//  FormComponent.swift
-//  APNGKit
-//
-//  Created by Mauricio Castillo on 08-05-24.
-//
-
 import Foundation
 
 import SwiftUI
@@ -76,7 +69,7 @@ public struct FormComponent: View {
                     )
                 }
                 FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
-
+                
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 32)
@@ -106,7 +99,7 @@ public struct FormComponent: View {
                 
             }
             
-            InactivityModal(isPresented: $alertManager.showAlert, onDismiss: {}, viewModel: viewModel).environmentObject(themeManager)
+            InactivityModalView(isPresented: $alertManager.showAlert, onDismiss: {}, translator: viewModel.uiState.translator).environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
             
         }
@@ -359,12 +352,7 @@ public struct FormComponent_Previews: PreviewProvider {
         )
         let viewModel = KhipuViewModel()
         viewModel.uiState = KhipuUiState(currentForm: request)
-        viewModel.uiState.translator = KhipuTranslator(translations: [
-            "page.are.you.there.title": "¿Sigues ahí?",
-            "page.are.you.there.continue.operation": "Continua con tu pago,",
-            "page.are.you.there.session.about.to.end": "¡La sesión está a punto de cerrarse!",
-            "page.are.you.there.continue.button": "Continuar pago",
-        ])
+        viewModel.uiState.translator = MockDataGenerator.createTranslator()
         return FormComponent(
             formRequest: request,
             viewModel: viewModel

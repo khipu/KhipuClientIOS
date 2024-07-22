@@ -50,9 +50,19 @@ struct FailureMessageHeaderComponent: View {
             }
             
             if let bodyText = bodyText {
-                FormWarning(text: bodyText).padding(.bottom, Dimens.Spacing.large) 
+                FormWarning(text: bodyText).padding(.bottom, Dimens.Spacing.large)
             }
         }
         
+    }
+}
+
+
+@available(iOS 15.0, *)
+struct FailureMessageHeaderComponent_Previews: PreviewProvider{
+    static var previews: some View{
+        
+        return FailureMessageHeaderComponent(icon: "clock.fill",title:"title" ,subtitle: "subtitle",bodyText: "body").environmentObject(ThemeManager())
+
     }
 }

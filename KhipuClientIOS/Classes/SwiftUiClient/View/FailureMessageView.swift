@@ -41,25 +41,12 @@ struct FailureMessageView: View {
     
 }
 
-/*
 
 @available(iOS 15.0, *)
-struct FailureMessageComponent_Previews: PreviewProvider {
+struct FailureMessageView_Previews: PreviewProvider {
     static var previews: some View {
-        FailureMessageComponent(
-            operationFailure:
-                OperationFailure(
-                    type: MessageType.operationFailure,
-                    body: "body",
-                    events: nil,
-                    exitURL: "exitUrl",
-                    operationID: "operationID",
-                    resultMessage: "resultMessage",
-                    title: "Title",
-                    reason: FailureReasonType.taskExecutionError
-                ), viewModel: KhipuViewModel())
+        FailureMessageView(operationFailure: MockDataGenerator.createOperationFailure(title: "No se pudo completar la transferencia"), operationInfo: MockDataGenerator.createOperationInfo(), translator: MockDataGenerator.createTranslator(), returnToApp: {})
         .environmentObject(ThemeManager())
         .padding()
     }
 }
-*/

@@ -14,7 +14,7 @@ struct Fonts {
             return Font.system(size: size, weight: weight)
         }
     }
-
+    
     func font(style: FontStyle, size: CGFloat) -> Font {
         let fontName: String
         let weight: Font.Weight

@@ -1,7 +1,7 @@
 import SwiftUI
 
-@available(iOS 13.0, *)
-struct EndToEndEncryption: View {
+@available(iOS 15.0, *)
+struct EndToEndEncryptionView: View {
     var translator: KhipuTranslator
     @EnvironmentObject private var themeManager: ThemeManager
 
@@ -18,13 +18,12 @@ struct EndToEndEncryption: View {
     }
 }
 
-/*
-@available(iOS 13.0, *)
-struct EndToEndEncryption_Previews: PreviewProvider {
+@available(iOS 15.0, *)
+struct EndToEndEncryptionView_Previews: PreviewProvider {
     static var previews: some View {
-        EndToEndEncryption(viewModel: KhipuViewModel())
+        return EndToEndEncryptionView(translator: MockDataGenerator.createTranslator())
             .environmentObject(ThemeManager())
             .padding()
     }
 }
-*/
+

@@ -92,24 +92,17 @@ struct RedirectToManualView: View {
         }
     }
 }
-    /*
+
+
+
+    
      @available(iOS 15.0, *)
-     struct RedirectToManualComponent_Previews: PreviewProvider{
+     struct RedirectToManualView_Previews: PreviewProvider{
      static var previews: some View{
-     return RedirectToManualComponent(operationFailure:
-     OperationFailure(
-     type: MessageType.operationWarning,
-     body: "body",
-     events: nil,
-     exitURL: "exitUrl",
-     operationID: "operationID",
-     resultMessage: "resultMessage",
-     title: "Failure",
-     reason: FailureReasonType.bankWithoutAutomaton
-     ), viewModel: KhipuViewModel()
-     )
+         
+         return RedirectToManualView(operationFailure: MockDataGenerator.createOperationFailure(reason: .bankWithoutAutomaton), translator: MockDataGenerator.createTranslator(), operationInfo: MockDataGenerator.createOperationInfo(), restartPayment: {})
      .environmentObject(ThemeManager())
      .padding()
      }
-     }
-     */
+    }
+     

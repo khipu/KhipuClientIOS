@@ -75,7 +75,7 @@ public struct KhipuView: View {
                     }
 
                 default:
-                    EndToEndEncryption(translator: viewModel.uiState.translator)
+                    EndToEndEncryptionView(translator: viewModel.uiState.translator)
                 }
                 if(viewModel.uiState.returnToApp) {
                     ExecuteCode {

@@ -34,7 +34,7 @@ public class KhipuViewModel: ObservableObject {
     public func setCurrentProgress(currentProgress: Float){
         uiState.currentProgress=currentProgress
     }
- 
+    
     public func setSiteOperationComplete(type: OperationType, value: String) {
         switch type{
         case OperationType.bankSelected:

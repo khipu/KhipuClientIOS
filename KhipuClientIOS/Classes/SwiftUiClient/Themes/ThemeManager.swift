@@ -8,5 +8,5 @@ class ThemeManager: ObservableObject {
     func setTheme(_ theme: ThemeProtocol) {
         selectedTheme = theme
     }
-
+    
 }

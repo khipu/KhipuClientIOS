@@ -18,7 +18,7 @@ public class KhipuSocketIOClient {
     private let locale: String
     private let browserId: String
     private let url: String
-
+    
     
     public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
@@ -450,7 +450,7 @@ public class KhipuSocketIOClient {
     
     private func authAndGetSavedForm(_ formRequest: FormRequest) -> Void {
         let context = LAContext()
-        var error: NSError?        
+        var error: NSError?
         if (formRequest.rememberValues ?? false && isLoginFormAndStored(formRequest)) {
             if(context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error)) {
                 let reason = "Confirme su identidad."

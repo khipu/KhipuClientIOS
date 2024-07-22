@@ -33,12 +33,12 @@ struct NavigationBarComponent: View {
             Button {
                 isConfirmingClose = true
             } label: {
-                Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
+                Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.primary)
             }
             .padding()
             .confirmationDialog(translator.t("modal.abortOperation.title"),
-                isPresented: $isConfirmingClose,
-                titleVisibility: .visible
+                                isPresented: $isConfirmingClose,
+                                titleVisibility: .visible
             ) {
                 Button(translator.t("modal.abortOperation.cancel.button"), role: .destructive){
                     returnToApp()
@@ -53,29 +53,19 @@ struct NavigationBarComponent: View {
     }
 }
 
-/*
 @available(iOS 15.0, *)
 struct NavigationBarComponent_Previews: PreviewProvider {
     static var previews: some View {
-        return NavigationBarComponent(
-            title: "Title",
-            imageName: nil,
-            viewModel: KhipuViewModel()
-        )
-        .environmentObject(ThemeManager())
+        return NavigationBarComponent(translator: MockDataGenerator.createTranslator(), returnToApp: {})        .environmentObject(ThemeManager())
+        
     }
 }
 
 @available(iOS 15.0, *)
 struct NavigationBarComponentWithImage_Previews: PreviewProvider {
     static var previews: some View {
-        return NavigationBarComponent(
-            title: "Title",
-            imageName: nil, 
-            imageUrl: "https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-black.png",
-            viewModel: KhipuViewModel()
-        )
-        .environmentObject(ThemeManager())
+        return NavigationBarComponent(title:"Title",imageName: nil,
+                                      imageUrl: "https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-black.png",translator: MockDataGenerator.createTranslator(), returnToApp: {})        .environmentObject(ThemeManager())
+        
     }
 }
-*/

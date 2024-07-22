@@ -100,7 +100,7 @@ struct SuccessMessageView: View {
 }
 
 @available(iOS 15.0, *)
-struct SuccessMessageComponent_Previews: PreviewProvider{
+struct SuccessMessageView_Previews: PreviewProvider{
     static var previews: some View{
         return SuccessMessageView(operationSuccess: MockDataGenerator.createOperationSuccess(), translator: MockDataGenerator.createTranslator(), operationInfo: MockDataGenerator.createOperationInfo(amount:"$9.950", merchantName: "NIC CHILE S.A"), returnToApp: {})
         .environmentObject(ThemeManager())
