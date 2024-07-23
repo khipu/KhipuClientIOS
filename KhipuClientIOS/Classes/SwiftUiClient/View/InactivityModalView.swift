@@ -21,7 +21,7 @@ struct InactivityModalView: View {
                 primaryButtonColor: ThemeManager().selectedTheme.colors.primary,
                 icon: Image(systemName: "clock.fill"),
                 iconColor: themeManager.selectedTheme.colors.tertiary,
-                imageSrc: "https://khenshin-web.s3.amazonaws.com/img/ufo.svg",
+                imageSrc: "https://s3.amazonaws.com/static.khipu.com/icon/ufo.png",
                 countDown: 60)
             .padding()
         
