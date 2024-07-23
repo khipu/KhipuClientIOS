@@ -11,7 +11,7 @@ struct HeaderComponent: View {
     @State private var showMerchantDialog = false
     
     var body: some View {
-        if (operationInfo?.merchant) != nil {
+        if (operationInfo?.merchant?.name) != nil {
             VStack(spacing: 0) {
                 headerContent
                 Spacer().frame(height:Dimens.Spacing.extraSmall)
@@ -32,7 +32,7 @@ struct HeaderComponent: View {
                     image: (operationInfo?.urls?.image)!
                 ).environmentObject(themeManager)
                     .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme) 
-
+                
             }
         } else {
             SkeletonHeaderComponent()
@@ -104,43 +104,20 @@ struct HeaderComponent: View {
     }
 }
 
-/*
+
 @available(iOS 15.0.0, *)
 struct HeaderComponent_Previews: PreviewProvider {
     static var previews: some View {
-        let uiState = KhipuUiState(operationInfo: OperationInfo(
-            acceptManualTransfer: true,
-            amount: "$ 1.000",
-            body: "body",
-            email: "khipu@khipu.com",
-            merchant:
-                Merchant(
-                    logo: "",
-                    name: "Merchant"
-                ),
-            operationID: "operationID",
-            subject: "Subject",
-            type: MessageType.operationInfo,
-            urls: nil,
-            welcomeScreen: nil
-        )
-        )
-        let viewModel = KhipuViewModel()
-        viewModel.uiState = uiState
         return VStack{
             Text("Skeleton:")
-            HeaderComponent(
-                viewModel: KhipuViewModel()
-            )
-            .environmentObject(ThemeManager())
-            .padding()
+            HeaderComponent(translator: MockDataGenerator.createTranslator())
+                .environmentObject(ThemeManager())
+                .padding()
             Text("Loaded:")
-            HeaderComponent(
-                viewModel: viewModel
-            )
-            .environmentObject(ThemeManager())
-            .padding()
+            HeaderComponent(operationInfo: MockDataGenerator.createOperationInfo(),translator: MockDataGenerator.createTranslator())
+                .environmentObject(ThemeManager())
+                .padding()
         }
     }
 }
-*/
+

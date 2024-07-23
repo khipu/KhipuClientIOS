@@ -66,54 +66,19 @@ struct KhipuOtpField_Previews: PreviewProvider {
         let returnValue: (String) -> Void = { param in }
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
-        
-        let formItem1 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "Type your DIGIPASS with numbers",
-                       "length": 4,
-                       "type": "\(FormItemTypes.otp.rawValue)",
-                       "hint": "Give me the answer",
-                       "number": false,
-                     }
-                 """
-        )
-        let formItem2 = try! FormItem(
-                 """
-                     {
-                       "id": "item2",
-                       "label": "Type your alphanumeric otp",
-                       "length": 5,
-                       "type": "\(FormItemTypes.otp.rawValue)",
-                       "number" : false
-                     }
-                 """
-        )
-        let formItem3 = try! FormItem(
-                 """
-                     {
-                       "id": "item3",
-                       "label": "Type your alphanumeric otp secure",
-                       "length": 6,
-                       "type": "\(FormItemTypes.otp.rawValue)",
-                       "secure" : true
-                     }
-                 """
-        )
         return VStack {
             OtpField(
-                formItem: formItem1,
+                formItem: MockDataGenerator.createOtpFormItem(id: "item1", label: "Type your DIGIPASS with numbers", length: 4,hint: "Give me the answer", number: true),
                 isValid:  isValid,
                 returnValue: returnValue
             )
             OtpField(
-                formItem: formItem2,
+                formItem: MockDataGenerator.createOtpFormItem(id: "item2", label: "Type your alphanumeric otp", length: 6,hint: "", number: false),
                 isValid:  isValid,
                 returnValue: returnValue
             )
             OtpField(
-                formItem: formItem3,
+                formItem: MockDataGenerator.createOtpFormItem(id: "item3", label: "Type your alphanumeric otp secure", length: 3,secure: true),
                 isValid:  isValid,
                 returnValue: returnValue
             )

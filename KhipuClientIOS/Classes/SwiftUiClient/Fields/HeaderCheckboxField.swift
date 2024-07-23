@@ -105,42 +105,32 @@ struct HeaderCheckboxField_Previews: PreviewProvider {
         let returnValue: (String) -> Void = { param in }
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
-        let formItem1 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "item1",
-                       "title": "HeaderCheckbox with title",
-                       "bottomText": "The bottom text",
-                       "items": ["item 1", "item 2", "item 3"],
-                       "type": "\(FormItemTypes.headerCheckbox.rawValue)",
-                       "defaultState": "off",
-                        "requiredState": "on"
-                     }
-                 """
-        )
-        let formItem2 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "item1",
-                        "title": "HeaderCheckbox selected",
-                        "mandatory": true,
-                       "type": "\(FormItemTypes.headerCheckbox.rawValue)",
-                       "defaultState": "on",
-                     }
-                 """
-        )
+ 
         return VStack {
             HeaderCheckboxField(
-                formItem: formItem1,
+                formItem: MockDataGenerator.createCheckboxFormItem(
+                    id: "item1",
+                    label: "item1",
+                    requiredState: "on",
+                    defaultState: "off",
+                    title: "HeaderCheckbox with title",
+                    bottomText: "The bottom text",
+                    items: ["item 1", "item 2", "item 3"]
+                ),
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
             HeaderCheckboxField(
-                formItem: formItem2,
+                formItem: MockDataGenerator.createCheckboxFormItem(
+                    id: "item1",
+                    label: "item1",
+                    requiredState: "on",
+                    defaultState: "on",
+                    title: "HeaderCheckbox selected",
+                    mandatory: true
+                ),
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,

@@ -139,21 +139,11 @@ class MockTextDocumentProxy: NSObject, UITextDocumentProxy {
 @available(iOS 15.0.0, *)
 struct KhipuRutField_Previews: PreviewProvider {
     static var previews: some View {
-        let formItem1 = try! FormItem(
-             """
-                 {
-                   "id": "Some text",
-                   "label": "Label",
-                   "type": "\(FormItemTypes.text.rawValue)",
-                   "hint": "Enter some text",
-                   "placeHolder": "Ex: my text"
-                 }
-             """
-        )
+
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
         return RutField(
-            formItem: formItem1,
+            formItem: MockDataGenerator.createTextFormItem(label: "Label", hint: "Enter some text", placeHolder: "Ex: my text"),
             hasNextField: false,
             isValid: isValid,
             returnValue: returnValue,

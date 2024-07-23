@@ -313,43 +313,7 @@ struct DrawComponent: View {
 @available(iOS 15.0.0, *)
 public struct FormComponent_Previews: PreviewProvider {
     static public var previews: some View {
-        let formItem1 = try! FormItem(
-         """
-             {
-               "id": "username",
-               "label": "Username",
-               "type": "\(FormItemTypes.text.rawValue)",
-               "hint": "Enter your username",
-               "placeHolder": "Ej: Username"
-             }
-         """
-        )
-        let formItem2 = try! FormItem(
-         """
-             {
-               "id": "password",
-               "label": "Password",
-               "secure": true,
-               "type": "\(FormItemTypes.text.rawValue)",
-               "hint": "Enter your password"
-             }
-         """
-        )
-        let request = FormRequest(
-            alternativeAction: nil,
-            continueLabel: "Continue",
-            errorMessage: "There are some errors",
-            id: "id",
-            info: "This is an info alert",
-            items: [formItem1, formItem2],
-            pageTitle: "Page Title",
-            progress: Progress(current: 1, total: 2),
-            rememberValues: true,
-            termsURL: "",
-            timeout: 300,
-            title: "Login",
-            type: MessageType.formRequest
-        )
+        let request = MockDataGenerator.createFormRequest()
         let viewModel = KhipuViewModel()
         viewModel.uiState = KhipuUiState(currentForm: request)
         viewModel.uiState.translator = MockDataGenerator.createTranslator()
@@ -365,61 +329,15 @@ public struct FormComponent_Previews: PreviewProvider {
 struct RememberValues_Previews: PreviewProvider {
     static var previews: some View {
         
-        let formItem = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "item1",
-            "type": "\(FormItemTypes.dataTable.rawValue)",
-            "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}},
-           }
-         """
-        )
-        return RememberValues(formRequest: FormRequest(
-            alternativeAction: nil,
-            continueLabel: "continue",
-            errorMessage: "error message",
-            id: "id",
-            info: "info",
-            items: [formItem],
-            pageTitle: "Page Title",
-            progress: nil,
-            rememberValues: true,
-            termsURL: "",
-            timeout: 300,
-            title: "Title",
-            type: MessageType.formRequest
-        ), viewModel: KhipuViewModel())
-        .environmentObject(ThemeManager())
-        .padding()
+        return RememberValues(formRequest:MockDataGenerator.createFormRequest(), viewModel: KhipuViewModel())
+            .environmentObject(ThemeManager())
+            .padding()
     }
 }
 
 @available(iOS 15.0, *)
 struct DrawComponent_Previews: PreviewProvider {
     static var previews: some View {
-        let formItem = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "item1",
-            "type": "\(FormItemTypes.dataTable.rawValue)",
-            "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}
-           }
-         """
-        )
-        let formItem1 = try! FormItem(
-         """
-             {
-               "id": "item1",
-               "label": "Type your DIGIPASS with numbers",
-               "length": 4,
-               "type": "\(FormItemTypes.otp.rawValue)",
-               "hint": "Give me the answer",
-               "number": false,
-             }
-         """
-        )
         let submitFunction: () -> Void = {}
         let getFunction: () -> [String: String] = { ["key":"value"]}
         let setFunction: ([String: String]) -> Void = { param in }
@@ -427,7 +345,18 @@ struct DrawComponent_Previews: PreviewProvider {
         return VStack {
             Text("DataTable:").underline().padding()
             DrawComponent(
-                item: formItem,
+                item: MockDataGenerator.createDataTableFormItem(
+                    id: "item1",
+                    label: "item1",
+                    dataTable: DataTable(
+                        rows: [
+                            DataTableRow(cells: [
+                                DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 1", url: nil)
+                            ])
+                        ],
+                        rowSeparator: nil
+                    )
+                ),
                 hasNextField: false,
                 formValues: Binding(get: getFunction, set: setFunction),
                 submitFunction: submitFunction,
@@ -436,7 +365,7 @@ struct DrawComponent_Previews: PreviewProvider {
             .padding()
             Text("OTP:").underline().padding()
             DrawComponent(
-                item: formItem1,
+                item: MockDataGenerator.createOtpFormItem(),
                 hasNextField: false,
                 formValues: Binding(get: getFunction, set: setFunction),
                 submitFunction: submitFunction,
