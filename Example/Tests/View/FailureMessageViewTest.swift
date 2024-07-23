@@ -9,13 +9,11 @@ final class FailureMessageViewTest: XCTestCase {
     
     
     func testFailureMessageComponentRendersCorrectly() throws {
-        let themeManager = ThemeManager()
-        
-        
+
         let view = FailureMessageView(operationFailure: MockDataGenerator.createOperationFailure(), operationInfo: MockDataGenerator.createOperationInfo(), translator: MockDataGenerator.createTranslator(), returnToApp: {})
-            .environmentObject(themeManager)
+            .environmentObject(ThemeManager())
         
         let inspectedView = try view.inspect().view(FailureMessageView.self)
-        XCTAssertNotNil(try? inspectedView.find(text: MockDataGenerator.createTranslator().t("page.operationFailure.header.text.operation.task.finished")), "Failed to find the text: Operation Failed")
+        XCTAssertNotNil(try? inspectedView.find(text: MockDataGenerator.createTranslator().t("page.operationFailure.header.text.operation.task.finished")), "Failed to find the text: page.operationFailure.header.text.operation.task.finished")
     }
 }

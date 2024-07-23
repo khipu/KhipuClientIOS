@@ -7,13 +7,12 @@ import ViewInspector
 final class EndToEndEncryptionTests: XCTestCase {
     
     func testFormInfoView() throws {
-        let themeManager = ThemeManager()
         let view = EndToEndEncryptionView(translator: MockDataGenerator.createTranslator())
-            .environmentObject(themeManager)
+            .environmentObject(ThemeManager())
         
         let inspectedView = try view.inspect()
         
-        XCTAssertNotNil(try? inspectedView.find(text: MockDataGenerator.createTranslator().t("default.end.to.end.encryption")), "Failed to find the text")
+        XCTAssertNotNil(try? inspectedView.find(text: MockDataGenerator.createTranslator().t("default.end.to.end.encryption")), "Failed to find the text: default.end.to.end.encryption")
         
     }
     

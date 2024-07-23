@@ -16,20 +16,9 @@ final class CheckboxFieldTest: XCTestCase {
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
         
-        let formItem = try! FormItem(
-                     """
-                         {
-                           "id": "item1",
-                           "label": "item1",
-                           "type": "\(FormItemTypes.checkbox.rawValue)",
-                           "defaultState": "off",
-                           "requiredState": "on"
-                         }
-                     """
-        )
         
         let view = CheckboxField(
-            formItem: formItem,
+            formItem: MockDataGenerator.createCheckboxFormItem(id: "item1", label: "item1", requiredState: "on", defaultState: "off"),
             hasNextField: false,
             isValid: isValid,
             returnValue: returnValue,

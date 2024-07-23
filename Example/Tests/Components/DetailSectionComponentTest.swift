@@ -7,12 +7,10 @@ import ViewInspector
 @available(iOS 15.0, *)
 final class DetailSectionComponentTest: XCTestCase {
 
-    
         func testDetailSectionRendersCorrectly() throws {
-            let themeManager = ThemeManager()
             let params = DetailSectionParams(amountLabel: "monto", amountValue: "100", merchantNameLabel: "merchant", merchantNameValue: "merchant name", codOperacionLabel: "123456")
                       
-            let view = DetailSectionComponent(operationId: "123456", params: params).environmentObject(themeManager)
+            let view = DetailSectionComponent(operationId: "123456", params: params).environmentObject(ThemeManager())
 
             let inspectedView = try view.inspect().view(DetailSectionComponent.self)
             XCTAssertNotNil(try? inspectedView.find(text: "monto"), "Failed to find the text: monto")
@@ -23,9 +21,8 @@ final class DetailSectionComponentTest: XCTestCase {
         }
 
         func testDetailItemRendersCorrectly() throws {
-            let themeManager = ThemeManager()
             let view = DetailItem(label: "Label", value: "Value")
-                .environmentObject(themeManager)
+                .environmentObject(ThemeManager())
 
             let inspectedView = try view.inspect().view(DetailItem.self)
             XCTAssertNotNil(try? inspectedView.find(text: "Label"), "Failed to find the text: Label")

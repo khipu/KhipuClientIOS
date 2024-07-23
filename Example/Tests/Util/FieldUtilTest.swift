@@ -3,7 +3,7 @@ import KhenshinProtocol
 @testable import KhipuClientIOS
 
 final class FieldUtilsTest: XCTestCase {
-
+    
     func testIsEmpty() throws {
         XCTAssertTrue(FieldUtils.isEmpty(""))
         XCTAssertTrue(FieldUtils.isEmpty(" "))
@@ -22,7 +22,7 @@ final class FieldUtilsTest: XCTestCase {
         XCTAssertFalse(FieldUtils.matches("9999", regex: "([A-Z])\\w+"))
         XCTAssertFalse(FieldUtils.matches("Test", regex: "([0-9])\\w+"))
     }
-
+    
     func testMaxDataTableCells() throws {
         let dataTable1 = try DataTable(
         """
@@ -153,7 +153,7 @@ final class FieldUtilsTest: XCTestCase {
         
         XCTAssertEqual(FieldUtils.getKeyboardType(formItem: defaultForm), UIKeyboardType.default)
     }
-
+    
     func testGetElement() {
         enum Enum: Int, CaseIterable {
             case first = 1
