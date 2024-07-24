@@ -11,7 +11,7 @@ struct MustContinueView: View {
 
     
     var body: some View {
-        VStack(alignment: .center, spacing: Dimens.Spacing.large) {
+        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             FailureMessageHeaderComponent(icon: "info.circle.fill",title:translator.t("page.operationFailure.header.text.operation.task.finished") ,subtitle: (operationMustContinue.title)!,bodyText: operationMustContinue.body)
             InformationSection(translator: translator, operationInfo: operationInfo)
             DetailSectionComponent(
@@ -33,14 +33,9 @@ struct MustContinueView: View {
                 backgroundColor: themeManager.selectedTheme.colors.tertiary
             )
         }
-        .padding(.horizontal, Dimens.Padding.large)
-        .padding(.vertical, Dimens.Padding.quiteLarge)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .overlay(
-          Rectangle()
-            .inset(by: 0.5)
-            .stroke(Color(red: 0.85, green: 0.85, blue: 0.85), lineWidth: 1)
-        )
+        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.vertical,Dimens.Padding.quiteLarge)
+        .frame(maxWidth: .infinity, alignment: .top)
     }
 }
 
