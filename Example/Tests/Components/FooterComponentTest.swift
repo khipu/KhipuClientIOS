@@ -6,15 +6,11 @@ import ViewInspector
 @available(iOS 15.0, *)
 final class FooterComponentTest: XCTestCase {
 
+    
     func testFooterComponentView() throws {
-        let themeManager = ThemeManager()
-        
-        let viewModel = KhipuViewModel()
-        viewModel.uiState.translator = KhipuTranslator(translations: [ "footer.powered.by": "Impulsado por"])
-        viewModel.uiState.showFooter = true
-        let view = FooterComponent(viewModel: viewModel).environmentObject(themeManager)
+        let view = FooterComponent(translator: MockDataGenerator.createTranslator(), showFooter: true).environmentObject(ThemeManager())
         
         let inspectedView = try view.inspect()
-        XCTAssertNotNil(try? inspectedView.find(text: "Impulsado por"), "Failed to find the text: Title")
+        XCTAssertNotNil(try? inspectedView.find(text: MockDataGenerator.createTranslator().t("footer.powered.by")), "Failed to find the text: footer.powered.by")
     }
 }

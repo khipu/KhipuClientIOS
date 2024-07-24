@@ -102,39 +102,16 @@ struct KhipuTextField_Previews: PreviewProvider {
         let returnValue: (String) -> Void = { param in }
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
-        
-        let formItem1 = try! FormItem(
-                 """
-                     {
-                       "id": "Some text",
-                       "label": "item1",
-                       "type": "\(FormItemTypes.text.rawValue)",
-                       "hint": "Enter some text",
-                       "placeHolder": "Ej: my text"
-                     }
-                 """
-        )
-        let formItem2 = try! FormItem(
-                 """
-                     {
-                       "id": "item2",
-                       "label": "Password",
-                       "secure": true,
-                       "type": "\(FormItemTypes.text.rawValue)",
-                       "hint": "Enter your password"
-                     }
-                 """
-        )
         return VStack {
             SimpleTextField(
-                formItem: formItem1,
+                formItem: MockDataGenerator.createTextFormItem(id: "item1", label: "Some text", hint: "Enter some text", placeHolder: "Ej: my text"),
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
             SimpleTextField(
-                formItem: formItem2,
+                formItem: MockDataGenerator.createTextFormItem(id: "item2", label: "Password", hint: "Enter your password", secure: true),
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,

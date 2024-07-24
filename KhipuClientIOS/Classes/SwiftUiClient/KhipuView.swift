@@ -24,61 +24,63 @@ public struct KhipuView: View {
     }
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, imageUrl: options.topBarImageUrl, viewModel: viewModel)
+            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, imageUrl: options.topBarImageUrl, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     if(options.header != nil && options.header?.headerUIView != nil){
                         HeaderRepresentableComponent(viewModel: viewModel, baseView: options.header!.headerUIView!)
                             .frame(maxHeight: CGFloat(integerLiteral: options.header?.height ?? 100))
                     } else {
-                        HeaderComponent(viewModel: viewModel)
+                        HeaderComponent(operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator)
                     }
                 }
             }
             ScrollView(.vertical){
                 switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
-                    ProgressComponent(viewModel: viewModel)
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
                     FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
                 case MessageType.operationFailure.rawValue:
                     if (!options.skipExitPage) {
                         if(viewModel.uiState.operationFailure?.reason == FailureReasonType.bankWithoutAutomaton){
-                            RedirectToManualComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                            RedirectToManualView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, restartPayment: viewModel.restartPayment)
                         }else if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
-                            TimeoutMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
-
+                            TimeoutMessageView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
                         } else {
-                            FailureMessageComponent(operationFailure: viewModel.uiState.operationFailure!,viewModel: viewModel)
+                            FailureMessageView(operationFailure: viewModel.uiState.operationFailure!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
                         }
-                        FooterComponent(viewModel: viewModel)
-
-
+                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.operationWarning.rawValue:
                     if (!options.skipExitPage) {
-                        WarningMessageComponent(operationWarning: viewModel.uiState.operationWarning!,viewModel: viewModel)
-                        FooterComponent(viewModel: viewModel)
+                        WarningMessageView(operationWarning: viewModel.uiState.operationWarning!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.operationSuccess.rawValue:
                     if (!options.skipExitPage){
-                        SuccessMessageComponent(operationSuccess: viewModel.uiState.operationSuccess!,viewModel: viewModel)
-                        FooterComponent(viewModel: viewModel)
+                        SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo, returnToApp: {viewModel.uiState.returnToApp=true})
+                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.progressInfo.rawValue:
-                    ProgressComponent(viewModel: viewModel)
-                    ProgressInfoComponent(message: viewModel.uiState.progressInfoMessage)
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+                    ProgressInfoView(message: viewModel.uiState.progressInfoMessage)
                 case MessageType.authorizationRequest.rawValue:
-                    ProgressComponent(viewModel: viewModel)
-                    AuthorizationRequestView(viewModel: viewModel)
-                    FooterComponent(viewModel: viewModel)
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+
+
+                    if let authorizationRequest = viewModel.uiState.currentAuthorizationRequest {
+
+                        AuthorizationRequestView(authorizationRequest:authorizationRequest, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
+                    }
+                    FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                 case MessageType.operationMustContinue.rawValue:
                     if (!options.skipExitPage) {
-                        MustContinueComponent(viewModel: viewModel, operationMustContinue: viewModel.uiState.operationMustContinue!)
-                        FooterComponent(viewModel: viewModel)
+                        MustContinueView(operationMustContinue: viewModel.uiState.operationMustContinue!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
+                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
 
                 default:
-                    EndToEndEncryption(viewModel: viewModel)
+                    EndToEndEncryptionView(translator: viewModel.uiState.translator)
                 }
                 if(viewModel.uiState.returnToApp) {
                     ExecuteCode {
@@ -109,7 +111,7 @@ public struct KhipuView: View {
                 appName: appName(),
                 appVersion: appVersion(),
                 locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")",
-                skipExitPage: options.skipExitPage, 
+                skipExitPage: options.skipExitPage,
                 showFooter: options.showFooter
             )
             viewModel.connectClient()
@@ -118,9 +120,6 @@ public struct KhipuView: View {
                 .map { String($0) }
         })
         .environmentObject(themeManager)
-
-
-
     }
 
     func buildResult(_ state: KhipuUiState) -> KhipuResult {

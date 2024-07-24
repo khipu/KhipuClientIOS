@@ -78,38 +78,16 @@ struct KhipuSwitchField_Previews: PreviewProvider {
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
         
-        let formItem1 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "Do you accept the terms?",
-                       "type": "\(FormItemTypes.formItemTypesSWITCH.rawValue)",
-                       "hint": "You must accept the terms",
-                       "defaultState": "off"
-                     }
-                 """
-        )
-        let formItem2 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "item1",
-                       "type": "\(FormItemTypes.formItemTypesSWITCH.rawValue)",
-                       "defaultState": "on",
-                       "requiredState": "on"
-                     }
-                 """
-        )
         return VStack {
             SwitchField(
-                formItem: formItem1,
+                formItem: MockDataGenerator.createSwitchFormItem(id: "item1", label: "Do you accept the terms?",defaultState: "off"),
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
             SwitchField(
-                formItem: formItem2,
+                formItem: MockDataGenerator.createSwitchFormItem(id: "item1", label: "Do you accept the terms?",defaultState: "on", requiredState: "on"),
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,

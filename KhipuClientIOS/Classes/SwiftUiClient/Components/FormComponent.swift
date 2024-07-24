@@ -1,10 +1,3 @@
-//
-//  FormComponent.swift
-//  APNGKit
-//
-//  Created by Mauricio Castillo on 08-05-24.
-//
-
 import Foundation
 
 import SwiftUI
@@ -17,7 +10,7 @@ class AlertManager: ObservableObject {
     func displayAlert() {
         showAlert = true
     }
-    
+
     func dismissAlert() {
         showAlert = false
     }
@@ -25,7 +18,7 @@ class AlertManager: ObservableObject {
 
 @available(iOS 15.0.0, *)
 public struct FormComponent: View {
-    
+
     @StateObject private var alertManager = AlertManager()
     @State var countDown: Int = 300
     @State private var submittedForm: Bool = false
@@ -33,7 +26,7 @@ public struct FormComponent: View {
     public var formRequest: FormRequest
     @ObservedObject public var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
-    
+
     public var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 20) {
@@ -53,17 +46,17 @@ public struct FormComponent: View {
                         viewModel: viewModel
                     )
                 }
-                
+
                 FormError(text: formRequest.errorMessage)
-                
+
                 RememberValues(
                     formRequest: formRequest,
                     viewModel: viewModel)
-                
+
                 if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
-                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
+                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, translator: viewModel.uiState.translator)
                 }
-                
+
                 if getShouldShowContinueButton(formRequest: formRequest) {
                     MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                                enabled: validForm(),
@@ -75,8 +68,8 @@ public struct FormComponent: View {
                                backgroundColor: themeManager.selectedTheme.colors.primary
                     )
                 }
-                FooterComponent(viewModel: viewModel)
-                
+                FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
+
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 32)
@@ -87,11 +80,11 @@ public struct FormComponent: View {
                    let total = progress.total {
                     viewModel.setCurrentProgress(currentProgress: Float(1*Float(current)/Float(total)))
                 }
-                
+
                 if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
-                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, viewModel: viewModel)
+                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, translator: viewModel.uiState.translator)
                 }
-                
+
                 if(getShouldShowContinueButton(formRequest: formRequest)) {
                     MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
                                enabled: validForm(),
@@ -103,16 +96,16 @@ public struct FormComponent: View {
                                backgroundColor: themeManager.selectedTheme.colors.primary
                     )
                 }
-                
+
             }
-            
-            InactivityModal(isPresented: $alertManager.showAlert, onDismiss: {}, viewModel: viewModel).environmentObject(themeManager)
+
+            InactivityModalView(isPresented: $alertManager.showAlert, onDismiss: {}, translator: viewModel.uiState.translator).environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
-            
+
         }
     }
-    
-    
+
+
     func startTimer() {
         if formRequest.timeout != nil {
             countDown = formRequest.timeout!
@@ -124,24 +117,24 @@ public struct FormComponent: View {
             }
         }
     }
-    
+
     private func getMainButtonText(formRequest: FormRequest, khipuUiState: KhipuUiState) -> String {
         if !(formRequest.continueLabel?.isEmpty ?? true) {
             return formRequest.continueLabel ?? ""
         }
         return khipuUiState.translator.t("default.continue.label")
     }
-    
+
     private func validForm() -> Bool {
         return viewModel.uiState.validatedFormItems.isEmpty || viewModel.uiState.validatedFormItems.filter { !$0.value }.isEmpty
     }
-    
+
     private func submitForm() -> Void {
         if validForm() {
             submitNovalidate(formRequest: formRequest, viewModel: viewModel)
         }
     }
-    
+
     func submitNovalidate(formRequest: FormRequest, viewModel: KhipuViewModel) -> Void {
         let answers = formRequest.items.map {
             FormItemAnswer(
@@ -167,12 +160,12 @@ public struct FormComponent: View {
             try! CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)
         }
     }
-    
+
     private func getShouldShowContinueButton(formRequest: FormRequest) -> Bool {
         return !(formRequest.items.count == 1 && (formRequest.items.first?.type == FormItemTypes.groupedList || formRequest.items.first?.type == FormItemTypes.list))
     }
-    
-    
+
+
 }
 
 @available(iOS 15.0, *)
@@ -181,7 +174,7 @@ private struct RememberValues: View {
     @ObservedObject var viewModel: KhipuViewModel
     @State private var storedForm: Bool = false
     @AppStorage("storedBankCredentials") private var storedBankForms: String = ""
-    
+
     public var body: some View {
         if formRequest.rememberValues ?? false {
             HStack{
@@ -206,7 +199,7 @@ private struct RememberValues: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            
+
         }
     }
 }
@@ -214,14 +207,14 @@ private struct RememberValues: View {
 
 @available(iOS 15.0, *)
 struct DrawComponent: View {
-    
+
     var item: FormItem
     var hasNextField: Bool
     @Binding var formValues: [String: String]
     var submitFunction: () -> Void
     @ObservedObject var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
-    
+
     public var body: some View {
         let validationFun: (Bool) -> Void = { valid in
             viewModel.uiState.validatedFormItems[item.id] = valid
@@ -320,51 +313,10 @@ struct DrawComponent: View {
 @available(iOS 15.0.0, *)
 public struct FormComponent_Previews: PreviewProvider {
     static public var previews: some View {
-        let formItem1 = try! FormItem(
-         """
-             {
-               "id": "username",
-               "label": "Username",
-               "type": "\(FormItemTypes.text.rawValue)",
-               "hint": "Enter your username",
-               "placeHolder": "Ej: Username"
-             }
-         """
-        )
-        let formItem2 = try! FormItem(
-         """
-             {
-               "id": "password",
-               "label": "Password",
-               "secure": true,
-               "type": "\(FormItemTypes.text.rawValue)",
-               "hint": "Enter your password"
-             }
-         """
-        )
-        let request = FormRequest(
-            alternativeAction: nil,
-            continueLabel: "Continue",
-            errorMessage: "There are some errors",
-            id: "id",
-            info: "This is an info alert",
-            items: [formItem1, formItem2],
-            pageTitle: "Page Title",
-            progress: Progress(current: 1, total: 2),
-            rememberValues: true,
-            termsURL: "",
-            timeout: 300,
-            title: "Login",
-            type: MessageType.formRequest
-        )
+        let request = MockDataGenerator.createFormRequest()
         let viewModel = KhipuViewModel()
         viewModel.uiState = KhipuUiState(currentForm: request)
-        viewModel.uiState.translator = KhipuTranslator(translations: [
-            "page.are.you.there.title": "¿Sigues ahí?",
-            "page.are.you.there.continue.operation": "Continua con tu pago,",
-            "page.are.you.there.session.about.to.end": "¡La sesión está a punto de cerrarse!",
-            "page.are.you.there.continue.button": "Continuar pago",
-        ])
+        viewModel.uiState.translator = MockDataGenerator.createTranslator()
         return FormComponent(
             formRequest: request,
             viewModel: viewModel
@@ -376,70 +328,35 @@ public struct FormComponent_Previews: PreviewProvider {
 @available(iOS 15.0, *)
 struct RememberValues_Previews: PreviewProvider {
     static var previews: some View {
-        
-        let formItem = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "item1",
-            "type": "\(FormItemTypes.dataTable.rawValue)",
-            "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}},
-           }
-         """
-        )
-        return RememberValues(formRequest: FormRequest(
-            alternativeAction: nil,
-            continueLabel: "continue",
-            errorMessage: "error message",
-            id: "id",
-            info: "info",
-            items: [formItem],
-            pageTitle: "Page Title",
-            progress: nil,
-            rememberValues: true,
-            termsURL: "",
-            timeout: 300,
-            title: "Title",
-            type: MessageType.formRequest
-        ), viewModel: KhipuViewModel())
-        .environmentObject(ThemeManager())
-        .padding()
+
+        return RememberValues(formRequest:MockDataGenerator.createFormRequest(), viewModel: KhipuViewModel())
+            .environmentObject(ThemeManager())
+            .padding()
     }
 }
 
 @available(iOS 15.0, *)
 struct DrawComponent_Previews: PreviewProvider {
     static var previews: some View {
-        let formItem = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "item1",
-            "type": "\(FormItemTypes.dataTable.rawValue)",
-            "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}
-           }
-         """
-        )
-        let formItem1 = try! FormItem(
-         """
-             {
-               "id": "item1",
-               "label": "Type your DIGIPASS with numbers",
-               "length": 4,
-               "type": "\(FormItemTypes.otp.rawValue)",
-               "hint": "Give me the answer",
-               "number": false,
-             }
-         """
-        )
         let submitFunction: () -> Void = {}
         let getFunction: () -> [String: String] = { ["key":"value"]}
         let setFunction: ([String: String]) -> Void = { param in }
-        
+
         return VStack {
             Text("DataTable:").underline().padding()
             DrawComponent(
-                item: formItem,
+                item: MockDataGenerator.createDataTableFormItem(
+                    id: "item1",
+                    label: "item1",
+                    dataTable: DataTable(
+                        rows: [
+                            DataTableRow(cells: [
+                                DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 1", url: nil)
+                            ])
+                        ],
+                        rowSeparator: nil
+                    )
+                ),
                 hasNextField: false,
                 formValues: Binding(get: getFunction, set: setFunction),
                 submitFunction: submitFunction,
@@ -448,7 +365,7 @@ struct DrawComponent_Previews: PreviewProvider {
             .padding()
             Text("OTP:").underline().padding()
             DrawComponent(
-                item: formItem1,
+                item: MockDataGenerator.createOtpFormItem(),
                 hasNextField: false,
                 formValues: Binding(get: getFunction, set: setFunction),
                 submitFunction: submitFunction,

@@ -6,11 +6,12 @@ import KhenshinProtocol
 
 @available(iOS 15.0, *)
 final class NavigationBarComponentTest: XCTestCase {
+    
     func testNavigationBarWithImageURLRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
         
-        let view = NavigationBarComponent(imageUrl: "imageUrl", viewModel: viewModel).environmentObject(themeManager)
+        let view = NavigationBarComponent(imageUrl: "imageUrl", translator: MockDataGenerator.createTranslator(), returnToApp: {}).environmentObject(themeManager)
 
         let inspectView = try view.inspect().view(NavigationBarComponent.self)
         
@@ -22,7 +23,7 @@ final class NavigationBarComponentTest: XCTestCase {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
         
-        let view = NavigationBarComponent(imageName: "imageName", viewModel: viewModel).environmentObject(themeManager)
+        let view = NavigationBarComponent(imageName: "imageName", translator: MockDataGenerator.createTranslator(), returnToApp: {}).environmentObject(themeManager)
 
         let inspectView = try view.inspect().view(NavigationBarComponent.self)
         
@@ -34,11 +35,12 @@ final class NavigationBarComponentTest: XCTestCase {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
         
-        let view = NavigationBarComponent(title: "title", viewModel: viewModel).environmentObject(themeManager)
+        let view = NavigationBarComponent(title: "title", translator: MockDataGenerator.createTranslator(), returnToApp: {}).environmentObject(themeManager)
 
         let inspectView = try view.inspect().view(NavigationBarComponent.self)
         
         let text = try inspectView.find(ViewType.Text.self)
         XCTAssertEqual(try text.string(), "title")
     }
+     
 }

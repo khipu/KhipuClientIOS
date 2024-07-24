@@ -9,17 +9,8 @@ import KhenshinProtocol
 final class SeparatorFieldTest: XCTestCase {
     
     func testSeparatorFieldView() throws {
-        let formItem = try! FormItem(
-                     """
-                         {
-                           "id": "item1",
-                           "type": "\(FormItemTypes.separator.rawValue)",
-                           "color": "#00ff00"
-                         }
-                     """
-        )
-        
-        let view = SeparatorField(formItem: formItem)
+
+        let view = SeparatorField(formItem: MockDataGenerator.createSeparatorFormItem())
         
         let inspected = try view.environmentObject(ThemeManager()).inspect()
         

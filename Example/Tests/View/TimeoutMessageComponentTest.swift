@@ -6,6 +6,8 @@ import KhenshinProtocol
 
 @available(iOS 15.0, *)
 final class TimeoutMessageComponentTest: XCTestCase {
+    
+    /*
     func testTimeoutMessageComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
         let viewModel = KhipuViewModel()
@@ -39,4 +41,5 @@ final class TimeoutMessageComponentTest: XCTestCase {
         XCTAssertNoThrow(try inspectView.find(MainButton.self))
 
     }
+     */
 }

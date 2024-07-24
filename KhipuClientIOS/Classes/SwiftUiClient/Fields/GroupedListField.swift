@@ -94,24 +94,26 @@ struct GroupedList_Previews: PreviewProvider {
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
         let submitFunction: () -> Void = {}
-        let formItem1 = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "item1",
-            "placeholder": "placeholder",
-            "type": "\(FormItemTypes.dataTable.rawValue)",
-            "groupedOptions": {
-                "options":[
-                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Demo Bank", "tag": "Persona", "value": "1" },
-                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Alternative Demo Bank", "tag": "Persona", "value": "2" },
-                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Demo Bank Empresa", "tag": "Empresa", "value": "2" }
-            ], "tagsOrder": "Persona,Empresa"}
-           }
-         """
-        )
+
         return GroupedListField(
-            formItem: formItem1,
+            formItem: MockDataGenerator.createDataTableFormItem(
+                id: "item1",
+                label: "item1",
+                placeholder: "placeholder",
+                dataTable: DataTable(
+                    rows: [
+                        DataTableRow(cells: [
+                            DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 1", url: nil)
+                        ])
+                    ],
+                    rowSeparator: nil
+                ),
+                groupedOptions: GroupedOptions(options: [
+                    GroupedOption(image: "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", name: "Demo Bank", tag: "Persona", value: "1"),
+                    GroupedOption(image: "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", name: "Alternative Demo Bank", tag: "Persona", value: "2"),
+                    GroupedOption(image: "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", name: "Demo Bank Empresa", tag: "Empresa", value: "2")
+                ], tagsOrder: "Persona,Empresa")
+            ),
             isValid: isValid,
             returnValue: returnValue,
             submitFunction: submitFunction)

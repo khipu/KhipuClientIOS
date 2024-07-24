@@ -2,14 +2,15 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct FooterComponent: View {
-    @ObservedObject var viewModel: KhipuViewModel
+    var translator: KhipuTranslator
+    var showFooter: Bool
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        if viewModel.uiState.showFooter {
-            HStack(alignment: .center, spacing: 5) {
+        if showFooter{
+            HStack(alignment: .center, spacing: Dimens.Spacing.small) {
                 
-                Text(viewModel.uiState.translator.t("footer.powered.by"))
+                Text(translator.t("footer.powered.by"))
                     .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 12))
                     .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                 
@@ -28,10 +29,12 @@ struct FooterComponent: View {
     }
 }
 
+
 @available(iOS 15.0, *)
 struct FooterComponent_Previews: PreviewProvider {
     static var previews: some View {
-        FooterComponent(viewModel: KhipuViewModel())
+        FooterComponent(translator: MockDataGenerator.createTranslator(), showFooter: true)
             .environmentObject(ThemeManager())
     }
 }
+

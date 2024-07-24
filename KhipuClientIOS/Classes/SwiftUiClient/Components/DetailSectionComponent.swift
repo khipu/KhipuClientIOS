@@ -2,24 +2,28 @@ import SwiftUI
 import KhenshinProtocol
 import SwiftUI
 
+
+struct DetailSectionParams {
+    let amountLabel: String
+    let amountValue: String
+    let merchantNameLabel: String
+    let merchantNameValue: String
+    let codOperacionLabel: String
+}
+
 @available(iOS 15.0.0, *)
 struct DetailSectionComponent: View {
-    var reason: String
     var operationId: String
-    var operationInfo: OperationInfo?
-    @ObservedObject public var viewModel: KhipuViewModel
+    var reason: FailureReasonType?
+    var params: DetailSectionParams
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-
-
-            DetailItem(label: viewModel.uiState.translator.t("default.amount.label"), value: operationInfo?.amount ?? "")
-            
-            DetailItem(label: viewModel.uiState.translator.t("default.merchant.label"), value:operationInfo?.merchant?.name ?? "")
+        VStack(alignment: .leading, spacing: Dimens.Spacing.large) {
+            DetailItem(label: params.amountLabel, value: params.amountValue)
+            DetailItem(label: params.merchantNameLabel, value: params.merchantNameValue)
             DashedLine()
-                        
-            DetailItem(label: viewModel.uiState.translator.t("default.operation.code.short.label"), value: FieldUtils.formatOperationId(operationId: operationId) + reason ,shouldCopyValue: true)
+            DetailItem(label: params.codOperacionLabel, value: [FieldUtils.formatOperationId(operationId: operationId), FieldUtils.getFailureReasonCode(reason: reason)].joined(separator: " "), shouldCopyValue: true)
         }
         .padding(Dimens.Padding.large)
         .frame(maxWidth: .infinity, alignment: .top)
@@ -39,29 +43,34 @@ struct DetailItem: View {
             Text(label)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-            Spacer()
-            if !shouldCopyValue {
-                Text(value)
-                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-                    .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                
-            } else {
-                CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
+                .frame(minWidth: Dimens.Frame.veryHuge, maxWidth: Dimens.Frame.veryHuge, alignment: .topLeading)
+            VStack(alignment: .leading) {
+                if !shouldCopyValue {
+                    Text(value)
+                        .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                        .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                        .frame(maxWidth: .infinity, minHeight: Dimens.Frame.large, maxHeight: Dimens.Frame.large, alignment: .topLeading)
+                } else {
+                    CopyToClipboardOperationId(text: value, textToCopy: FieldUtils.formatOperationId(operationId:value), background:themeManager.selectedTheme.colors.onSecondaryContainer)
+                        .frame(maxWidth: .infinity, minHeight: Dimens.Frame.large, maxHeight: Dimens.Frame.large, alignment: .topLeading)
+                }
             }
+            Spacer()
         }
-        .padding(.vertical,Dimens.Padding.verySmall)
+        .padding(.vertical, Dimens.Padding.verySmall)
     }
 }
 
 @available(iOS 15.0, *)
 struct DetailSection_Previews:PreviewProvider{
     static var previews: some View{
-        return DetailSectionComponent(reason: FieldUtils.getFailureReasonCode(reason: FailureReasonType.formTimeout), operationId: "operationID", viewModel: KhipuViewModel())
+        let detailSectionParams = DetailSectionParams(amountLabel: "Monto", amountValue: "$", merchantNameLabel: "Destinatario", merchantNameValue: "Merchant", codOperacionLabel: "Cod. Operación")
+        
+        return DetailSectionComponent(operationId: "operationID", reason: FailureReasonType.formTimeout, params: detailSectionParams)
             .environmentObject(ThemeManager())
             .padding()
     }
 }
-
 
 @available(iOS 15.0, *)
 struct DetailItem_Previews:PreviewProvider{

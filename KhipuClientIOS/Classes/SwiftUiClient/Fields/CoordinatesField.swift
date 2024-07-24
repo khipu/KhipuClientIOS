@@ -103,50 +103,32 @@ struct CoordinatesField_Previews: PreviewProvider {
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
         
-        let formItem1 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "labels": ["A1", "A1", "A1"],
-                       "type": "\(FormItemTypes.coordinates.rawValue)",
-                       "hint": "Give me the answer",
-                        "number": false,
-                     }
-                 """
-        )
-        let formItem2 = try! FormItem(
-                 """
-                     {
-                       "id": "item2",
-                       "labels": ["Coord1", "Coord2", "Coord2"],
-                       "type": "\(FormItemTypes.coordinates.rawValue)",
-                       "number" : true
-                     }
-                 """
-        )
-        let formItem3 = try! FormItem(
-                 """
-                     {
-                       "id": "item3",
-                       "labels": ["A", "B", "C"],
-                       "type": "\(FormItemTypes.coordinates.rawValue)",
-                        "secure" : true
-                     }
-                 """
-        )
         return VStack {
             CoordinatesField(
-                formItem: formItem1,
+                formItem: MockDataGenerator.createCoordinatesFormItem(
+                    id: "item1",
+                    labels: ["A1", "A2", "A3"],
+                    hint: "Give me the answer",
+                    number: false
+                ),
                 isValid:  isValid,
                 returnValue: returnValue
             )
             CoordinatesField(
-                formItem: formItem2,
+                formItem: MockDataGenerator.createCoordinatesFormItem(
+                    id: "item2",
+                    labels: ["Coord1", "Coord2", "Coord3"],
+                    number: true
+                ),
                 isValid:  isValid,
                 returnValue: returnValue
             )
             CoordinatesField(
-                formItem: formItem3,
+                formItem: MockDataGenerator.createCoordinatesFormItem(
+                    id: "item3",
+                    labels: ["A", "B", "C"],
+                    secure: true
+                ),
                 isValid:  isValid,
                 returnValue: returnValue
             )

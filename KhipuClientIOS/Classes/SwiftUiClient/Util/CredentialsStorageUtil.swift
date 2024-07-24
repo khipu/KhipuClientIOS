@@ -1,9 +1,3 @@
-//
-//  CredentialsStorageUtil.swift
-//  khenshinClientIos
-//
-//  Created by Mauricio Castillo on 06-03-24.
-//
 import Foundation
 public struct Credentials {
     var username: String

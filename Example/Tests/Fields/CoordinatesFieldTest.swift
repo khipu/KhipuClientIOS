@@ -16,20 +16,13 @@ final class CoordinatesFieldTest: XCTestCase {
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
         
-        let formItem = try! FormItem(
-                     """
-                         {
-                           "id": "item1",
-                           "labels": ["Coord 1", "Coord 2", "Coord 3"],
-                           "type": "\(FormItemTypes.coordinates.rawValue)",
-                           "hint": "Give me the answer",
-                            "number": false,
-                         }
-                     """
-        )
-        
         let view = CoordinatesField(
-            formItem: formItem,
+            formItem: MockDataGenerator.createCoordinatesFormItem(
+                id: "item1",
+                labels: ["Coord 1", "Coord 2", "Coord 3"],
+                hint: "Give me the answer",
+                number: false
+            ),
             isValid:  isValid,
             returnValue: returnValue
         )

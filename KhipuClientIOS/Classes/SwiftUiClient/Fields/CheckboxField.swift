@@ -76,38 +76,17 @@ struct CheckboxField_Previews: PreviewProvider {
         let returnValue: (String) -> Void = { param in }
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
-        
-        let formItem1 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "item1",
-                       "type": "\(FormItemTypes.checkbox.rawValue)",
-                       "defaultState": "on"
-                     }
-                 """
-        )
-        let formItem2 = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "item1",
-                       "type": "\(FormItemTypes.checkbox.rawValue)",
-                       "defaultState": "off",
-                       "requiredState": "on"
-                     }
-                 """
-        )
+
         return VStack {
             CheckboxField(
-                formItem: formItem1,
+                formItem: MockDataGenerator.createCheckboxFormItem(defaultState: "on"),
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
             CheckboxField(
-                formItem: formItem2,
+                formItem: MockDataGenerator.createCheckboxFormItem(requiredState: "on",defaultState: "off"),
                 hasNextField: false,
                 isValid:  isValid,
                 returnValue: returnValue,

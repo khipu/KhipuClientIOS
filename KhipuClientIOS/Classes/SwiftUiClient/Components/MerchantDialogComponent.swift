@@ -9,7 +9,6 @@ struct MerchantDialogComponent: View {
     var description: String
     var amount: String
     var image: String?
-    
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
@@ -112,7 +111,7 @@ struct MerchantDialogComponent_Previews: PreviewProvider {
         let onDismissRequest: () -> Void = {}
         return MerchantDialogComponent(
             onDismissRequest: onDismissRequest,
-            translator: KhipuUiState().translator,
+            translator: MockDataGenerator.createTranslator(),
             merchant: "Merchant",
             subject: "Subject",
             description: "Description",

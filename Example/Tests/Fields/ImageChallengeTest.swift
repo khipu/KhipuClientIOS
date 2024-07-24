@@ -19,20 +19,8 @@ final class ImageChallengeFieldTest: XCTestCase {
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
         
-        let formItem = try! FormItem(
-                 """
-                     {
-                       "id": "item1",
-                       "label": "The great Image Challenge",
-                       "placeHolder": "It is a khipu",
-                       "imageData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+P+/HgAFhAJ/wlseKgAAAABJRU5ErkJggg==",
-                       "type": "\(FormItemTypes.imageChallenge.rawValue)",
-                       "hint": "This is mandatory"
-                     }
-                 """
-        )
         var view = ImageChallengeField(
-            formItem: formItem,
+            formItem: MockDataGenerator.createImageChallengeFormItem(label: "label", hint: "hint"),
             hasNextField: false,
             isValid:  isValid,
             returnValue: returnValue,
@@ -42,12 +30,12 @@ final class ImageChallengeFieldTest: XCTestCase {
         let inspected = try view.environmentObject(ThemeManager()).inspect()
         
         let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText").text().string()
-        XCTAssertEqual(label, "The great Image Challenge")
+        XCTAssertEqual(label, "label")
         
         XCTAssertNoThrow(try inspected.vStack().vStack(1).image(0))
         
         let hint = try inspected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
-        XCTAssertEqual(hint, "This is mandatory")
+        XCTAssertEqual(hint, "hint")
         
     }
 }

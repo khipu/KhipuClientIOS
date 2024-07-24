@@ -16,21 +16,8 @@ final class OtpFieldTest: XCTestCase {
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
 
-          let formItem = try! FormItem(
-                     """
-                         {
-                           "id": "item1",
-                           "label": "Please use your OTP",
-                           "length": 4,
-                           "type": "\(FormItemTypes.otp.rawValue)",
-                           "hint": "Give me the answer",
-                            "number": false,
-                         }
-                     """
-            )
-      
         let view = OtpField(
-            formItem: formItem,
+            formItem: MockDataGenerator.createOtpFormItem(id: "id", label: "label", length: 4, hint: "hint", number: false),
             isValid:  isValid,
             returnValue: returnValue
         )
@@ -38,10 +25,10 @@ final class OtpFieldTest: XCTestCase {
         
         let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText")
         let text = try label.text().string()
-        XCTAssertEqual(text, "Please use your OTP")
+        XCTAssertEqual(text, "label")
         
         let hint = try inspected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
-        XCTAssertEqual(hint, "Give me the answer")
+        XCTAssertEqual(hint, "hint")
         
         for index in 0..<4 {
             let coordInput = try inspected.find(viewWithAccessibilityIdentifier: "coordinateInput\(index + 1)")

@@ -46,25 +46,18 @@ struct KhipuListField_Previews: PreviewProvider {
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
         let submitFunction: () -> Void = {}
-        let formItem1 = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "Select an option",
-            "placeholder": "placeholder",
-            "type": "\(FormItemTypes.list.rawValue)",
-            "options":[
-                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option 1", "value": "1" },
-                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option 2", "value": "2" },
-                    {"image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option with datatable", "value": "3", "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}}
-            ]
-            }
-           
-         """
-        )
         
         return ListField(
-            formItem: formItem1,
+            formItem: MockDataGenerator.createListFormItem(
+                id: "item1",
+                label: "Select an option",
+                placeholder: "placeholder",
+                options: [
+                    ["image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option 1", "value": "1"],
+                    ["image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option 2", "value": "2"],
+                    ["image": "https://s3.amazonaws.com/static.khipu.com/logos/bancos/chile/demobank-icon.png", "name": "Option with datatable", "value": "3", "dataTable": ["rows": [["cells": [["text": "Cell 1"]]]], "rowSeparator": [:]]]
+                ]
+            ),
             isValid: isValid,
             returnValue: returnValue,
             submitFunction: submitFunction
@@ -82,25 +75,18 @@ struct KhipuListFieldNoImage_Previews: PreviewProvider {
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
         let submitFunction: () -> Void = {}
-        let formItem1 = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "Select an option",
-            "placeholder": "placeholder",
-            "type": "\(FormItemTypes.list.rawValue)",
-            "options":[
-                    { "name": "Option 1", "value": "1" },
-                    { "name": "Option 2", "value": "2" },
-                    { "name": "Option with datatable", "value": "3", "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}}
-            ]
-            }
-           
-         """
-        )
         
         return ListField(
-            formItem: formItem1,
+            formItem: MockDataGenerator.createListFormItem(
+                id: "item1",
+                label: "Select an option",
+                placeholder: "placeholder",
+                options: [
+                        ["name": "Option 1", "value": "1"],
+                        ["name": "Option 2", "value": "2"],
+                        ["name": "Option with datatable", "value": "3", "dataTable": ["rows": [["cells": [["text": "Cell 1"]]]], "rowSeparator": [:]]]
+                    ]
+            ),
             isValid: isValid,
             returnValue: returnValue,
             submitFunction: submitFunction

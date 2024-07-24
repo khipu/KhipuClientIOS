@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 
 
 
-        sampleTextField.text = "wm8dng7xhpvv"
+        sampleTextField.text = "i7jmbvaeuldr"
         sampleTextField.font = UIFont.systemFont(ofSize: 15)
         sampleTextField.borderStyle = UITextField.BorderStyle.roundedRect
         sampleTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -53,7 +53,6 @@ class ViewController: UIViewController {
 
     lazy private var spacer: UIView = {
         let spacer = UIView()
-        // maximum width constraint
         let spacerWidthConstraint = spacer.heightAnchor.constraint(equalToConstant: .greatestFiniteMagnitude) // or some very high constant
         spacerWidthConstraint.priority = .defaultLow
         spacerWidthConstraint.isActive = true

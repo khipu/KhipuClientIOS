@@ -20,70 +20,70 @@ struct DataTableField_Previews: PreviewProvider {
     static var previews: some View {
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
-        let formItem1 = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "item1",
-            "type": "\(FormItemTypes.dataTable.rawValue)",
-            "dataTable": {"rows":[], "rowSeparator":{}}
-           }
-         """
-        )
-        let formItem2 = try! FormItem(
-         """
-           {
-            "id": "item1",
-            "label": "item1",
-            "type": "\(FormItemTypes.dataTable.rawValue)",
-            "dataTable": {"rows":[{"cells":[{"text":"Cell 1"}]}], "rowSeparator":{}}
-           }
-         """
-        )
-        
-        let formItem3 = try! FormItem(
-        """
-            {
-            "id": "item1",
-            "label": "item1",
-            "type":"\(FormItemTypes.dataTable.rawValue)",
-            "dataTable": {
-                "rows":[
-                    {"cells":[
-                        {"text":"Cell 1"},
-                        {"text":"Cell 2"},
-                        {"text":"Cell 3"}
-                    ]},
-                    {"cells":[
-                        {"text":"Cell 1"},
-                        {"text":"Cell 2"}
-                    ]}
-                ], "rowSeparator":{}}
-            }
-        """
-        )
+
         return VStack {
             Text("DataTable empty:")
             DataTableField(
-                formItem: formItem1,
+                formItem: MockDataGenerator.createDataTableFormItem(
+                    id: "item1",
+                    label: "item1",
+                    dataTable: DataTable(
+                        rows: [
+                            DataTableRow(cells: [
+                            ])
+                        ],
+                        rowSeparator: nil
+                    )
+                ),
                 hasNextField: false,
                 isValid: isValid,
                 returnValue: returnValue
-            )
+            ).environmentObject(ThemeManager())
+
             Text("DataTable one cell:")
             DataTableField(
-                formItem: formItem2,
+                formItem: MockDataGenerator.createDataTableFormItem(
+                    id: "item1",
+                    label: "item1",
+                    dataTable: DataTable(
+                        rows: [
+                            DataTableRow(cells: [
+                                DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 1", url: nil)
+                            ])
+                        ],
+                        rowSeparator: nil
+                    )
+                ),
                 hasNextField: false,
                 isValid: isValid,
                 returnValue: returnValue
-            )
+            ).environmentObject(ThemeManager())
+
             Text("DataTable two rows:")
             DataTableField(
-                formItem: formItem3,
+                formItem: MockDataGenerator.createDataTableFormItem(
+                    id: "item1",
+                    label: "item1",
+                    dataTable: DataTable(
+                        rows: [
+                            DataTableRow(cells: [
+                                DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 1", url: nil),
+                                DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 2", url: nil)
+                            ]),
+                            DataTableRow(cells: [
+                                DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 1", url: nil),
+                                DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 2", url: nil),
+                                DataTableCell(backgroundColor: nil, fontSize: nil, fontWeight: nil, foregroundColor: nil, text: "Cell 3", url: nil)
+                            ])
+                        ],
+                        rowSeparator: RowSeparator(color: "#D9D9D9", height:1)
+                    )
+                ),
                 hasNextField: false,
                 isValid: isValid,
                 returnValue: returnValue
-            )
+            ).environmentObject(ThemeManager())
+
         }
     }
 }
