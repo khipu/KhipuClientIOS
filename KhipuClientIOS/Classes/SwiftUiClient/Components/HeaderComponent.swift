@@ -98,7 +98,7 @@ struct HeaderComponent: View {
     private func formattedCode() -> Text {
         var text = Text("")
         text = text + Text(translator.t("header.code.label", default: "").uppercased()).foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-        text = text + Text(" • \(operationInfo?.operationID ?? "")").foregroundColor(themeManager.selectedTheme.colors.onSurface)
+        text = text + Text(" • \(FieldUtils.formatOperationId(operationId:operationInfo?.operationID ?? ""))").foregroundColor(themeManager.selectedTheme.colors.onSurface)
         
         return text
     }
@@ -114,7 +114,7 @@ struct HeaderComponent_Previews: PreviewProvider {
                 .environmentObject(ThemeManager())
                 .padding()
             Text("Loaded:")
-            HeaderComponent(operationInfo: MockDataGenerator.createOperationInfo(),translator: MockDataGenerator.createTranslator())
+            HeaderComponent(operationInfo: MockDataGenerator.createOperationInfo(operationID: "asdqqwerqwer"),translator: MockDataGenerator.createTranslator())
                 .environmentObject(ThemeManager())
                 .padding()
         }
