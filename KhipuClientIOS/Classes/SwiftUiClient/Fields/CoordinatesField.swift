@@ -10,17 +10,26 @@ struct CoordinateInputField: View {
     var length: Int
     let nextField: () -> Void
     let updateIndex: () -> Void
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         Group {
             if formItem.secure ?? false {
                 SecureField("", text: $coordValue)
+                    .focused($isFocused)
+                
             } else {
                 TextField("", text: $coordValue)
+                    .focused($isFocused)
+                
             }
         }
         .frame(minWidth:Dimens.Frame.quiteLarge, maxWidth:Dimens.Frame.muchLarger)
         .multilineTextAlignment(.center)
+        .overlay(
+            RoundedRectangle(cornerRadius: Dimens.CornerRadius.extraSmall)
+                .stroke(isFocused ? themeManager.selectedTheme.colors.primary : themeManager.selectedTheme.colors.outline, lineWidth: 1)
+        )
         .textFieldStyle(KhipuTextFieldStyle())
         .autocorrectionDisabled(true)
         .textInputAutocapitalization(.never)

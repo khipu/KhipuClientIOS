@@ -13,6 +13,7 @@ struct RutField: View {
     @ObservedObject var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
+    @FocusState private var isFocused: Bool
     
     var body: some View {
         
@@ -21,9 +22,14 @@ struct RutField: View {
             TextField(formItem.placeHolder ?? "", text: $rutValue)
                 .textFieldStyle(KhipuTextFieldStyle())
                 .autocorrectionDisabled(true)
+                .focused($isFocused)
                 .textInputAutocapitalization(.never)
                 .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
                 .multilineTextAlignment(.leading)
+                .overlay(
+                    RoundedRectangle(cornerRadius: Dimens.CornerRadius.extraSmall)
+                        .stroke(isFocused ? themeManager.selectedTheme.colors.primary : themeManager.selectedTheme.colors.outline, lineWidth: 1)
+                )
                 .onChange(of: rutValue) { newValue in
                     onChange(newValue: newValue)
                 }
@@ -33,6 +39,7 @@ struct RutField: View {
                         rutValue = viewModel.uiState.storedUsername
                     }
                 }
+            
             HintLabel(text: formItem.hint)
             
             if shouldDisplayError() {
@@ -139,7 +146,7 @@ class MockTextDocumentProxy: NSObject, UITextDocumentProxy {
 @available(iOS 15.0.0, *)
 struct KhipuRutField_Previews: PreviewProvider {
     static var previews: some View {
-
+        
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
         return RutField(

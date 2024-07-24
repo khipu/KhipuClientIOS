@@ -1,12 +1,10 @@
 import SwiftUI
 import KhenshinProtocol
 
-
-
 @available(iOS 15.0, *)
 struct PasswordButton: View {
     var secure: Bool? = false
-    @Binding var  passwordVisible: Bool
+    @Binding var passwordVisible: Bool
     
     var body: some View {
         Button(action: {
@@ -31,19 +29,21 @@ struct SimpleTextField: View {
     @State var error: String = ""
     @State var currentTime: TimeInterval = Date().timeIntervalSince1970
     @State var lastModificationTime: TimeInterval = 0
+    @FocusState private var isFocused: Bool
     @ObservedObject var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        
-        VStack(alignment: .leading, spacing:0) {
-            FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing:Dimens.Spacing.medium, paddingBottom: Dimens.Spacing.extraSmall)
+        VStack(alignment: .leading, spacing: 0) {
+            FieldLabel(text: formItem.label, font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: Dimens.Spacing.medium, paddingBottom: Dimens.Spacing.extraSmall)
             HStack {
                 Group {
                     if formItem.secure != true || passwordVisible {
                         TextField(formItem.placeHolder ?? "", text: $textFieldValue)
+                            .focused($isFocused)
                     } else {
                         SecureField(formItem.placeHolder ?? "", text: $textFieldValue)
+                            .focused($isFocused)
                     }
                 }
                 .textFieldStyle(KhipuTextFieldStyle())
@@ -53,6 +53,10 @@ struct SimpleTextField: View {
                 .overlay(
                     PasswordButton(secure: formItem.secure, passwordVisible: $passwordVisible),
                     alignment: .trailing
+                )
+                .overlay(
+                    RoundedRectangle(cornerRadius: Dimens.CornerRadius.extraSmall)
+                        .stroke(isFocused ? themeManager.selectedTheme.colors.primary : themeManager.selectedTheme.colors.outline, lineWidth: 1)
                 )
             }
             .onChange(of: textFieldValue) { newValue in
@@ -65,7 +69,7 @@ struct SimpleTextField: View {
                 ErrorLabel(text: error)
             }
         }
-        .padding(.vertical,Dimens.Padding.verySmall)
+        .padding(.vertical, Dimens.Padding.verySmall)
         .onAppear {
             startTimer()
             if viewModel.uiState.currentForm?.rememberValues ?? false {
@@ -91,7 +95,6 @@ struct SimpleTextField: View {
             currentTime = Date().timeIntervalSince1970
         }
     }
-    
 }
 
 @available(iOS 15.0, *)
@@ -106,14 +109,14 @@ struct KhipuTextField_Previews: PreviewProvider {
             SimpleTextField(
                 formItem: MockDataGenerator.createTextFormItem(id: "item1", label: "Some text", hint: "Enter some text", placeHolder: "Ej: my text"),
                 hasNextField: false,
-                isValid:  isValid,
+                isValid: isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
             SimpleTextField(
                 formItem: MockDataGenerator.createTextFormItem(id: "item2", label: "Password", hint: "Enter your password", secure: true),
                 hasNextField: false,
-                isValid:  isValid,
+                isValid: isValid,
                 returnValue: returnValue,
                 viewModel: viewModel
             )
