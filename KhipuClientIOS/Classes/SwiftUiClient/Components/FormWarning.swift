@@ -24,10 +24,12 @@ struct FormWarning: View {
             .padding(.horizontal, 0)
             .padding(.vertical,Dimens.Padding.extraSmall)
         }
-        .padding(.horizontal,Dimens.Padding.large)
+        .padding(.horizontal,Dimens.Padding.extraMedium)
         .padding(.vertical,Dimens.Padding.moderatelySmall)
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .cornerRadius(Dimens.CornerRadius.verySmall)
         .overlay(
-            Rectangle()
+            RoundedRectangle(cornerRadius:Dimens.CornerRadius.verySmall)
                 .inset(by: 0.5)
                 .stroke(themeManager.selectedTheme.colors.warning, lineWidth: 1)
         )

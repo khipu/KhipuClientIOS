@@ -66,7 +66,12 @@ public struct KhipuView: View {
                     ProgressInfoView(message: viewModel.uiState.progressInfoMessage)
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                    AuthorizationRequestView(authorizationRequest: viewModel.uiState.currentAuthorizationRequest!, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
+
+
+                    if let authorizationRequest = viewModel.uiState.currentAuthorizationRequest {
+
+                        AuthorizationRequestView(authorizationRequest:authorizationRequest, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
+                    }
                     FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                 case MessageType.operationMustContinue.rawValue:
                     if (!options.skipExitPage) {
@@ -106,7 +111,7 @@ public struct KhipuView: View {
                 appName: appName(),
                 appVersion: appVersion(),
                 locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")",
-                skipExitPage: options.skipExitPage, 
+                skipExitPage: options.skipExitPage,
                 showFooter: options.showFooter
             )
             viewModel.connectClient()
