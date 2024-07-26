@@ -29,6 +29,11 @@ public struct FormComponent: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 20) {
+                if !viewModel.uiState.connected {
+                    ToastView(message: "Error de conexión")
+                        .transition(.move(edge: .bottom))
+                        .zIndex(1)
+                }
                 FormTitle(text: formRequest.title!)
                 if !viewModel.uiState.bank.isEmpty {
                     FormPill(text: viewModel.uiState.bank)
