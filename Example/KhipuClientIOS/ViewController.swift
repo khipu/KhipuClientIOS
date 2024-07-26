@@ -43,7 +43,10 @@ class ViewController: UIViewController {
             presenter: self,
             operationId: sampleInput.text!,
             options: KhipuOptions.Builder()
-                .topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
+                //.topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
+                .topBarTitle("Demo App")
+                .theme(.light)
+                .colors(KhipuColors.Builder().lightPrimary("#0000ff").build())
                 .build()
         ) { result in
             print("Operation result \(result.asJson())")
