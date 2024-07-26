@@ -33,7 +33,7 @@ struct NavigationBarComponent: View {
             Button {
                 isConfirmingClose = true
             } label: {
-                Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.primary)
+                Image(systemName: "xmark").tint(themeManager.selectedTheme.colors.onTopBarContainer)
             }
             .padding()
             .confirmationDialog(translator.t("modal.abortOperation.title"),

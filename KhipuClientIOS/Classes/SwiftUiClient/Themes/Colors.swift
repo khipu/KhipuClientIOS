@@ -12,7 +12,7 @@ struct Colors {
         if colorScheme == .dark {
             return localColors.darkTopBarContainer ?? Color("topBarContainer", bundle: bundle)
         }
-        return localColors.lightOnBackground ?? Color("topBarContainer", bundle: bundle)
+        return localColors.lightTopBarContainer ?? Color("topBarContainer", bundle: bundle)
     }
     
     //onBackground
@@ -28,7 +28,7 @@ struct Colors {
         if colorScheme == .dark {
             return localColors.darkOnPrimary ?? Color("onPrimary", bundle: bundle)
         }
-        return localColors.lightOnBackground ?? Color("onPrimary", bundle: bundle)
+        return localColors.lightOnPrimary ?? Color("onPrimary", bundle: bundle)
     }
     
     //onTopBarContainer
@@ -36,7 +36,7 @@ struct Colors {
         if colorScheme == .dark {
             return localColors.darkOnTopBarContainer ?? Color("onTopBarContainer", bundle: bundle)
         }
-        return localColors.lightOnBackground ?? Color("onTopBarContainer", bundle: bundle)
+        return localColors.lightOnTopBarContainer ?? Color("onTopBarContainer", bundle: bundle)
     }
     
     //primary
@@ -44,7 +44,7 @@ struct Colors {
         if colorScheme == .dark {
             return localColors.darkPrimary ?? Color("primary", bundle: bundle)
         }
-        return localColors.lightOnBackground ?? Color("primary", bundle: bundle)
+        return localColors.lightPrimary ?? Color("primary", bundle: bundle)
     }
     
     //background
@@ -52,7 +52,7 @@ struct Colors {
         if colorScheme == .dark {
             return localColors.darkBackground ?? Color("background", bundle: bundle)
         }
-        return localColors.lightOnBackground ?? Color("background", bundle: bundle)
+        return localColors.lightBackground ?? Color("background", bundle: bundle)
     }
     
     //disabled
