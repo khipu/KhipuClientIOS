@@ -30,10 +30,11 @@ struct DetailSectionComponent: View {
         VStack(alignment: .leading, spacing: Dimens.Spacing.large) {
             DetailItem(label: params.amountLabel, value: params.amountValue)
             
-            if let merchantNameValue = params.merchantNameValue,
-               let merchantNameLabel = params.merchantNameLabel{
-                DetailItem(label:merchantNameLabel, value: merchantNameValue)
+            if let merchantNameLabel = params.merchantNameLabel, !merchantNameLabel.isEmpty,
+               let merchantNameValue = params.merchantNameValue, !merchantNameValue.isEmpty {
+                DetailItem(label: merchantNameLabel, value: merchantNameValue)
             }
+            
             DashedLine()
             DetailItem(label: params.codOperacionLabel, value: [FieldUtils.formatOperationId(operationId: operationId), FieldUtils.getFailureReasonCode(reason: reason)].joined(separator: " "), shouldCopyValue: true)
         }

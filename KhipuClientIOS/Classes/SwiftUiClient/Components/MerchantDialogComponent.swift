@@ -4,7 +4,7 @@ import SwiftUI
 struct MerchantDialogComponent: View {
     var onDismissRequest: () -> Void
     var translator: KhipuTranslator
-    var merchant: String
+    var merchant: String?
     var subject: String
     var description: String
     var amount: String
@@ -32,10 +32,11 @@ struct MerchantDialogComponent: View {
                             .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 20))
                             .padding(.top, Dimens.Padding.medium)
                         
-                        InfoView(title: translator.t("modal.merchant.info.destinatary.label"), value: merchant)
-                        InfoView(title: translator.t("modal.merchant.info.subject.label"), value: subject)
-                        
-                        
+                        if let merchant = merchant,!merchant.isEmpty {
+                            InfoView(title: translator.t("modal.merchant.info.destinatary.label"), value: merchant)
+                            InfoView(title: translator.t("modal.merchant.info.subject.label"), value: subject)
+                        }
+
                         if let imageUrl = image, let url = URL(string: imageUrl) {
                             VStack(alignment: .leading, spacing: 0) {
                                 AsyncImage(url: url) { phase in
@@ -113,6 +114,24 @@ struct MerchantDialogComponent_Previews: PreviewProvider {
             onDismissRequest: onDismissRequest,
             translator: MockDataGenerator.createTranslator(),
             merchant: "Merchant",
+            subject: "Subject",
+            description: "Description",
+            amount: "$ 1.000",
+            image: ""
+        ).padding()
+            .environmentObject(ThemeManager())
+    }
+}
+
+
+@available(iOS 15.0.0, *)
+struct MerchantDialogComponentCMR_Previews: PreviewProvider {
+    static var previews: some View {
+        let onDismissRequest: () -> Void = {}
+        return MerchantDialogComponent(
+            onDismissRequest: onDismissRequest,
+            translator: MockDataGenerator.createTranslator(),
+            merchant: "",
             subject: "Subject",
             description: "Description",
             amount: "$ 1.000",

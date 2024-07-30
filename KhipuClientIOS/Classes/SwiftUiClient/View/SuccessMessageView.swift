@@ -49,14 +49,14 @@ struct SuccessMessageView: View {
                             .multilineTextAlignment(.center)
                             .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                             .frame(maxWidth: .infinity, alignment: .top)
-                        if let merchant = operationInfo.merchant {
+                        if let merchant = operationInfo.merchant, let merchantName = merchant.name, !merchantName.isEmpty {
                             Text(translator.t("default.merchant.label"))
                                 .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
                                 .frame(maxWidth: .infinity, alignment: .top)
                             
-                            Text(merchant.name ?? "")
+                            Text(merchantName)
                                 .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
                                 .multilineTextAlignment(.center)
                                 .foregroundColor(themeManager.selectedTheme.colors.onSurface)
@@ -107,7 +107,6 @@ struct SuccessMessageViewCMR_Previews: PreviewProvider{
         .environmentObject(ThemeManager())
         .padding()
     }
- 
 }
 
 
