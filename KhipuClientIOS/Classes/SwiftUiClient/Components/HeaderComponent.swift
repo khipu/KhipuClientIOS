@@ -41,14 +41,16 @@ struct HeaderComponent: View {
     
     private var headerContent: some View {
         HStack() {
-            AsyncImage(url: URL(string: operationInfo?.merchant?.logo ?? "")) { image in
-                image
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width:Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
-                    .clipShape(RoundedRectangle(cornerRadius: Dimens.CornerRadius.verySmall))
-            } placeholder: {
-                ProgressView()
+            if let logoURLString = operationInfo?.merchant?.logo, let logoURL = URL(string: logoURLString), UIApplication.shared.canOpenURL(logoURL) {
+                AsyncImage(url: logoURL) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: Dimens.Frame.slightlyLarger, height: Dimens.Frame.slightlyLarger)
+                        .clipShape(RoundedRectangle(cornerRadius: Dimens.CornerRadius.verySmall))
+                } placeholder: {
+                    ProgressView()
+                }
             }
             
             VStack(alignment: .leading, spacing:Dimens.Spacing.verySmall) {
