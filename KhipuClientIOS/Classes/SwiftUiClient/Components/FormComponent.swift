@@ -1,5 +1,4 @@
 import Foundation
-
 import SwiftUI
 import KhenshinProtocol
 import LocalAuthentication
@@ -69,7 +68,6 @@ public struct FormComponent: View {
                     )
                 }
                 FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
-
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 32)
@@ -80,31 +78,12 @@ public struct FormComponent: View {
                    let total = progress.total {
                     viewModel.setCurrentProgress(currentProgress: Float(1*Float(current)/Float(total)))
                 }
-
-                if(formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true) {
-                    TermsAndConditionsComponent(termsURL: formRequest.termsURL!, translator: viewModel.uiState.translator)
-                }
-
-                if(getShouldShowContinueButton(formRequest: formRequest)) {
-                    MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
-                               enabled: validForm(),
-                               onClick: {
-                        submittedForm = true
-                        submitForm()
-                    },
-                               foregroundColor: themeManager.selectedTheme.colors.onPrimary,
-                               backgroundColor: themeManager.selectedTheme.colors.primary
-                    )
-                }
-
             }
 
             InactivityModalView(isPresented: $alertManager.showAlert, onDismiss: {}, translator: viewModel.uiState.translator).environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
-
         }
     }
-
 
     func startTimer() {
         if formRequest.timeout != nil {
@@ -164,8 +143,6 @@ public struct FormComponent: View {
     private func getShouldShowContinueButton(formRequest: FormRequest) -> Bool {
         return !(formRequest.items.count == 1 && (formRequest.items.first?.type == FormItemTypes.groupedList || formRequest.items.first?.type == FormItemTypes.list))
     }
-
-
 }
 
 @available(iOS 15.0, *)
@@ -199,11 +176,9 @@ private struct RememberValues: View {
                 Spacer()
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-
         }
     }
 }
-
 
 @available(iOS 15.0, *)
 struct DrawComponent: View {
