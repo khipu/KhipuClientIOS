@@ -114,7 +114,7 @@ struct HeaderComponent_Previews: PreviewProvider {
                 .environmentObject(ThemeManager())
                 .padding()
             Text("Loaded:")
-            HeaderComponent(operationInfo: MockDataGenerator.createOperationInfo(operationID: "asdqqwerqwer"),translator: MockDataGenerator.createTranslator())
+            HeaderComponent(operationInfo: MockDataGenerator.createOperationInfo(merchantLogo: "logo",merchantName: "Merchant",operationID: "asdqqwerqwer"),translator: MockDataGenerator.createTranslator())
                 .environmentObject(ThemeManager())
                 .padding()
         }

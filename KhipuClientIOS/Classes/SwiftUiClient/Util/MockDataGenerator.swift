@@ -8,11 +8,12 @@ class MockDataGenerator {
         amount: String = "$",
         body: String = "Transaction Body",
         email: String = "example@example.com",
-        merchantLogo: String = "merchant_logo",
-        merchantName: String = "[nombre]",
+        merchantLogo: String? = nil,
+        merchantName: String? = nil,
         operationID: String = "12345",
         subject: String = "Transaction Subject",
         type: MessageType = .operationInfo,
+        merchant: Merchant? = nil,
         urls: Urls = Urls(
             attachment: ["https://example.com/attachment"],
             cancel: "https://example.com/cancel",
@@ -25,12 +26,19 @@ class MockDataGenerator {
         ),
         welcomeScreen: WelcomeScreen = WelcomeScreen(enabled: true, ttl: 3600)
     ) -> OperationInfo {
+        let merchant: Merchant? = {
+            if let logo = merchantLogo, let name = merchantName, !logo.isEmpty, !name.isEmpty {
+                return Merchant(logo: logo, name: name)
+            }
+            return nil
+        }()
+
         return OperationInfo(
             acceptManualTransfer: acceptManualTransfer,
             amount: amount,
             body: body,
             email: email,
-            merchant: Merchant(logo: merchantLogo, name: merchantName),
+            merchant: merchant,
             operationID: operationID,
             subject: subject,
             type: type,

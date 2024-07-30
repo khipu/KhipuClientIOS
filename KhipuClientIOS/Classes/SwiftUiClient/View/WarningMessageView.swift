@@ -22,9 +22,9 @@ struct WarningMessageView: View {
                     params: DetailSectionParams(
                         amountLabel: translator.t("default.amount.label"),
                         amountValue: operationInfo.amount!,
+                        codOperacionLabel: translator.t("default.operation.code.short.label"),
                         merchantNameLabel: translator.t("default.merchant.label"),
-                        merchantNameValue: (operationInfo.merchant?.name!)!,
-                        codOperacionLabel: translator.t("default.operation.code.short.label")
+                        merchantNameValue: operationInfo.merchant?.name ?? nil
                     )
                 )
                 MainButton(
@@ -44,6 +44,16 @@ struct WarningMessageView: View {
 
 @available(iOS 15.0, *)
 struct WarningMessageView_Previews: PreviewProvider{
+    static var previews: some View{
+                
+        return WarningMessageView(operationWarning: MockDataGenerator.createOperationWarning(), operationInfo: MockDataGenerator.createOperationInfo(merchantLogo: "logo",merchantName: "Demo Merchant"), translator: MockDataGenerator.createTranslator(), returnToApp: {})
+            .environmentObject(ThemeManager())
+            .padding()
+    }
+}
+
+@available(iOS 15.0, *)
+struct WarningMessageViewCMR_Previews: PreviewProvider{
     static var previews: some View{
                 
         return WarningMessageView(operationWarning: MockDataGenerator.createOperationWarning(), operationInfo: MockDataGenerator.createOperationInfo(), translator: MockDataGenerator.createTranslator(), returnToApp: {})

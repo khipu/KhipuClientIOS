@@ -49,18 +49,19 @@ struct SuccessMessageView: View {
                             .multilineTextAlignment(.center)
                             .foregroundColor(themeManager.selectedTheme.colors.onSurface)
                             .frame(maxWidth: .infinity, alignment: .top)
-                        
-                        Text(translator.t("default.merchant.label"))
-                            .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-                            .frame(maxWidth: .infinity, alignment: .top)
-                        
-                        Text(operationInfo.merchant?.name ?? "")
-                            .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
-                            .multilineTextAlignment(.center)
-                            .foregroundColor(themeManager.selectedTheme.colors.onSurface)
-                            .frame(maxWidth: .infinity, alignment: .top)
+                        if let merchant = operationInfo.merchant {
+                            Text(translator.t("default.merchant.label"))
+                                .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                                .frame(maxWidth: .infinity, alignment: .top)
+                            
+                            Text(merchant.name ?? "")
+                                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 14))
+                                .multilineTextAlignment(.center)
+                                .foregroundColor(themeManager.selectedTheme.colors.onSurface)
+                                .frame(maxWidth: .infinity, alignment: .top)
+                        }
                         
                     }
                     .padding(.horizontal, 0)
@@ -100,9 +101,20 @@ struct SuccessMessageView: View {
 }
 
 @available(iOS 15.0, *)
+struct SuccessMessageViewCMR_Previews: PreviewProvider{
+    static var previews: some View{
+        return SuccessMessageView(operationSuccess: MockDataGenerator.createOperationSuccess(), translator: MockDataGenerator.createTranslator(), operationInfo: MockDataGenerator.createOperationInfo(amount:"$9.950", merchant: nil), returnToApp: {})
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+ 
+}
+
+
+@available(iOS 15.0, *)
 struct SuccessMessageView_Previews: PreviewProvider{
     static var previews: some View{
-        return SuccessMessageView(operationSuccess: MockDataGenerator.createOperationSuccess(), translator: MockDataGenerator.createTranslator(), operationInfo: MockDataGenerator.createOperationInfo(amount:"$9.950", merchantName: "NIC CHILE S.A"), returnToApp: {})
+        return SuccessMessageView(operationSuccess: MockDataGenerator.createOperationSuccess(), translator: MockDataGenerator.createTranslator(), operationInfo: MockDataGenerator.createOperationInfo(amount:"$9.950", merchantLogo: "logo",merchantName: "Demo Merchant"), returnToApp: {})
         .environmentObject(ThemeManager())
         .padding()
     }

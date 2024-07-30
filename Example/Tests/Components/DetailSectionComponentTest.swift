@@ -8,7 +8,7 @@ import ViewInspector
 final class DetailSectionComponentTest: XCTestCase {
 
         func testDetailSectionRendersCorrectly() throws {
-            let params = DetailSectionParams(amountLabel: "monto", amountValue: "100", merchantNameLabel: "merchant", merchantNameValue: "merchant name", codOperacionLabel: "123456")
+            let params = DetailSectionParams(amountLabel: "monto", amountValue: "100",codOperacionLabel: "123456", merchantNameLabel: "merchant", merchantNameValue: "merchant name")
                       
             let view = DetailSectionComponent(operationId: "123456", params: params).environmentObject(ThemeManager())
 
@@ -29,5 +29,19 @@ final class DetailSectionComponentTest: XCTestCase {
             XCTAssertNotNil(try? inspectedView.find(text: "Value"), "Failed to find the text: Value")
 
         }
+    
+    func testDetailSectionCMRRendersCorrectly() throws {
+        let params = DetailSectionParams(amountLabel: "monto", amountValue: "100",codOperacionLabel: "123456")
+                  
+        let view = DetailSectionComponent(operationId: "123456", params: params).environmentObject(ThemeManager())
+
+        let inspectedView = try view.inspect().view(DetailSectionComponent.self)
+        XCTAssertNotNil(try? inspectedView.find(text: "monto"), "Failed to find the text: monto")
+        XCTAssertNotNil(try? inspectedView.find(text: "100"), "Failed to find the text: 100")
+        XCTAssertNotNil(try? inspectedView.find(text: "123456"), "Failed to find the text: 123456")
+    }
+
+
+    
  
 }
