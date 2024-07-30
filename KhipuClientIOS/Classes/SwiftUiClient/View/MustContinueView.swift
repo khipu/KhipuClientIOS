@@ -20,9 +20,9 @@ struct MustContinueView: View {
                                 params: DetailSectionParams(
                                     amountLabel: translator.t("default.amount.label"),
                                     amountValue: operationInfo.amount!,
+                                    codOperacionLabel: translator.t("default.operation.code.short.label"),
                                     merchantNameLabel: translator.t("default.merchant.label"),
-                                    merchantNameValue: (operationInfo.merchant?.name!)!,
-                                    codOperacionLabel: translator.t("default.operation.code.short.label")
+                                    merchantNameValue: operationInfo.merchant?.name ?? nil
                                 )
                             )
             MainButton(
@@ -76,11 +76,23 @@ struct InformationSection: View {
 
 
 @available(iOS 15.0, *)
-struct MustContinueView_Previews:PreviewProvider{
+struct MustContinueViewCMR_Previews:PreviewProvider{
     static var previews: some View{
         return MustContinueView(operationMustContinue: MockDataGenerator.createOperationMustContinue(),
                                 translator: MockDataGenerator.createTranslator(),
                                 operationInfo: MockDataGenerator.createOperationInfo(),
+                                returnToApp: {  }).environmentObject(ThemeManager())
+            .previewLayout(.sizeThatFits)
+        
+    }
+}
+
+@available(iOS 15.0, *)
+struct MustContinueView_Previews:PreviewProvider{
+    static var previews: some View{
+        return MustContinueView(operationMustContinue: MockDataGenerator.createOperationMustContinue(),
+                                translator: MockDataGenerator.createTranslator(),
+                                operationInfo: MockDataGenerator.createOperationInfo(merchantLogo: "logo",merchantName: "Demo Merchant"),
                                 returnToApp: {  }).environmentObject(ThemeManager())
             .previewLayout(.sizeThatFits)
         

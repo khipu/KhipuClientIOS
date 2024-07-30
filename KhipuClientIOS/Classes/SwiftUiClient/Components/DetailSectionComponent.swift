@@ -6,9 +6,17 @@ import SwiftUI
 struct DetailSectionParams {
     let amountLabel: String
     let amountValue: String
-    let merchantNameLabel: String
-    let merchantNameValue: String
     let codOperacionLabel: String
+    let merchantNameLabel: String?
+    let merchantNameValue: String?
+    
+    init(amountLabel: String, amountValue: String, codOperacionLabel: String, merchantNameLabel: String? = nil, merchantNameValue: String? = nil) {
+        self.amountLabel = amountLabel
+        self.amountValue = amountValue
+        self.codOperacionLabel = codOperacionLabel
+        self.merchantNameLabel = merchantNameLabel
+        self.merchantNameValue = merchantNameValue
+    }
 }
 
 @available(iOS 15.0.0, *)
@@ -21,7 +29,12 @@ struct DetailSectionComponent: View {
     var body: some View {
         VStack(alignment: .leading, spacing: Dimens.Spacing.large) {
             DetailItem(label: params.amountLabel, value: params.amountValue)
-            DetailItem(label: params.merchantNameLabel, value: params.merchantNameValue)
+            
+            if let merchantNameLabel = params.merchantNameLabel, !merchantNameLabel.isEmpty,
+               let merchantNameValue = params.merchantNameValue, !merchantNameValue.isEmpty {
+                DetailItem(label: merchantNameLabel, value: merchantNameValue)
+            }
+            
             DashedLine()
             DetailItem(label: params.codOperacionLabel, value: [FieldUtils.formatOperationId(operationId: operationId), FieldUtils.getFailureReasonCode(reason: reason)].joined(separator: " "), shouldCopyValue: true)
         }
@@ -62,9 +75,30 @@ struct DetailItem: View {
 }
 
 @available(iOS 15.0, *)
-struct DetailSection_Previews:PreviewProvider{
-    static var previews: some View{
-        let detailSectionParams = DetailSectionParams(amountLabel: "Monto", amountValue: "$", merchantNameLabel: "Destinatario", merchantNameValue: "Merchant", codOperacionLabel: "Cod. Operación")
+struct DetailSection_Previews: PreviewProvider {
+    static var previews: some View {
+        let detailSectionParams = DetailSectionParams(
+            amountLabel: "Monto",
+            amountValue: "$",
+            codOperacionLabel: "Cod. Operación",
+            merchantNameLabel: "Destinatario",
+            merchantNameValue: "Merchant"
+        )
+        
+        return DetailSectionComponent(operationId: "operationID", reason: FailureReasonType.formTimeout, params: detailSectionParams)
+            .environmentObject(ThemeManager())
+            .padding()
+    }
+}
+
+@available(iOS 15.0, *)
+struct DetailSectionCMR_Previews: PreviewProvider {
+    static var previews: some View {
+        let detailSectionParams = DetailSectionParams(
+            amountLabel: "Monto",
+            amountValue: "$",
+            codOperacionLabel: "Cod. Operación"
+        )
         
         return DetailSectionComponent(operationId: "operationID", reason: FailureReasonType.formTimeout, params: detailSectionParams)
             .environmentObject(ThemeManager())

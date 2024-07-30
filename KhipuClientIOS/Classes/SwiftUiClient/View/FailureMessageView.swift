@@ -19,9 +19,9 @@ struct FailureMessageView: View {
                                 params: DetailSectionParams(
                                     amountLabel: translator.t("default.amount.label"),
                                     amountValue: operationInfo.amount!,
+                                    codOperacionLabel: translator.t("default.operation.code.short.label"),
                                     merchantNameLabel: translator.t("default.merchant.label"),
-                                    merchantNameValue: (operationInfo.merchant?.name!)!,
-                                    codOperacionLabel: translator.t("default.operation.code.short.label")
+                                    merchantNameValue: operationInfo.merchant?.name ?? nil
                                 )
                             )
             
@@ -43,9 +43,19 @@ struct FailureMessageView: View {
 
 
 @available(iOS 15.0, *)
-struct FailureMessageView_Previews: PreviewProvider {
+struct FailureMessageViewCMR_Previews: PreviewProvider {
     static var previews: some View {
         FailureMessageView(operationFailure: MockDataGenerator.createOperationFailure(title: "No se pudo completar la transferencia"), operationInfo: MockDataGenerator.createOperationInfo(), translator: MockDataGenerator.createTranslator(), returnToApp: {})
+        .environmentObject(ThemeManager())
+        .padding()
+    }
+}
+
+
+@available(iOS 15.0, *)
+struct FailureMessageView_Previews: PreviewProvider {
+    static var previews: some View {
+        FailureMessageView(operationFailure: MockDataGenerator.createOperationFailure(title: "No se pudo completar la transferencia"), operationInfo: MockDataGenerator.createOperationInfo(merchantLogo: "logo",merchantName: "Merchant"), translator: MockDataGenerator.createTranslator(), returnToApp: {})
         .environmentObject(ThemeManager())
         .padding()
     }
