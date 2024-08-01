@@ -29,11 +29,7 @@ public struct FormComponent: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 20) {
-                if !viewModel.uiState.connected {
-                    ToastView(message: "Error de conexión")
-                        .transition(.move(edge: .bottom))
-                        .zIndex(1)
-                }
+               
                 FormTitle(text: formRequest.title!)
                 if !viewModel.uiState.bank.isEmpty {
                     FormPill(text: viewModel.uiState.bank)
@@ -51,6 +47,7 @@ public struct FormComponent: View {
                     )
                 }
 
+
                 FormError(text: formRequest.errorMessage)
 
                 RememberValues(
@@ -60,6 +57,8 @@ public struct FormComponent: View {
                 if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
                     TermsAndConditionsComponent(termsURL: formRequest.termsURL!, translator: viewModel.uiState.translator)
                 }
+                
+               
 
                 if getShouldShowContinueButton(formRequest: formRequest) {
                     MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
@@ -73,6 +72,7 @@ public struct FormComponent: View {
                     )
                 }
                 FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
+                
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 32)
@@ -87,6 +87,12 @@ public struct FormComponent: View {
 
             InactivityModalView(isPresented: $alertManager.showAlert, onDismiss: {}, translator: viewModel.uiState.translator).environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
+            
+            if !viewModel.uiState.connected {
+                ToastComponent(text: viewModel.uiState.translator.t("default.socket.disconnected"))
+                     .position(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height - 200)
+                     .zIndex(1)
+             }
         }
     }
 
