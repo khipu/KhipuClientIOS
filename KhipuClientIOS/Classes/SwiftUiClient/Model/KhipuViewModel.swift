@@ -1,10 +1,23 @@
 import Foundation
 import KhenshinProtocol
+import Combine
 
 @available(iOS 13.0, *)
 public class KhipuViewModel: ObservableObject {
     var khipuSocketIOClient: KhipuSocketIOClient? = nil
     @Published var uiState = KhipuUiState()
+    private var networkMonitor: NetworkMonitor
+     private var cancellables = Set<AnyCancellable>()
+
+     init() {
+         self.networkMonitor = NetworkMonitor()
+         self.networkMonitor.$isConnected
+             .receive(on: DispatchQueue.main)
+             .sink { [weak self] isConnected in
+                 self?.uiState.connected = isConnected
+             }
+             .store(in: &cancellables)
+     }
 
     func setKhipuSocketIOClient(serverUrl: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter:Bool) {
         if(khipuSocketIOClient == nil) {
