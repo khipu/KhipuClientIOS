@@ -12,7 +12,7 @@ struct ListField: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        VStack(alignment: .leading, spacing:Dimens.Spacing.small) {
+        VStack(alignment: .leading, spacing:Dimens.Spacing.medium) {
             var a = 0
             ForEach(formItem.options ?? [], id: \.value) { option in
                 a = a + 1

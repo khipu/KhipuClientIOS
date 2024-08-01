@@ -84,15 +84,8 @@ public struct FormComponent: View {
                     viewModel.setCurrentProgress(currentProgress: Float(1*Float(current)/Float(total)))
                 }
             }
-
             InactivityModalView(isPresented: $alertManager.showAlert, onDismiss: {}, translator: viewModel.uiState.translator).environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
-            
-            if !viewModel.uiState.connected {
-                ToastComponent(text: viewModel.uiState.translator.t("default.socket.disconnected"))
-                     .position(x: UIScreen.main.bounds.width / 2, y: UIScreen.main.bounds.height - 200)
-                     .zIndex(1)
-             }
         }
     }
 

@@ -31,5 +31,6 @@ struct KhipuUiState {
     var storedPassword: String = ""
     var storedBankForms: [String] = []
     var showFooter: Bool = true
-    var connected: Bool = false
+    var connected: Bool = true
+    var operationFinished: Bool = false
 }

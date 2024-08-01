@@ -11,6 +11,7 @@ public class KhipuViewModel: ObservableObject {
             khipuSocketIOClient = KhipuSocketIOClient(serverUrl: serverUrl, browserId: browserId, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, skipExitPage: skipExitPage, showFooter: showFooter,viewModel: self)
         }
     }
+    
 
     func restartPayment(){
         uiState.bank = ""

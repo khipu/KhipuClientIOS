@@ -98,7 +98,19 @@ public struct KhipuView: View {
             maxWidth: .infinity,
             maxHeight: .infinity,
             alignment: .topLeading
+        ).overlay(
+            VStack {
+                Spacer()
+                if !viewModel.uiState.connected && !viewModel.uiState.operationFinished {
+                    ToastComponent(text: viewModel.uiState.translator.t("default.socket.disconnected"))
+                        .padding()
+                        .transition(.move(edge: .bottom))
+                        .zIndex(1)
+                }
+            }
         )
+        .animation(.default, value: viewModel.uiState.connected)
+        .environmentObject(themeManager)
         .onAppear(perform: {
             if(browserId == nil) {
                 browserId = UUID().uuidString

@@ -19,6 +19,8 @@ public class KhipuSocketIOClient {
     private let browserId: String
     private let url: String
     private var connectionCheckerTimer: Timer?
+    private var shouldCheckConnection = false
+
 
 
     public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, viewModel: KhipuViewModel) {
@@ -58,16 +60,21 @@ public class KhipuSocketIOClient {
     }
 
     private func startConnectionChecker() {
-            connectionCheckerTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
-                guard let self = self else { return }
-                if let socketManager = self.socketManager {
-                    self.viewModel.uiState.connected = socketManager.status == .connected
-                } else {
-                    self.viewModel.uiState.connected = false
+        let initialDelay: TimeInterval = 10.0
+        connectionCheckerTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { [weak self] timer in
+            guard let self = self else { return }
+            DispatchQueue.main.async {
+                if self.shouldCheckConnection {
+                    self.viewModel.uiState.connected = self.socketManager?.status == .connected
+                    self.viewModel.notifyViewUpdate()
                 }
             }
         }
-
+        DispatchQueue.main.asyncAfter(deadline: .now() + initialDelay) {
+            self.shouldCheckConnection = true
+        }
+    }
+    
     private func addParametersUiState(){
         self.viewModel.uiState.showFooter=self.showFooter
     }
@@ -75,13 +82,11 @@ public class KhipuSocketIOClient {
     private func addListeners() {
         self.socket?.on(clientEvent: .connect) { data, ack in
             print("[id: \(self.viewModel.uiState.operationId)] connected")
-            self.viewModel.uiState.connected=true
         }
 
         self.socket?.on(clientEvent: .disconnect) { data, ack in
             let reason = data.first as! String
             print("[id: \(self.viewModel.uiState.operationId)] disconnected, reason \(reason)")
-            self.viewModel.uiState.connected=false
         }
 
         self.socket?.on(clientEvent: .reconnect) { data, ack in
@@ -196,6 +201,7 @@ public class KhipuSocketIOClient {
 
                 if(self.viewModel.uiState.operationFailure?.reason != FailureReasonType.bankWithoutAutomaton){
                     self.viewModel.disconnectClient()
+                    self.viewModel.uiState.operationFinished=true
                 }
 
                 if(self.skipExitPage) {
@@ -243,6 +249,7 @@ public class KhipuSocketIOClient {
                 let operationSuccess = try OperationSuccess(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.operationSuccess.rawValue
                 self.viewModel.uiState.operationSuccess = operationSuccess
+                self.viewModel.uiState.operationFinished=true
                 self.viewModel.disconnectClient()
                 if(self.skipExitPage) {
                     self.viewModel.uiState.returnToApp = true
@@ -264,6 +271,7 @@ public class KhipuSocketIOClient {
                 let operationWarning = try OperationWarning(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.operationWarning.rawValue
                 self.viewModel.uiState.operationWarning = operationWarning
+                self.viewModel.uiState.operationFinished=true
                 self.viewModel.disconnectClient()
                 if(self.skipExitPage) {
                     self.viewModel.uiState.returnToApp = true
@@ -285,6 +293,7 @@ public class KhipuSocketIOClient {
                 let operationMustContinue = try OperationMustContinue(decryptedMessage!)
                 self.viewModel.uiState.currentMessageType = MessageType.operationMustContinue.rawValue
                 self.viewModel.uiState.operationMustContinue = operationMustContinue
+                self.viewModel.uiState.operationFinished=true
                 self.viewModel.disconnectClient()
                 if(self.skipExitPage) {
                     self.viewModel.uiState.returnToApp = true
