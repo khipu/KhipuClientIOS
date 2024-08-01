@@ -18,7 +18,6 @@ public class KhipuSocketIOClient {
     private let locale: String
     private let browserId: String
     private let url: String
-    private var connectionCheckerTimer: Timer?
 
     public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
@@ -427,13 +426,8 @@ public class KhipuSocketIOClient {
 
     public func sendMessage(type: String, message: String) {
         print("SENDING MESSAGE \(type)")
-        guard let socketManager = socketManager, socketManager.status == .connected else {
-            print("Cannot send message, socket is not connected")
-            return
-        }
         let encryptedMessage = self.secureMessage.encrypt(plainText: message, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
         socket?.emit(type, encryptedMessage!)
-        print("SENDING MESSAGE \(String(describing: self.viewModel.khipuSocketIOClient?.socketManager?.status))")
     }
 
 
