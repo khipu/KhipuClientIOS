@@ -14,7 +14,7 @@ public class KhipuViewModel: ObservableObject {
          self.networkMonitor.$isConnected
              .receive(on: DispatchQueue.main)
              .sink { [weak self] isConnected in
-                 self?.uiState.connected = isConnected
+                 self?.uiState.connectedNetwork = isConnected
              }
              .store(in: &cancellables)
      }

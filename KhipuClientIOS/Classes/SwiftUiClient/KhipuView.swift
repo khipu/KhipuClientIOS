@@ -12,7 +12,7 @@ public struct KhipuView: View {
     let options: KhipuOptions
     let completitionHandler: ((KhipuResult) -> Void)?
     let hostingControllerContainer: HostingControllerContainer
-
+    
     init(operationId: String,
          options: KhipuOptions,
          onComplete: ((KhipuResult) -> Void)?,
@@ -66,10 +66,10 @@ public struct KhipuView: View {
                     ProgressInfoView(message: viewModel.uiState.progressInfoMessage)
                 case MessageType.authorizationRequest.rawValue:
                     ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-
-
+                    
+                    
                     if let authorizationRequest = viewModel.uiState.currentAuthorizationRequest {
-
+                        
                         AuthorizationRequestView(authorizationRequest:authorizationRequest, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
                     }
                     FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
@@ -78,7 +78,7 @@ public struct KhipuView: View {
                         MustContinueView(operationMustContinue: viewModel.uiState.operationMustContinue!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
-
+                    
                 default:
                     EndToEndEncryptionView(translator: viewModel.uiState.translator)
                 }
@@ -101,7 +101,7 @@ public struct KhipuView: View {
         ).overlay(
             VStack {
                 Spacer()
-                if !viewModel.uiState.connected && !viewModel.uiState.operationFinished {
+                if isConnected() && !viewModel.uiState.operationFinished {
                     ToastComponent(text: viewModel.uiState.translator.t("default.socket.disconnected"))
                         .padding()
                         .transition(.move(edge: .bottom))
@@ -109,7 +109,7 @@ public struct KhipuView: View {
                 }
             }
         )
-        .animation(.default, value: viewModel.uiState.connected)
+        .animation(.default, value: isConnected())
         .environmentObject(themeManager)
         .onAppear(perform: {
             if(browserId == nil) {
@@ -133,10 +133,10 @@ public struct KhipuView: View {
         })
         .environmentObject(themeManager)
     }
-
+    
     func buildResult(_ state: KhipuUiState) -> KhipuResult {
         if (viewModel.uiState.operationSuccess != nil) {
-
+            
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationSuccess?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationSuccess?.title),
@@ -148,7 +148,7 @@ public struct KhipuView: View {
                 continueUrl: nil
             )
         } else if (viewModel.uiState.operationFailure != nil) {
-
+            
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationFailure?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationFailure?.title),
@@ -171,7 +171,7 @@ public struct KhipuView: View {
                 continueUrl: nil
             )
         } else if (viewModel.uiState.operationMustContinue != nil) {
-
+            
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationMustContinue?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationMustContinue?.title),
@@ -183,7 +183,7 @@ public struct KhipuView: View {
                 continueUrl: cleanString(viewModel.uiState.operationInfo?.urls?.info)
             )
         }
-
+        
         return KhipuResult(
             operationId: cleanString(getOperationId(viewModel.uiState)),
             exitTitle: cleanString(viewModel.uiState.translator.t("page.operationFailure.operation.user.canceled.title", default: "")),
@@ -195,7 +195,7 @@ public struct KhipuView: View {
             continueUrl: nil
         )
     }
-
+    
     func getOperationId(_ uiState: KhipuUiState) -> String? {
         if (uiState.operationInfo?.operationID == nil || uiState.operationInfo!.operationID!.isEmpty) {
             return uiState.operationId
@@ -203,18 +203,18 @@ public struct KhipuView: View {
             return uiState.operationInfo?.operationID
         }
     }
-
+    
     func cleanString(_ toClean: String?) -> String {
         return toClean ?? ""
     }
-
+    
     func cleanEvents(_ events: [OperationEvent]?) -> [KhipuEvent] {
         if (events == nil) {
             return [KhipuEvent]()
         }
         return events!.map { KhipuEvent(name: $0.name, timestamp: $0.timestamp, type: $0.type)}
     }
-
+    
     func shouldShowHeader(currentMessageType: String) -> Bool {
         let excludedTypes = [
             MessageType.operationSuccess.rawValue,
@@ -222,8 +222,13 @@ public struct KhipuView: View {
             MessageType.operationMustContinue.rawValue,
             MessageType.operationWarning.rawValue
         ]
-
+        
         return !excludedTypes.contains(currentMessageType)
+    }
+    
+    
+    func isConnected() -> Bool {
+        return !viewModel.uiState.connectedSocket || !viewModel.uiState.connectedNetwork
     }
 }
 
