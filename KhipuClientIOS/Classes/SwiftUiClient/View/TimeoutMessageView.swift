@@ -47,7 +47,7 @@ struct TimeoutMessageView: View {
                     
                     
                     MainButton(
-                        text: translator.t("page.redirectManual.redirecting"),
+                        text: translator.t("default.end.and.go.back"),
                         enabled: true,
                         onClick: returnToApp,
                         foregroundColor: themeManager.selectedTheme.colors.onTertiary,

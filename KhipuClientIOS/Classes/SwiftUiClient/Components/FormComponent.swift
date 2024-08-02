@@ -29,6 +29,7 @@ public struct FormComponent: View {
     public var body: some View {
         ZStack {
             VStack(alignment: .center, spacing: 20) {
+               
                 FormTitle(text: formRequest.title!)
                 if !viewModel.uiState.bank.isEmpty {
                     FormPill(text: viewModel.uiState.bank)
@@ -46,6 +47,7 @@ public struct FormComponent: View {
                     )
                 }
 
+
                 FormError(text: formRequest.errorMessage)
 
                 RememberValues(
@@ -55,6 +57,8 @@ public struct FormComponent: View {
                 if formRequest.termsURL != nil && !formRequest.termsURL!.isEmpty && formRequest.rememberValues != nil && formRequest.rememberValues! == true {
                     TermsAndConditionsComponent(termsURL: formRequest.termsURL!, translator: viewModel.uiState.translator)
                 }
+                
+               
 
                 if getShouldShowContinueButton(formRequest: formRequest) {
                     MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
@@ -68,6 +72,7 @@ public struct FormComponent: View {
                     )
                 }
                 FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
+                
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 32)
@@ -79,7 +84,6 @@ public struct FormComponent: View {
                     viewModel.setCurrentProgress(currentProgress: Float(1*Float(current)/Float(total)))
                 }
             }
-
             InactivityModalView(isPresented: $alertManager.showAlert, onDismiss: {}, translator: viewModel.uiState.translator).environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
         }
