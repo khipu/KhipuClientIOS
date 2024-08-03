@@ -26,10 +26,8 @@ struct OtpField: View {
         VStack {
             FieldLabel(text: formItem.label,font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing:Dimens.Spacing.medium, paddingBottom: Dimens.Spacing.extraSmall)
             HStack(spacing:Dimens.Spacing.extraMedium) {
-                var a = 0
                 ForEach(0..<count, id: \.self) { index in
-                    a = a + 1
-                    return VStack(alignment: .center) {
+                    VStack(alignment: .center) {
                         CoordinateInputField(formItem: formItem,
                                              coordValue: $states[index],
                                              length: 1,
@@ -42,7 +40,7 @@ struct OtpField: View {
                             focusedField = FieldUtils.getElement(FocusableField.self, at: focusedIndex)
                         }
                         )
-                        .accessibilityIdentifier("coordinateInput\(a)")
+                        .accessibilityIdentifier("coordinateInput\(index)")
                         .focused($focusedField,   equals: FieldUtils.getElement(FocusableField.self, at: index))
                     }
                 }
