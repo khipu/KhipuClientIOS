@@ -13,10 +13,8 @@ struct ListField: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing:Dimens.Spacing.medium) {
-            var a = 0
             ForEach(formItem.options ?? [], id: \.value) { option in
-                a = a + 1
-                return VStack() {
+                VStack() {
                     Button(action: {
                         selectedOption = option
                         isValid(true)
@@ -32,7 +30,7 @@ struct ListField: View {
                                 }
                             }
                         }.padding(0)
-                            .frame(maxWidth: .infinity, alignment: .topLeading).accessibilityIdentifier("listItem\(a)")
+                            .frame(maxWidth: .infinity, alignment: .topLeading).accessibilityIdentifier("listItem\(option.value ?? "")")
                     }
                 }
             }
