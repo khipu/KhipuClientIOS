@@ -5,6 +5,8 @@ import KhenshinProtocol
 
 @available(iOS 15.0.0, *)
 struct HeaderComponent: View {
+    var showMerchantLogo: Bool
+    var showPaymentDetails: Bool
     var operationInfo: OperationInfo?
     var translator: KhipuTranslator
     @EnvironmentObject private var themeManager: ThemeManager
@@ -15,11 +17,13 @@ struct HeaderComponent: View {
             VStack(spacing: 0) {
                 headerContent
                 Spacer().frame(height:Dimens.Spacing.extraSmall)
-                Divider()
-                Spacer().frame(height:Dimens.Spacing.extraSmall)
-                footerContent
-                Spacer().frame(height:Dimens.Spacing.extraSmall)
-                Divider()
+                if showPaymentDetails {
+                    Divider()
+                    Spacer().frame(height:Dimens.Spacing.extraSmall)
+                    footerContent
+                    Spacer().frame(height: Dimens.Spacing.extraSmall)
+                    Divider()
+                }
             }
             .sheet(isPresented: $showMerchantDialog) {
                 MerchantDialogComponent(
@@ -31,7 +35,7 @@ struct HeaderComponent: View {
                     amount: (operationInfo?.amount)!,
                     image: (operationInfo?.urls?.image)!
                 ).environmentObject(themeManager)
-                    .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme) 
+                    .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
                 
             }
         } else {
@@ -41,7 +45,7 @@ struct HeaderComponent: View {
     
     private var headerContent: some View {
         HStack() {
-            if let logoURLString = operationInfo?.merchant?.logo, let logoURL = URL(string: logoURLString), UIApplication.shared.canOpenURL(logoURL) {
+            if showMerchantLogo, let logoURLString = operationInfo?.merchant?.logo, let logoURL = URL(string: logoURLString), UIApplication.shared.canOpenURL(logoURL) {
                 AsyncImage(url: logoURL) { image in
                     image
                         .resizable()
@@ -112,11 +116,12 @@ struct HeaderComponent_Previews: PreviewProvider {
     static var previews: some View {
         return VStack{
             Text("Skeleton:")
-            HeaderComponent(translator: MockDataGenerator.createTranslator())
-                .environmentObject(ThemeManager())
-                .padding()
+            HeaderComponent(showMerchantLogo: false, showPaymentDetails: false,
+                            translator: MockDataGenerator.createTranslator())
+            .environmentObject(ThemeManager())
+            .padding()
             Text("Loaded:")
-            HeaderComponent(operationInfo: MockDataGenerator.createOperationInfo(merchantLogo: "logo",merchantName: "Merchant",operationID: "asdqqwerqwer"),translator: MockDataGenerator.createTranslator())
+            HeaderComponent(showMerchantLogo: false, showPaymentDetails: false,operationInfo: MockDataGenerator.createOperationInfo(merchantLogo: "logo",merchantName: "Merchant",operationID: "asdqqwerqwer"),translator: MockDataGenerator.createTranslator())
                 .environmentObject(ThemeManager())
                 .padding()
         }

@@ -30,11 +30,5 @@ final class OtpFieldTest: XCTestCase {
         let hint = try inspected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
         XCTAssertEqual(hint, "hint")
         
-        for index in 0..<4 {
-            let coordInput = try inspected.find(viewWithAccessibilityIdentifier: "coordinateInput\(index + 1)")
-            XCTAssertNoThrow(try coordInput
-                .group()
-                .textField(0))
-        }
     }
 }

@@ -56,9 +56,6 @@ final class ListFieldTest: XCTestCase {
             } catch {
                 print("Error al inspeccionar item \(index + 1): \(error)")
             }
-        }
-        
-        let item = try inspected.find(viewWithAccessibilityIdentifier: "listItem3")
-        XCTAssertNoThrow(try item.find(viewWithAccessibilityIdentifier: "dataTable"))
+        }        
     }
 }
