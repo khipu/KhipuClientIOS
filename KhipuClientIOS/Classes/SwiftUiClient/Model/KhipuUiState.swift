@@ -34,4 +34,6 @@ struct KhipuUiState {
     var connectedSocket: Bool = true
     var connectedNetwork: Bool = true
     var operationFinished: Bool = false
+    var showMerchantLogo: Bool = true
+    var showPaymentDetails: Bool = true
 }

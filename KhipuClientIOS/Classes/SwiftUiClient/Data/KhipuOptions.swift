@@ -12,6 +12,8 @@ public class KhipuOptions {
     let colors: KhipuColors?
     let locale: String?
     let showFooter: Bool
+    let showMerchantLogo: Bool
+    let showPaymentDetails: Bool
 
     private init(
         serverUrl: String,
@@ -24,7 +26,9 @@ public class KhipuOptions {
         theme: Theme,
         colors: KhipuColors?,
         locale: String?,
-        showFooter: Bool
+        showFooter: Bool,
+        showMerchantLogo: Bool,
+        showPaymentDetails: Bool
     ) {
         self.serverUrl = serverUrl
         self.serverPublicKey = serverPublicKey
@@ -37,6 +41,8 @@ public class KhipuOptions {
         self.colors = colors
         self.locale = locale
         self.showFooter = showFooter
+        self.showMerchantLogo = showMerchantLogo
+        self.showPaymentDetails = showPaymentDetails
     }
 
     public enum Theme: String, Codable {
@@ -55,6 +61,8 @@ public class KhipuOptions {
         var _colors: KhipuColors?
         var _locale: String = "es_CL"
         var _showFooter: Bool = true
+        var _showMerchantLogo: Bool = true
+        var _showPaymentDetails: Bool = true
 
         public init() {
 
@@ -115,6 +123,16 @@ public class KhipuOptions {
             return self
         }
 
+        public func showMerchantLogo(_ showMerchantLogo: Bool) -> Builder {
+            self._showMerchantLogo = showMerchantLogo
+            return self
+        }
+
+        public func showPaymentDetails(_ showPaymentDetails: Bool) -> Builder {
+            self._showPaymentDetails = showPaymentDetails
+            return self
+        }
+
         public func build() -> KhipuOptions {
             return KhipuOptions(
                 serverUrl: _serverUrl,
@@ -127,7 +145,9 @@ public class KhipuOptions {
                 theme: _theme,
                 colors: _colors,
                 locale: _locale,
-                showFooter: _showFooter
+                showFooter: _showFooter,
+                showMerchantLogo: _showMerchantLogo,
+                showPaymentDetails: _showPaymentDetails
             )
         }
     }

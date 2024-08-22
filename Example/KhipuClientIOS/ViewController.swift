@@ -44,6 +44,8 @@ class ViewController: UIViewController {
                 //.topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
                 .topBarTitle("Demo App")
                 .theme(.light)
+                //.showMerchantLogo(false)
+                //.showPaymentDetails(false)
                 //.colors(KhipuColors.Builder().lightPrimary("#0000ff").build())
                 .build()
         ) { result in

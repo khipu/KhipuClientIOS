@@ -20,10 +20,11 @@ public class KhipuSocketIOClient {
     private let url: String
     private var connectionCheckerTimer: Timer?
     private var shouldCheckConnection = false
+    private var showMerchantLogo: Bool
+    private var showPaymentDetails: Bool
 
 
-
-    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, viewModel: KhipuViewModel) {
+    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, showMerchantLogo: Bool, showPaymentDetails: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         self.locale = locale
@@ -52,6 +53,8 @@ public class KhipuSocketIOClient {
         self.viewModel = viewModel
         self.skipExitPage = skipExitPage
         self.showFooter = showFooter
+        self.showMerchantLogo = showMerchantLogo
+        self.showPaymentDetails = showPaymentDetails
         self.clearKhssCookies()
         self.addListeners()
         self.addParametersUiState()
@@ -74,9 +77,11 @@ public class KhipuSocketIOClient {
             self.shouldCheckConnection = true
         }
     }
-    
+
     private func addParametersUiState(){
         self.viewModel.uiState.showFooter=self.showFooter
+        self.viewModel.uiState.showMerchantLogo=self.showMerchantLogo
+        self.viewModel.uiState.showPaymentDetails=self.showPaymentDetails
     }
 
     private func addListeners() {
