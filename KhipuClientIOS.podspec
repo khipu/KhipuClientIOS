@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KhipuClientIOS'
-  s.version          = '2.7.5'
+  s.version          = '2.7.6'
   s.summary          = 'A Client for iOS Apps written in Swift for Khipu'
 
   s.description      = <<-DESC
