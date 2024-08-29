@@ -137,7 +137,9 @@ public struct FormComponent: View {
             print("Error sending form")
         }
         if(self.formRequest.rememberValues ?? false && viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)) {
-            let credentials = Credentials(username: answers[0].value, password: answers[1].value)
+            let username = answers.first {$0.id == "username"}?.value ?? ""
+            let password = answers.first {$0.id == "password"}?.value ?? ""
+            let credentials = Credentials(username: username, password: password)
             try! CredentialsStorageUtil.storeCredentials(credentials: credentials, server: viewModel.uiState.bank)
         } else if(self.formRequest.rememberValues ?? false && !viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)) {
             try! CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)

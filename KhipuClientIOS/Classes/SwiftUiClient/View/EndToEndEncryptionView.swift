@@ -7,14 +7,22 @@ struct EndToEndEncryptionView: View {
 
     var body: some View {
         VStack {
-            CircularProgressView()
-                .frame(width:Dimens.Frame.extraLarge,
-                       height:Dimens.Frame.extraLarge,
-                       alignment: .center)
-                .padding([.top],Dimens.Padding.massive)
-            Text(translator.t("default.end.to.end.encryption", default: ""))
-                .frame(alignment: .center)
-        }.frame(maxWidth: .infinity, maxHeight: .infinity)
+            VStack(alignment: .center) {
+                CircularProgressView()
+                    .frame(width: Dimens.Frame.extraLarge,
+                           height:Dimens.Frame.extraLarge,
+                           alignment: .center)
+                    .padding(.top,Dimens.Padding.massive)
+                Spacer().frame(height: 30)
+                Text(translator.t("default.end.to.end.encryption", default: ""))
+                    .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
+                    .padding(.horizontal,Dimens.Padding.moderatelyLarge)
+                    .foregroundStyle(themeManager.selectedTheme.colors.onSurfaceVariant)
+            }
+            Spacer()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .padding(.horizontal,Dimens.Padding.moderatelyLarge)
     }
 }
 

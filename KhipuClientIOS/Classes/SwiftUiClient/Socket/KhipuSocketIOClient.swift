@@ -527,6 +527,6 @@ public class KhipuSocketIOClient {
     private func isLoginFormAndStored(_ formRequest: FormRequest) -> Bool {
         self.viewModel.uiState.storedBankForms.contains(self.viewModel.uiState.bank) && formRequest.items.filter({
             $0.id == "username" || $0.id == "password"
-        }).count == 2
+        }).count > 0
     }
 }
