@@ -132,7 +132,8 @@ public struct FormComponent: View {
             type: MessageType.formResponse
         )
         do {
-            try viewModel.khipuSocketIOClient?.sendMessage(type: response.type.rawValue, message: response.jsonString() ?? "")
+            try KhipuSocketIOClient.shared.sendMessage(type: response.type.rawValue, message: response.jsonString() ?? "")
+
         } catch {
             print("Error sending form")
         }

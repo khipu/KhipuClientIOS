@@ -116,19 +116,28 @@ public struct KhipuView: View {
                 browserId = UUID().uuidString
             }
             viewModel.uiState.operationId = self.operationId
-            viewModel.setKhipuSocketIOClient(
-                serverUrl: options.serverUrl,
-                browserId: browserId!,
-                publicKey: options.serverPublicKey,
-                appName: appName(),
-                appVersion: appVersion(),
-                locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")",
-                skipExitPage: options.skipExitPage,
-                showFooter: options.showFooter,
-                showMerchantLogo: options.showMerchantLogo,
-                showPaymentDetails: options.showPaymentDetails
-            )
-            viewModel.connectClient()
+            
+            if !KhipuSocketIOClient.shared.isConfigured {
+                    KhipuSocketIOClient.shared.configure(
+                        serverUrl: options.serverUrl,
+                        browserId: browserId!,
+                        publicKey: options.serverPublicKey,
+                        appName: appName(),
+                        appVersion: appVersion(),
+                        locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")",
+                        skipExitPage: options.skipExitPage,
+                        showFooter: options.showFooter,
+                        showMerchantLogo: options.showMerchantLogo,
+                        showPaymentDetails: options.showPaymentDetails,
+                        viewModel: viewModel
+                    )
+                }
+
+                if !KhipuSocketIOClient.shared.isConnected {
+                    KhipuSocketIOClient.shared.connect()
+                }
+            
+            
             themeManager.selectedTheme.setColorSchemeAndCustomColors(colorScheme: colorScheme, colors: options.colors)
             viewModel.uiState.storedBankForms = storedBankForms.split(separator: "|")
                 .map { String($0) }
