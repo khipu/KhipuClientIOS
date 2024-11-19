@@ -23,6 +23,8 @@ public class KhipuSocketIOClient {
     private var shouldCheckConnection = false
     private var showMerchantLogo: Bool
     private var showPaymentDetails: Bool
+    private var hasOpenedAuthorizationApp = false
+
 
 
     public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, showMerchantLogo: Bool, showPaymentDetails: Bool, viewModel: KhipuViewModel) {
@@ -66,17 +68,25 @@ public class KhipuSocketIOClient {
     }
 
     @objc private func appDidEnterBackground() {
-           print("App did enter background. Starting background task...")
-           beginBackgroundTask()
-       }
+        print("App did enter background. Starting background task...")
+        beginBackgroundTask()
 
-       @objc private func appWillEnterForeground() {
-           print("App will enter foreground. Ending background task...")
-           endBackgroundTask()
-           if socket?.status != .connected {
-               connect()
-           }
-       }
+        DispatchQueue.main.async {
+            self.viewModel.notifyViewUpdate()
+        }
+    }
+    
+    @objc private func appWillEnterForeground() {
+        print("App will enter foreground. Ending background task...")
+        endBackgroundTask()
+        
+        if socket?.status != .connected {
+            print("Socket disconnected, attempting to reconnect.")
+            connect()
+        } else {
+            print("Socket already connected.")
+        }
+    }
 
        private func beginBackgroundTask() {
            backgroundTask = UIApplication.shared.beginBackgroundTask(withName: "SocketBackgroundTask") {
@@ -121,6 +131,7 @@ public class KhipuSocketIOClient {
         self.socket?.on(clientEvent: .disconnect) { data, ack in
             let reason = data.first as! String
             print("[id: \(self.viewModel.uiState.operationId)] disconnected, reason \(reason)")
+            self.hasOpenedAuthorizationApp = false
         }
 
         self.socket?.on(clientEvent: .reconnect) { data, ack in
@@ -191,9 +202,15 @@ public class KhipuSocketIOClient {
 
         self.socket?.on(MessageType.openAuthorizationApp.rawValue) { data, ack in
             print("Received message \(MessageType.openAuthorizationApp.rawValue)")
+            
+            if self.hasOpenedAuthorizationApp {
+                return
+            }
+            
             if (self.isRepeatedMessage(data: data, type: MessageType.openAuthorizationApp.rawValue)) {
                 return
             }
+            
             let encryptedData = data.first as! String
             let mid = data[1] as! String
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
@@ -205,6 +222,8 @@ public class KhipuSocketIOClient {
                     if UIApplication.shared.canOpenURL(appUrl)
                     {
                         UIApplication.shared.open(appUrl)
+                        self.hasOpenedAuthorizationApp = true
+
                     }
                 }
             } catch {
@@ -350,6 +369,7 @@ public class KhipuSocketIOClient {
             if (self.isRepeatedMessage(data: data, type: MessageType.progressInfo.rawValue)) {
                 return
             }
+            self.hasOpenedAuthorizationApp = false
             let encryptedData = data.first as! String
             let mid = data[1] as! String
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
