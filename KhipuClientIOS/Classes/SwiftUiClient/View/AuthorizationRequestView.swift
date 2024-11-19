@@ -24,7 +24,7 @@ struct AuthorizationRequestView: View {
 struct QrAuthorizationRequestView: View {
     var authorizationRequest: AuthorizationRequest
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     var body: some View {
         VStack(spacing:Dimens.Spacing.extraSmall) {
             if let base64String = authorizationRequest.imageData?.split(separator: ",").last,
@@ -41,7 +41,7 @@ struct QrAuthorizationRequestView: View {
             } else {
                 Text("Invalid image data")
             }
-
+            
             Text(authorizationRequest.message)
         }
         .padding(.horizontal,Dimens.Padding.extraMedium)
@@ -80,16 +80,12 @@ struct MobileAuthorizationRequestView: View {
             
             
             VStack(alignment: .center, spacing: Dimens.Spacing.large) {
-                
-                AsyncImage(url: URL(string: "https://s3.amazonaws.com/static.khipu.com/khipu-client/authorize.png")) { image in
-                    image
+                if let image = KhipuClientBundleHelper.image(named: "authorize") {
+                    Image(uiImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: Dimens.Image.extraHuge, height: Dimens.Image.extraHuge)
-
-                } placeholder: {
-                    ProgressView()
-                }
+                } 
             }
             .padding(.horizontal, Dimens.Padding.large)
             .padding(.vertical, Dimens.Padding.quiteLarge)
@@ -107,7 +103,7 @@ struct MobileAuthorizationRequestView: View {
             .padding(.vertical, Dimens.Padding.quiteLarge)
             .frame(maxWidth: .infinity, alignment: .top)
             .cornerRadius(Dimens.CornerRadius.moderatelySmall)
-
+            
             
             MainButton(
                 text: translator.t("modal.authorization.wait"),
@@ -121,7 +117,7 @@ struct MobileAuthorizationRequestView: View {
         .padding(.vertical, Dimens.Padding.quiteLarge)
         .frame(maxWidth: .infinity, alignment: .top)
         .cornerRadius(Dimens.CornerRadius.moderatelySmall)
-
+        
     }
 }
 

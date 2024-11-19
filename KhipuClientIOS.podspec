@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KhipuClientIOS'
-  s.version          = '2.7.9'
+  s.version          = '2.8.0'
   s.summary          = 'A Client for iOS Apps written in Swift for Khipu'
 
   s.description      = <<-DESC
@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'KhipuClientIOS/Classes/**/*'
   s.resource_bundles = {
-    'KhipuClientIOS' => ['KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css}']
+    'KhipuClientIOS' => ['KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css,png}']
   }
 
   s.dependency 'Socket.IO-Client-Swift', '16.1.0'
