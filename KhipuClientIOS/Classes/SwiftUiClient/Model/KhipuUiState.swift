@@ -1,3 +1,4 @@
+import CoreLocation
 import Foundation
 import KhenshinProtocol
 
@@ -36,4 +37,10 @@ struct KhipuUiState {
     var operationFinished: Bool = false
     var showMerchantLogo: Bool = true
     var showPaymentDetails: Bool = true
+    var locationAuthStatus: CLAuthorizationStatus = .notDetermined
+    var currentLocation: CLLocation?
+    var geolocationRequired: Bool = false
+    var geolocationAcquired: Bool = false
+    var geolocationAccessDeclinedAtWarningView: Bool = false
+    var geolocationRequested: Bool = false
 }

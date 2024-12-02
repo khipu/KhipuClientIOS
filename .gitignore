@@ -20,6 +20,7 @@ DerivedData
 *.hmap
 *.ipa
 .idea/*
+.vscode/*
 
 # Bundler
 .bundle

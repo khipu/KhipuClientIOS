@@ -1,3 +1,4 @@
+import CoreLocation
 import SwiftUI
 import KhenshinProtocol
 
@@ -38,8 +39,66 @@ public struct KhipuView: View {
             ScrollView(.vertical){
                 switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
-                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                    FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+                    if viewModel.uiState.geolocationRequired && !viewModel.uiState.geolocationAcquired {
+                        switch viewModel.uiState.locationAuthStatus {
+                        case .denied, .restricted:
+                            LocationAccessErrorView(
+                                translator: viewModel.uiState.translator,
+                                operationId: viewModel.uiState.operationId,
+                                bank: viewModel.uiState.bank,
+                                continueButton: {
+                                    viewModel.uiState.geolocationRequested = false
+                                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                                        UIApplication.shared.open(url)
+                                    }
+                                },
+                                declineButton: { viewModel.uiState.returnToApp = true }
+                            )
+                        case .notDetermined:
+                            if viewModel.uiState.geolocationRequested {
+                                ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+                                ProgressInfoView(message: viewModel.uiState.translator.t("geolocation.request.description"))
+                            } else {
+                                if viewModel.uiState.geolocationAccessDeclinedAtWarningView {
+                                    LocationAccessErrorView(
+                                        translator: viewModel.uiState.translator,
+                                        operationId: viewModel.uiState.operationId,
+                                        bank: viewModel.uiState.bank,
+                                        continueButton: { viewModel.requestLocation() },
+                                        declineButton: { viewModel.uiState.returnToApp = true }
+                                    )
+                                } else {
+                                    let _ = print("FIX THIS")
+                                    LocationRequestWarningView(
+                                        translator: viewModel.uiState.translator,
+                                        operationId: viewModel.uiState.operationId,
+                                        bank: viewModel.uiState.bank,
+                                        continueButton: { viewModel.requestLocation() },
+                                        declineButton: { viewModel.uiState.geolocationAccessDeclinedAtWarningView = true }
+                                    )
+                                }
+                            }
+                        case .authorizedWhenInUse, .authorizedAlways:
+                            ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+                            FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+                        @unknown default:
+                            LocationAccessErrorView(
+                                translator: viewModel.uiState.translator,
+                                operationId: viewModel.uiState.operationId,
+                                bank: viewModel.uiState.bank,
+                                continueButton: {
+                                    viewModel.uiState.geolocationRequested = false
+                                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                                        UIApplication.shared.open(url)
+                                    }
+                                },
+                                declineButton: { viewModel.uiState.returnToApp = true }
+                            )
+                        }
+                    } else {
+                        ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+                        FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+                    }
                 case MessageType.operationFailure.rawValue:
                     if (!options.skipExitPage) {
                         if(viewModel.uiState.operationFailure?.reason == FailureReasonType.bankWithoutAutomaton){
@@ -78,7 +137,17 @@ public struct KhipuView: View {
                         MustContinueView(operationMustContinue: viewModel.uiState.operationMustContinue!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
+                case MessageType.geolocationRequest.rawValue:
+                    Group {
+                        let _ = print("Handling geolocation request. Required: \(viewModel.uiState.geolocationRequired), Auth status: \(viewModel.uiState.locationAuthStatus)")
 
+                        if viewModel.uiState.geolocationRequired {
+                            ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+                            ProgressInfoView(message: viewModel.uiState.translator.t("geolocation.request.description"))
+                        } else {
+                            ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+                        }
+                    }
                 default:
                     EndToEndEncryptionView(translator: viewModel.uiState.translator)
                 }
@@ -133,7 +202,6 @@ public struct KhipuView: View {
             viewModel.uiState.storedBankForms = storedBankForms.split(separator: "|")
                 .map { String($0) }
         })
-        .environmentObject(themeManager)
     }
 
     func buildResult(_ state: KhipuUiState) -> KhipuResult {
