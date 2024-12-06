@@ -9,7 +9,10 @@ final class DasehdLineTest: XCTestCase {
     func testDashedLineView() throws {
         let view = DashedLine().environmentObject(ThemeManager())
         let inspectedView = try view.inspect()
-        let strokeStyleModifier = try inspectedView.shape(0).strokeStyle()
+        let strokeStyleModifier = try inspectedView
+            .implicitAnyView()
+            .shape(0)
+            .strokeStyle()
         XCTAssertEqual(strokeStyleModifier.lineWidth, 1)
         XCTAssertEqual(strokeStyleModifier.dash, [5])
     }

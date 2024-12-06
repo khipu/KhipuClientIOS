@@ -37,11 +37,13 @@ final class CoordinatesFieldTest: XCTestCase {
             XCTAssertEqual(try label
                 .vStack()
                 .view(FieldLabel.self, 0)
+                .anyView(0)
                 .vStack(0)
                 .text(0)
                 .string(), "Coord \(index + 1)")
             let coordInput = try inspected.find(viewWithAccessibilityIdentifier: "coordinateInput\(index + 1)")
             XCTAssertNoThrow(try coordInput
+                .implicitAnyView()
                 .group()
                 .textField(0))
         }

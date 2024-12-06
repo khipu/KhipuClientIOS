@@ -11,7 +11,9 @@ final class CopyToClipboardComponentTest: XCTestCase {
             .environmentObject(ThemeManager())
         
         let inspectedView = try view.inspect().view(CopyToClipboardOperationId.self)
-        let button = try inspectedView.button()
+        let button = try inspectedView
+            .implicitAnyView()
+            .button()
         XCTAssertNotNil(try? inspectedView.find(text: "Copy this"), "Failed to find the text: Copy this")
     }
     
@@ -20,7 +22,9 @@ final class CopyToClipboardComponentTest: XCTestCase {
             .environmentObject(ThemeManager())
         
         let inspectedView = try view.inspect().view(CopyToClipboardLink.self)
-        let button = try inspectedView.button()
+        let button = try inspectedView
+            .implicitAnyView()
+            .button()
         XCTAssertNotNil(try? inspectedView.find(text: "Copy this link"), "Failed to find the text: Copy this link")
     }
 }

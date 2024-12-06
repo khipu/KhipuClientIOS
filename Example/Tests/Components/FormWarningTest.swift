@@ -14,7 +14,9 @@ final class FormWarningTest: XCTestCase {
             .environmentObject(themeManager)
 
         let inspectedView = try view.inspect().view(FormWarning.self)
-        let hStack = try inspectedView.hStack()
+        let hStack = try inspectedView
+            .implicitAnyView()
+            .hStack()
         XCTAssertNotNil(try? inspectedView.find(text: "Warning message"), "Failed to find the text: Warning message")
 
     }

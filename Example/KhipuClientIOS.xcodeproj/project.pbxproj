@@ -49,6 +49,8 @@
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		757586A52CFF8E1B0007CC3D /* LocationManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757586A42CFF8E1B0007CC3D /* LocationManagerTest.swift */; };
+		757586A92CFF918C0007CC3D /* LocationAccessErrorViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 757586A82CFF918C0007CC3D /* LocationAccessErrorViewTest.swift */; };
 		BD0D0E1E2C4200FC000C7121 /* FooterComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0D0E1D2C4200FC000C7121 /* FooterComponentTest.swift */; };
 		BD1568F42C3ED05E00B1CA1B /* DetailSectionComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1568F32C3ED05E00B1CA1B /* DetailSectionComponentTest.swift */; };
 		BDAE5D802C0A100400B6DDD4 /* ProgressComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE5D7F2C0A100400B6DDD4 /* ProgressComponentTest.swift */; };
@@ -136,6 +138,8 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		61E1E5CCD61F1D71496B96D9 /* Pods-KhipuClientIOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		757586A42CFF8E1B0007CC3D /* LocationManagerTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManagerTest.swift; sourceTree = "<group>"; };
+		757586A82CFF918C0007CC3D /* LocationAccessErrorViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAccessErrorViewTest.swift; sourceTree = "<group>"; };
 		9750864254034D2225691257 /* Pods-KhipuClientIOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B25DC7457D9C2288C1A744D0 /* Pods_KhipuClientIOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B93557902ABE2A6072D0C451 /* Pods-KhipuClientIOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -225,6 +229,7 @@
 		4AD82D452C0253FD0065CC37 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				757586A42CFF8E1B0007CC3D /* LocationManagerTest.swift */,
 				4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTest.swift */,
 				C55C20EC2C07CC4B0015A732 /* DashedLineTest.swift */,
 				BDD445592C04D25300098056 /* FormInfoTest.swift */,
@@ -342,6 +347,7 @@
 		BDE0AEA92C4EBDBE00F6564B /* View */ = {
 			isa = PBXGroup;
 			children = (
+				757586A82CFF918C0007CC3D /* LocationAccessErrorViewTest.swift */,
 				26594A3B2C2623D1002D094F /* InactivityModalViewTest.swift */,
 				264E0D8E2C21C504001C1BB8 /* TimeoutMessageComponentTest.swift */,
 				264E0D8C2C21C486001C1BB8 /* WarningMessageViewTest.swift */,
@@ -595,6 +601,7 @@
 				15E3917C2C260AF600EA396E /* SimpleTextFieldTest.swift in Sources */,
 				15E391832C26209E00EA396E /* ImageChallengeTest.swift in Sources */,
 				C5DB1B062C08C6110061351A /* EndToEndEncryptionViewTest.swift in Sources */,
+				757586A92CFF918C0007CC3D /* LocationAccessErrorViewTest.swift in Sources */,
 				1508CF392C231A4100DCE1FA /* CoordinatesFieldTest.swift in Sources */,
 				26594A3A2C2623C0002D094F /* ModalTest.swift in Sources */,
 				26594A082C222093002D094F /* FieldUtilTest.swift in Sources */,
@@ -607,6 +614,7 @@
 				C55C20ED2C07CC4B0015A732 /* DashedLineTest.swift in Sources */,
 				4AD82D472C0253FD0065CC37 /* AuthorizationRequestViewTest.swift in Sources */,
 				1547EFCD2C20C00500229365 /* ListFieldTest.swift in Sources */,
+				757586A52CFF8E1B0007CC3D /* LocationManagerTest.swift in Sources */,
 				264E0D932C21C5B0001C1BB8 /* NavigationBarComponentTest.swift in Sources */,
 				BDD445642C04F73A00098056 /* MainButtonTest.swift in Sources */,
 				BDF2EF822C3C1C88000D3FFA /* RedirectToManualViewTest.swift in Sources */,

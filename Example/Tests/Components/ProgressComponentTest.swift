@@ -12,7 +12,10 @@ final class ProgressComponentTest: XCTestCase {
             .environmentObject(themeManager)
 
         let inspectedView = try view.inspect().view(ProgressComponent.self)
-        let progressView = try inspectedView.progressView()
+        let progressView = try inspectedView
+            .implicitAnyView()
+            .progressView()
+            
         XCTAssertEqual(
             try progressView.tint(),
             themeManager.selectedTheme.colors.primary,
