@@ -68,7 +68,7 @@ public struct KhipuView: View {
                                         declineButton: { viewModel.uiState.returnToApp = true }
                                     )
                                 } else {
-                                    let _ = print("FIX THIS")
+                                    // Revise this
                                     LocationRequestWarningView(
                                         translator: viewModel.uiState.translator,
                                         operationId: viewModel.uiState.operationId,
