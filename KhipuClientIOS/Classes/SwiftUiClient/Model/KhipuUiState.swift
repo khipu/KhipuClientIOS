@@ -39,7 +39,6 @@ struct KhipuUiState {
     var showPaymentDetails: Bool = true
     var locationAuthStatus: CLAuthorizationStatus = .notDetermined
     var currentLocation: CLLocation?
-    var geolocationRequired: Bool = false
     var geolocationAcquired: Bool = false
     var geolocationAccessDeclinedAtWarningView: Bool = false
     var geolocationRequested: Bool = false

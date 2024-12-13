@@ -39,66 +39,8 @@ public struct KhipuView: View {
             ScrollView(.vertical){
                 switch(viewModel.uiState.currentMessageType) {
                 case MessageType.formRequest.rawValue:
-                    if viewModel.uiState.geolocationRequired && !viewModel.uiState.geolocationAcquired {
-                        switch viewModel.uiState.locationAuthStatus {
-                        case .denied, .restricted:
-                            LocationAccessErrorView(
-                                translator: viewModel.uiState.translator,
-                                operationId: viewModel.uiState.operationId,
-                                bank: viewModel.uiState.bank,
-                                continueButton: {
-                                    viewModel.uiState.geolocationRequested = false
-                                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                                        UIApplication.shared.open(url)
-                                    }
-                                },
-                                declineButton: { viewModel.uiState.returnToApp = true }
-                            )
-                        case .notDetermined:
-                            if viewModel.uiState.geolocationRequested {
-                                ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                                ProgressInfoView(message: viewModel.uiState.translator.t("geolocation.request.description"))
-                            } else {
-                                if viewModel.uiState.geolocationAccessDeclinedAtWarningView {
-                                    LocationAccessErrorView(
-                                        translator: viewModel.uiState.translator,
-                                        operationId: viewModel.uiState.operationId,
-                                        bank: viewModel.uiState.bank,
-                                        continueButton: { viewModel.requestLocation() },
-                                        declineButton: { viewModel.uiState.returnToApp = true }
-                                    )
-                                } else {
-                                    // Revise this
-                                    LocationRequestWarningView(
-                                        translator: viewModel.uiState.translator,
-                                        operationId: viewModel.uiState.operationId,
-                                        bank: viewModel.uiState.bank,
-                                        continueButton: { viewModel.requestLocation() },
-                                        declineButton: { viewModel.uiState.geolocationAccessDeclinedAtWarningView = true }
-                                    )
-                                }
-                            }
-                        case .authorizedWhenInUse, .authorizedAlways:
-                            ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                            FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
-                        @unknown default:
-                            LocationAccessErrorView(
-                                translator: viewModel.uiState.translator,
-                                operationId: viewModel.uiState.operationId,
-                                bank: viewModel.uiState.bank,
-                                continueButton: {
-                                    viewModel.uiState.geolocationRequested = false
-                                    if let url = URL(string: UIApplication.openSettingsURLString) {
-                                        UIApplication.shared.open(url)
-                                    }
-                                },
-                                declineButton: { viewModel.uiState.returnToApp = true }
-                            )
-                        }
-                    } else {
-                        ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                        FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
-                    }
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+                    FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
                 case MessageType.operationFailure.rawValue:
                     if (!options.skipExitPage) {
                         if(viewModel.uiState.operationFailure?.reason == FailureReasonType.bankWithoutAutomaton){
@@ -138,16 +80,7 @@ public struct KhipuView: View {
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.geolocationRequest.rawValue:
-                    Group {
-                        let _ = print("Handling geolocation request. Required: \(viewModel.uiState.geolocationRequired), Auth status: \(viewModel.uiState.locationAuthStatus)")
-
-                        if viewModel.uiState.geolocationRequired {
-                            ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                            ProgressInfoView(message: viewModel.uiState.translator.t("geolocation.request.description"))
-                        } else {
-                            ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                        }
-                    }
+                    LocationAccessRequestComponent(viewModel: viewModel)
                 default:
                     EndToEndEncryptionView(translator: viewModel.uiState.translator)
                 }

@@ -26,14 +26,9 @@ public class KhipuViewModel: ObservableObject {
         locationManager?.requestLocation()
     }
 
-    func handleGeolocationRequest(required: Bool) {
+    func handleGeolocationRequest() {
         if locationManager == nil {
             locationManager = LocationManager(viewModel: self)
-        }
-        uiState.geolocationRequired = required
-
-        if !uiState.geolocationRequired {
-            self.requestLocation()
         }
     }
     
@@ -49,35 +44,19 @@ public class KhipuViewModel: ObservableObject {
     }
     
     func handleLocationError(_ error: Error) {
-        sendGeolocationResponse(
-            latitude: nil,
-            longitude: nil,
-            accuracy: nil,
-            errorCode: "LOCATION_ERROR"
-        )
     }
     
     func handleAuthStatusChange(_ status: CLAuthorizationStatus) {
         uiState.locationAuthStatus = status
         switch status {
         case .denied, .restricted:
-            sendGeolocationResponse(
-                latitude: nil,
-                longitude: nil,
-                accuracy: nil,
-                errorCode: "PERMISSION_DENIED"
-            )
-        case .notDetermined:
-            break // Wait for user response
+            uiState.geolocationRequested = false
         case .authorizedWhenInUse, .authorizedAlways:
             self.requestLocation()
+        case .notDetermined:
+            break // Do nothing
         @unknown default:
-            sendGeolocationResponse(
-                latitude: nil,
-                longitude: nil,
-                accuracy: nil,
-                errorCode: "UNKNOWN_ERROR"
-            )
+            break // Do nothing
         }
     }
     

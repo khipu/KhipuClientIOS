@@ -53,7 +53,7 @@ public class KhipuSocketIOClient {
             //.log(true),
             .compress,
             .forceNew(true),
-            .secure(true),
+            .secure(false),
             .reconnectAttempts(-1),
             .connectParams([
                 "clientId": UUID().uuidString,
@@ -456,7 +456,7 @@ public class KhipuSocketIOClient {
                 let geolocationRequest = try GeolocationRequest(decryptedMessage!)
                 print("Parsed geolocation request. Mandatory: \(geolocationRequest.mandatory ?? false)")
                 self.viewModel.uiState.currentMessageType = MessageType.geolocationRequest.rawValue
-                self.viewModel.handleGeolocationRequest(required: geolocationRequest.mandatory ?? false)
+                self.viewModel.handleGeolocationRequest()
             } catch {
                 print("Error processing geolocation request message, mid \(mid)")
             }
