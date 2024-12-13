@@ -53,7 +53,7 @@ public class KhipuSocketIOClient {
             //.log(true),
             .compress,
             .forceNew(true),
-            .secure(false),
+            .secure(true),
             .reconnectAttempts(-1),
             .connectParams([
                 "clientId": UUID().uuidString,
