@@ -82,6 +82,7 @@ public struct KhipuView: View {
                 case MessageType.geolocationRequest.rawValue:
                     LocationAccessRequestComponent(viewModel: viewModel)
                 default:
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
                     EndToEndEncryptionView(translator: viewModel.uiState.translator)
                 }
                 if(viewModel.uiState.returnToApp) {
