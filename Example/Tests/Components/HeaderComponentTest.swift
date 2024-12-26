@@ -14,7 +14,9 @@ final class HeaderComponentTest: XCTestCase {
             .environmentObject(themeManager)
         
         let inspectedView = try view.inspect().view(HeaderComponent.self)
-        let vStack = try inspectedView.vStack()
+        let vStack = try inspectedView
+            .implicitAnyView()
+            .vStack()
         
         XCTAssertNotNil(try? inspectedView.find(text: "Merchant Name"), "Failed to find the text: Merchant Name")
         XCTAssertNotNil(try? inspectedView.find(text: "Transaction Subject"), "Failed to find the text: Transaction Subject")

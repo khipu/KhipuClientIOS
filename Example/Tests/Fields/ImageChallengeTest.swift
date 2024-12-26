@@ -32,7 +32,12 @@ final class ImageChallengeFieldTest: XCTestCase {
         let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText").text().string()
         XCTAssertEqual(label, "label")
         
-        XCTAssertNoThrow(try inspected.vStack().vStack(1).image(0))
+        XCTAssertNoThrow(try inspected
+            .implicitAnyView()
+            .vStack()
+            .vStack(1)
+            .image(0)
+        )
         
         let hint = try inspected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
         XCTAssertEqual(hint, "hint")

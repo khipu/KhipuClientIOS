@@ -49,6 +49,7 @@
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACEC1AFB9204008FA782 /* Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACEB1AFB9204008FA782 /* Tests.swift */; };
+		755C79F82D18FA430072F80C /* LocationAccessRequestComponentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 755C79F72D18FA430072F80C /* LocationAccessRequestComponentTests.swift */; };
 		BD0D0E1E2C4200FC000C7121 /* FooterComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD0D0E1D2C4200FC000C7121 /* FooterComponentTest.swift */; };
 		BD1568F42C3ED05E00B1CA1B /* DetailSectionComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD1568F32C3ED05E00B1CA1B /* DetailSectionComponentTest.swift */; };
 		BDAE5D802C0A100400B6DDD4 /* ProgressComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDAE5D7F2C0A100400B6DDD4 /* ProgressComponentTest.swift */; };
@@ -136,6 +137,7 @@
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		61E1E5CCD61F1D71496B96D9 /* Pods-KhipuClientIOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		755C79F72D18FA430072F80C /* LocationAccessRequestComponentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationAccessRequestComponentTests.swift; sourceTree = "<group>"; };
 		9750864254034D2225691257 /* Pods-KhipuClientIOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		B25DC7457D9C2288C1A744D0 /* Pods_KhipuClientIOS_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KhipuClientIOS_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B93557902ABE2A6072D0C451 /* Pods-KhipuClientIOS_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Example.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Example/Pods-KhipuClientIOS_Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -225,6 +227,7 @@
 		4AD82D452C0253FD0065CC37 /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				755C79F72D18FA430072F80C /* LocationAccessRequestComponentTests.swift */,
 				4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTest.swift */,
 				C55C20EC2C07CC4B0015A732 /* DashedLineTest.swift */,
 				BDD445592C04D25300098056 /* FormInfoTest.swift */,
@@ -616,6 +619,7 @@
 				26594A122C223493002D094F /* CredentialsStorageUtilTest.swift in Sources */,
 				BDD445622C04DD7F00098056 /* HeaderComponentTest.swift in Sources */,
 				4AD82D4A2C0253FD0065CC37 /* MerchantDialogComponentTest.swift in Sources */,
+				755C79F82D18FA430072F80C /* LocationAccessRequestComponentTests.swift in Sources */,
 				26594A042C21ED7D002D094F /* KhipuTranslatorTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,9 +1,9 @@
-
 import Foundation
 import SocketIO
 import KhenshinSecureMessage
 import KhenshinProtocol
 import LocalAuthentication
+import CoreLocation
 
 @available(iOS 13.0, *)
 public class KhipuSocketIOClient {
@@ -33,6 +33,22 @@ public class KhipuSocketIOClient {
         self.locale = locale
         self.browserId = browserId
         self.url = url
+
+        let authStatus: CLAuthorizationStatus
+        if #available(iOS 14.0, *) {
+            authStatus = CLLocationManager().authorizationStatus
+        } else {
+            authStatus = CLLocationManager.authorizationStatus()
+        }
+          
+        let capabilities = switch authStatus {
+            case .notDetermined, .restricted, .denied, 
+                 .authorizedWhenInUse, .authorizedAlways:
+                "geolocation"
+            @unknown default:
+                ""
+        }
+
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
             //.log(true),
             .compress,
@@ -48,7 +64,8 @@ public class KhipuSocketIOClient {
                 "browserId": browserId,
                 "appName": appName,
                 "appVersion": appVersion,
-                "appOS": "iOS"
+                "appOS": "iOS",
+                "capabilities": capabilities
             ])
         ])
         self.receivedMessages = []
@@ -63,8 +80,10 @@ public class KhipuSocketIOClient {
         self.addParametersUiState()
         self.startConnectionChecker()
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
-               NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
+        print("Current location authorization status: \(authorizationStatusString(authStatus))")
+        print("Setting capabilities as: \(capabilities)")
     }
 
     @objc private func appDidEnterBackground() {
@@ -99,7 +118,7 @@ public class KhipuSocketIOClient {
                UIApplication.shared.endBackgroundTask(backgroundTask)
                backgroundTask = .invalid
            }
-       }
+    }
 
     private func startConnectionChecker() {
         let initialDelay: TimeInterval = 10.0
@@ -145,7 +164,6 @@ public class KhipuSocketIOClient {
         self.socket?.onAny { data in
             //self.showCookies()
         }
-
 
         self.socket?.on(MessageType.operationRequest.rawValue) { data, ack in
             print("Received message \(MessageType.operationRequest.rawValue)")
@@ -223,7 +241,6 @@ public class KhipuSocketIOClient {
                     {
                         UIApplication.shared.open(appUrl)
                         self.hasOpenedAuthorizationApp = true
-
                     }
                 }
             } catch {
@@ -423,6 +440,27 @@ public class KhipuSocketIOClient {
         self.socket?.on(MessageType.welcomeMessageShown.rawValue) { data, ack in
             print("Received message \(MessageType.welcomeMessageShown.rawValue)")
         }
+
+        self.socket?.on(MessageType.geolocationRequest.rawValue) { data, ack in
+            print("Received message \(MessageType.geolocationRequest.rawValue)")
+            if (self.isRepeatedMessage(data: data, type: MessageType.geolocationRequest.rawValue)) {
+                print("Skipping repeated message")
+                return
+            }
+            
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            print("Decrypted GeolocationRequest message: \(decryptedMessage ?? "nil")")
+            do {
+                let geolocationRequest = try GeolocationRequest(decryptedMessage!)
+                print("Parsed geolocation request. Mandatory: \(geolocationRequest.mandatory ?? false)")
+                self.viewModel.uiState.currentMessageType = MessageType.geolocationRequest.rawValue
+                self.viewModel.handleGeolocationRequest()
+            } catch {
+                print("Error processing geolocation request message, mid \(mid)")
+            }
+        }     
     }
 
     public func connect() {
@@ -577,5 +615,22 @@ public class KhipuSocketIOClient {
         self.viewModel.uiState.storedBankForms.contains(self.viewModel.uiState.bank) && formRequest.items.filter({
             $0.id == "username" || $0.id == "password"
         }).count > 0
+    }
+}
+
+private func authorizationStatusString(_ status: CLAuthorizationStatus) -> String {
+    switch status {
+    case .notDetermined:
+        return "notDetermined - User has not yet made a choice"
+    case .restricted:
+        return "restricted - Location services are restricted"
+    case .denied:
+        return "denied - User denied location access"
+    case .authorizedWhenInUse:
+        return "authorizedWhenInUse - User allowed location access while app is in use"
+    case .authorizedAlways:
+        return "authorizedAlways - User allowed location access even in background"
+    @unknown default:
+        return "unknown status"
     }
 }

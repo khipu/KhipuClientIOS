@@ -44,6 +44,7 @@ final class SimpleTextFieldTest: XCTestCase {
         XCTAssertEqual(hint, "Some instructions")
         
         XCTAssertNoThrow(try inspected
+            .implicitAnyView()
             .vStack()
             .hStack(1)
             .group(0)
@@ -80,6 +81,7 @@ final class SimpleTextFieldTest: XCTestCase {
         XCTAssertEqual(label, "Some stuff")
      
         XCTAssertNoThrow(try inspected
+            .implicitAnyView()
             .vStack()
             .hStack(1)
             .group(0)

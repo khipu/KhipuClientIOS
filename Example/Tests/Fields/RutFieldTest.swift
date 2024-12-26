@@ -41,7 +41,11 @@ final class RutFieldTest: XCTestCase {
         let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText").text().string()
         XCTAssertEqual(label, "Some stuff")
      
-        XCTAssertNoThrow(try inspected.vStack().textField(1))
+        XCTAssertNoThrow(try inspected
+            .implicitAnyView()
+            .vStack()
+            .anyView(1)
+            .textField())
         
         let hint = try inspected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
         XCTAssertEqual(hint, "Some instructions")

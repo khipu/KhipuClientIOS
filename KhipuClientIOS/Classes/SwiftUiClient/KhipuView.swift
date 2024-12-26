@@ -1,3 +1,4 @@
+import CoreLocation
 import SwiftUI
 import KhenshinProtocol
 
@@ -78,8 +79,10 @@ public struct KhipuView: View {
                         MustContinueView(operationMustContinue: viewModel.uiState.operationMustContinue!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
-
+                case MessageType.geolocationRequest.rawValue:
+                    LocationAccessRequestComponent(viewModel: viewModel)
                 default:
+                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
                     EndToEndEncryptionView(translator: viewModel.uiState.translator)
                 }
                 if(viewModel.uiState.returnToApp) {
@@ -133,7 +136,6 @@ public struct KhipuView: View {
             viewModel.uiState.storedBankForms = storedBankForms.split(separator: "|")
                 .map { String($0) }
         })
-        .environmentObject(themeManager)
     }
 
     func buildResult(_ state: KhipuUiState) -> KhipuResult {

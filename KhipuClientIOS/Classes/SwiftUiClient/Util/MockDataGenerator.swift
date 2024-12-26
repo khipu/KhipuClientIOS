@@ -289,7 +289,16 @@ class MockDataGenerator {
             "form.validation.error.default.number.invalid": "El valor no es número",
             "form.validation.error.default.required": "El campo es requerido",
             "form.validation.error.switch.decline.required": "Debes rechazar",
-            "form.validation.error.switch.accept.required": "Debes aceptar"
+            "form.validation.error.switch.accept.required": "Debes aceptar",
+            "geolocation.warning.title": "{{bank}} solicita comprobar tu ubicación",
+            "geolocation.warning.description": "A continuación, se solicitará conocer tu ubicación.",
+            "geolocation.warning.button.continue": "Ir a activar ubicación",
+            "geolocation.warning.button.decline": "No activar ubicación",
+            "geolocation.request.description": "Revisando permisos de ubicación",
+            "geolocation.blocked.title": "Restablece el permiso de ubicación para continuar",
+            "geolocation.blocked.description": "Activar este permiso es necesario para completar el pago en {{bank}}.",
+            "geolocation.blocked.button.continue": "Activar permiso de ubicación",
+            "geolocation.blocked.button.decline": "Salir"
         ])
     }
     
