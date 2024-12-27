@@ -1,0 +1,23 @@
+name: Deploy to Cocoapods
+
+on:
+  push:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    name: Deploy KhipuClientIOS to Cocoapods # https://cocoapods.org/pods/KhipuClientIOS
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+    - name: Install Cocoapods
+      run: pod install --project-directory=Example
+    - name: Deploy to Cocoapods
+      env:
+        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+      run: |
+        set -eo pipefail
+        pod lib lint --allow-warnings
+        pod trunk push --allow-warnings
