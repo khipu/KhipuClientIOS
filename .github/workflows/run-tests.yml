@@ -2,11 +2,16 @@ name: Run Tests
 
 on:
   pull_request:
-    branches: [ "master" ]
+    branches:
+      - master
+  push:
+    branches:
+      - master
+      - prod
 
 jobs:
   build:
-    name: Build and Test KhipuClientIOS-Example scheme using any available iPhone simulator
+    name: Build and Test # Builds and tests KhipuClientIOS-Example scheme using any available iPhone simulator
     runs-on: macos-latest
 
     steps:
