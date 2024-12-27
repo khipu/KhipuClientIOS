@@ -12,18 +12,24 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v1
+
     - name: Install Cocoapods
       run: pod install --project-directory=Example
+
+    - name: Create and Push Tag
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        set -eo pipefail
+        VERSION=$(grep -oE "s.version.*= *'[^']*'" KhipuClientIOS.podspec | grep -oE "'[^']*'" | tr -d "'")
+        echo "Detected version: $VERSION"
+        git tag $VERSION
+        git push origin $VERSION
+
     - name: Deploy to Cocoapods
       env:
         COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
       run: |
-        if [ -z "$COCOAPODS_TRUNK_TOKEN" ]; then
-          echo "Error: COCOAPODS_TRUNK_TOKEN is empty"
-        else
-          echo "COCOAPODS_TRUNK_TOKEN is set, proceeding with deployment..."
-        fi
         set -eo pipefail
-        pod trunk me
         pod lib lint --allow-warnings
         pod trunk push --allow-warnings
