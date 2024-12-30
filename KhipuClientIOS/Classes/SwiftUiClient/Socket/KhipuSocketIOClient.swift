@@ -451,10 +451,8 @@ public class KhipuSocketIOClient {
             let encryptedData = data.first as! String
             let mid = data[1] as! String
             let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            print("Decrypted GeolocationRequest message: \(decryptedMessage ?? "nil")")
             do {
                 let geolocationRequest = try GeolocationRequest(decryptedMessage!)
-                print("Parsed geolocation request. Mandatory: \(geolocationRequest.mandatory ?? false)")
                 self.viewModel.uiState.currentMessageType = MessageType.geolocationRequest.rawValue
                 self.viewModel.handleGeolocationRequest()
             } catch {

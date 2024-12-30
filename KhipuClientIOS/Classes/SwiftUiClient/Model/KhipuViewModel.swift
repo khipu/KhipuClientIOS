@@ -69,7 +69,6 @@ public class KhipuViewModel: ObservableObject {
                 longitude: longitude,
                 type: .geolocationResponse
             )
-            print("Geolocation Response: \(try response.jsonString() ?? "Unable to convert to string")")
             
             khipuSocketIOClient?.sendMessage(
                 type: MessageType.geolocationResponse.rawValue,
