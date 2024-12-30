@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -eo pipefail
-          VERSION=$(grep -oE "s.version.*= *'[^']*'" KhipuClientIOS.podspec | grep -oE "'[^']*'" | tr -d "'")
+          VERSION=$(grep -oE "s.version.*= *'[^']*'" *.podspec | grep -oE "'[^']*'" | tr -d "'")
           echo "Detected version: $VERSION"
           git tag $VERSION
           git push origin $VERSION
