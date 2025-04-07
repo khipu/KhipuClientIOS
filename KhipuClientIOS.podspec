@@ -23,8 +23,8 @@ Pod::Spec.new do |s|
     'KhipuClientIOS' => ['KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css,png}']
   }
 
-  s.dependency 'Socket.IO-Client-Swift', '16.1.0'
-  s.dependency 'Starscream', '4.0.6'
+  s.dependency 'Socket.IO-Client-Swift', '16.1.1'
+  s.dependency 'Starscream', '4.0.8'
   s.dependency 'KhenshinSecureMessage', '1.3.0'
   s.dependency 'KhenshinProtocol', '1.0.48'
   s.swift_versions = "5.0"
