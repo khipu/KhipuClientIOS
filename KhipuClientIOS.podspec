@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KhipuClientIOS'
-  s.version          = '2.9.1'
+  s.version          = '2.9.2'
   s.summary          = 'A Client for iOS Apps written in Swift for Khipu'
 
   s.description      = <<-DESC
@@ -23,8 +23,8 @@ Pod::Spec.new do |s|
     'KhipuClientIOS' => ['KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css,png}']
   }
 
-  s.dependency 'Socket.IO-Client-Swift', '16.1.0'
-  s.dependency 'Starscream', '4.0.6'
+  s.dependency 'Socket.IO-Client-Swift', '16.1.1'
+  s.dependency 'Starscream', '4.0.8'
   s.dependency 'KhenshinSecureMessage', '1.3.0'
   s.dependency 'KhenshinProtocol', '1.0.48'
   s.swift_versions = "5.0"
