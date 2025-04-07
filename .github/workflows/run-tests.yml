@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build and Test # Builds and tests KhipuClientIOS-Example scheme using any available iPhone simulator
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
       - name: Checkout
