@@ -37,7 +37,6 @@ struct NavigationBarComponent: View {
                         ProgressView()
                     }
                     .frame(width: geometry.size.width * 1)
-                    //.aspectRatio(contentMode: .fit)
                 }
             } else if (imageName != nil) {
                 GeometryReader { geometry in
@@ -46,10 +45,8 @@ struct NavigationBarComponent: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .frame(maxWidth: geometry.size.width * self.imageScale, maxHeight: geometry.size.height * self.imageScale)
-                            
-                            
+                            .id("resourceImage")
                     }
-                    //.aspectRatio(contentMode: .fit)
                     .frame(width: geometry.size.width, height:  geometry.size.height)
                     
                 }
