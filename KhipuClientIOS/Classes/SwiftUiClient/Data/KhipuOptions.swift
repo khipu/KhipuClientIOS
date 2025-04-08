@@ -6,6 +6,7 @@ public class KhipuOptions {
     let header: KhipuHeader?
     let topBarTitle: String?
     let topBarImageUrl: String?
+    let topBarImageScale: CGFloat?
     let topBarImageResourceName: String?
     let skipExitPage: Bool
     let theme: Theme
@@ -21,6 +22,7 @@ public class KhipuOptions {
         header: KhipuHeader?,
         topBarTitle: String?,
         topBarImageUrl: String?,
+        topBarImageScale: CGFloat?,
         topBarImageResourceName: String?,
         skipExitPage: Bool,
         theme: Theme,
@@ -35,6 +37,7 @@ public class KhipuOptions {
         self.header = header
         self.topBarTitle = topBarTitle
         self.topBarImageUrl = topBarImageUrl
+        self.topBarImageScale = topBarImageScale
         self.topBarImageResourceName = topBarImageResourceName
         self.skipExitPage = skipExitPage
         self.theme = theme
@@ -55,6 +58,7 @@ public class KhipuOptions {
         var _header: KhipuHeader?
         var _topBarTitle: String?
         var _topBarImageUrl: String?
+        var _topBarImageScale: CGFloat?
         var _topBarImageResourceName: String?
         var _skipExitPage: Bool = false
         var _theme: Theme = .system
@@ -90,6 +94,11 @@ public class KhipuOptions {
 
         public func topBarImageUrl(_ topBarImageUrl: String) -> Builder {
             self._topBarImageUrl = topBarImageUrl
+            return self
+        }
+        
+        public func topBarImageScale(_ topBarImageScale: CGFloat) -> Builder {
+            self._topBarImageScale = topBarImageScale
             return self
         }
 
@@ -140,6 +149,7 @@ public class KhipuOptions {
                 header: _header,
                 topBarTitle: _topBarTitle,
                 topBarImageUrl: _topBarImageUrl,
+                topBarImageScale: _topBarImageScale,
                 topBarImageResourceName: _topBarImageResourceName,
                 skipExitPage: _skipExitPage,
                 theme: _theme,

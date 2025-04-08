@@ -27,7 +27,7 @@ final class NavigationBarComponentTest: XCTestCase {
 
         let inspectView = try view.inspect().view(NavigationBarComponent.self)
         
-        let image = try inspectView.find(ViewType.Image.self)
+        let image = try inspectView.find(viewWithId: "resourceImage").image()
         XCTAssertEqual(try image.actualImage().name(), "imageName")
     }
     
