@@ -42,7 +42,9 @@ class ViewController: UIViewController {
             operationId: sampleInput.text!,
             options: KhipuOptions.Builder()
                 .theme(.system)
-                //.topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
+                //.topBarImageResourceName("header_image")
+                .topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
+                .topBarImageScale(0.9)
                 //.topBarTitle("Demo App")
                 //.showFooter(false)
                 //.showMerchantLogo(false)
