@@ -85,13 +85,6 @@ public struct KhipuView: View {
                     ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
                     EndToEndEncryptionView(translator: viewModel.uiState.translator)
                 }
-                if(viewModel.uiState.returnToApp) {
-                    ExecuteCode {
-                        viewModel.disconnectClient()
-                        completitionHandler!(buildResult(viewModel.uiState))
-                        hostingControllerContainer.hostingController?.dismiss(animated: true)
-                    }
-                }
                 Spacer()
             }
         }
@@ -114,7 +107,7 @@ public struct KhipuView: View {
         )
         .animation(.default, value: isConnected())
         .environmentObject(themeManager)
-        .onAppear(perform: {
+        .task(priority: .userInitiated) {
             if(browserId == nil) {
                 browserId = UUID().uuidString
             }
@@ -135,7 +128,15 @@ public struct KhipuView: View {
             themeManager.selectedTheme.setColorSchemeAndCustomColors(colorScheme: colorScheme, colors: options.colors)
             viewModel.uiState.storedBankForms = storedBankForms.split(separator: "|")
                 .map { String($0) }
-        })
+        }
+        .onChange(of: viewModel.uiState.returnToApp) { returnToApp in
+            guard returnToApp else { return }
+            if(returnToApp) {
+                viewModel.disconnectClient()
+                completitionHandler!(buildResult(viewModel.uiState))
+                hostingControllerContainer.hostingController?.dismiss(animated: true)
+            }
+        }
     }
 
     func buildResult(_ state: KhipuUiState) -> KhipuResult {

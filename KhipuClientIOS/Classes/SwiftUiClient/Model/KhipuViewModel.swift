@@ -21,6 +21,7 @@ public class KhipuViewModel: ObservableObject {
             .store(in: &cancellables)
     }
 
+    @MainActor
     func requestLocation() {
         uiState.geolocationRequested = true
         locationManager?.requestLocation()
@@ -32,6 +33,7 @@ public class KhipuViewModel: ObservableObject {
         }
     }
     
+    @MainActor
     func handleLocationUpdate(_ location: CLLocation) {
         uiState.currentLocation = location
         uiState.geolocationAcquired = true
@@ -46,6 +48,7 @@ public class KhipuViewModel: ObservableObject {
     func handleLocationError(_ error: Error) {
     }
     
+    @MainActor
     func handleAuthStatusChange(_ status: CLAuthorizationStatus) {
         uiState.locationAuthStatus = status
         switch status {
@@ -79,13 +82,14 @@ public class KhipuViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     func setKhipuSocketIOClient(serverUrl: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter:Bool, showMerchantLogo:Bool, showPaymentDetails:Bool) {
         if(khipuSocketIOClient == nil) {
             khipuSocketIOClient = KhipuSocketIOClient(serverUrl: serverUrl, browserId: browserId, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, skipExitPage: skipExitPage, showFooter: showFooter, showMerchantLogo: showMerchantLogo, showPaymentDetails: showPaymentDetails, viewModel: self)
         }
     }
 
-
+    @MainActor
     func restartPayment(){
         uiState.bank = ""
         khipuSocketIOClient?.reconnect()
@@ -105,10 +109,12 @@ public class KhipuViewModel: ObservableObject {
         khipuSocketIOClient = nil
     }
 
+    @MainActor
     public func setCurrentProgress(currentProgress: Float){
         uiState.currentProgress=currentProgress
     }
 
+    @MainActor
     public func setSiteOperationComplete(type: OperationType, value: String) {
         switch type{
         case OperationType.bankSelected:
@@ -132,6 +138,11 @@ public class KhipuViewModel: ObservableObject {
         default:
             return
         }
+    }
+    
+    @MainActor
+    public func setSocketConnected(connected: Bool){
+        uiState.connectedSocket = connected
     }
 
 }

@@ -27,6 +27,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+    @MainActor
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         viewModel.handleLocationUpdate(location)
@@ -37,11 +38,13 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         viewModel.handleLocationError(error)
     }
     
+    @MainActor
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         viewModel.handleAuthStatusChange(getCurrentAuthStatus())
     }
     
     // For iOS 13 support
+    @MainActor
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         viewModel.handleAuthStatusChange(status)
     }
