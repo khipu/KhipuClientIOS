@@ -159,4 +159,9 @@ struct Colors {
         return Color("warning", bundle: bundle)
     }
     
+    //operationId
+    var operationIdText: Color {
+        return Color("operationIdText", bundle: bundle)
+    }
+    
 }

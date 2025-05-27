@@ -104,7 +104,7 @@ struct HeaderComponent: View {
     private func formattedCode() -> Text {
         var text = Text("")
         text = text + Text(translator.t("header.code.label", default: "").uppercased()).foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
-        text = text + Text(" • \(FieldUtils.formatOperationId(operationId:operationInfo?.operationID ?? ""))").foregroundColor(themeManager.selectedTheme.colors.onSurface)
+        text = text + Text(" • \(FieldUtils.formatOperationId(operationId:operationInfo?.operationID ?? ""))").foregroundColor(themeManager.selectedTheme.colors.operationIdText)
         
         return text
     }
