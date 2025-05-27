@@ -26,7 +26,7 @@ public class KhipuSocketIOClient {
     private var hasOpenedAuthorizationApp = false
 
 
-
+    @MainActor
     public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, showMerchantLogo: Bool, showPaymentDetails: Bool, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
@@ -78,7 +78,7 @@ public class KhipuSocketIOClient {
         self.clearKhssCookies()
         self.addListeners()
         self.addParametersUiState()
-        self.startConnectionChecker()
+        //self.startConnectionChecker()
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
@@ -126,7 +126,7 @@ public class KhipuSocketIOClient {
             guard let self = self else { return }
             DispatchQueue.main.async {
                 if self.shouldCheckConnection {
-                    self.viewModel.uiState.connectedSocket = self.socketManager?.status == .connected
+                    self.viewModel.setSocketConnected(connected: self.socketManager?.status == .connected)
                     self.viewModel.notifyViewUpdate()
                 }
             }
@@ -142,15 +142,18 @@ public class KhipuSocketIOClient {
         self.viewModel.uiState.showPaymentDetails=self.showPaymentDetails
     }
 
+    @MainActor
     private func addListeners() {
         self.socket?.on(clientEvent: .connect) { data, ack in
             print("[id: \(self.viewModel.uiState.operationId)] connected")
+            self.viewModel.setSocketConnected(connected: true)
         }
 
         self.socket?.on(clientEvent: .disconnect) { data, ack in
             let reason = data.first as! String
             print("[id: \(self.viewModel.uiState.operationId)] disconnected, reason \(reason)")
             self.hasOpenedAuthorizationApp = false
+            self.viewModel.setSocketConnected(connected: false)
         }
 
         self.socket?.on(clientEvent: .reconnect) { data, ack in
@@ -484,6 +487,7 @@ public class KhipuSocketIOClient {
         socketManager = nil
     }
 
+    @MainActor
     public func reconnect() {
         disconnect()
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [

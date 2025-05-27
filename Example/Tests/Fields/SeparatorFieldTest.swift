@@ -16,7 +16,6 @@ final class SeparatorFieldTest: XCTestCase {
         
         XCTAssertNoThrow(try inspected
             .view(SeparatorField.self)
-            .implicitAnyView()
             .shape(0))
         
     }

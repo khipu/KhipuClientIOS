@@ -18,7 +18,6 @@ final class MainButtonTest: XCTestCase {
         
         let inspectedView = try button.inspect().view(MainButton.self)
         let buttonView = try inspectedView
-            .implicitAnyView()
             .hStack()
             .button(0)
             
@@ -42,7 +41,6 @@ final class MainButtonTest: XCTestCase {
         
         let inspectedView = try button.inspect().view(MainButton.self)
         let buttonView = try inspectedView
-            .implicitAnyView()
             .hStack()
             .button(0)
             

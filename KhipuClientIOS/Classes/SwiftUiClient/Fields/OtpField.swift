@@ -41,7 +41,9 @@ struct OtpField: View {
                         }
                         )
                         .accessibilityIdentifier("coordinateInput\(index)")
+                        #if !TESTING
                         .focused($focusedField,   equals: FieldUtils.getElement(FocusableField.self, at: index))
+                        #endif
                     }
                 }
             }

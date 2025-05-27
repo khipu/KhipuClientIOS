@@ -41,7 +41,7 @@ class ViewController: UIViewController {
             presenter: self,
             operationId: sampleInput.text!,
             options: KhipuOptions.Builder()
-                .theme(.system)
+                .theme(.dark)
                 //.topBarImageResourceName("header_image")
                 .topBarImageUrl("https://s3.amazonaws.com/static.khipu.com/buttons/2024/200x75-purple.png")
                 .topBarImageScale(0.9)

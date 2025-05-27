@@ -13,7 +13,6 @@ final class ProgressComponentTest: XCTestCase {
 
         let inspectedView = try view.inspect().view(ProgressComponent.self)
         let progressView = try inspectedView
-            .implicitAnyView()
             .progressView()
             
         XCTAssertEqual(

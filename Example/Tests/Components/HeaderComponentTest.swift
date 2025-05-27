@@ -15,7 +15,6 @@ final class HeaderComponentTest: XCTestCase {
         
         let inspectedView = try view.inspect().view(HeaderComponent.self)
         let vStack = try inspectedView
-            .implicitAnyView()
             .vStack()
         
         XCTAssertNotNil(try? inspectedView.find(text: "Merchant Name"), "Failed to find the text: Merchant Name")
