@@ -33,7 +33,6 @@ final class ImageChallengeFieldTest: XCTestCase {
         XCTAssertEqual(label, "label")
         
         XCTAssertNoThrow(try inspected
-            .implicitAnyView()
             .vStack()
             .vStack(1)
             .image(0)

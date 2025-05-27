@@ -28,6 +28,7 @@ final class FormComponentTest: XCTestCase {
         let submitFunction: () -> Void = {}
         let getFunction: () -> [String: String] = { ["key":"value"]}
         let setFunction: ([String: String]) -> Void = { param in }
+        let themeManager = ThemeManager()
         
         let view = DrawComponent(
             item:MockDataGenerator.createDataTableFormItem(
@@ -46,8 +47,19 @@ final class FormComponentTest: XCTestCase {
             formValues: Binding(get: getFunction, set: setFunction),
             submitFunction: submitFunction,
             viewModel: KhipuViewModel())
-        .environmentObject(ThemeManager())
+        .environmentObject(themeManager)
         
+        let inspectView = try view.inspect()
+        
+        XCTAssertNoThrow(try inspectView.find(DataTableField.self))
+        XCTAssertThrowsError(try inspectView.find(OtpField.self))
+    }
+    
+    func testDrawComponentReturnsOtpComponent() throws {
+        let submitFunction: () -> Void = {}
+        let getFunction: () -> [String: String] = { ["key":"value"]}
+        let setFunction: ([String: String]) -> Void = { param in }
+        let themeManager = ThemeManager()
         
         let view2 = DrawComponent(
             item: MockDataGenerator.createOtpFormItem(id: "item1", label: "Type your DIGIPASS with numbers", length: 4,hint: "Give me the answer", number: true),
@@ -55,14 +67,8 @@ final class FormComponentTest: XCTestCase {
             formValues: Binding(get: getFunction, set: setFunction),
             submitFunction: submitFunction,
             viewModel: KhipuViewModel())
-        .environmentObject(ThemeManager())
-        
-        let inspectView = try view.inspect()
+        .environmentObject(themeManager)
         let inspectView2 = try view2.inspect()
-        
-        XCTAssertNoThrow(try inspectView.find(DataTableField.self))
-        XCTAssertThrowsError(try inspectView.find(OtpField.self))
-        
         XCTAssertNoThrow(try inspectView2.find(OtpField.self))
         XCTAssertThrowsError(try inspectView2.find(DataTableField.self))
     }
