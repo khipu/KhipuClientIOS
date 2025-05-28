@@ -10,7 +10,6 @@ final class DasehdLineTest: XCTestCase {
         let view = DashedLine().environmentObject(ThemeManager())
         let inspectedView = try view.inspect()
         let strokeStyleModifier = try inspectedView
-            .implicitAnyView()
             .shape(0)
             .strokeStyle()
         XCTAssertEqual(strokeStyleModifier.lineWidth, 1)

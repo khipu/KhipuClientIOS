@@ -18,7 +18,6 @@ final class AuthorizationRequestViewTests: XCTestCase {
         
         let inspectedView = try view.inspect()
             .view(AuthorizationRequestView.self)
-            .implicitAnyView()
             .view(MobileAuthorizationRequestView.self)
             
         XCTAssertNotNil(try? inspectedView.find(text: translator.t("Please authorize using the app")), "Failed to find the text: Please authorize using the app")
@@ -37,7 +36,6 @@ final class AuthorizationRequestViewTests: XCTestCase {
         
         let inspectedView = try view.inspect()
             .view(AuthorizationRequestView.self)
-            .implicitAnyView()
             .view(QrAuthorizationRequestView.self)
 
         XCTAssertNotNil(try? inspectedView.find(text: "Scan the QR code"), "Failed to find the text: Scan the QR code")
