@@ -123,7 +123,7 @@ public struct KhipuView: View {
                 showFooter: options.showFooter,
                 showMerchantLogo: options.showMerchantLogo,
                 showPaymentDetails: options.showPaymentDetails,
-                clientIP: await NetworkUtil.fetchPublicIP(ipv6: false, timeout: 2),
+                clientIP: await NetworkUtil.fetchPublicIP(ipv6: false, timeout: 2)
             )
             viewModel.connectClient()
             themeManager.selectedTheme.setColorSchemeAndCustomColors(colorScheme: colorScheme, colors: options.colors)
