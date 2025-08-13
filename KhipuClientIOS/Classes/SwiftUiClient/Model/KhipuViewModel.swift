@@ -83,9 +83,9 @@ public class KhipuViewModel: ObservableObject {
     }
 
     @MainActor
-    func setKhipuSocketIOClient(serverUrl: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter:Bool, showMerchantLogo:Bool, showPaymentDetails:Bool) {
+    func setKhipuSocketIOClient(serverUrl: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter:Bool, showMerchantLogo:Bool, showPaymentDetails:Bool, clientIP: String) {
         if(khipuSocketIOClient == nil) {
-            khipuSocketIOClient = KhipuSocketIOClient(serverUrl: serverUrl, browserId: browserId, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, skipExitPage: skipExitPage, showFooter: showFooter, showMerchantLogo: showMerchantLogo, showPaymentDetails: showPaymentDetails, viewModel: self)
+            khipuSocketIOClient = KhipuSocketIOClient(serverUrl: serverUrl, browserId: browserId, publicKey: publicKey, appName: appName, appVersion: appVersion, locale: locale, skipExitPage: skipExitPage, showFooter: showFooter, showMerchantLogo: showMerchantLogo, showPaymentDetails: showPaymentDetails, clientIP: clientIP, viewModel: self)
         }
     }
 

@@ -27,7 +27,7 @@ public class KhipuSocketIOClient {
 
 
     @MainActor
-    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, showMerchantLogo: Bool, showPaymentDetails: Bool, viewModel: KhipuViewModel) {
+    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, showMerchantLogo: Bool, showPaymentDetails: Bool, clientIP: String, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         self.locale = locale
@@ -65,7 +65,8 @@ public class KhipuSocketIOClient {
                 "appName": appName,
                 "appVersion": appVersion,
                 "appOS": "iOS",
-                "capabilities": capabilities
+                "capabilities": capabilities,
+                "clientIP": clientIP
             ])
         ])
         self.receivedMessages = []
