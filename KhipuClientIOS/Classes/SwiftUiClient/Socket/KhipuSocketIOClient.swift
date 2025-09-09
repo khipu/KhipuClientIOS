@@ -244,7 +244,7 @@ public class KhipuSocketIOClient {
                     if UIApplication.shared.canOpenURL(appUrl)
                     {
                         print("opening schema \(appUrl)")
-                        UIApplication.shared.open(appUrl)
+                        UIApplication.shared.open(appUrl, options: [:], completionHandler: nil)
                         self.hasOpenedAuthorizationApp = true
                     }
                 }
