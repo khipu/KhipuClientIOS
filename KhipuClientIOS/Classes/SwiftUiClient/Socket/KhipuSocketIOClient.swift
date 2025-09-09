@@ -243,6 +243,7 @@ public class KhipuSocketIOClient {
                     let appUrl = URL(string: openAuthorizationApp.data.ios!.schema)!
                     if UIApplication.shared.canOpenURL(appUrl)
                     {
+                        print("opening schema \(appUrl)")
                         UIApplication.shared.open(appUrl)
                         self.hasOpenedAuthorizationApp = true
                     }
