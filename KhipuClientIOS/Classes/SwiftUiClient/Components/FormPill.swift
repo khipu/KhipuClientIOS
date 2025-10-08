@@ -10,10 +10,13 @@ struct FormPill: View {
             Text(text)
                 .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 14))
                 .foregroundColor(themeManager.selectedTheme.colors.onBackground)
-                .frame(width:Dimens.Frame.extremelyLarge,height: Dimens.Frame.quiteLarge)
-            
+                .lineLimit(nil)
+                .fixedSize(horizontal: false, vertical: true)
+
         }
         .padding(.horizontal,Dimens.Padding.veryMedium)
+        .padding(.vertical, Dimens.Padding.moderatelySmall)
+        .frame(minHeight: Dimens.Frame.quiteLarge)
         .cornerRadius(Dimens.CornerRadius.large)
         .overlay(
             RoundedRectangle(cornerRadius:Dimens.CornerRadius.large)

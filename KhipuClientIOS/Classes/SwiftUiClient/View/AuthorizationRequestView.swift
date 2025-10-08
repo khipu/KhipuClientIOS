@@ -12,7 +12,7 @@ struct AuthorizationRequestView: View {
         case .mobile:
             MobileAuthorizationRequestView(authorizationRequest: authorizationRequest,translator:translator, bank: bank)
         case .qr:
-            QrAuthorizationRequestView(authorizationRequest: authorizationRequest)
+            QrAuthorizationRequestView(authorizationRequest: authorizationRequest,translator:translator, bank: bank)
         default:
             EmptyView()
         }
@@ -23,31 +23,114 @@ struct AuthorizationRequestView: View {
 @available(iOS 15.0.0, *)
 struct QrAuthorizationRequestView: View {
     var authorizationRequest: AuthorizationRequest
+    var translator: KhipuTranslator
+    var bank: String
+    
+    @Environment(\.openURL) private var openURL
     @EnvironmentObject private var themeManager: ThemeManager
     
+    @State private var qrURL: URL?
+    @State private var isLoading = false
+    @State private var errorMsg: String?
+    @State private var uiImage: UIImage?
+    
     var body: some View {
-        VStack(spacing:Dimens.Spacing.extraSmall) {
+        VStack(spacing: Dimens.Spacing.large) {
+            // Procesar mensaje: si tiene "/" dividir en título/subtítulo
+            let messageParts = authorizationRequest.message.split(separator: "|", maxSplits: 1)
+            if messageParts.count == 2 {
+                VStack(spacing: Dimens.Spacing.small) {
+                    Text(messageParts[0].trimmingCharacters(in: .whitespaces))
+                        .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
+                    Text(messageParts[1].trimmingCharacters(in: .whitespaces))
+                        .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 14))
+                        .foregroundStyle(.secondary)
+                        .multilineTextAlignment(.center)
+                }
+            } else {
+                Text(authorizationRequest.message)
+                    .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 16))
+            }
+            
+            if !bank.isEmpty {
+                FormPill(text: bank)
+            }
+
             if let base64String = authorizationRequest.imageData?.split(separator: ",").last,
                let imageData = Data(base64Encoded: String(base64String)) {
-                if let uiImage = UIImage(data: imageData) {
-                    Image(uiImage: uiImage)
+                if let img = UIImage(data: imageData) {
+                    Image(uiImage: img)
                         .resizable()
                         .scaledToFit()
                         .frame(maxWidth: UIScreen.main.bounds.width * 0.5)
                         .accessibility(identifier: "ImageChallengeImage")
-                } else {
-                    Text("Unable to load image")
+                        .onAppear { decodeAndRead(image: img) }
                 }
             } else {
-                Text("Invalid image data")
+                // fallback por si aún no se decodifica o falla
+                if authorizationRequest.imageData != nil {
+                    ProgressView().accessibilityIdentifier("QRImageLoading")
+                } else {
+                    Text("Invalid image data")
+                }
             }
             
-            Text(authorizationRequest.message)
+            // Botón: solo si hay URL válida en el QR
+            if let url = qrURL {
+                MainButton(
+                    text: translator.t("modal.authorization.open.qr.link.button"),
+                    enabled: !isLoading,
+                    onClick: { openURL(url) },
+                    foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                    backgroundColor: themeManager.selectedTheme.colors.primary
+                )
+            } else if let e = errorMsg {
+                Text(e).font(.footnote).foregroundStyle(.secondary)
+            }
+            
+            
         }
-        .padding(.horizontal,Dimens.Padding.extraMedium)
+        .padding(.horizontal, Dimens.Padding.extraMedium)
         .frame(maxWidth: .infinity, alignment: .center)
+        
+    }
+    
+    // MARK: - Helpers
+    
+    private func decodeAndRead(image: UIImage) {
+        errorMsg = nil
+        qrURL = nil
+        isLoading = true
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            var url = extractSafeURLFromQRSync(
+                image: image,
+                blockedSchemes: ["javascript","data","file","vbscript"],
+                allowHTTP: false,
+                allowLocalNetworkHosts: false
+            )
+
+            // Si falló, intentar con allowHTTP = true
+            if url == nil {
+                url = extractSafeURLFromQRSync(
+                    image: image,
+                    blockedSchemes: ["javascript","data","file","vbscript"],
+                    allowHTTP: true,
+                    allowLocalNetworkHosts: false
+                )
+            }
+
+            DispatchQueue.main.async {
+                self.qrURL = url
+                self.isLoading = false
+                if url == nil {
+                    self.errorMsg = "El QR no contiene una URL segura/permitida."
+                }
+            }
+        }
     }
 }
+
 
 @available(iOS 15.0.0, *)
 struct MobileAuthorizationRequestView: View {
@@ -85,7 +168,7 @@ struct MobileAuthorizationRequestView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: Dimens.Image.extraHuge, height: Dimens.Image.extraHuge)
-                } 
+                }
             }
             .padding(.horizontal, Dimens.Padding.large)
             .padding(.vertical, Dimens.Padding.quiteLarge)
@@ -124,7 +207,10 @@ struct MobileAuthorizationRequestView: View {
 @available(iOS 15.0, *)
 struct QrAuthorizationRequestView_Previews: PreviewProvider {
     static var previews: some View {
-        return QrAuthorizationRequestView(authorizationRequest: MockDataGenerator.createAuthorizationRequest(authorizationType: .qr)).environmentObject(ThemeManager())
+        return QrAuthorizationRequestView(authorizationRequest: MockDataGenerator.createAuthorizationRequest(authorizationType: .qr),
+                                          translator: MockDataGenerator.createTranslator(),
+                                          bank: "Banco prueba")
+        .environmentObject(ThemeManager())
     }
 }
 
