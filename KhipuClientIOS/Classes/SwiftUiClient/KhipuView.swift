@@ -54,7 +54,7 @@ public struct KhipuView: View {
                     }
                 case MessageType.operationWarning.rawValue:
                     if (!options.skipExitPage) {
-                        WarningMessageView(operationWarning: viewModel.uiState.operationWarning!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+                        WarningMessageView(operationWarning: viewModel.uiState.operationWarning!, operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.operationSuccess.rawValue:

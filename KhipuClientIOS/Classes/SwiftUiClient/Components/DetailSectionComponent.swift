@@ -5,12 +5,12 @@ import SwiftUI
 
 struct DetailSectionParams {
     let amountLabel: String
-    let amountValue: String
+    let amountValue: String?
     let codOperacionLabel: String
     let merchantNameLabel: String?
     let merchantNameValue: String?
     
-    init(amountLabel: String, amountValue: String, codOperacionLabel: String, merchantNameLabel: String? = nil, merchantNameValue: String? = nil) {
+    init(amountLabel: String, amountValue: String? = nil, codOperacionLabel: String, merchantNameLabel: String? = nil, merchantNameValue: String? = nil) {
         self.amountLabel = amountLabel
         self.amountValue = amountValue
         self.codOperacionLabel = codOperacionLabel
@@ -28,7 +28,9 @@ struct DetailSectionComponent: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: Dimens.Spacing.large) {
-            DetailItem(label: params.amountLabel, value: params.amountValue)
+            if (params.amountValue != nil) {
+                DetailItem(label: params.amountLabel, value: params.amountValue!)
+            }
             
             if let merchantNameLabel = params.merchantNameLabel, !merchantNameLabel.isEmpty,
                let merchantNameValue = params.merchantNameValue, !merchantNameValue.isEmpty {
