@@ -5,7 +5,7 @@ import SwiftUI
 @available(iOS 15.0.0, *)
 struct WarningMessageView: View {
     var operationWarning: OperationWarning
-    var operationInfo: OperationInfo
+    var operationInfo: OperationInfo?
     var translator: KhipuTranslator
     var returnToApp: () -> Void
     @EnvironmentObject private var themeManager: ThemeManager
@@ -21,10 +21,10 @@ struct WarningMessageView: View {
                     reason: operationWarning.reason,
                     params: DetailSectionParams(
                         amountLabel: translator.t("default.amount.label"),
-                        amountValue: operationInfo.amount!,
+                        amountValue: operationInfo?.amount ?? nil,
                         codOperacionLabel: translator.t("default.operation.code.short.label"),
                         merchantNameLabel: translator.t("default.merchant.label"),
-                        merchantNameValue: operationInfo.merchant?.name ?? nil
+                        merchantNameValue: operationInfo?.merchant?.name ?? nil
                     )
                 )
                 MainButton(
