@@ -8,7 +8,7 @@ target 'KhipuClientIOS_Example' do
   target 'KhipuClientIOS_Tests' do
     inherit! :search_paths
 
-    pod 'ViewInspector', '0.10.1'
+    pod 'ViewInspector', '0.10.3'
   end
 end
 
