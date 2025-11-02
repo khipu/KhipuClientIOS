@@ -25,6 +25,12 @@ struct FooterComponent: View {
             }
             .frame(maxWidth: .infinity, alignment: .center)
         }
+        HStack(alignment: .center) {
+            Text("v" + KhipuVersion.version)
+                .font(themeManager.selectedTheme.fonts.font(style: .semiBold, size: 10))
+                .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+        }
+        .frame(maxWidth: .infinity, alignment: .center)
     }
 }
 
