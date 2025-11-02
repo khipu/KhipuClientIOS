@@ -66,7 +66,8 @@ public class KhipuSocketIOClient {
                 "appVersion": appVersion,
                 "appOS": "iOS",
                 "capabilities": capabilities,
-                "clientIP": clientIP
+                "clientIP": clientIP,
+                "clientVersion": KhipuVersion.version,
             ])
         ])
         self.receivedMessages = []

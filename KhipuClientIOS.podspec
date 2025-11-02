@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'KhipuClientIOS'
-  s.version          = '2.12.1'
+  s.version          = '2.13.0'
   s.summary          = 'A Client for iOS Apps written in Swift for Khipu'
 
   s.description      = <<-DESC
@@ -17,6 +17,24 @@ Pod::Spec.new do |s|
   s.source           = { :git => 'https://github.com/khipu/KhipuClientIOS.git', :tag => s.version.to_s }
 
   s.ios.deployment_target = '12.0'
+
+  s.prepare_command = <<-CMD
+    cat > KhipuClientIOS/Classes/KhipuVersion.swift <<EOF
+import Foundation
+
+/// Provides version information for the KhipuClientIOS SDK
+/// This file is auto-generated from KhipuClientIOS.podspec - DO NOT EDIT MANUALLY
+public class KhipuVersion {
+
+    /// The current version of the KhipuClientIOS SDK
+    public static let version = "#{s.version}"
+
+    /// Private initializer to prevent instantiation
+    private init() {}
+}
+EOF
+    echo "✓ Generated KhipuVersion.swift with version #{s.version}"
+  CMD
 
   s.source_files = 'KhipuClientIOS/Classes/**/*'
   s.resource_bundles = {
