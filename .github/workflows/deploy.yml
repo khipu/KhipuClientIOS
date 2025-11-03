@@ -22,15 +22,6 @@ jobs:
           git commit -am "Version sync with podfile"
           git push origin
 
-      - name: Sync to master branch
-        run: |
-          git remote add originmaster git@github.com:khipu/KhipuClientIOS.git
-          git fetch originmaster
-          git checkout --track originmaster/master
-          git merge --no-ff prod -m "Sync from prod [skip ci]"
-          git push originmaster master
-          git checkout prod
-
       - name: Install Cocoapods
         run: pod install --project-directory=Example
 
