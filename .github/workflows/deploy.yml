@@ -25,7 +25,7 @@ jobs:
       - name: Sync to master branch
         run: |
           git fetch origin master
-          git checkout master
+          git checkout -b master origin/master
           git merge prod --no-edit -m "Sync from prod [skip ci]"
           git push origin master
           git checkout prod
