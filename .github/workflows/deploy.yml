@@ -16,19 +16,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Sync version
-	run: |
-	  ./sync_version.sh
-	  git add .
-	  git commit -am "Version sync with podfile"
-	  git push origin
+        run: |
+          ./sync_version.sh
+          git add .
+          git commit -am "Version sync with podfile"
+          git push origin
 
       - name: Sync to master branch
-	run: |
-	  git fetch origin master
-	  git checkout master
-	  git merge prod --no-edit -m "Sync from prod [skip ci]"
-	  git push origin master
-	  git checkout prod
+        run: |
+          git fetch origin master
+          git checkout master
+          git merge prod --no-edit -m "Sync from prod [skip ci]"
+          git push origin master
+          git checkout prod
 
       - name: Install Cocoapods
         run: pod install --project-directory=Example
