@@ -24,10 +24,11 @@ jobs:
 
       - name: Sync to master branch
         run: |
-          git fetch origin master
-          git checkout -b master origin/master
-          git merge prod --no-edit -m "Sync from prod [skip ci]"
-          git push origin master
+          git remote add originmaster git@github.com:khipu/KhipuClientIOS.git
+          git fetch originmaster
+          git checkout --track originmaster/master
+          git merge --no-ff prod -m "Sync from prod [skip ci]"
+          git push originmaster master
           git checkout prod
 
       - name: Install Cocoapods
