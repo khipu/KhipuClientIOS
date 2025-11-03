@@ -14,13 +14,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # importante para poder hacer merge y push
 
       - name: Sync version
         run: |
           ./sync_version.sh
           git add .
           git commit -am "Version sync with podfile"
-          git push origin
+          git commit -m "Actualización de prod [skip ci]" || echo "No changes"
+          git push origin prod
 
       - name: Install Cocoapods
         run: pod install --project-directory=Example
@@ -34,11 +37,11 @@ jobs:
           echo "Detected version: $VERSION"
           git tag $VERSION
           git push origin $VERSION
-
-      - name: Deploy to Cocoapods
-        env:
-          COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+          
+      - name: Sync to master
         run: |
-          set -eo pipefail
-          pod lib lint --allow-warnings
-          pod trunk push --allow-warnings
+          git fetch origin master
+          git checkout master
+          git merge origin/prod --no-edit
+          git push origin master -o ci.skip
+          git checkout prod
