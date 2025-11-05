@@ -57,9 +57,9 @@ public class KhipuViewModel: ObservableObject {
         case .authorizedWhenInUse, .authorizedAlways:
             self.requestLocation()
         case .notDetermined:
-            break // Do nothing
+            break
         @unknown default:
-            break // Do nothing
+            break
         }
     }
     

@@ -3,7 +3,7 @@ import SwiftUI
 
 
 class HostingControllerContainer {
-    weak var hostingController: UIViewController?    // << wraps reference
+    weak var hostingController: UIViewController?
 }
 
 public class KhipuLauncher {

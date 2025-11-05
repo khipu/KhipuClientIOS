@@ -2,23 +2,6 @@ import SwiftUI
 import KhenshinProtocol
 
 @available(iOS 15.0, *)
-struct PasswordButton: View {
-    var secure: Bool? = false
-    @Binding var passwordVisible: Bool
-    
-    var body: some View {
-        Button(action: {
-            passwordVisible.toggle()
-        }) {
-            Image(systemName: passwordVisible ? "eye" : "eye.slash")
-                .foregroundColor(.gray)
-        }
-        .padding()
-        .opacity(secure == true ? 1 : 0)
-    }
-}
-
-@available(iOS 15.0, *)
 struct SimpleTextField: View {
     var formItem: FormItem
     var hasNextField: Bool
@@ -32,39 +15,27 @@ struct SimpleTextField: View {
     @FocusState private var isFocused: Bool
     @ObservedObject var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
-    
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            FieldLabel(text: formItem.label, font: themeManager.selectedTheme.fonts.font(style: .regular, size: 14), lineSpacing: Dimens.Spacing.medium, paddingBottom: Dimens.Spacing.extraSmall)
-            HStack {
-                Group {
-                    if formItem.secure != true || passwordVisible {
-                        TextField(formItem.placeHolder ?? "", text: $textFieldValue)
-                            .focused($isFocused)
-                    } else {
-                        SecureField(formItem.placeHolder ?? "", text: $textFieldValue)
-                            .focused($isFocused)
-                    }
-                }
-                .textFieldStyle(KhipuTextFieldStyle())
-                .autocorrectionDisabled(true)
-                .textInputAutocapitalization(.never)
-                .keyboardType(FieldUtils.getKeyboardType(formItem: formItem))
-                .overlay(
-                    PasswordButton(secure: formItem.secure, passwordVisible: $passwordVisible),
-                    alignment: .trailing
-                )
-                .overlay(
-                    RoundedRectangle(cornerRadius: Dimens.CornerRadius.extraSmall)
-                        .stroke(isFocused ? themeManager.selectedTheme.colors.primary : themeManager.selectedTheme.colors.outline, lineWidth: 1)
-                )
-            }
+        VStack(alignment: .leading, spacing: 4) {
+            MaterialTextField(
+                label: formItem.label ?? "",
+                placeholder: formItem.placeHolder ?? "",
+                text: $textFieldValue,
+                isSecure: (formItem.secure == true) && !passwordVisible,
+                keyboardType: FieldUtils.getKeyboardType(formItem: formItem),
+                trailingIcon: getTrailingIcon(),
+                onTrailingIconTap: formItem.secure == true ? {
+                    passwordVisible.toggle()
+                } : nil,
+                isFocused: $isFocused
+            )
             .onChange(of: textFieldValue) { newValue in
                 onChange(newValue: newValue)
             }
-            
+
             HintLabel(text: formItem.hint)
-            
+
             if shouldDisplayError() {
                 ErrorLabel(text: error)
             }
@@ -76,6 +47,13 @@ struct SimpleTextField: View {
                 textFieldValue = viewModel.uiState.storedPassword
             }
         }
+    }
+
+    func getTrailingIcon() -> String? {
+        if formItem.secure == true {
+            return passwordVisible ? "eye" : "eye.slash"
+        }
+        return nil
     }
     
     func onChange(newValue: String) {

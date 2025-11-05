@@ -31,11 +31,9 @@ public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandle
         webView.uiDelegate = self
         webView.navigationDelegate = self
         
-        // inject JS to capture console.log output and send to iOS
         let source = "function captureLog(msg) { window.webkit.messageHandlers.logHandler.postMessage(msg); } window.console.log = captureLog; window.console.error = captureLog; window.console.debug = captureLog; window.console.info = captureLog;"
         let script = WKUserScript(source: source, injectionTime: .atDocumentEnd, forMainFrameOnly: false)
         webView.configuration.userContentController.addUserScript(script)
-        // register the bridge script that listens for the output
         webView.configuration.userContentController.add(self, name: "logHandler")
         webView.configuration.userContentController.add(self, name: "resultHandler")
         webView.configuration.userContentController.add(self, name: "closeHandler")
@@ -107,7 +105,6 @@ public class KhipuWebView: UIViewController, WKUIDelegate, WKScriptMessageHandle
         do {
             guard let filePath = KhipuClientBundleHelper.podBundle!.path(forResource: "khipuClient", ofType: "html")
             else {
-                // File Error
                 print ("File reading error")
                 return
             }

@@ -11,28 +11,23 @@ struct MainButton: View {
     @State private var submitted = false
 
     var body: some View {
-        HStack(alignment: .center, spacing:Dimens.Spacing.extraSmall) {
-
-            Button(action: {
-                submitted = true
-                onClick()
-            }) {
-                Text(text)
-                    .foregroundColor(enabled && !submitted ? foregroundColor :themeManager.selectedTheme.colors.onDisabled)
-                    .padding(.horizontal,Dimens.Padding.moderatelyLarge)
-                    .padding(.vertical,Dimens.Padding.moderatelySmall)
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .background(enabled && !submitted ? backgroundColor : themeManager.selectedTheme.colors.disabled)
-                    .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 18))
-            }
-            .disabled(!enabled && !submitted)
-
+        Button(action: {
+            submitted = true
+            onClick()
+        }) {
+            Text(text.uppercased())
+                .font(.custom("Roboto", size: 15).weight(.medium))
+                .foregroundColor(enabled && !submitted ? foregroundColor : Color.black.opacity(0.38))
+                .tracking(0.46)
+                .lineSpacing(11)
+                .frame(maxWidth: .infinity)
+                .frame(height: 50)
         }
-        .padding(.horizontal,Dimens.Padding.moderatelyLarge)
-        .padding(.vertical,Dimens.Padding.moderatelySmall)
-        .frame(maxWidth: .infinity, alignment: .center)
-        .background(enabled && !submitted ? backgroundColor :themeManager.selectedTheme.colors.disabled)
-        .cornerRadius(Dimens.CornerRadius.moderatelySmall)
+        .disabled(!enabled && !submitted)
+        .frame(maxWidth: .infinity)
+        .frame(height: 50)
+        .background(enabled && !submitted ? backgroundColor : Color.black.opacity(0.12))
+        .cornerRadius(4)
     }
 }
 

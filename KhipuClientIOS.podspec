@@ -20,7 +20,7 @@ Pod::Spec.new do |s|
 
   s.source_files = 'KhipuClientIOS/Classes/**/*'
   s.resource_bundles = {
-    'KhipuClientIOS' => ['KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css,png}']
+    'KhipuClientIOS' => ['KhipuClientIOS/Assets/**/*.{xcassets,json,ttf,html,js,css,png,svg}']
   }
 
   s.dependency 'Socket.IO-Client-Swift', '16.1.1'

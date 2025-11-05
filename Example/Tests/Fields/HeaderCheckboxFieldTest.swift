@@ -17,7 +17,7 @@ final class HeaderCheckboxFieldTest: XCTestCase {
         viewModel.uiState = KhipuUiState()
         viewModel.uiState.translator = KhipuTranslator(translations: [:])
 
-        let formItem = try! FormItem(
+        let formItem = try! KhenshinProtocol.FormItem(
                  """
                      {
                        "id": "item",

@@ -36,7 +36,6 @@ struct QrAuthorizationRequestView: View {
     
     var body: some View {
         VStack(spacing: Dimens.Spacing.large) {
-            // Procesar mensaje: si tiene "/" dividir en título/subtítulo
             let messageParts = authorizationRequest.message.split(separator: "|", maxSplits: 1)
             if messageParts.count == 2 {
                 VStack(spacing: Dimens.Spacing.small) {
@@ -67,7 +66,6 @@ struct QrAuthorizationRequestView: View {
                         .onAppear { decodeAndRead(image: img) }
                 }
             } else {
-                // fallback por si aún no se decodifica o falla
                 if authorizationRequest.imageData != nil {
                     ProgressView().accessibilityIdentifier("QRImageLoading")
                 } else {
@@ -75,7 +73,6 @@ struct QrAuthorizationRequestView: View {
                 }
             }
             
-            // Botón: solo si hay URL válida en el QR
             if let url = qrURL {
                 MainButton(
                     text: translator.t("modal.authorization.open.qr.link.button"),
@@ -110,7 +107,6 @@ struct QrAuthorizationRequestView: View {
                 allowLocalNetworkHosts: false
             )
 
-            // Si falló, intentar con allowHTTP = true
             if url == nil {
                 url = extractSafeURLFromQRSync(
                     image: image,

@@ -42,4 +42,5 @@ struct KhipuUiState {
     var geolocationAcquired: Bool = false
     var geolocationAccessDeclinedAtWarningView: Bool = false
     var geolocationRequested: Bool = false
+    var termsAccepted: Bool = false
 }

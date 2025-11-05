@@ -53,8 +53,10 @@ public class KhipuOptions {
     }
 
     public class Builder {
-        var _serverUrl: String = "https://khenshin-ws.khipu.com"
-        var _serverPublicKey: String = "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw="
+        var _serverUrl: String = "https://khenshin-ws-st-oci-scl.khipu.com"
+        //var _serverUrl: String = "https://khenshin-ws.khipu.com"
+        //var _serverPublicKey: String = "mp4j+M037aSEnCuS/1vr3uruFoeEOm5O1ugB+LLoUyw="
+        var _serverPublicKey: String = "h/00Tj8/rOuJBq1fzPI7xiPBeC8NAIm9qJOXV67akXY="
         var _header: KhipuHeader?
         var _topBarTitle: String?
         var _topBarImageUrl: String?

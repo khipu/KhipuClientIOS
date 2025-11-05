@@ -18,7 +18,7 @@ public func extractSafeURLFromQRSync(
     allowLocalNetworkHosts: Bool = false,
     maxLength: Int = 2000,
     maxSideForDownscale: CGFloat = 2048,
-    forceCPU: Bool? = nil   // nil = auto (simulador CPU; dispositivo GPU)
+    forceCPU: Bool? = nil
 ) -> URL? {
     func containsControlCharacters(_ s: String) -> Bool {
         for sc in s.unicodeScalars {
@@ -54,17 +54,14 @@ public func extractSafeURLFromQRSync(
         @unknown default: return .up
         }
     }
-    // Downscale/Upscale defensivo: crea SIEMPRE un CGImage propio (evita problemas de lifetime de UIImage)
     func resizedCGImage(from image: UIImage, targetSize: CGFloat) -> CGImage? {
         guard let baseCG = image.cgImage else { return nil }
         let w = CGFloat(baseCG.width), h = CGFloat(baseCG.height)
         let maxCurrent = max(w, h)
 
-        // Si la imagen es muy pequeña (< 300px), hacer upscale
         let finalSize = maxCurrent < 300 ? max(targetSize, 512) : targetSize
 
         if abs(maxCurrent - finalSize) < 10 {
-            // Similar tamaño, igual copiamos
             return baseCG.copy()
         }
 
@@ -79,26 +76,21 @@ public func extractSafeURLFromQRSync(
             space: cs,
             bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
         ) else { return baseCG.copy() }
-        // Para QR: usar interpolación none si estamos escalando hacia arriba (evita difuminado)
         ctx.interpolationQuality = scale > 1.5 ? .none : .high
         ctx.draw(baseCG, in: CGRect(x: 0, y: 0, width: newW, height: newH))
         return ctx.makeImage()
     }
 
-    // Usar imagen ORIGINAL sin procesar
     guard let cgImage = image.cgImage else { return nil }
 
-    // Forzar orientación .up para evitar problemas con Vision
     let orientation: CGImagePropertyOrientation = .up
 
-    // Política CPU/GPU
     #if targetEnvironment(simulator)
     let useCPU = forceCPU ?? false
     #else
     let useCPU = forceCPU ?? false
     #endif
 
-    // ---- Intentar con CIDetector primero (más robusto para QRs pequeños) ----
     let payload: String = autoreleasepool {
         let ciImage = CIImage(cgImage: cgImage)
         let context = CIContext()
@@ -111,7 +103,6 @@ public func extractSafeURLFromQRSync(
             return message
         }
 
-        // ---- Fallback a Vision ----
         let request = VNDetectBarcodesRequest()
         request.symbologies = [.QR]
         request.usesCPUOnly = useCPU
@@ -124,7 +115,7 @@ public func extractSafeURLFromQRSync(
 
         do {
             try handler.perform([request])
-            if let results = request.results as? [VNBarcodeObservation],
+            if let results = request.results,
                let first = results.first(where: { $0.symbology == .QR }),
                let text = first.payloadStringValue,
                !text.isEmpty {
@@ -138,11 +129,10 @@ public func extractSafeURLFromQRSync(
 
     guard !payload.isEmpty else { return nil }
 
-    // ---- Validación segura de URL ----
     let trimmed = payload.trimmingCharacters(in: .whitespacesAndNewlines)
     guard !trimmed.isEmpty, trimmed.count <= maxLength else { return nil }
     guard !containsControlCharacters(trimmed) else { return nil }
-    guard var comps = URLComponents(string: trimmed) else { return nil }
+    guard let comps = URLComponents(string: trimmed) else { return nil }
     guard let scheme = comps.scheme?.lowercased(), !scheme.isEmpty else { return nil }
 
     if blockedSchemes.contains(scheme) { return nil }

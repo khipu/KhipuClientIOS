@@ -1,6 +1,7 @@
 import SwiftUI
 import KhenshinProtocol
 
+
 @available(iOS 15.0, *)
 class MockDataGenerator {
     static func createOperationInfo(
@@ -531,7 +532,7 @@ class MockDataGenerator {
             createTextFormItem(id: "password", label: "Password", hint: "Enter your password", secure: true)
         ],
         pageTitle: String = "Page Title",
-        progress: KhenshinProtocol.Progress = KhenshinProtocol.Progress(current: 1, total: 2),
+        progress: KhenshinProtocol.Progress = Progress(current: 1, total: 2),
         rememberValues: Bool = true,
         termsURL: String = "",
         timeout: Int = 300,

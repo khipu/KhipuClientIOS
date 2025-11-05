@@ -22,7 +22,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         if #available(iOS 14.0, *) {
             return locationManager.authorizationStatus
         } else {
-            // For iOS 13, we use the deprecated class method
             return CLLocationManager.authorizationStatus()
         }
     }

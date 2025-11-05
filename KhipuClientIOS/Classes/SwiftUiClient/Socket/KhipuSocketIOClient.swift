@@ -80,7 +80,6 @@ public class KhipuSocketIOClient {
         self.clearKhssCookies()
         self.addListeners()
         self.addParametersUiState()
-        //self.startConnectionChecker()
         NotificationCenter.default.addObserver(self, selector: #selector(appWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
 
@@ -561,8 +560,7 @@ public class KhipuSocketIOClient {
     func showCookies() {
 
         let cookieStorage = HTTPCookieStorage.shared
-        //println("policy: \(cookieStorage.cookieAcceptPolicy.rawValue)")
-
+        
         let cookies = cookieStorage.cookies!
         print("Cookies.count: \(cookies.count)")
         for cookie in cookies {

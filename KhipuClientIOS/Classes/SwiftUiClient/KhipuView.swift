@@ -50,17 +50,14 @@ public struct KhipuView: View {
                         } else {
                             FailureMessageView(operationFailure: viewModel.uiState.operationFailure!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
                         }
-                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.operationWarning.rawValue:
                     if (!options.skipExitPage) {
                         WarningMessageView(operationWarning: viewModel.uiState.operationWarning!, operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
-                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.operationSuccess.rawValue:
                     if (!options.skipExitPage){
                         SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo, returnToApp: {viewModel.uiState.returnToApp=true})
-                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.progressInfo.rawValue:
                     ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
@@ -73,11 +70,9 @@ public struct KhipuView: View {
 
                         AuthorizationRequestView(authorizationRequest:authorizationRequest, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
                     }
-                    FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                 case MessageType.operationMustContinue.rawValue:
                     if (!options.skipExitPage) {
                         MustContinueView(operationMustContinue: viewModel.uiState.operationMustContinue!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
-                        FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.geolocationRequest.rawValue:
                     LocationAccessRequestComponent(viewModel: viewModel)
@@ -87,6 +82,8 @@ public struct KhipuView: View {
                 }
                 Spacer()
             }
+
+            FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter, operationCode: viewModel.uiState.operationId)
         }
         .background(themeManager.selectedTheme.colors.background)
         .navigationBarBackButtonHidden(true)
