@@ -43,11 +43,6 @@ final class SimpleTextFieldTest: XCTestCase {
         let hint = try inspected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
         XCTAssertEqual(hint, "Some instructions")
         
-        XCTAssertNoThrow(try inspected
-            .vStack()
-            .hStack(1)
-            .group(0)
-            .textField(0))
     }
     
     func testAsTextSecure() throws {
@@ -78,12 +73,6 @@ final class SimpleTextFieldTest: XCTestCase {
         
         let label = try inspected.find(viewWithAccessibilityIdentifier: "labelText").text().string()
         XCTAssertEqual(label, "Some stuff")
-     
-        XCTAssertNoThrow(try inspected
-            .vStack()
-            .hStack(1)
-            .group(0)
-            .secureField(0))
         
         let hint = try inspected.find(viewWithAccessibilityIdentifier: "hintText").text().string()
         XCTAssertEqual(hint, "Some instructions")

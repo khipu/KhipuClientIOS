@@ -13,7 +13,7 @@ final class FormComponentTest: XCTestCase {
         let view = FormComponent(formRequest: MockDataGenerator.createFormRequest(), viewModel: viewModel).environmentObject(ThemeManager())
         
         let inspectView = try view.inspect()
-        let titles = inspectView.findAll(FormTitle.self)
+        let titles = inspectView.findAll(FormIconHeader.self)
         let texts = inspectView.findAll(SimpleTextField.self)
         
         XCTAssertEqual(titles.count, 1)

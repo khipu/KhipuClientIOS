@@ -82,7 +82,7 @@ struct HeaderComponent: View {
 
                         if showPaymentDetails {
                             Button(action: { showMerchantDialog = true }) {
-                                Text("VER DETALLE")
+                                Text(translator.t("header.details.show"))
                                     .font(themeManager.selectedTheme.fonts.font(style: .medium, size: 13))
                                     .foregroundColor(themeManager.selectedTheme.colors.info)
                                     .tracking(0.46)

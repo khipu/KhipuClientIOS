@@ -2,7 +2,6 @@ import SwiftUI
 
 @available(iOS 15.0, *)
 struct FooterComponent: View {
-    var translator: KhipuTranslator
     var showFooter: Bool
     var operationCode: String?
     @EnvironmentObject private var themeManager: ThemeManager
@@ -57,14 +56,12 @@ struct FooterComponent_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 20) {
             FooterComponent(
-                translator: MockDataGenerator.createTranslator(),
                 showFooter: true,
                 operationCode: "HUSK-P7ZZ-XGYG"
             )
             .environmentObject(ThemeManager())
             
             FooterComponent(
-                translator: MockDataGenerator.createTranslator(),
                 showFooter: true,
                 operationCode: nil
             )

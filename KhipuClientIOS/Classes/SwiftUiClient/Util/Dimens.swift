@@ -72,12 +72,14 @@ struct Dimens {
         static let moderatelyMedium = Dimens.moderatelyMedium
         static let extraMedium = Dimens.extraMedium
         static let medium = Dimens.large
+        static let icon: CGFloat = 24 // Tamaño estándar de íconos
         static let large = Dimens.moderatelyLarge
         static let quiteLarge = Dimens.quiteLarge
         static let slightlyLarger = Dimens.slightlyLarger
         static let almostLarge = Dimens.almostLarge
         static let larger = Dimens.larger
         static let extraLarge = Dimens.extraLarge
+        static let materialTextField: CGFloat = 56 // Altura del Material TextField
         static let substantiallyLarge = Dimens.substantiallyLarge
         static let muchLarger = Dimens.muchLarger
         static let extremelyLarge = Dimens.extremelyLarge

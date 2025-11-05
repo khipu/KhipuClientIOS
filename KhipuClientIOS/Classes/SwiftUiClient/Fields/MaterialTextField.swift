@@ -14,16 +14,16 @@ struct MaterialTextField: View {
 
     var body: some View {
         ZStack(alignment: .leading) {
-            HStack(spacing: 8) {
+            HStack(spacing: Dimens.Spacing.extraSmall) {
                 if isSecure {
                     SecureField(placeholder ?? "", text: $text)
-                        .font(.custom("Roboto", size: 16).weight(.regular))
-                        .foregroundColor(Color.black.opacity(0.87))
+                        .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 16))
+                        .foregroundColor(themeManager.selectedTheme.colors.onBackground)
                         .focused($isFocused)
                 } else {
                     TextField(placeholder ?? "", text: $text)
-                        .font(.custom("Roboto", size: 16).weight(.regular))
-                        .foregroundColor(Color.black.opacity(0.87))
+                        .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 16))
+                        .foregroundColor(themeManager.selectedTheme.colors.onBackground)
                         .focused($isFocused)
                 }
 
@@ -32,24 +32,24 @@ struct MaterialTextField: View {
                         onTrailingIconTap?()
                     }) {
                         Image(systemName: icon)
-                            .foregroundColor(Color.black.opacity(0.54))
-                            .frame(width: 24, height: 24)
+                            .foregroundColor(themeManager.selectedTheme.colors.onSurfaceVariant)
+                            .frame(width: Dimens.Frame.icon, height: Dimens.Frame.icon)
                     }
                     .buttonStyle(PlainButtonStyle())
                 }
             }
-            .padding(.vertical, 16)
-            .padding(.horizontal, 12)
-            .background(Color.white)
+            .padding(.vertical, Dimens.extraMedium)
+            .padding(.horizontal, Dimens.veryMedium)
+            .background(themeManager.selectedTheme.colors.surface)
             .keyboardType(keyboardType)
             .autocorrectionDisabled(true)
             .textInputAutocapitalization(.never)
             .overlay(
-                RoundedRectangle(cornerRadius: 4)
+                RoundedRectangle(cornerRadius: Dimens.CornerRadius.verySmall)
                     .stroke(
                         isFocused ?
-                            (Color(hexString: "#7E57C2") ?? themeManager.selectedTheme.colors.primary) :
-                            (Color.black.opacity(0.23)),
+                            themeManager.selectedTheme.colors.primary :
+                            themeManager.selectedTheme.colors.outline,
                         lineWidth: isFocused ? 2 : 1
                     )
             )
@@ -58,24 +58,25 @@ struct MaterialTextField: View {
                 VStack {
                     HStack {
                         Text(label)
-                            .font(.custom("Roboto", size: 12).weight(.regular))
+                            .font(themeManager.selectedTheme.fonts.font(style: .regular, size: 12))
                             .tracking(0.15)
                             .foregroundColor(
                                 isFocused ?
-                                    (Color(hexString: "#7E57C2") ?? themeManager.selectedTheme.colors.primary) :
-                                    Color.black.opacity(0.6)
+                                    themeManager.selectedTheme.colors.primary :
+                                    themeManager.selectedTheme.colors.onSurfaceVariant
                             )
-                            .padding(.horizontal, 4)
-                            .background(Color.white)
+                            .padding(.horizontal, Dimens.verySmall)
+                            .background(themeManager.selectedTheme.colors.surface)
+                            .accessibilityIdentifier("labelText")
                         Spacer()
                     }
-                    .padding(.leading, 8)
+                    .padding(.leading, Dimens.extraSmall)
                     .offset(y: -1)
                     Spacer()
                 }
             }
         }
-        .frame(height: 56)
+        .frame(height: Dimens.Frame.materialTextField)
     }
 }
 

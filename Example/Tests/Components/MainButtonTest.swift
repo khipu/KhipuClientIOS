@@ -18,10 +18,10 @@ final class MainButtonTest: XCTestCase {
         
         let inspectedView = try button.inspect().view(MainButton.self)
         let buttonView = try inspectedView
-            .hStack()
+            //.hStack()
             .button(0)
             
-        XCTAssertEqual(try buttonView.labelView().text().string(), "Click Me")
+        XCTAssertEqual(try buttonView.labelView().text().string(), "CLICK ME")
         XCTAssertEqual(buttonView.isDisabled(), false)
         XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), Color.white)
  
@@ -41,10 +41,9 @@ final class MainButtonTest: XCTestCase {
         
         let inspectedView = try button.inspect().view(MainButton.self)
         let buttonView = try inspectedView
-            .hStack()
             .button(0)
             
-        XCTAssertEqual(try buttonView.labelView().text().string(), "Click Me")
+        XCTAssertEqual(try buttonView.labelView().text().string(), "CLICK ME")
         XCTAssertEqual(buttonView.isDisabled(), true)
         XCTAssertEqual(try buttonView.labelView().text().attributes().foregroundColor(), themeManager.selectedTheme.colors.onDisabled)
     }

@@ -83,7 +83,7 @@ public struct KhipuView: View {
                 Spacer()
             }
 
-            FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter, operationCode: viewModel.uiState.operationId)
+            FooterComponent(showFooter: viewModel.uiState.showFooter, operationCode: viewModel.uiState.operationId)
         }
         .background(themeManager.selectedTheme.colors.background)
         .navigationBarBackButtonHidden(true)

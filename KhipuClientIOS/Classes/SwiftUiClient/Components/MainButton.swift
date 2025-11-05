@@ -17,7 +17,7 @@ struct MainButton: View {
         }) {
             Text(text.uppercased())
                 .font(.custom("Roboto", size: 15).weight(.medium))
-                .foregroundColor(enabled && !submitted ? foregroundColor : Color.black.opacity(0.38))
+                .foregroundColor(enabled && !submitted ? foregroundColor : themeManager.selectedTheme.colors.onDisabled)
                 .tracking(0.46)
                 .lineSpacing(11)
                 .frame(maxWidth: .infinity)

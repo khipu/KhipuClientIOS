@@ -16,7 +16,7 @@ final class MustContinueViewTest: XCTestCase {
         let inspectedView = try view.inspect().view(MustContinueView.self)
         
         XCTAssertNotNil(try? inspectedView.find(text: MockDataGenerator.createTranslator().t("page.operationFailure.header.text.operation.task.finished")), "Failed to find the text: Pago en verificación")
-        XCTAssertNotNil(try? inspectedView.find(text: MockDataGenerator.createTranslator().t("default.end.and.go.back")), "Failed to find the text: Pago en verificación")
+        XCTAssertNotNil(try? inspectedView.find(text: MockDataGenerator.createTranslator().t("default.end.and.go.back").uppercased()), "Failed to find the text: Pago en verificación")
         XCTAssertNoThrow(try inspectedView.find(MainButton.self))
     }
     
