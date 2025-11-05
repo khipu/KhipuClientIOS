@@ -9,20 +9,17 @@ struct SelectableOption<Content: View>: View  {
     @EnvironmentObject private var themeManager: ThemeManager
     
     var body: some View {
-        
-      
-        HStack(alignment: .center, spacing: Dimens.Spacing.extraMedium) {
+        HStack(alignment: .center, spacing: Dimens.extraMedium) {
             content()
         }
-        .padding(.horizontal, Dimens.Padding.large)
-        .padding(.vertical, Dimens.Padding.medium)
-        .frame(maxWidth: .infinity, minHeight: Dimens.Frame.substantiallyLarge, maxHeight: Dimens.Frame.substantiallyLarge, alignment: .leading)
+        .padding(.horizontal, Dimens.large)
+        .padding(.vertical, Dimens.medium)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(themeManager.selectedTheme.colors.surface)
         .cornerRadius(Dimens.CornerRadius.moderatelySmall)
         .overlay(
-        RoundedRectangle(cornerRadius: Dimens.CornerRadius.moderatelySmall)
-        .inset(by: 0.5)
-        .stroke(selected ? themeManager.selectedTheme.colors.primary : themeManager.selectedTheme.colors.outline, lineWidth: 1)
+            RoundedRectangle(cornerRadius: Dimens.CornerRadius.moderatelySmall)
+                .stroke(themeManager.selectedTheme.colors.outline, lineWidth: 1)
         )
     }
 }

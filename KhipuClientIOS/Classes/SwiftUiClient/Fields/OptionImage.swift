@@ -12,16 +12,13 @@ struct OptionImage: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width:Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
-                        .clipShape(Circle())
+                        .frame(width: Dimens.Image.bankLogo, height: Dimens.Image.bankLogo)
                 } else if phase.error != nil {
                     Color.red
-                        .frame(width: Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
-                        .clipShape(Circle())
+                        .frame(width: Dimens.Image.bankLogo, height: Dimens.Image.bankLogo)
                 } else {
                     Color.gray
-                        .frame(width: Dimens.Frame.slightlyLarger, height:Dimens.Frame.slightlyLarger)
-                        .clipShape(Circle())
+                        .frame(width: Dimens.Image.bankLogo, height: Dimens.Image.bankLogo)
                 }
             }
         }

@@ -30,67 +30,76 @@ struct Dimens {
 
 
     struct Spacing {
-        static let small = Dimens.small // 2
-        static let verySmall = Dimens.verySmall // 4
-        static let moderatelySmall = Dimens.moderatelySmall // 6
-        static let extraSmall = Dimens.extraSmall // 8
-        static let medium = Dimens.medium // 10
-        static let veryMedium = Dimens.veryMedium // 12
-        static let extraMedium = Dimens.extraMedium // 16
-        static let large = Dimens.large // 20
+        static let small = Dimens.small
+        static let verySmall = Dimens.verySmall
+        static let moderatelySmall = Dimens.moderatelySmall
+        static let extraSmall = Dimens.extraSmall
+        static let medium = Dimens.medium
+        static let veryMedium = Dimens.veryMedium
+        static let extraMedium = Dimens.extraMedium
+        static let large = Dimens.large
+        static let headerContent: CGFloat = 16
     }
 
     struct Padding {
-        static let verySmall = Dimens.verySmall // 4
-        static let moderatelySmall = Dimens.moderatelySmall // 6
-        static let extraSmall = Dimens.extraSmall // 8
-        static let medium = Dimens.medium // 10
-        static let veryMedium = Dimens.veryMedium // 12
-        static let extraMedium = Dimens.extraMedium // 16
-        static let large = Dimens.large // 20
-        static let moderatelyLarge = Dimens.moderatelyLarge // 24
-        static let quiteLarge = Dimens.quiteLarge // 32
-        static let veryLarge = Dimens.veryLarge // 36
-        static let slightlyLarger = Dimens.slightlyLarger // 40
-        static let larger = Dimens.larger // 48
-        static let extraLarge = Dimens.extraLarge // 54
-        static let massive = Dimens.massive // 180
+        static let verySmall = Dimens.verySmall
+        static let moderatelySmall = Dimens.moderatelySmall
+        static let extraSmall = Dimens.extraSmall
+        static let medium = Dimens.medium
+        static let veryMedium = Dimens.veryMedium
+        static let extraMedium = Dimens.extraMedium
+        static let large = Dimens.large
+        static let moderatelyLarge = Dimens.moderatelyLarge
+        static let quiteLarge = Dimens.quiteLarge
+        static let veryLarge = Dimens.veryLarge
+        static let slightlyLarger = Dimens.slightlyLarger
+        static let larger = Dimens.larger
+        static let extraLarge = Dimens.extraLarge
+        static let massive = Dimens.massive
     }
 
     struct CornerRadius {
-        static let verySmall = Dimens.verySmall // 4
-        static let moderatelySmall = Dimens.moderatelySmall // 6
-        static let extraSmall = Dimens.extraSmall // 8
-        static let medium = Dimens.medium // 10
-        static let large = Dimens.large // 20
+        static let verySmall = Dimens.verySmall
+        static let moderatelySmall = Dimens.moderatelySmall
+        static let extraSmall = Dimens.extraSmall
+        static let medium = Dimens.medium
+        static let large = Dimens.large
+        static let formContainer = Dimens.large
     }
 
     struct Frame {
-        static let verySmall = Dimens.extraSmall // 8
-        static let moderatelyMedium = Dimens.moderatelyMedium // 15
-        static let extraMedium = Dimens.extraMedium // 16
-        static let medium = Dimens.large // 20
-        static let large = Dimens.moderatelyLarge // 24
-        static let quiteLarge = Dimens.quiteLarge // 32
-        static let slightlyLarger = Dimens.slightlyLarger // 40
-        static let almostLarge = Dimens.almostLarge // 45
-        static let larger = Dimens.larger // 48
-        static let extraLarge = Dimens.extraLarge // 54
-        static let substantiallyLarge = Dimens.substantiallyLarge // 65
-        static let muchLarger = Dimens.muchLarger // 80
-        static let extremelyLarge = Dimens.extremelyLarge // 90
-        static let veryHuge = Dimens.veryHuge // 120
-        static let gigantic = Dimens.gigantic // 200
-        static let colossal = Dimens.colossal // 300
+        static let verySmall = Dimens.extraSmall
+        static let moderatelyMedium = Dimens.moderatelyMedium
+        static let extraMedium = Dimens.extraMedium
+        static let medium = Dimens.large
+        static let large = Dimens.moderatelyLarge
+        static let quiteLarge = Dimens.quiteLarge
+        static let slightlyLarger = Dimens.slightlyLarger
+        static let almostLarge = Dimens.almostLarge
+        static let larger = Dimens.larger
+        static let extraLarge = Dimens.extraLarge
+        static let substantiallyLarge = Dimens.substantiallyLarge
+        static let muchLarger = Dimens.muchLarger
+        static let extremelyLarge = Dimens.extremelyLarge
+        static let veryHuge = Dimens.veryHuge
+        static let gigantic = Dimens.gigantic
+        static let colossal = Dimens.colossal
     }
 
     struct Image {
-        static let veryMedium = Dimens.veryMedium // 12
-        static let small = Dimens.large // 20
-        static let slightlyLarger = Dimens.slightlyLarger // 40
-        static let larger = Dimens.larger // 48
-        static let huge = Dimens.huge // 100
-        static let extraHuge = Dimens.extraHuge // 150
-        static let gigantic = Dimens.gigantic // 200
+        static let veryMedium = Dimens.veryMedium
+        static let small = Dimens.large
+        static let bankLogo: CGFloat = 35
+        static let emptyStateIcon: CGFloat = 32
+        static let slightlyLarger = Dimens.slightlyLarger
+        static let larger = Dimens.larger
+        static let merchantLogo: CGFloat = 70
+        static let huge = Dimens.huge
+        static let extraHuge = Dimens.extraHuge
+        static let gigantic = Dimens.gigantic
+    }
+
+    struct LineHeight {
+        static let tabIndicator: CGFloat = 2
     }
 }
