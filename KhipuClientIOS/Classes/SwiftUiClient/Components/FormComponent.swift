@@ -28,87 +28,79 @@ public struct FormComponent: View {
     @EnvironmentObject private var themeManager: ThemeManager
     
     public var body: some View {
-        ZStack {
-            themeManager.selectedTheme.colors.background
-                .edgesIgnoringSafeArea(.all)
-            
-            VStack(alignment: .center, spacing: 0) {
-                
-                VStack(alignment: .center, spacing: Dimens.large) {
-                    let formTitle = formRequest.items.count == 1 && formRequest.items[0].email ?? false ?
-                    viewModel.uiState.translator.t("form.email.subtitle") : viewModel.uiState.bank
-                    if let iconName = getIconName(formRequest: formRequest), let subtitle = formRequest.title {
-                        FormIconHeader(
-                            iconName: iconName,
-                            title: formTitle,
-                            subtitle: subtitle
-                        )
-                    } else if let title = formRequest.title {
-                        FormTitle(text: title)
-                    }
-                    
-                    if formRequest.info != nil && !formRequest.info!.isEmpty {
-                        FormInfo(text: formRequest.info!)
-                    }
-                    
-                    ForEach(formRequest.items.indices, id: \.self) { index in
-                        DrawComponent(
-                            item: formRequest.items[index],
-                            hasNextField: index < formRequest.items.count - 1,
-                            formValues: $formValues,
-                            submitFunction: submitForm,
-                            viewModel: viewModel
-                        )
-                    }
-                    
-                    FormError(text: formRequest.errorMessage)
-                    
-                    RememberValues(
-                        formRequest: formRequest,
-                        viewModel: viewModel)
-                    
-                    if showTermsCheckbox && getShouldShowContinueButton(formRequest: formRequest) {
-                        TermsCheckbox(
-                            isAccepted: Binding(
-                                get: { viewModel.uiState.termsAccepted },
-                                set: { viewModel.uiState.termsAccepted = $0 }
-                            ),
-                            termsURL: viewModel.uiState.translator.t("default.terms.accept.link.url"),
-                            translator: viewModel.uiState.translator
-                        )
-                    }
-                    
-                    if getShouldShowContinueButton(formRequest: formRequest) {
-                        MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
-                                   enabled: validForm() && viewModel.uiState.termsAccepted,
-                                   onClick: {
-                            submittedForm = true
-                            submitForm()
-                        },
-                                   foregroundColor: themeManager.selectedTheme.colors.onPrimary,
-                                   backgroundColor: themeManager.selectedTheme.colors.primary
-                        )
-                    }
-                    
-                    SecurityMessage(translator: viewModel.uiState.translator)
+        VStack(spacing: 0) {
+            VStack(alignment: .center, spacing: Dimens.large) {
+                let formTitle = formRequest.items.count == 1 && formRequest.items[0].email ?? false ?
+                viewModel.uiState.translator.t("form.email.subtitle") : viewModel.uiState.bank
+                if let iconName = getIconName(formRequest: formRequest), let subtitle = formRequest.title {
+                    FormIconHeader(
+                        iconName: iconName,
+                        title: formTitle,
+                        subtitle: subtitle
+                    )
+                } else if let title = formRequest.title {
+                    FormTitle(text: title)
                 }
-                .padding(.horizontal, Dimens.large)
-                .padding(.vertical, Dimens.quiteLarge)
-                .background(themeManager.selectedTheme.colors.surface)
-                .cornerRadius(Dimens.CornerRadius.formContainer, corners: [.topLeft, .topRight])
-                .onAppear {
-                    startTimer()
-                    if let progress = formRequest.progress,
-                       let current = progress.current,
-                       let total = progress.total {
-                        viewModel.setCurrentProgress(currentProgress: Float(1*Float(current)/Float(total)))
-                    }
-                    showTermsCheckbox = !(viewModel.uiState.termsAccepted )
+
+                if formRequest.info != nil && !formRequest.info!.isEmpty {
+                    FormInfo(text: formRequest.info!)
                 }
-                
+
+                ForEach(formRequest.items.indices, id: \.self) { index in
+                    DrawComponent(
+                        item: formRequest.items[index],
+                        hasNextField: index < formRequest.items.count - 1,
+                        formValues: $formValues,
+                        submitFunction: submitForm,
+                        viewModel: viewModel
+                    )
+                }
+
+                FormError(text: formRequest.errorMessage)
+
+                RememberValues(
+                    formRequest: formRequest,
+                    viewModel: viewModel)
+
+                if showTermsCheckbox && getShouldShowContinueButton(formRequest: formRequest) {
+                    TermsCheckbox(
+                        isAccepted: Binding(
+                            get: { viewModel.uiState.termsAccepted },
+                            set: { viewModel.uiState.termsAccepted = $0 }
+                        ),
+                        termsURL: viewModel.uiState.translator.t("default.terms.accept.link.url"),
+                        translator: viewModel.uiState.translator
+                    )
+                }
+
+                if getShouldShowContinueButton(formRequest: formRequest) {
+                    MainButton(text: getMainButtonText(formRequest: formRequest, khipuUiState: viewModel.uiState),
+                               enabled: validForm() && viewModel.uiState.termsAccepted,
+                               onClick: {
+                        submittedForm = true
+                        submitForm()
+                    },
+                               foregroundColor: themeManager.selectedTheme.colors.onPrimary,
+                               backgroundColor: themeManager.selectedTheme.colors.primary
+                    )
+                }
+
+                SecurityMessage(translator: viewModel.uiState.translator)
             }
-            
-            InactivityModalView(isPresented: $alertManager.showAlert, onDismiss: {}, translator: viewModel.uiState.translator).environmentObject(themeManager)
+            .padding(.horizontal, Dimens.large)
+            .padding(.vertical, Dimens.quiteLarge)
+            .onAppear {
+                startTimer()
+                if let progress = formRequest.progress,
+                   let current = progress.current,
+                   let total = progress.total {
+                    viewModel.setCurrentProgress(currentProgress: Float(1*Float(current)/Float(total)))
+                }
+                showTermsCheckbox = !(viewModel.uiState.termsAccepted)
+            }
+
+            InactivityModalView(isPresented: $alertManager.showAlert, onDismiss: {}, translator: viewModel.uiState.translator)
+                .environmentObject(themeManager)
                 .preferredColorScheme(themeManager.selectedTheme.colors.colorScheme)
         }
     }
@@ -181,7 +173,7 @@ public struct FormComponent: View {
         
         if hasId("username") { return "bank-login" }
         if hasId("account") { return "origin-account" }
-        if hasId("password") || hasId("coordinates") { return "bank-authorization" }
+        if hasId("password") || hasId("coordinates") || hasId("matrix") || hasId("sms-code") || hasId("sms") { return "bank-authorization" }
         if hasId("email") { return "envelope-simple" }
         return nil
     }

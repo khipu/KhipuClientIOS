@@ -65,6 +65,7 @@ struct Dimens {
         static let medium = Dimens.medium
         static let large = Dimens.large
         static let formContainer = Dimens.large
+        static let contentContainer: CGFloat = 20
     }
 
     struct Frame {
@@ -96,6 +97,8 @@ struct Dimens {
         static let slightlyLarger = Dimens.slightlyLarger
         static let larger = Dimens.larger
         static let merchantLogo: CGFloat = 70
+        static let khipuLogoWidth: CGFloat = 44.5 // Ancho del logo de Khipu
+        static let khipuLogoHeight: CGFloat = 15 // Alto del logo de Khipu
         static let huge = Dimens.huge
         static let extraHuge = Dimens.extraHuge
         static let gigantic = Dimens.gigantic

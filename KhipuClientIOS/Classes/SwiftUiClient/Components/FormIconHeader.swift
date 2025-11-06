@@ -6,29 +6,24 @@ struct FormIconHeader: View {
     var title: String
     var subtitle: String
     @EnvironmentObject private var themeManager: ThemeManager
-
+    
     var body: some View {
         VStack(alignment: .center, spacing: 10) {
-            ZStack {
-                RoundedRectangle(cornerRadius: 10)
-                    .fill(Color(hexString: "#F0F0FA") ?? Color.purple.opacity(0.1))
-                    .frame(width: 60, height: 60)
-
-                if let image = getIcon() {
+            if let image = getIcon() {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(hexString: "#F0F0FA") ?? Color.purple.opacity(0.1))
+                        .frame(width: 60, height: 60)
+                    
+                    
                     Image(uiImage: image)
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                         .frame(width: 32, height: 32)
-                } else {
-                    Image(systemName: "person.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 32, height: 32)
-                        .foregroundColor(Color(hexString: "#8347AD") ?? .purple)
-                }
+                }.padding(.bottom, 12)
             }
-            .padding(.bottom, 12)
-
+                
+            
             Text(title)
                 .font(.custom("Public Sans", size: 20).weight(.semibold))
                 .kerning(0.15)
@@ -36,7 +31,7 @@ struct FormIconHeader: View {
                 .foregroundColor(Color(hexString: "#272930") ?? .black)
                 .lineSpacing(12)
                 .multilineTextAlignment(.center)
-
+            
             Text(subtitle.uppercased())
                 .font(.custom("Public Sans", size: 12).weight(.regular))
                 .foregroundColor(Color(hexString: "#272930") ?? .black)
@@ -47,7 +42,7 @@ struct FormIconHeader: View {
         .frame(maxWidth: .infinity)
         .padding(.horizontal, 10)
     }
-
+    
     private func getIcon() -> UIImage? {
         if let image = KhipuClientBundleHelper.image(named: iconName) {
             return image
@@ -61,14 +56,14 @@ struct FormIconHeader_Previews: PreviewProvider {
     static var previews: some View {
         VStack(spacing: 20) {
             FormIconHeader(
-                iconName: "sign-in",
+                iconName: "matrix",
                 title: "Banco Estado",
                 subtitle: "Ingresa a tu banco"
             )
             .environmentObject(ThemeManager())
-
+            
             FormIconHeader(
-                iconName: "bank-icon",
+                iconName: "bank-login",
                 title: "Banco de Chile",
                 subtitle: "Ingresa tus credenciales"
             )

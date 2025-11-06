@@ -76,8 +76,7 @@ struct LabeledButton: View {
     let text: String
     let textDocumentProxy: UITextDocumentProxy
     let playSystemFeedback: (() -> ())?
-    let bundle = KhipuClientBundleHelper.podBundle
-    
+
     var body: some View {
         Button {
             textDocumentProxy.insertText(text)
@@ -87,36 +86,35 @@ struct LabeledButton: View {
         Text(text)
             .font(.system(size: 24))
             .padding(.all, 9)
-            .background(Color("background", bundle: bundle))
+            .background(Color(UIColor.systemBackground))
     }
     .frame(maxWidth: .infinity, maxHeight: .infinity)
-    .background(Color("background", bundle: bundle))
-    .foregroundColor(Color("onBackground", bundle: bundle))
+    .background(Color(UIColor.systemBackground))
+    .foregroundColor(Color(UIColor.label))
     .cornerRadius(6)
-    .shadow(radius: 0, y: 1)
+    .shadow(color: Color.black.opacity(0.1), radius: 1, y: 1)
     }
 }
 
 @available(iOS 15.0.0, *)
 struct ImageButton: View {
-    let bundle = KhipuClientBundleHelper.podBundle
     let imageName: String
     let textDocumentProxy: UITextDocumentProxy
     let playSystemFeedback: (() -> ())?
-    
+
     var body: some View {
         Button {
             textDocumentProxy.deleteBackward()
             playSystemFeedback?()
-            
+
         } label: {
             Image(systemName: imageName)
                 .imageScale(.large)
                 .padding(.all, 9)
-            
+
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .foregroundColor(Color("onBackground", bundle: bundle))
+        .foregroundColor(Color(UIColor.label))
     }
 }
 

@@ -10,7 +10,7 @@ final class HeaderComponentTest: XCTestCase {
     func testHeaderComponentRendersCorrectly() throws {
         let themeManager = ThemeManager()
 
-        let view = HeaderComponent(showMerchantLogo: true, showPaymentDetails: true,operationInfo: MockDataGenerator.createOperationInfo(amount:"$1.000",merchantLogo: "logo",merchantName: "Merchant Name",operationID: "12345",subject: "Transaction Subject"), translator: MockDataGenerator.createTranslator())
+        let view = HeaderComponent(showMerchantLogo: true, showPaymentDetails: true,operationInfo: MockDataGenerator.createOperationInfo(amount:"$1.000",merchantLogo: "logo",merchantName: "Merchant Name",operationID: "12345",subject: "Transaction Subject"), translator: MockDataGenerator.createTranslator(), currentProgress: 0.5)
             .environmentObject(themeManager)
         
         let inspectedView = try view.inspect().view(HeaderComponent.self)

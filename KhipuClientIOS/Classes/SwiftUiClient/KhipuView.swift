@@ -13,7 +13,7 @@ public struct KhipuView: View {
     let options: KhipuOptions
     let completitionHandler: ((KhipuResult) -> Void)?
     let hostingControllerContainer: HostingControllerContainer
-
+    
     init(operationId: String,
          options: KhipuOptions,
          onComplete: ((KhipuResult) -> Void)?,
@@ -28,64 +28,71 @@ public struct KhipuView: View {
             NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, imageUrl: options.topBarImageUrl, imageScale: options.topBarImageScale, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
+                    
                     if(options.header != nil && options.header?.headerUIView != nil){
                         HeaderRepresentableComponent(viewModel: viewModel, baseView: options.header!.headerUIView!)
                             .frame(maxHeight: CGFloat(integerLiteral: options.header?.height ?? 100))
                     } else {
-                        HeaderComponent(showMerchantLogo: viewModel.uiState.showMerchantLogo, showPaymentDetails: viewModel.uiState.showPaymentDetails,operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator)
+                        HeaderComponent(showMerchantLogo: viewModel.uiState.showMerchantLogo, showPaymentDetails: viewModel.uiState.showPaymentDetails,operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator, currentProgress: viewModel.uiState.currentProgress)
                     }
                 }
             }
-            ScrollView(.vertical){
-                switch(viewModel.uiState.currentMessageType) {
-                case MessageType.formRequest.rawValue:
-                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                    FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
-                case MessageType.operationFailure.rawValue:
-                    if (!options.skipExitPage) {
-                        if(viewModel.uiState.operationFailure?.reason == FailureReasonType.bankWithoutAutomaton){
-                            RedirectToManualView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, restartPayment: viewModel.restartPayment)
-                        }else if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
-                            TimeoutMessageView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
-                        } else {
-                            FailureMessageView(operationFailure: viewModel.uiState.operationFailure!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+            
+            GeometryReader { geometry in
+                ZStack(alignment: .bottom) {
+                    ScrollView(.vertical){
+                        VStack(spacing: 0) {
+                            switch(viewModel.uiState.currentMessageType) {
+                            case MessageType.formRequest.rawValue:
+                                FormComponent(formRequest: viewModel.uiState.currentForm!, viewModel: viewModel)
+                            case MessageType.operationFailure.rawValue:
+                                if (!options.skipExitPage) {
+                                    if(viewModel.uiState.operationFailure?.reason == FailureReasonType.bankWithoutAutomaton){
+                                        RedirectToManualView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, restartPayment: viewModel.restartPayment)
+                                    }else if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
+                                        TimeoutMessageView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+                                    } else {
+                                        FailureMessageView(operationFailure: viewModel.uiState.operationFailure!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+                                    }
+                                }
+                            case MessageType.operationWarning.rawValue:
+                                if (!options.skipExitPage) {
+                                    WarningMessageView(operationWarning: viewModel.uiState.operationWarning!, operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+                                }
+                            case MessageType.operationSuccess.rawValue:
+                                if (!options.skipExitPage){
+                                    SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo, returnToApp: {viewModel.uiState.returnToApp=true})
+                                }
+                            case MessageType.progressInfo.rawValue:
+                                ProgressInfoView(message: viewModel.uiState.progressInfoMessage)
+                            case MessageType.authorizationRequest.rawValue:
+                                if let authorizationRequest = viewModel.uiState.currentAuthorizationRequest {
+
+                                    AuthorizationRequestView(authorizationRequest:authorizationRequest, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
+                                }
+                            case MessageType.operationMustContinue.rawValue:
+                                if (!options.skipExitPage) {
+                                    MustContinueView(operationMustContinue: viewModel.uiState.operationMustContinue!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
+                                }
+                            case MessageType.geolocationRequest.rawValue:
+                                LocationAccessRequestComponent(viewModel: viewModel)
+                            default:
+                                EndToEndEncryptionView(translator: viewModel.uiState.translator)
+                            }
+
+                            Spacer(minLength: 45)
                         }
+                        .frame(maxWidth: .infinity, minHeight: geometry.size.height)
                     }
-                case MessageType.operationWarning.rawValue:
-                    if (!options.skipExitPage) {
-                        WarningMessageView(operationWarning: viewModel.uiState.operationWarning!, operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
-                    }
-                case MessageType.operationSuccess.rawValue:
-                    if (!options.skipExitPage){
-                        SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo, returnToApp: {viewModel.uiState.returnToApp=true})
-                    }
-                case MessageType.progressInfo.rawValue:
-                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                    ProgressInfoView(message: viewModel.uiState.progressInfoMessage)
-                case MessageType.authorizationRequest.rawValue:
-                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
+                    .id("\(viewModel.uiState.currentMessageType)-\(viewModel.uiState.currentForm?.id ?? UUID().uuidString)")
+                    .background(themeManager.selectedTheme.colors.surface)
+                    .cornerRadius(Dimens.CornerRadius.contentContainer, corners: [.topLeft, .topRight])
 
-
-                    if let authorizationRequest = viewModel.uiState.currentAuthorizationRequest {
-
-                        AuthorizationRequestView(authorizationRequest:authorizationRequest, translator: viewModel.uiState.translator, bank: viewModel.uiState.bank)
-                    }
-                case MessageType.operationMustContinue.rawValue:
-                    if (!options.skipExitPage) {
-                        MustContinueView(operationMustContinue: viewModel.uiState.operationMustContinue!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo!, returnToApp: {viewModel.uiState.returnToApp=true})
-                    }
-                case MessageType.geolocationRequest.rawValue:
-                    LocationAccessRequestComponent(viewModel: viewModel)
-                default:
-                    ProgressComponent(currentProgress: viewModel.uiState.currentProgress)
-                    EndToEndEncryptionView(translator: viewModel.uiState.translator)
+                    FooterComponent(showFooter: viewModel.uiState.showFooter, operationCode: viewModel.uiState.operationId)
                 }
-                Spacer()
             }
-
-            FooterComponent(showFooter: viewModel.uiState.showFooter, operationCode: viewModel.uiState.operationId)
         }
-        .background(themeManager.selectedTheme.colors.background)
+        .background(themeManager.selectedTheme.colors.scaffoldBackground)
         .navigationBarBackButtonHidden(true)
         .frame(
             maxWidth: .infinity,
@@ -136,10 +143,10 @@ public struct KhipuView: View {
             }
         }
     }
-
+    
     func buildResult(_ state: KhipuUiState) -> KhipuResult {
         if (viewModel.uiState.operationSuccess != nil) {
-
+            
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationSuccess?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationSuccess?.title),
@@ -151,7 +158,7 @@ public struct KhipuView: View {
                 continueUrl: nil
             )
         } else if (viewModel.uiState.operationFailure != nil) {
-
+            
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationFailure?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationFailure?.title),
@@ -174,7 +181,7 @@ public struct KhipuView: View {
                 continueUrl: nil
             )
         } else if (viewModel.uiState.operationMustContinue != nil) {
-
+            
             return KhipuResult(
                 operationId: cleanString(viewModel.uiState.operationMustContinue?.operationID),
                 exitTitle: cleanString(viewModel.uiState.operationMustContinue?.title),
@@ -186,7 +193,7 @@ public struct KhipuView: View {
                 continueUrl: cleanString(viewModel.uiState.operationInfo?.urls?.info)
             )
         }
-
+        
         return KhipuResult(
             operationId: cleanString(getOperationId(viewModel.uiState)),
             exitTitle: cleanString(viewModel.uiState.translator.t("page.operationFailure.operation.user.canceled.title", default: "")),
@@ -198,7 +205,7 @@ public struct KhipuView: View {
             continueUrl: nil
         )
     }
-
+    
     func getOperationId(_ uiState: KhipuUiState) -> String? {
         if (uiState.operationInfo?.operationID == nil || uiState.operationInfo!.operationID!.isEmpty) {
             return uiState.operationId
@@ -206,18 +213,18 @@ public struct KhipuView: View {
             return uiState.operationInfo?.operationID
         }
     }
-
+    
     func cleanString(_ toClean: String?) -> String {
         return toClean ?? ""
     }
-
+    
     func cleanEvents(_ events: [OperationEvent]?) -> [KhipuEvent] {
         if (events == nil) {
             return [KhipuEvent]()
         }
         return events!.map { KhipuEvent(name: $0.name, timestamp: $0.timestamp, type: $0.type)}
     }
-
+    
     func shouldShowHeader(currentMessageType: String) -> Bool {
         let excludedTypes = [
             MessageType.operationSuccess.rawValue,
@@ -225,11 +232,11 @@ public struct KhipuView: View {
             MessageType.operationMustContinue.rawValue,
             MessageType.operationWarning.rawValue
         ]
-
+        
         return !excludedTypes.contains(currentMessageType)
     }
-
-
+    
+    
     func isConnected() -> Bool {
         return !viewModel.uiState.connectedSocket || !viewModel.uiState.connectedNetwork
     }
