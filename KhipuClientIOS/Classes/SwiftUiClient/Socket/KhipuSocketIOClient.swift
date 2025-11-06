@@ -402,6 +402,22 @@ public class KhipuSocketIOClient {
                 print("Error processing progressInfo message, mid \(mid)")
             }
         }
+        
+        self.socket?.on(MessageType.operationStatusMessage.rawValue) { data, ack in
+            print("Received message \(MessageType.operationStatusMessage.rawValue)")
+            if (self.isRepeatedMessage(data: data, type: MessageType.operationStatusMessage.rawValue)) {
+                return
+            }
+            let encryptedData = data.first as! String
+            let mid = data[1] as! String
+            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            do {
+                let operationStatus = try OperationStatusMessage(decryptedMessage!)
+                self.viewModel.uiState.operationStatusMessage = operationStatus.message!
+            } catch {
+                print("Error processing operationStatus message, mid \(mid)")
+            }
+        }
 
         self.socket?.on(MessageType.translation.rawValue) { data, ack in
             print("Received message \(MessageType.translation.rawValue)")

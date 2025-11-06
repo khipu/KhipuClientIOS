@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   s.author           = { 'Khipu' => 'developers@khipu.com' }
   s.source           = { :git => 'https://github.com/khipu/KhipuClientIOS.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '12.0'
+  s.ios.deployment_target = '13.0'
 
   s.source_files = 'KhipuClientIOS/Classes/**/*'
   s.resource_bundles = {
@@ -26,6 +26,6 @@ Pod::Spec.new do |s|
   s.dependency 'Socket.IO-Client-Swift', '16.1.1'
   s.dependency 'Starscream', '4.0.8'
   s.dependency 'KhenshinSecureMessage', '1.4.0'
-  s.dependency 'KhenshinProtocol', '1.0.48'
+  s.dependency 'KhenshinProtocol', '1.0.56'
   s.swift_versions = "5.0"
 end

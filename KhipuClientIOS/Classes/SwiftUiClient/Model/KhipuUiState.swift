@@ -11,6 +11,7 @@ struct KhipuUiState {
     var validatedFormItems: [String : Bool] = [:]
     var savedForm: [String : String] = [:]
     var progressInfoMessage: String = ""
+    var operationStatusMessage: String = "Procesando pago"
     var translator: KhipuTranslator = KhipuTranslator(translations: [:])
     var operationInfo: OperationInfo? = nil
     var operationSuccess: OperationSuccess? = nil

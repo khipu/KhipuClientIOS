@@ -64,7 +64,7 @@ public struct KhipuView: View {
                                     SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo, returnToApp: {viewModel.uiState.returnToApp=true})
                                 }
                             case MessageType.progressInfo.rawValue:
-                                ProgressInfoView(message: viewModel.uiState.progressInfoMessage)
+                                ProgressInfoView(message: viewModel.uiState.operationStatusMessage, subtitle: viewModel.uiState.progressInfoMessage)
                             case MessageType.authorizationRequest.rawValue:
                                 if let authorizationRequest = viewModel.uiState.currentAuthorizationRequest {
 

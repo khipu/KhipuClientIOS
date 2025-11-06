@@ -3,35 +3,33 @@ import SwiftUI
 @available(iOS 13.0, *)
 struct CircularProgressView: View {
     @EnvironmentObject private var themeManager: ThemeManager
-    @State private var drawingStroke = false
-    
-    let animation = Animation
-        .easeOut(duration: 2)
-        .repeatForever(autoreverses: false)
-        .delay(0.5)
-    
+    @State private var rotation: Double = 0
+
     var body: some View {
         ZStack {
             Circle()
                 .stroke(
-                    themeManager.selectedTheme.colors.surface,
-                    lineWidth:Dimens.Spacing.small
+                    themeManager.selectedTheme.colors.outlineVariant,
+                    lineWidth: 4
                 )
             Circle()
-                .trim(from: 0, to: drawingStroke ? 1 : 0)
+                .trim(from: 0, to: 0.25)
                 .stroke(
                     themeManager.selectedTheme.colors.primary,
                     style: StrokeStyle(
-                        lineWidth:Dimens.Spacing.small,
+                        lineWidth: 4,
                         lineCap: .round
                     )
                 )
-                .rotationEffect(.degrees(-90))
-                .animation(animation, value: drawingStroke)
-            
+                .rotationEffect(.degrees(rotation))
+                .animation(
+                    Animation.linear(duration: 1)
+                        .repeatForever(autoreverses: false),
+                    value: rotation
+                )
         }
         .onAppear {
-            drawingStroke.toggle()
+            rotation = 360
         }
     }
 }

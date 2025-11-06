@@ -29,7 +29,7 @@ class MockDataGenerator {
     ) -> OperationInfo {
         let merchant: Merchant? = {
             if let logo = merchantLogo, let name = merchantName, !logo.isEmpty, !name.isEmpty {
-                return Merchant(logo: logo, name: name)
+                return Merchant(country: Country(code: "CL", name: "Chile"), logo: logo, name: name)
             }
             return nil
         }()
@@ -41,6 +41,7 @@ class MockDataGenerator {
             email: email,
             merchant: merchant,
             operationID: operationID,
+            sessionReplaySaved: false,
             subject: subject,
             type: type,
             urls: urls,
