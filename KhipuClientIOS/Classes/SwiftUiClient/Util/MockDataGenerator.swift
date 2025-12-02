@@ -307,8 +307,10 @@ class MockDataGenerator {
         label: String = "Default Label",
         hint: String = "Default Hint",
         placeHolder: String = "Default Placeholder",
-        secure: Bool = false
+        secure: Bool = false,
+        defaultValue: String? = nil
     ) -> FormItem {
+        let defaultValueJson = defaultValue.map { "\"\($0)\"" } ?? "null"
         return try! FormItem(
                """
                {
@@ -317,7 +319,30 @@ class MockDataGenerator {
                  "type": "\(FormItemTypes.text.rawValue)",
                  "hint": "\(hint)",
                  "placeHolder": "\(placeHolder)",
-                 "secure": \(secure)
+                 "secure": \(secure),
+                 "defaultValue": \(defaultValueJson)
+               }
+               """
+        )
+    }
+
+    static func createRutFormItem(
+        id: String = "default_id",
+        label: String = "Default Label",
+        hint: String = "Default Hint",
+        placeHolder: String = "Default Placeholder",
+        defaultValue: String? = nil
+    ) -> FormItem {
+        let defaultValueJson = defaultValue.map { "\"\($0)\"" } ?? "null"
+        return try! FormItem(
+               """
+               {
+                 "id": "\(id)",
+                 "label": "\(label)",
+                 "type": "\(FormItemTypes.rut.rawValue)",
+                 "hint": "\(hint)",
+                 "placeHolder": "\(placeHolder)",
+                 "defaultValue": \(defaultValueJson)
                }
                """
         )
