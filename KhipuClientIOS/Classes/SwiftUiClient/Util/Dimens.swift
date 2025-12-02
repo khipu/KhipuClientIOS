@@ -36,9 +36,11 @@ struct Dimens {
         static let extraSmall = Dimens.extraSmall
         static let medium = Dimens.medium
         static let veryMedium = Dimens.veryMedium
+        static let moderatelyMedium = Dimens.moderatelyMedium
         static let extraMedium = Dimens.extraMedium
         static let large = Dimens.large
         static let headerContent: CGFloat = 16
+        static let quiteLarge = Dimens.quiteLarge
     }
 
     struct Padding {
@@ -81,6 +83,7 @@ struct Dimens {
         static let larger = Dimens.larger
         static let extraLarge = Dimens.extraLarge
         static let materialTextField: CGFloat = 56 // Altura del Material TextField
+        static let checkmarkContainer: CGFloat = 60 // Contenedor del checkmark en success view
         static let substantiallyLarge = Dimens.substantiallyLarge
         static let muchLarger = Dimens.muchLarger
         static let extremelyLarge = Dimens.extremelyLarge

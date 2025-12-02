@@ -118,7 +118,7 @@ class MockDataGenerator {
     static func createOperationSuccess(
         canUpdateEmail: Bool = false,
         type: MessageType = .operationSuccess,
-        body: String = "Enviaremos el comprobante  de pago a tu correo",
+        body: String = "Al confirmarse, te enviaremos el comprobante de pago en tu email",
         events: [OperationEvent]? = nil,
         exitURL: String = "exitUrl",
         operationID: String = "htre-2345-hqtt",
@@ -300,7 +300,9 @@ class MockDataGenerator {
             "geolocation.blocked.title": "Restablece el permiso de ubicación para continuar",
             "geolocation.blocked.description": "Activar este permiso es necesario para completar el pago en {{bank}}.",
             "geolocation.blocked.button.continue": "Activar permiso de ubicación",
-            "geolocation.blocked.button.decline": "Salir"
+            "geolocation.blocked.button.decline": "Salir",
+            "page.operationComplete.header.title": "Transferencia completada",
+            "page.operationComplete.subtitle": "Tu pago ya está en proceso"
         ])
     }
     

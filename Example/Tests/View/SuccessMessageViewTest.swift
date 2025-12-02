@@ -4,7 +4,7 @@ import ViewInspector
 @testable import KhipuClientIOS
 import KhenshinProtocol
 
-@available(iOS 15.0, *)
+@available(iOS 16.0, *)
 final class SuccessMessageViewTest: XCTestCase {
     
     func testSuccessMessageViewRendersCorrectly() throws {

@@ -2,7 +2,7 @@ import CoreLocation
 import SwiftUI
 import KhenshinProtocol
 
-@available(iOS 15.0.0, *)
+@available(iOS 16.0.0, *)
 public struct KhipuView: View {
     @StateObject var themeManager = ThemeManager()
     @StateObject var viewModel = KhipuViewModel()
@@ -242,7 +242,7 @@ public struct KhipuView: View {
     }
 }
 
-@available(iOS 15.0.0, *)
+@available(iOS 16.0.0, *)
 struct KhipuView_Previews: PreviewProvider {
     static var previews: some View {
         KhipuView(operationId: "rgq1gwc0rprl", options: KhipuOptions.Builder().build(), onComplete: nil, hostingControllerContainer: HostingControllerContainer())

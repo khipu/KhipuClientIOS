@@ -16,7 +16,8 @@ struct HeaderComponent: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            topBar
+            TopBarComponent(onClose: onClose)
+                .environmentObject(themeManager)
             ProgressComponent(currentProgress: currentProgress)
             if (operationInfo?.merchant?.name) != nil {
                 headerContent
@@ -36,22 +37,6 @@ struct HeaderComponent: View {
                 SkeletonHeaderComponent()
             }
         }
-    }
-
-    private var topBar: some View {
-        HStack(alignment: .center, spacing: Dimens.slightlyLarger) {
-            if let logoImage = KhipuClientBundleHelper.image(named: "logo-khipu-color") {
-                Image(uiImage: logoImage)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: Dimens.Image.khipuLogoWidth, height: Dimens.Image.khipuLogoHeight)
-            }
-
-            Spacer()
-        }
-        .padding(.horizontal, Dimens.large)
-        .padding(.vertical, Dimens.medium)
-        .background(themeManager.selectedTheme.colors.surface)
     }
     
     private var headerContent: some View {

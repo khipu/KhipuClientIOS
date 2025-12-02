@@ -14,7 +14,7 @@ public class KhipuLauncher {
     public static func launch(presenter: UIViewController, operationId: String, options: KhipuOptions, onComplete: ((KhipuResult) -> Void)? = nil) -> Void {
         var view: UIViewController
         
-        if #available(iOS 15.0.0, *) {
+        if #available(iOS 16.0.0, *) {
             let hostingControllerContainer = HostingControllerContainer()
             
             let khipuView = KhipuView(

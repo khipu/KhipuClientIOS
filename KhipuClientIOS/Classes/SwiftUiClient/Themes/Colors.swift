@@ -123,6 +123,18 @@ struct Colors {
     private let lightScaffoldBackgroundDefault = Color(hexString: "#F5F5F5")!
     private let darkScaffoldBackgroundDefault = Color(hexString: "#121212")!
 
+    // successBackground (Alert background)
+    private let lightSuccessBackgroundDefault = Color(hexString: "#EDF7ED")!
+    private let darkSuccessBackgroundDefault = Color(hexString: "#0D6E13")!
+
+    // infoBackground (Alert background)
+    private let lightInfoBackgroundDefault = Color(hexString: "#E5F6FD")!
+    private let darkInfoBackgroundDefault = Color(hexString: "#005EB5")!
+
+    // infoDark (Info text dark)
+    private let lightInfoDarkDefault = Color(hexString: "#01579B")!
+    private let darkInfoDarkDefault = Color(hexString: "#ADC6FF")!
+
     // MARK: - Public Color Properties
 
     var topBarContainer: Color {
@@ -323,5 +335,26 @@ struct Colors {
             return darkScaffoldBackgroundDefault
         }
         return lightScaffoldBackgroundDefault
+    }
+
+    var successBackground: Color {
+        if colorScheme == .dark {
+            return darkSuccessBackgroundDefault
+        }
+        return lightSuccessBackgroundDefault
+    }
+
+    var infoBackground: Color {
+        if colorScheme == .dark {
+            return darkInfoBackgroundDefault
+        }
+        return lightInfoBackgroundDefault
+    }
+
+    var infoDark: Color {
+        if colorScheme == .dark {
+            return darkInfoDarkDefault
+        }
+        return lightInfoDarkDefault
     }
 }
