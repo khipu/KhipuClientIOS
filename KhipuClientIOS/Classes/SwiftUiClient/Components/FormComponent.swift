@@ -285,6 +285,7 @@ struct DrawComponent: View {
                 hasNextField: hasNextField,
                 isValid: validationFun,
                 returnValue: getValueFun,
+                textFieldValue: item.defaultValue ?? "",
                 viewModel: viewModel
             )
         }
