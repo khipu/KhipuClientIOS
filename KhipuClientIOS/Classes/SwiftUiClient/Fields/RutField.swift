@@ -7,13 +7,28 @@ struct RutField: View {
     var hasNextField: Bool
     var isValid: (Bool) -> Void
     var returnValue: (String) -> Void
-    @State var rutValue: String = ""
-    @State var error: String = ""
-    @State var lastModificationTime: TimeInterval = 0
+    @State private var rutValue: String
+    @State private var error: String = ""
+    @State private var lastModificationTime: TimeInterval = 0
     @ObservedObject var viewModel: KhipuViewModel
     @EnvironmentObject private var themeManager: ThemeManager
-    @State var currentTime: TimeInterval = Date().timeIntervalSince1970
+    @State private var currentTime: TimeInterval = Date().timeIntervalSince1970
     @FocusState private var isFocused: Bool
+
+    init(
+        formItem: FormItem,
+        hasNextField: Bool,
+        isValid: @escaping (Bool) -> Void,
+        returnValue: @escaping (String) -> Void,
+        viewModel: KhipuViewModel
+    ) {
+        self.formItem = formItem
+        self.hasNextField = hasNextField
+        self.isValid = isValid
+        self.returnValue = returnValue
+        self.viewModel = viewModel
+        _rutValue = State(initialValue: formItem.defaultValue ?? "")
+    }
     
     var body: some View {
         
@@ -35,8 +50,12 @@ struct RutField: View {
                 }
                 .customKeyboard(.rutKeyboard)
                 .onAppear {
-                    if viewModel.uiState.currentForm?.rememberValues ?? false {
+                    if viewModel.uiState.currentForm?.rememberValues ?? false,
+                       !viewModel.uiState.storedUsername.isEmpty {
                         rutValue = viewModel.uiState.storedUsername
+                    }
+                    if !rutValue.isEmpty {
+                        onChange(newValue: rutValue)
                     }
                 }
             
@@ -150,15 +169,11 @@ struct KhipuRutField_Previews: PreviewProvider {
         let isValid: (Bool) -> Void = { param in }
         let returnValue: (String) -> Void = { param in }
         return RutField(
-            formItem: MockDataGenerator.createTextFormItem(label: "Label", hint: "Enter some text", placeHolder: "Ex: my text"),
+            formItem: MockDataGenerator.createRutFormItem(label: "RUT", hint: "Ingresa tu RUT", placeHolder: "Ej: 12345678-5", defaultValue: "12345678-5"),
             hasNextField: false,
             isValid: isValid,
             returnValue: returnValue,
-            rutValue: "",
-            error: "Error message",
-            lastModificationTime: TimeInterval.pi,
-            viewModel: KhipuViewModel(),
-            currentTime: TimeInterval.pi
+            viewModel: KhipuViewModel()
         )
         .environmentObject(ThemeManager())
         .padding()
