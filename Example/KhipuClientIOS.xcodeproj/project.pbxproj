@@ -38,6 +38,7 @@
 		26594A352C26181A002D094F /* SVGImageRendererTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A342C261819002D094F /* SVGImageRendererTest.swift */; };
 		26594A3A2C2623C0002D094F /* ModalTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A392C2623C0002D094F /* ModalTest.swift */; };
 		26594A3C2C2623D1002D094F /* InactivityModalViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26594A3B2C2623D1002D094F /* InactivityModalViewTest.swift */; };
+		4A995AE22F59E789004B8E2F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A995AE12F59E789004B8E2F /* SceneDelegate.swift */; };
 		4AD82D472C0253FD0065CC37 /* AuthorizationRequestViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D412C0253FD0065CC37 /* AuthorizationRequestViewTest.swift */; };
 		4AD82D482C0253FD0065CC37 /* CopyToClipboardComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTest.swift */; };
 		4AD82D492C0253FD0065CC37 /* FailureMessageViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D432C0253FD0065CC37 /* FailureMessageViewTest.swift */; };
@@ -124,6 +125,7 @@
 		26594A3B2C2623D1002D094F /* InactivityModalViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InactivityModalViewTest.swift; sourceTree = "<group>"; };
 		304E69BB29867F219ED5C14A /* Pods-KhipuClientIOS_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.debug.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		3776521433BA6C8BE12981C1 /* Pods-KhipuClientIOS_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KhipuClientIOS_Tests.release.xcconfig"; path = "Target Support Files/Pods-KhipuClientIOS_Tests/Pods-KhipuClientIOS_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		4A995AE12F59E789004B8E2F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4AD82D412C0253FD0065CC37 /* AuthorizationRequestViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationRequestViewTest.swift; sourceTree = "<group>"; };
 		4AD82D422C0253FD0065CC37 /* CopyToClipboardComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyToClipboardComponentTest.swift; sourceTree = "<group>"; };
 		4AD82D432C0253FD0065CC37 /* FailureMessageViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailureMessageViewTest.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 		607FACD21AFB9204008FA782 /* Example for KhipuClientIOS */ = {
 			isa = PBXGroup;
 			children = (
+				4A995AE12F59E789004B8E2F /* SceneDelegate.swift */,
 				4AD82D4C2C0256A70065CC37 /* CustomHeaderUIVIew.swift */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
@@ -563,6 +566,7 @@
 				4AD82D4E2C0256A70065CC37 /* CustomHeaderUIVIew.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
+				4A995AE22F59E789004B8E2F /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

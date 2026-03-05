@@ -8,6 +8,7 @@ public class KhipuViewModel: ObservableObject {
     var khipuSocketIOClient: KhipuSocketIOClient? = nil
     @Published var uiState = KhipuUiState()
     private var networkMonitor: NetworkMonitor
+    public var clientId: String = UUID().uuidString
     private var cancellables = Set<AnyCancellable>()
     private var locationManager: LocationManager?
 
