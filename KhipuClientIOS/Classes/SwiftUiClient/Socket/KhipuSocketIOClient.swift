@@ -48,15 +48,16 @@ public class KhipuSocketIOClient {
             @unknown default:
                 ""
         }
+        print("Starting a new socket")
 
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
-            //.log(true),
+            .log(true),
             .compress,
             .forceNew(true),
             .secure(true),
             .reconnectAttempts(-1),
             .connectParams([
-                "clientId": UUID().uuidString,
+                "clientId": viewModel.clientId,
                 "clientPublicKey": secureMessage.publicKeyBase64,
                 "locale": locale,
                 "userAgent": UAString(),
@@ -77,7 +78,7 @@ public class KhipuSocketIOClient {
         self.showFooter = showFooter
         self.showMerchantLogo = showMerchantLogo
         self.showPaymentDetails = showPaymentDetails
-        self.clearKhssCookies()
+        //self.clearKhssCookies()
         self.addListeners()
         self.addParametersUiState()
         //self.startConnectionChecker()
@@ -167,7 +168,7 @@ public class KhipuSocketIOClient {
         }
 
         self.socket?.onAny { data in
-            //self.showCookies()
+            self.showCookies()
         }
 
         self.socket?.on(MessageType.operationRequest.rawValue) { data, ack in
@@ -566,7 +567,7 @@ public class KhipuSocketIOClient {
         let cookies = cookieStorage.cookies!
         print("Cookies.count: \(cookies.count)")
         for cookie in cookies {
-            print("\(cookie.name)=\(cookie.value) \(cookie.domain)")
+            print("\(cookie.name)=\(cookie.value) \(cookie.domain) \(cookie.expiresDate)")
         }
     }
 
