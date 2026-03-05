@@ -6,7 +6,7 @@ import Foundation
 public class KhipuVersion {
 
     /// The current version of the KhipuClientIOS SDK
-    public static let version = "2.13.7"
+    public static let version = "2.14.0"
 
     /// Private initializer to prevent instantiation
     private init() {}
