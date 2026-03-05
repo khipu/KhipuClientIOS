@@ -51,7 +51,7 @@ public class KhipuSocketIOClient {
         print("Starting a new socket")
 
         socketManager = SocketManager(socketURL: URL(string: url)!, config: [
-            .log(true),
+            //.log(true),
             .compress,
             .forceNew(true),
             .secure(true),
@@ -167,9 +167,9 @@ public class KhipuSocketIOClient {
             print("[id: \(self.viewModel.uiState.operationId)] reconnectAttempt")
         }
 
-        self.socket?.onAny { data in
-            self.showCookies()
-        }
+//        self.socket?.onAny { data in
+//            self.showCookies()
+//        }
 
         self.socket?.on(MessageType.operationRequest.rawValue) { data, ack in
             print("Received message \(MessageType.operationRequest.rawValue)")
