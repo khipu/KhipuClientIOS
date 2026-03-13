@@ -58,7 +58,7 @@ public struct KhipuView: View {
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
                 case MessageType.operationSuccess.rawValue:
-                    if (!options.skipExitPage){
+                    if (!options.skipExitPage && !options.skipExitSuccessPage){
                         SuccessMessageView(operationSuccess: viewModel.uiState.operationSuccess!, translator: viewModel.uiState.translator, operationInfo: viewModel.uiState.operationInfo, returnToApp: {viewModel.uiState.returnToApp=true})
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
@@ -120,6 +120,7 @@ public struct KhipuView: View {
                 appVersion: appVersion(),
                 locale: options.locale ?? "\(Locale.current.languageCode ?? "es")_\(Locale.current.regionCode ?? "CL")",
                 skipExitPage: options.skipExitPage,
+                skipExitSuccessPage: options.skipExitSuccessPage,
                 showFooter: options.showFooter,
                 showMerchantLogo: options.showMerchantLogo,
                 showPaymentDetails: options.showPaymentDetails,
