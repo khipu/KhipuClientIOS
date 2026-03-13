@@ -9,6 +9,7 @@ public class KhipuOptions {
     let topBarImageScale: CGFloat?
     let topBarImageResourceName: String?
     let skipExitPage: Bool
+    let skipExitSuccessPage: Bool
     let theme: Theme
     let colors: KhipuColors?
     let locale: String?
@@ -25,6 +26,7 @@ public class KhipuOptions {
         topBarImageScale: CGFloat?,
         topBarImageResourceName: String?,
         skipExitPage: Bool,
+        skipExitSuccessPage: Bool,
         theme: Theme,
         colors: KhipuColors?,
         locale: String?,
@@ -40,6 +42,7 @@ public class KhipuOptions {
         self.topBarImageScale = topBarImageScale
         self.topBarImageResourceName = topBarImageResourceName
         self.skipExitPage = skipExitPage
+        self.skipExitSuccessPage = skipExitSuccessPage
         self.theme = theme
         self.colors = colors
         self.locale = locale
@@ -61,6 +64,7 @@ public class KhipuOptions {
         var _topBarImageScale: CGFloat?
         var _topBarImageResourceName: String?
         var _skipExitPage: Bool = false
+        var _skipExitSuccessPage: Bool = false
         var _theme: Theme = .system
         var _colors: KhipuColors?
         var _locale: String = "es_CL"
@@ -84,6 +88,11 @@ public class KhipuOptions {
 
         public func skipExitPage(_ skipExitPage: Bool) -> Builder {
             self._skipExitPage = skipExitPage
+            return self
+        }
+        
+        public func skipExitSuccessPage(_ skipExitSuccessPage: Bool) -> Builder {
+            self._skipExitSuccessPage = skipExitSuccessPage
             return self
         }
 
@@ -152,6 +161,7 @@ public class KhipuOptions {
                 topBarImageScale: _topBarImageScale,
                 topBarImageResourceName: _topBarImageResourceName,
                 skipExitPage: _skipExitPage,
+                skipExitSuccessPage: _skipExitSuccessPage,
                 theme: _theme,
                 colors: _colors,
                 locale: _locale,
