@@ -25,6 +25,7 @@ struct KhipuUiState {
     var doNotLoadForm: [String: Bool] = [:]
     var hasAskedAuthentication: Bool = false
     var skipExitPage: Bool = false
+    var skipExitSuccessPage: Bool = false
     var currentProgress: Float = 0
     var bankAccountNumber: String = ""
     var personalIdentifier: String = ""

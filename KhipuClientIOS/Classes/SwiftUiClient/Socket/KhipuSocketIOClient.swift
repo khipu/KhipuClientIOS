@@ -15,6 +15,7 @@ public class KhipuSocketIOClient {
     private var receivedMessages: [String]
     private var viewModel: KhipuViewModel
     private var skipExitPage: Bool
+    private var skipExitSuccessPage: Bool
     private var showFooter: Bool
     private let locale: String
     private let browserId: String
@@ -27,7 +28,7 @@ public class KhipuSocketIOClient {
 
 
     @MainActor
-    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, showFooter: Bool, showMerchantLogo: Bool, showPaymentDetails: Bool, clientIP: String, viewModel: KhipuViewModel) {
+    public init(serverUrl url: String, browserId: String, publicKey: String, appName: String, appVersion: String, locale: String, skipExitPage: Bool, skipExitSuccessPage: Bool, showFooter: Bool, showMerchantLogo: Bool, showPaymentDetails: Bool, clientIP: String, viewModel: KhipuViewModel) {
         self.KHENSHIN_PUBLIC_KEY = publicKey
         self.secureMessage = SecureMessage.init(publicKeyBase64: nil, privateKeyBase64: nil)
         self.locale = locale
@@ -75,6 +76,7 @@ public class KhipuSocketIOClient {
         self.socket = socketManager?.defaultSocket
         self.viewModel = viewModel
         self.skipExitPage = skipExitPage
+        self.skipExitSuccessPage = skipExitSuccessPage
         self.showFooter = showFooter
         self.showMerchantLogo = showMerchantLogo
         self.showPaymentDetails = showPaymentDetails
@@ -327,7 +329,7 @@ public class KhipuSocketIOClient {
                 self.viewModel.uiState.operationSuccess = operationSuccess
                 self.viewModel.uiState.operationFinished=true
                 self.viewModel.disconnectClient()
-                if(self.skipExitPage) {
+                if(self.skipExitPage || self.skipExitSuccessPage) {
                     self.viewModel.uiState.returnToApp = true
                 }
             } catch {
