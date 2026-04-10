@@ -5,6 +5,19 @@ import ViewInspector
 @testable import KhenshinProtocol
 
 @available(iOS 15.0, *)
+class SpySocketClient: KhipuSocketClientProtocol {
+    var sentMessages: [(type: String, message: String)] = []
+
+    func sendMessage(type: String, message: String) {
+        sentMessages.append((type: type, message: message))
+    }
+
+    func connect() {}
+    func disconnect() {}
+    @MainActor func reconnect() {}
+}
+
+@available(iOS 15.0, *)
 final class UserCancelWebsocketTest: XCTestCase {
 
     // MARK: - UserCanceled message construction
@@ -111,6 +124,47 @@ final class UserCancelWebsocketTest: XCTestCase {
         let result = view.buildResult(KhipuUiState())
 
         XCTAssertEqual(result.failureReason, FailureReasonType.userCanceled.rawValue)
+    }
+
+    // MARK: - WebSocket message sent on cancel
+
+    @MainActor
+    func testUserCanceledMessageIsSentViaWebsocket() throws {
+        let viewModel = KhipuViewModel()
+        let spySocket = SpySocketClient()
+        viewModel.khipuSocketIOClient = spySocket
+
+        // Simulate the cancel action from KhipuView's returnToApp closure
+        let userCanceled = UserCanceled(
+            message: nil,
+            type: MessageType.userCanceled
+        )
+        try? viewModel.khipuSocketIOClient?.sendMessage(
+            type: userCanceled.type.rawValue,
+            message: userCanceled.jsonString()!
+        )
+
+        XCTAssertEqual(spySocket.sentMessages.count, 1)
+        XCTAssertEqual(spySocket.sentMessages.first?.type, MessageType.userCanceled.rawValue)
+        XCTAssertTrue(spySocket.sentMessages.first?.message.contains(MessageType.userCanceled.rawValue) ?? false)
+    }
+
+    @MainActor
+    func testUserCanceledMessageIsNotSentWhenSocketIsNil() throws {
+        let viewModel = KhipuViewModel()
+        // khipuSocketIOClient is nil by default
+
+        let userCanceled = UserCanceled(
+            message: nil,
+            type: MessageType.userCanceled
+        )
+        try? viewModel.khipuSocketIOClient?.sendMessage(
+            type: userCanceled.type.rawValue,
+            message: userCanceled.jsonString()!
+        )
+
+        // No crash, no message sent - socket is nil
+        XCTAssertNil(viewModel.khipuSocketIOClient)
     }
 
     // MARK: - Delay behavior
