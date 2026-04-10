@@ -4,7 +4,7 @@ import KhenshinProtocol
 @available(iOS 15.0.0, *)
 struct FailureMessageView: View {
     var operationFailure: OperationFailure
-    var operationInfo: OperationInfo
+    var operationInfo: OperationInfo?
     var translator: KhipuTranslator
     var returnToApp: () -> Void
     @EnvironmentObject private var themeManager: ThemeManager
@@ -18,10 +18,10 @@ struct FailureMessageView: View {
                                 reason: operationFailure.reason,
                                 params: DetailSectionParams(
                                     amountLabel: translator.t("default.amount.label"),
-                                    amountValue: operationInfo.amount!,
+                                    amountValue: operationInfo?.amount ?? "",
                                     codOperacionLabel: translator.t("default.operation.code.short.label"),
                                     merchantNameLabel: translator.t("default.merchant.label"),
-                                    merchantNameValue: operationInfo.merchant?.name ?? nil
+                                    merchantNameValue: operationInfo?.merchant?.name ?? nil
                                 )
                             )
             
