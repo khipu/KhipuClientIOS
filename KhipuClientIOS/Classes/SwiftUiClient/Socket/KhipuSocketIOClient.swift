@@ -6,7 +6,7 @@ import LocalAuthentication
 import CoreLocation
 
 @available(iOS 13.0, *)
-public class KhipuSocketIOClient {
+public class KhipuSocketIOClient: KhipuSocketClientProtocol {
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid
     private var socketManager: SocketManager?
     private var socket: SocketIOClient?
@@ -484,7 +484,7 @@ public class KhipuSocketIOClient {
         return false
     }
 
-    func disconnect() {
+    public func disconnect() {
         socket?.disconnect()
         socket?.removeAllHandlers()
         socketManager?.reconnects = false
@@ -547,7 +547,7 @@ public class KhipuSocketIOClient {
     public func sendMessage(type: String, message: String) {
         let encryptedMessage = self.secureMessage.encrypt(plainText: message, receiverPublicKeyBase64: self.KHENSHIN_PUBLIC_KEY)
         socket?.emit(type, encryptedMessage!)
-        print("SENDING MESSAGE \(String(describing: self.viewModel.khipuSocketIOClient?.socketManager?.status))")
+        print("SENDING MESSAGE \(String(describing: (self.viewModel.khipuSocketIOClient as? KhipuSocketIOClient)?.socketManager?.status))")
     }
 
 

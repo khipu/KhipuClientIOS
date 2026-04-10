@@ -5,7 +5,7 @@ import Combine
 
 @available(iOS 13.0, *)
 public class KhipuViewModel: ObservableObject {
-    var khipuSocketIOClient: KhipuSocketIOClient? = nil
+    var khipuSocketIOClient: (any KhipuSocketClientProtocol)? = nil
     @Published var uiState = KhipuUiState()
     private var networkMonitor: NetworkMonitor
     public var clientId: String = UUID().uuidString
@@ -129,6 +129,7 @@ public class KhipuViewModel: ObservableObject {
                                               email: uiState.operationInfo?.email,
                                               merchant: uiState.operationInfo?.merchant,
                                               operationID: uiState.operationInfo?.operationID,
+                                              sessionReplaySaved: uiState.operationInfo?.sessionReplaySaved,
                                               subject: uiState.operationInfo?.subject,
                                               type: MessageType.operationInfo,
                                               urls: uiState.operationInfo?.urls,
