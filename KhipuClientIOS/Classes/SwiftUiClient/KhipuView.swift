@@ -61,7 +61,7 @@ public struct KhipuView: View {
                         }else if (viewModel.uiState.operationFailure?.reason == FailureReasonType.formTimeout) {
                             TimeoutMessageView(operationFailure: viewModel.uiState.operationFailure!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
                         } else {
-                            FailureMessageView(operationFailure: viewModel.uiState.operationFailure!, operationInfo: viewModel.uiState.operationInfo!, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+                            FailureMessageView(operationFailure: viewModel.uiState.operationFailure!, operationInfo: viewModel.uiState.operationInfo, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
                         }
                         FooterComponent(translator: viewModel.uiState.translator, showFooter: viewModel.uiState.showFooter)
                     }
