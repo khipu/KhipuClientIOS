@@ -25,7 +25,20 @@ public struct KhipuView: View {
     }
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, imageUrl: options.topBarImageUrl, imageScale: options.topBarImageScale, translator: viewModel.uiState.translator, returnToApp: {viewModel.uiState.returnToApp=true})
+            NavigationBarComponent(title: options.topBarTitle, imageName: options.topBarImageResourceName, imageUrl: options.topBarImageUrl, imageScale: options.topBarImageScale, translator: viewModel.uiState.translator, returnToApp: {
+                
+                let userCanceled = UserCanceled(
+                    message: nil,
+                    type: MessageType.userCanceled
+                )
+                try? viewModel.khipuSocketIOClient?.sendMessage(type: userCanceled.type.rawValue, message: userCanceled.jsonString()!)
+                Task {
+                    try? await Task.sleep(nanoseconds: 300_000_000)
+                    await MainActor.run {
+                        viewModel.uiState.returnToApp=true
+                    }
+                }
+            })
             VStack {
                 if(shouldShowHeader(currentMessageType: viewModel.uiState.currentMessageType)){
                     if(options.header != nil && options.header?.headerUIView != nil){
