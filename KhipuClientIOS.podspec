@@ -26,6 +26,6 @@ Pod::Spec.new do |s|
   s.dependency 'Socket.IO-Client-Swift', '16.1.1'
   s.dependency 'Starscream', '4.0.8'
   s.dependency 'KhenshinSecureMessage', '1.4.0'
-  s.dependency 'KhenshinProtocol', '1.0.48'
+  s.dependency 'KhenshinProtocol', '1.0.59'
   s.swift_versions = "5.0"
 end

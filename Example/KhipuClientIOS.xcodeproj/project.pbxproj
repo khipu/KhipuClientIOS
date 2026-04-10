@@ -44,6 +44,7 @@
 		4AD82D492C0253FD0065CC37 /* FailureMessageViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D432C0253FD0065CC37 /* FailureMessageViewTest.swift */; };
 		4AD82D4A2C0253FD0065CC37 /* MerchantDialogComponentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D442C0253FD0065CC37 /* MerchantDialogComponentTest.swift */; };
 		4AD82D4E2C0256A70065CC37 /* CustomHeaderUIVIew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AD82D4C2C0256A70065CC37 /* CustomHeaderUIVIew.swift */; };
+		4AE468B92F89387D00791AA1 /* UserCancelWebsocketTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AE468B82F89387D00791AA1 /* UserCancelWebsocketTest.swift */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
@@ -131,6 +132,7 @@
 		4AD82D432C0253FD0065CC37 /* FailureMessageViewTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FailureMessageViewTest.swift; sourceTree = "<group>"; };
 		4AD82D442C0253FD0065CC37 /* MerchantDialogComponentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MerchantDialogComponentTest.swift; sourceTree = "<group>"; };
 		4AD82D4C2C0256A70065CC37 /* CustomHeaderUIVIew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomHeaderUIVIew.swift; sourceTree = "<group>"; };
+		4AE468B82F89387D00791AA1 /* UserCancelWebsocketTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCancelWebsocketTest.swift; sourceTree = "<group>"; };
 		607FACD01AFB9204008FA782 /* KhipuClientIOS_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KhipuClientIOS_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 				BDF2EF812C3C1C88000D3FFA /* RedirectToManualViewTest.swift */,
 				BDAE5D812C0A10AE00B6DDD4 /* ProgressInfoViewTest.swift */,
 				BDAE5D832C0A153100B6DDD4 /* SuccessMessageViewTest.swift */,
+				4AE468B82F89387D00791AA1 /* UserCancelWebsocketTest.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -606,6 +609,7 @@
 				26594A3A2C2623C0002D094F /* ModalTest.swift in Sources */,
 				26594A082C222093002D094F /* FieldUtilTest.swift in Sources */,
 				26594A0A2C222E2F002D094F /* ExecuteCodeTest.swift in Sources */,
+				4AE468B92F89387D00791AA1 /* UserCancelWebsocketTest.swift in Sources */,
 				26594A3C2C2623D1002D094F /* InactivityModalViewTest.swift in Sources */,
 				BDD4455E2C04D68500098056 /* FormTitleTest.swift in Sources */,
 				26594A002C21D7F8002D094F /* FormComponentTest.swift in Sources */,

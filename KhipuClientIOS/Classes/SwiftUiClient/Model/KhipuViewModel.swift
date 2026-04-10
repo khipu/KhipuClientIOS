@@ -129,6 +129,7 @@ public class KhipuViewModel: ObservableObject {
                                               email: uiState.operationInfo?.email,
                                               merchant: uiState.operationInfo?.merchant,
                                               operationID: uiState.operationInfo?.operationID,
+                                              sessionReplaySaved: uiState.operationInfo?.sessionReplaySaved,
                                               subject: uiState.operationInfo?.subject,
                                               type: MessageType.operationInfo,
                                               urls: uiState.operationInfo?.urls,
