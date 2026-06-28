@@ -86,6 +86,8 @@ class FieldUtils {
                return "-tne"
            case .userCanceled:
                return "-uc"
+           case .userDisconnected:
+               return "-ud"
            case .none:
                return ""
            @unknown default:
