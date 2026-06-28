@@ -1,9 +1,11 @@
 import Foundation
-
 import UIKit
 
 public class KhipuClientBundleHelper {
 
+    #if SWIFT_PACKAGE
+    public static let podBundle: Bundle? = Bundle.module
+    #else
     private static let podFramework = Bundle(for: KhipuClientBundleHelper.self)
 
     private static let podBundlePath = podFramework.path(
@@ -17,6 +19,7 @@ public class KhipuClientBundleHelper {
         }
         return Bundle(path: podBundlePath)
     }()
+    #endif
 
     public static func image(named imageName: String) -> UIImage? {
         guard let bundle = podBundle else {
