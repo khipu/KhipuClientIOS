@@ -88,6 +88,8 @@ class FieldUtils {
                return "-uc"
            case .none:
                return ""
+           @unknown default:
+               return "-unknown"
            }
        }
     

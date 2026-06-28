@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 import SocketIO
 import KhenshinSecureMessage
 import KhenshinProtocol
