@@ -1,0 +1,26 @@
+name: SPM Build & Test
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  spm:
+    name: xcodebuild (SPM)
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.4.app
+      - name: Find simulator
+        id: sim
+        run: |
+          device=$(xcrun xctrace list devices 2>&1 | grep -oE 'iPhone.*?[^\(]+ \(.+?\)' | head -1 | awk '{$1=$1;print}')
+          echo "name=$(echo "$device" | sed -e 's/ Simulator.*//')" >> "$GITHUB_OUTPUT"
+          echo "os=$(echo "$device" | sed -n 's/.*(\(.*\)).*/\1/p')" >> "$GITHUB_OUTPUT"
+      - name: Build & Test (SPM)
+        run: |
+          xcodebuild test -scheme KhipuClientIOS \
+            -destination "platform=iOS Simulator,OS=${{ steps.sim.outputs.os }},name=${{ steps.sim.outputs.name }}"
