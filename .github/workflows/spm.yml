@@ -24,5 +24,8 @@ jobs:
           echo "os=$(echo "$device" | sed -n 's/.*(\(.*\)).*/\1/p')" >> "$GITHUB_OUTPUT"
       - name: Build & Test (SPM)
         run: |
+          # En CI no hay Example/Pods, así que el symlink _Pods.xcodeproj queda roto
+          # y xcodebuild lo tomaría como proyecto por defecto. Lo quitamos para que use Package.swift.
+          rm -f _Pods.xcodeproj
           xcodebuild test -scheme KhipuClientIOS \
             -destination "platform=iOS Simulator,OS=${{ steps.sim.outputs.os }},name=${{ steps.sim.outputs.name }}"
