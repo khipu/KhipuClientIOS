@@ -19,6 +19,15 @@ it, simply add the following line to your Podfile:
 pod 'KhipuClientIOS'
 ```
 
+## Installation (Swift Package Manager)
+
+Add the package to your `Package.swift` dependencies:
+
+    .package(url: "https://github.com/khipu/KhipuClientIOS.git", from: "2.16.3")
+
+Then add `KhipuClientIOS` to your target's dependencies, or in Xcode use
+**File → Add Package Dependencies…** with the same URL. Requires iOS 13+.
+
 ## Author
 
 Khipu, developers@khipu.com
