@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public struct KhipuHeader {
     let headerUIView: (UIView & KhipuHeaderProtocol)?
