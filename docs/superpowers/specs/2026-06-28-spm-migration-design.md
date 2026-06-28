@@ -59,7 +59,7 @@ import KHTweetNaclSwift
 
 **(b) Recursos en `KhipuClientIOS`** (el reto técnico real, se detalla en su propio spec). Hoy el código busca un `.bundle` nombrado (patrón CocoaPods) en ≥6 sitios (`BundleHelper`, `FontLoader`, `Colors`, `RutField`, `CheckboxField`, `KhipuWebView`). Se unificará detrás de un único accessor que resuelva el bundle según el gestor (`Bundle.module` en SPM vs. bundle nombrado en CocoaPods), y en `Package.swift` los assets (`.ttf`, `.xcassets`, `.html`, `.png`) se declararán con `.process(...)`/`.copy(...)`.
 
-**(c) Tests vía SPM.** Cada `Package.swift` declara `testTarget` apuntando a los tests existentes (sin moverlos). `ViewInspector` se agrega como dependencia SPM de test donde aplique. Riesgo conocido a validar en el eslabón #3: algunos tests de ViewInspector podrían requerir host app.
+**(c) Tests vía SPM.** Donde existan tests reales, el `Package.swift` declara `testTarget` apuntando a los tests existentes (sin moverlos), con `ViewInspector` como dependencia SPM de test. Riesgo conocido a validar en el eslabón #3: algunos tests de ViewInspector podrían requerir host app. **Excepción:** repos de código 100% auto-generado sin tests reales (`KhenshinProtocol`) van **solo-librería**, sin `testTarget` — no se escriben tests a mano (si los hubiera serían generados también); la validación es `swift build` + prueba de consumidor real.
 
 **(d) Versionado (regla por repo).**
 - `KhenshinProtocol`: versión **sincronizada con el generador** `khenshin-websocket-schema` (auto-generado con quicktype). **No se hace bump artificial** por agregar SPM. Detalle en §4.
@@ -96,7 +96,7 @@ Implicaciones:
 
 ### 4.4 Cambios concretos
 
-**`Package.swift` (raíz del repo Swift, sin mover archivos):**
+**`Package.swift` (raíz del repo Swift, sin mover archivos), solo-librería:**
 
 ```swift
 // swift-tools-version:5.5
@@ -112,23 +112,17 @@ let package = Package(
         .target(
             name: "KhenshinProtocol",
             path: "KhenshinProtocol/Classes"
-        ),
-        .testTarget(
-            name: "KhenshinProtocolTests",
-            dependencies: ["KhenshinProtocol"],
-            path: "Example/Tests",
-            exclude: ["Info.plist"]
         )
     ]
 )
 ```
 - `path:` reutiliza la estructura actual → el `.podspec` queda intacto.
-- Se excluye `Info.plist` del testTarget para evitar el warning de recurso sin manejar. (`.gitkeep` es archivo oculto y SPM lo ignora.)
+- **Sin `testTarget`**: el código es 100% auto-generado por quicktype, no se escriben tests a mano. La validación SPM es `swift build` + prueba de consumidor real. (`.gitkeep` es archivo oculto y SPM lo ignora.)
 
 **CI — `.github/workflows/spm.yml` (no toca el flujo de pods):**
 
 ```yaml
-name: SPM Build & Test
+name: SPM Build
 on:
   push: { branches: [main] }
   pull_request:
@@ -140,9 +134,8 @@ jobs:
       - uses: actions/checkout@v4
       - run: sudo xcode-select -s /Applications/Xcode_16.4.app
       - run: swift build
-      - run: swift test
 ```
-Foundation puro → `swift build`/`swift test` en macOS basta para este eslabón. (En `KhipuClientIOS` se usará `xcodebuild` con simulador iOS.)
+Foundation puro → `swift build` en macOS basta para este eslabón (sin tests). (En `KhipuClientIOS` se usará `xcodebuild` con simulador iOS y `swift test`.)
 
 **Documentación:** nota en el README/CLAUDE.md del propio repo Swift indicando que el repo soporta SPM (no en el generador, para no gatillar el bump).
 
@@ -153,7 +146,7 @@ Para que SPM funcione manteniendo `1.0.60` sin bump artificial:
 3. Es seguro para CocoaPods: el `.swift` y el `.podspec` no cambian, el pod resultante es idéntico; los `source_files` (`KhenshinProtocol/Classes/**/*`) no incluyen el `Package.swift`.
 
 ### 4.6 Verificación (gate antes del eslabón #2)
-1. `swift build` y `swift test` en verde, localmente y en CI.
+1. `swift build` en verde, localmente y en CI.
 2. `pod lib lint --allow-warnings` sigue pasando (CocoaPods intacto).
 3. Tag `1.0.60` (movido) incluye `Package.swift`.
 4. Prueba de consumidor real: proyecto iOS con `.package(url: "https://github.com/khipu/KhenshinProtocolSwift.git", from: "1.0.60")` que haga `import KhenshinProtocol` y compile.
@@ -170,6 +163,6 @@ Para que SPM funcione manteniendo `1.0.60` sin bump artificial:
 ## 6. Decisiones registradas
 - Alcance de esta sesión: plan maestro + primer eslabón (`KhenshinProtocol`).
 - Modelo de distribución: **dual** CocoaPods + SPM (no cortar CocoaPods).
-- Tests expuestos vía SPM (`testTarget`).
+- Tests expuestos vía SPM (`testTarget`) donde haya tests reales; repos 100% generados sin tests (`KhenshinProtocol`) van solo-librería.
 - Capa cripto en SPM: reutilizar `tweetnacl-swiftwrap` (no portar `TweetNaclSwift`).
 - `KhenshinProtocol`: versión sincronizada con el generador; **mover el tag `1.0.60`** (sin bump); **no modificar** el generador.
