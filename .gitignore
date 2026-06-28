@@ -41,3 +41,4 @@ Carthage/Build
 
 # Swift Package Manager
 .build/
+Package.resolved
