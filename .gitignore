@@ -38,3 +38,7 @@ Carthage/Build
 # `pod install` in .travis.yml
 #
 # Pods/
+
+# Swift Package Manager
+.build/
+Package.resolved

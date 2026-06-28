@@ -3,9 +3,13 @@ import SwiftUI
 
 public class FontLoader {
     public static func loadFonts() {
+        #if SWIFT_PACKAGE
+        let resourceBundle: Bundle? = Bundle.module
+        #else
         let bundle = Bundle(for: FontLoader.self)
         let resourceBundleURL = bundle.url(forResource: "KhipuClientIOS", withExtension: "bundle")
         let resourceBundle = resourceBundleURL != nil ? Bundle(url: resourceBundleURL!) : bundle
+        #endif
         
         let fontNames = [
             "PublicSans-Bold",
