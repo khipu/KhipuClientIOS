@@ -12,9 +12,9 @@ struct FailureMessageView: View {
     var body: some View {
         
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-            FailureMessageHeaderComponent(icon: "info.circle.fill",title:translator.t("page.operationFailure.header.text.operation.task.finished") ,subtitle: (operationFailure.title)!,bodyText: operationFailure.body)
+            FailureMessageHeaderComponent(icon: "info.circle.fill",title:translator.t("page.operationFailure.header.text.operation.task.finished") ,subtitle: operationFailure.title,bodyText: operationFailure.body)
             DetailSectionComponent(
-                operationId: operationFailure.operationID!,
+                operationId: operationFailure.operationID ?? "",
                                 reason: operationFailure.reason,
                                 params: DetailSectionParams(
                                     amountLabel: translator.t("default.amount.label"),

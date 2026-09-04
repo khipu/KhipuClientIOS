@@ -15,9 +15,9 @@ struct WarningMessageView: View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
             VStack(alignment: .center, spacing:Dimens.Spacing.medium) {
                 
-                FailureMessageHeaderComponent(icon: "clock.fill",title:translator.t("page.operationWarning.failure.after.notify.pre.header") ,subtitle: (operationWarning.title)!,bodyText: operationWarning.body)
+                FailureMessageHeaderComponent(icon: "clock.fill",title:translator.t("page.operationWarning.failure.after.notify.pre.header") ,subtitle: operationWarning.title,bodyText: operationWarning.body)
                 DetailSectionComponent(
-                    operationId: operationWarning.operationID!,
+                    operationId: operationWarning.operationID ?? "",
                     reason: operationWarning.reason,
                     params: DetailSectionParams(
                         amountLabel: translator.t("default.amount.label"),

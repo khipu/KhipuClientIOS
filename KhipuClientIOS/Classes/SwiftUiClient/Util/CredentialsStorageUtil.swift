@@ -12,7 +12,7 @@ public class CredentialsStorageUtil {
     public static func storeCredentials(credentials: Credentials, server: String) throws -> Void {
         let account = credentials.username
         let password = credentials.password.data(using: String.Encoding.utf8)!
-        if(try! searchCredentials(server: server) != nil){
+        if(try searchCredentials(server: server) != nil){
             let query: [String: Any] = [kSecClass as String: kSecClassInternetPassword,
                                         kSecAttrServer as String: server]
             let attributes: [String: Any] = [kSecAttrAccount as String: account,

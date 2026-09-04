@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script to synchronize version from podspec to KhipuVersion.swift
+# Script to synchronize version from podspec to KhipuVersion.swift and README.md
 # Usage: ./sync_version.sh
 
 set -e
@@ -37,3 +37,11 @@ public class KhipuVersion {
 EOF
 
 echo "✓ Generated KhipuVersion.swift with version $VERSION"
+
+# Sync the SPM version shown in README.md (the `from: "X.Y.Z"` line)
+README_FILE="$SCRIPT_DIR/README.md"
+if [ -f "$README_FILE" ]; then
+    sed -i.bak -E "s|(KhipuClientIOS\.git\", from: \")[0-9]+\.[0-9]+\.[0-9]+(\")|\1${VERSION}\2|" "$README_FILE"
+    rm -f "$README_FILE.bak"
+    echo "✓ Synced SPM version in README.md to $VERSION"
+fi
