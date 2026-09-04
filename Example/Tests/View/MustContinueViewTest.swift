@@ -30,4 +30,60 @@ final class MustContinueViewTest: XCTestCase {
 
         XCTAssertNoThrow(try inspectedView.find(CopyToClipboardLink.self))
     }
+
+    /// Regression guard: `title`, `operationID` and `amount` are all optional in the
+    /// wire protocol. Force-unwrapping them aborted the app on this screen.
+    func testRendersWhenTitleOperationIdAndAmountAreNil() throws {
+        let view = MustContinueView(
+            operationMustContinue: MustContinueViewTest.emptyMustContinue(),
+            translator: MockDataGenerator.createTranslator(),
+            operationInfo: MustContinueViewTest.emptyOperationInfo(),
+            returnToApp: {}
+        ).environmentObject(ThemeManager())
+
+        let inspectedView = try view.inspect().view(MustContinueView.self)
+        XCTAssertNoThrow(try inspectedView.find(MainButton.self))
+    }
+
+    /// The ShareLink built `URL(string:)!` out of `urls.info`, which is optional in the
+    /// protocol, so a missing info URL aborted the screen. The link is now conditional
+    /// on the URL parsing, and the rest of the section still renders without it.
+    func testInformationSectionRendersWhenInfoUrlIsMissing() throws {
+        let view = InformationSection(
+            translator: MockDataGenerator.createTranslator(),
+            operationInfo: MustContinueViewTest.emptyOperationInfo()
+        ).environmentObject(ThemeManager())
+
+        let inspectedView = try view.inspect().view(InformationSection.self)
+        XCTAssertNoThrow(try inspectedView.find(CopyToClipboardLink.self))
+    }
+
+    private static func emptyMustContinue() -> OperationMustContinue {
+        OperationMustContinue(
+            type: .operationMustContinue,
+            body: "[Mensaje autómata].",
+            events: nil,
+            exitURL: nil,
+            operationID: nil,
+            resultMessage: nil,
+            title: nil,
+            reason: nil
+        )
+    }
+
+    private static func emptyOperationInfo() -> OperationInfo {
+        OperationInfo(
+            acceptManualTransfer: nil,
+            amount: nil,
+            body: nil,
+            email: nil,
+            merchant: nil,
+            operationID: nil,
+            sessionReplaySaved: nil,
+            subject: nil,
+            type: .operationInfo,
+            urls: nil,
+            welcomeScreen: nil
+        )
+    }
 }

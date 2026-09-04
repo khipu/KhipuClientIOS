@@ -12,14 +12,14 @@ struct MustContinueView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing:Dimens.Spacing.large) {
-            FailureMessageHeaderComponent(icon: "info.circle.fill",title:translator.t("page.operationFailure.header.text.operation.task.finished") ,subtitle: (operationMustContinue.title)!,bodyText: operationMustContinue.body)
+            FailureMessageHeaderComponent(icon: "info.circle.fill",title:translator.t("page.operationFailure.header.text.operation.task.finished") ,subtitle: operationMustContinue.title,bodyText: operationMustContinue.body)
             InformationSection(translator: translator, operationInfo: operationInfo)
             DetailSectionComponent(
-                operationId: operationMustContinue.operationID!,
+                operationId: operationMustContinue.operationID ?? "",
                 reason: operationMustContinue.reason,
                                 params: DetailSectionParams(
                                     amountLabel: translator.t("default.amount.label"),
-                                    amountValue: operationInfo.amount!,
+                                    amountValue: operationInfo.amount,
                                     codOperacionLabel: translator.t("default.operation.code.short.label"),
                                     merchantNameLabel: translator.t("default.merchant.label"),
                                     merchantNameValue: operationInfo.merchant?.name ?? nil
@@ -59,8 +59,8 @@ struct InformationSection: View {
             
             Spacer().frame(height:Dimens.Spacing.extraMedium)
             
-            if #available(iOS 16.0, *) {
-                ShareLink(item: URL(string: operationInfo.urls?.info ?? "")!,
+            if #available(iOS 16.0, *), let infoURL = URL(string: operationInfo.urls?.info ?? "") {
+                ShareLink(item: infoURL,
                           message: Text(translator.t("page.operationMustContinue.share.link.body"))){
                     Label("Compartir", systemImage: "square.and.arrow.up")
                 }
