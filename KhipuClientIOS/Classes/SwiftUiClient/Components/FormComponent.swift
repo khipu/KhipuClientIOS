@@ -140,9 +140,17 @@ public struct FormComponent: View {
             let username = answers.first {$0.id == "username"}?.value ?? ""
             let password = answers.first {$0.id == "password"}?.value ?? ""
             let credentials = Credentials(username: username, password: password)
-            try! CredentialsStorageUtil.storeCredentials(credentials: credentials, server: viewModel.uiState.bank)
+            do {
+                try CredentialsStorageUtil.storeCredentials(credentials: credentials, server: viewModel.uiState.bank)
+            } catch {
+                print("Error storing credentials for \(viewModel.uiState.bank): \(error)")
+            }
         } else if(self.formRequest.rememberValues ?? false && !viewModel.uiState.storedBankForms.contains(viewModel.uiState.bank)) {
-            try! CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)
+            do {
+                try CredentialsStorageUtil.deleteCredentials(server: viewModel.uiState.bank)
+            } catch {
+                print("Error deleting credentials for \(viewModel.uiState.bank): \(error)")
+            }
         }
     }
 
