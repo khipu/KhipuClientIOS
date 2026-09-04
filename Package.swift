@@ -8,9 +8,13 @@ let package = Package(
         .library(name: "KhipuClientIOS", targets: ["KhipuClientIOS"])
     ],
     dependencies: [
-        .package(url: "https://github.com/socketio/socket.io-client-swift.git", from: "16.1.1"),
-        .package(url: "https://github.com/khipu/KhenshinProtocolSwift.git", from: "1.0.60"),
-        .package(url: "https://github.com/khipu/KhenshinSecureMessage.git", from: "1.4.1"),
+        // Fijadas exacto para calzar con KhipuClientIOS.podspec: un consumidor por
+        // CocoaPods y otro por SPM del mismo tag deben resolver el mismo grafo.
+        // `.exact` en vez de `exact:` porque swift-tools-version es 5.5.
+        .package(url: "https://github.com/socketio/socket.io-client-swift.git", .exact("16.1.1")),
+        .package(url: "https://github.com/khipu/KhenshinProtocolSwift.git", .exact("1.0.60")),
+        .package(url: "https://github.com/khipu/KhenshinSecureMessage.git", .exact("1.4.1")),
+        // Solo para tests, no llega al consumidor.
         .package(url: "https://github.com/nalexn/ViewInspector.git", from: "0.10.3")
     ],
     targets: [
