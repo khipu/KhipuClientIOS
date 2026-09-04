@@ -55,10 +55,10 @@
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>bancochilemipass</string>
+		<string>bancochilemipass2</string>
 		<string>BciPassApp</string>
 		<string>BICEPassApp</string>
-		<string>keypass</string>
+		<string>scotiabankgo</string>
 		<string>SantanderPassApp</string>
 		<string>tupass</string>
 		<string>bancoestado</string>
