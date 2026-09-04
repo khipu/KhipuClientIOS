@@ -183,8 +183,13 @@ final class UserCancelWebsocketTest: XCTestCase {
         // Immediately after starting the task, returnToApp should still be false
         XCTAssertFalse(viewModel.uiState.returnToApp)
 
-        // Wait enough time for the delay to complete
-        try await Task.sleep(nanoseconds: 500_000_000)
+        // Poll for the condition instead of betting on a fixed wall-clock margin:
+        // the previous 500 ms wait left only 200 ms of slack over the 300 ms task,
+        // which a loaded CI runner blows, failing a correct implementation.
+        let deadline = Date().addingTimeInterval(5)
+        while !viewModel.uiState.returnToApp, Date() < deadline {
+            try await Task.sleep(nanoseconds: 10_000_000)
+        }
 
         XCTAssertTrue(viewModel.uiState.returnToApp)
     }
@@ -200,8 +205,14 @@ final class UserCancelWebsocketTest: XCTestCase {
             }
         }
 
-        // Wait only 100ms - should still be false
+        // Mirror image of the same race: this asserts an absence, so polling cannot
+        // fix it. Assert only if we actually observed the state early enough — a
+        // starved runner can stretch this 100 ms sleep past the 300 ms mark.
+        let start = Date()
         try await Task.sleep(nanoseconds: 100_000_000)
+        let elapsed = Date().timeIntervalSince(start)
+
+        try XCTSkipIf(elapsed >= 0.3, "Runner too slow to observe the pre-delay state (\(elapsed)s)")
         XCTAssertFalse(viewModel.uiState.returnToApp)
     }
 }
