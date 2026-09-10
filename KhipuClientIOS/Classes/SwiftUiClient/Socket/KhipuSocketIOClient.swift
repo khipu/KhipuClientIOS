@@ -156,7 +156,7 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
         }
 
         self.socket?.on(clientEvent: .disconnect) { data, ack in
-            let reason = data.first as! String
+            let reason = data.first as? String ?? "unknown"
             print("[id: \(self.viewModel.uiState.operationId)] disconnected, reason \(reason)")
             self.hasOpenedAuthorizationApp = false
             self.viewModel.setSocketConnected(connected: false)
@@ -180,8 +180,10 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                 return
             }
             self.viewModel.uiState.currentMessageType = MessageType.operationRequest.rawValue
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: data.first as! String, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
-            if(!decryptedMessage!.isEmpty) {
+            guard let (decryptedMessage, _) = self.decodeMessage(data, type: MessageType.operationRequest.rawValue) else {
+                return
+            }
+            if(!decryptedMessage.isEmpty) {
                 self.sendOperationResponse()
             }
         }
@@ -191,11 +193,11 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.authorizationRequest.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.authorizationRequest.rawValue) else {
+                return
+            }
             do {
-                let authRequest = try AuthorizationRequest(decryptedMessage!)
+                let authRequest = try AuthorizationRequest(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.authorizationRequest.rawValue
                 self.viewModel.uiState.currentAuthorizationRequest = authRequest
             } catch {
@@ -216,11 +218,11 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.formRequest.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.formRequest.rawValue) else {
+                return
+            }
             do {
-                let formRequest = try FormRequest(decryptedMessage!)
+                let formRequest = try FormRequest(decryptedMessage)
                 self.authAndGetSavedForm(formRequest)
             } catch {
                 print("Error processing form message, mid \(mid)")
@@ -238,14 +240,15 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                 return
             }
             
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.openAuthorizationApp.rawValue) else {
+                return
+            }
             do {
-                let openAuthorizationApp = try OpenAuthorizationApp(decryptedMessage!)
+                let openAuthorizationApp = try OpenAuthorizationApp(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.authorizationRequest.rawValue
-                if(!(openAuthorizationApp.data.ios?.schema.isEmpty)!){
-                    let appUrl = URL(string: openAuthorizationApp.data.ios!.schema)!
+                if let schema = openAuthorizationApp.data.ios?.schema,
+                   !schema.isEmpty,
+                   let appUrl = URL(string: schema) {
                     if UIApplication.shared.canOpenURL(appUrl)
                     {
                         UIApplication.shared.open(appUrl)
@@ -270,11 +273,12 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.operationFailure.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.operationFailure.rawValue) else {
+                self.finishOperationWithoutDetail(type: MessageType.operationFailure.rawValue, mid: KhipuSocketIOClient.payloadFields(data)?.mid ?? "")
+                return
+            }
             do {
-                let operationFailure = try OperationFailure(decryptedMessage!)
+                let operationFailure = try OperationFailure(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.operationFailure.rawValue
                 self.viewModel.uiState.operationFailure = operationFailure
 
@@ -287,7 +291,8 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                     self.viewModel.uiState.returnToApp = true
                 }
             } catch {
-                print("Error processing form message, mid \(mid)")
+                print("Error processing \(MessageType.operationFailure.rawValue), mid \(mid)")
+                self.finishOperationWithoutDetail(type: MessageType.operationFailure.rawValue, mid: mid)
             }
         }
 
@@ -296,11 +301,11 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.operationInfo.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.operationInfo.rawValue) else {
+                return
+            }
             do {
-                let operationInfo = try OperationInfo(decryptedMessage!)
+                let operationInfo = try OperationInfo(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.operationInfo.rawValue
                 self.viewModel.uiState.operationInfo = operationInfo
             } catch {
@@ -321,11 +326,12 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.operationSuccess.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.operationSuccess.rawValue) else {
+                self.finishOperationWithoutDetail(type: MessageType.operationSuccess.rawValue, mid: KhipuSocketIOClient.payloadFields(data)?.mid ?? "")
+                return
+            }
             do {
-                let operationSuccess = try OperationSuccess(decryptedMessage!)
+                let operationSuccess = try OperationSuccess(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.operationSuccess.rawValue
                 self.viewModel.uiState.operationSuccess = operationSuccess
                 self.viewModel.uiState.operationFinished=true
@@ -334,7 +340,8 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                     self.viewModel.uiState.returnToApp = true
                 }
             } catch {
-                print("Error processing form message, mid \(mid)")
+                print("Error processing \(MessageType.operationSuccess.rawValue), mid \(mid)")
+                self.finishOperationWithoutDetail(type: MessageType.operationSuccess.rawValue, mid: mid)
             }
         }
 
@@ -343,11 +350,12 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.operationWarning.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.operationWarning.rawValue) else {
+                self.finishOperationWithoutDetail(type: MessageType.operationWarning.rawValue, mid: KhipuSocketIOClient.payloadFields(data)?.mid ?? "")
+                return
+            }
             do {
-                let operationWarning = try OperationWarning(decryptedMessage!)
+                let operationWarning = try OperationWarning(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.operationWarning.rawValue
                 self.viewModel.uiState.operationWarning = operationWarning
                 self.viewModel.uiState.operationFinished=true
@@ -356,7 +364,8 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                     self.viewModel.uiState.returnToApp = true
                 }
             } catch {
-                print("Error processing form message, mid \(mid)")
+                print("Error processing \(MessageType.operationWarning.rawValue), mid \(mid)")
+                self.finishOperationWithoutDetail(type: MessageType.operationWarning.rawValue, mid: mid)
             }
         }
 
@@ -365,11 +374,12 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.operationMustContinue.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.operationMustContinue.rawValue) else {
+                self.finishOperationWithoutDetail(type: MessageType.operationMustContinue.rawValue, mid: KhipuSocketIOClient.payloadFields(data)?.mid ?? "")
+                return
+            }
             do {
-                let operationMustContinue = try OperationMustContinue(decryptedMessage!)
+                let operationMustContinue = try OperationMustContinue(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.operationMustContinue.rawValue
                 self.viewModel.uiState.operationMustContinue = operationMustContinue
                 self.viewModel.uiState.operationFinished=true
@@ -378,7 +388,8 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                     self.viewModel.uiState.returnToApp = true
                 }
             } catch {
-                print("Error processing form message, mid \(mid)")
+                print("Error processing \(MessageType.operationMustContinue.rawValue), mid \(mid)")
+                self.finishOperationWithoutDetail(type: MessageType.operationMustContinue.rawValue, mid: mid)
             }
         }
 
@@ -396,13 +407,13 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                 return
             }
             self.hasOpenedAuthorizationApp = false
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.progressInfo.rawValue) else {
+                return
+            }
             do {
-                let progressInfo = try ProgressInfo(decryptedMessage!)
+                let progressInfo = try ProgressInfo(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.progressInfo.rawValue
-                self.viewModel.uiState.progressInfoMessage = progressInfo.message!
+                self.viewModel.uiState.progressInfoMessage = progressInfo.message ?? ""
             } catch {
                 print("Error processing progressInfo message, mid \(mid)")
             }
@@ -413,13 +424,15 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.translation.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.translation.rawValue) else {
+                return
+            }
             do {
-                let translation = try Translations(decryptedMessage!)
+                let translation = try Translations(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.translation.rawValue
-                self.viewModel.uiState.translator = KhipuTranslator(translations: translation.data!)
+                if let translations = translation.data {
+                    self.viewModel.uiState.translator = KhipuTranslator(translations: translations)
+                }
             } catch {
                 print("Error processing translation message, mid \(mid)")
             }
@@ -434,11 +447,11 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
             if (self.isRepeatedMessage(data: data, type: MessageType.siteOperationComplete.rawValue)) {
                 return
             }
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.siteOperationComplete.rawValue) else {
+                return
+            }
             do {
-                let siteOperationComplete = try SiteOperationComplete(decryptedMessage!)
+                let siteOperationComplete = try SiteOperationComplete(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.siteOperationComplete.rawValue
                 self.viewModel.setSiteOperationComplete(type: siteOperationComplete.operationType, value: siteOperationComplete.value)
             } catch {
@@ -457,11 +470,11 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                 return
             }
             
-            let encryptedData = data.first as! String
-            let mid = data[1] as! String
-            let decryptedMessage = self.secureMessage.decrypt(cipherText: encryptedData, senderPublicKey: self.KHENSHIN_PUBLIC_KEY)
+            guard let (decryptedMessage, mid) = self.decodeMessage(data, type: MessageType.geolocationRequest.rawValue) else {
+                return
+            }
             do {
-                let geolocationRequest = try GeolocationRequest(decryptedMessage!)
+                let geolocationRequest = try GeolocationRequest(decryptedMessage)
                 self.viewModel.uiState.currentMessageType = MessageType.geolocationRequest.rawValue
                 self.viewModel.handleGeolocationRequest()
             } catch {
@@ -528,7 +541,11 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                     sessionCookie: nil,
                     type: MessageType.operationResponse
                 )
-                self.sendMessage(type: operationResponse.type.rawValue as String, message: try operationResponse.jsonString()!)
+                guard let message = try operationResponse.jsonString() else {
+                    print("Could not serialize operationResponse")
+                    return
+                }
+                self.sendMessage(type: operationResponse.type.rawValue as String, message: message)
             } else {
                 let operationResponse = OperationResponse(
                     fingerprint: nil,
@@ -537,7 +554,11 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
                     sessionCookie: nil,
                     type: MessageType.operationResponse
                 )
-                self.sendMessage(type: operationResponse.type.rawValue as String, message: try operationResponse.jsonString()!)
+                guard let message = try operationResponse.jsonString() else {
+                    print("Could not serialize operationResponse")
+                    return
+                }
+                self.sendMessage(type: operationResponse.type.rawValue as String, message: message)
             }
         } catch {
             print("Error sending operation response")
@@ -572,6 +593,81 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
         for cookie in cookies {
             print("\(cookie.name)=\(cookie.value) \(cookie.domain) \(cookie.expiresDate)")
         }
+    }
+
+    /// Extracts and decrypts the `(payload, mid)` pair that every socket message carries.
+    ///
+    /// Returns nil — never traps — when the frame has an unexpected shape or cannot be
+    /// decrypted. `SecureMessage.decrypt` is declared `-> String?`, and force-unwrapping it
+    /// is a trap rather than an `Error`, so the `do/catch` around the deserialization never
+    /// covered this path: a failed decryption killed the merchant's app.
+    private func decodeMessage(_ data: [Any], type: String) -> (message: String, mid: String)? {
+        guard let fields = KhipuSocketIOClient.payloadFields(data) else {
+            print("Malformed \(type): payload is missing or is not a String")
+            return nil
+        }
+        guard KhipuSocketIOClient.hasDecryptableShape(fields.cipherText) else {
+            print("Malformed ciphertext in \(type), mid \(fields.mid): refusing to decrypt")
+            return nil
+        }
+        guard let decryptedMessage = self.secureMessage.decrypt(cipherText: fields.cipherText, senderPublicKey: self.KHENSHIN_PUBLIC_KEY) else {
+            print("Could not decrypt \(type), mid \(fields.mid)")
+            return nil
+        }
+        return (decryptedMessage, fields.mid)
+    }
+
+    /// Reads the `(cipherText, mid)` pair out of a raw socket frame.
+    ///
+    /// Split out of `decodeMessage` so the shape handling can be tested without building a
+    /// `KhipuSocketIOClient`, whose initializer spins up a `SocketManager` and CoreLocation.
+    ///
+    /// Every access here used to be a force-cast: `data.first as! String` and `data[1] as! String`.
+    /// The second also indexed without checking the count, which is a different failure from a
+    /// failed cast and happens before any error handling.
+    /// Whether `SecureMessage.decrypt` can be called on this ciphertext without crashing.
+    ///
+    /// Defends against a precondition the dependency does not check itself.
+    /// `SecureMessage._decrypt` does:
+    ///
+    /// ```swift
+    /// let dataParts = cipherText.split(separator: ".")
+    /// ... String(dataParts[1])   // no count check
+    /// ```
+    ///
+    /// so a ciphertext with no "." yields a single element and `dataParts[1]` traps with
+    /// "Index out of range" — inside the dependency, where a `guard let` on the result
+    /// cannot help, because the crash happens before it ever returns. Verified by test:
+    /// calling `decrypt` with garbage aborts the process rather than returning nil.
+    ///
+    /// Fixing this properly belongs in KhenshinSecureMessage; until then we refuse to
+    /// hand it input it cannot survive.
+    static func hasDecryptableShape(_ cipherText: String) -> Bool {
+        return cipherText.split(separator: ".").count >= 2
+    }
+
+    static func payloadFields(_ data: [Any]) -> (cipherText: String, mid: String)? {
+        guard let cipherText = data.first as? String else {
+            return nil
+        }
+        let mid = data.count > 1 ? (data[1] as? String ?? "") : ""
+        return (cipherText, mid)
+    }
+
+    /// Ends the operation when a *terminal* message cannot be read.
+    ///
+    /// The result loses its detail, but the person leaves the flow and the merchant gets its
+    /// callback instead of being stranded on a screen with no way out.
+    ///
+    /// Deliberately does NOT set `currentMessageType`: `KhipuView` force-unwraps
+    /// `operationFailure`/`operationSuccess`/`operationWarning`/`operationMustContinue` when it
+    /// renders the matching exit screen, so pointing it at a screen whose payload we failed to
+    /// build would swap one crash for another. Returning to the app is the only safe exit here.
+    private func finishOperationWithoutDetail(type: String, mid: String) {
+        print("Unreadable terminal message \(type), mid \(mid): finishing the operation without detail")
+        self.viewModel.disconnectClient()
+        self.viewModel.uiState.operationFinished = true
+        self.viewModel.uiState.returnToApp = true
     }
 
     private func authAndGetSavedForm(_ formRequest: FormRequest) -> Void {
