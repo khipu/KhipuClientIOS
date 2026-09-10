@@ -12,6 +12,10 @@ let package = Package(
         // CocoaPods y otro por SPM del mismo tag deben resolver el mismo grafo.
         // `.exact` en vez de `exact:` porque swift-tools-version es 5.5.
         .package(url: "https://github.com/socketio/socket.io-client-swift.git", .exact("16.1.1")),
+        // Transitiva de SocketIO, declarada acá solo para fijarla. El manifiesto de
+        // socket.io-client-swift la pide `.upToNextMajor(from: "4.0.8")`, así que sin esta
+        // línea puede resolver cualquier 4.x por SPM mientras el podspec la clava en 4.0.8.
+        .package(url: "https://github.com/daltoniam/Starscream", .exact("4.0.8")),
         .package(url: "https://github.com/khipu/KhenshinProtocolSwift.git", .exact("1.0.60")),
         .package(url: "https://github.com/khipu/KhenshinSecureMessage.git", .exact("1.4.1")),
         // Solo para tests, no llega al consumidor.
