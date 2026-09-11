@@ -17,6 +17,12 @@ struct KhipuUiState {
     var operationFailure: OperationFailure? = nil
     var operationMustContinue: OperationMustContinue? = nil
     var operationWarning: OperationWarning? = nil
+    /// Message type of a terminal message that could not be read, or nil.
+    ///
+    /// Distinguishes "the operation ended because we could not decode the message" from
+    /// "the person cancelled". Both leave every `operation*` object nil, so without this
+    /// `buildResult` cannot tell them apart and reports the wrong cause to the merchant.
+    var unprocessableMessageType: String? = nil
     var returnToApp: Bool = false
     var openManualUrl: Bool = false
     var isRutKeyboardVisible: Bool = false

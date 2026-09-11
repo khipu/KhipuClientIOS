@@ -665,6 +665,9 @@ public class KhipuSocketIOClient: KhipuSocketClientProtocol {
     /// build would swap one crash for another. Returning to the app is the only safe exit here.
     private func finishOperationWithoutDetail(type: String, mid: String) {
         print("Unreadable terminal message \(type), mid \(mid): finishing the operation without detail")
+        // Recorded so `buildResult` can tell this apart from a cancellation. Without it the
+        // merchant is told the payer cancelled, which is a different event entirely.
+        self.viewModel.uiState.unprocessableMessageType = type
         self.viewModel.disconnectClient()
         self.viewModel.uiState.operationFinished = true
         self.viewModel.uiState.returnToApp = true
