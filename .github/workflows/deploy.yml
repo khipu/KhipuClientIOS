@@ -21,7 +21,10 @@ jobs:
         run: |
           ./sync_version.sh
           git add .
-          git commit -am "Version sync with podfile"
+          # Idempotent: on a re-run the version is already synced, so there is nothing to
+          # commit and `git commit` exits 1 — which under the default `bash -e` shell would
+          # kill the step before it ever reached the tag or the push to trunk.
+          git commit -am "Version sync with podfile" || echo "Version already in sync."
           git commit -m "Actualización de prod [skip ci]" || echo "No changes"
           git push origin prod
 
@@ -35,14 +38,42 @@ jobs:
           set -eo pipefail
           VERSION=$(grep -oE "s.version.*= *'[^']*'" *.podspec | grep -oE "'[^']*'" | tr -d "'")
           echo "Detected version: $VERSION"
-          git tag $VERSION
-          git push origin $VERSION
+          # Idempotent on purpose: when a previous run tagged but failed to publish,
+          # re-running used to die right here, before ever reaching the push to trunk.
+          if git rev-parse -q --verify "refs/tags/$VERSION" >/dev/null; then
+            echo "Tag $VERSION already exists, reusing it."
+          else
+            git tag "$VERSION"
+          fi
+          # No-op when origin already has the tag at this commit.
+          git push origin "$VERSION" || echo "Tag $VERSION already on origin."
 
       - name: Deploy to Cocoapods
         env:
           COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
         run: |
           set -eo pipefail
+          VERSION=$(grep -oE "s.version.*= *'[^']*'" *.podspec | grep -oE "'[^']*'" | tr -d "'")
+
+          # `pod trunk push` writes the podspec to the Specs repo through GitHub's commit
+          # API. When that call times out the client cannot tell whether the write landed:
+          # in 2.16.5 it had, in 2.17.0 it had not. Same error, opposite meaning. So check
+          # before pushing instead of assuming either way.
+          #
+          # A failed query must NOT be read as "not published": skipping the push on a
+          # broken query would silently drop the release. Attempting it is the safe
+          # direction, because pushing an existing version fails loudly.
+          if TRUNK=$(curl -sf --max-time 30 -H "Accept: application/json" \
+                       "https://trunk.cocoapods.org/api/v1/pods/KhipuClientIOS"); then
+            if grep -q "\"name\":\"$VERSION\"" <<<"$TRUNK"; then
+              echo "Version $VERSION is already on trunk, skipping the push."
+              exit 0
+            fi
+            echo "Version $VERSION is not on trunk yet, publishing."
+          else
+            echo "Could not reach trunk to check for $VERSION; attempting the push anyway."
+          fi
+
           pod lib lint --allow-warnings
           pod trunk push --allow-warnings
           
