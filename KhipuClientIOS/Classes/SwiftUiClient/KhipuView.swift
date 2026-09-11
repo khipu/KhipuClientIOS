@@ -155,59 +155,80 @@ public struct KhipuView: View {
     }
 
     func buildResult(_ state: KhipuUiState) -> KhipuResult {
-        if (viewModel.uiState.operationSuccess != nil) {
+        if (state.operationSuccess != nil) {
 
             return KhipuResult(
-                operationId: cleanString(viewModel.uiState.operationSuccess?.operationID),
-                exitTitle: cleanString(viewModel.uiState.operationSuccess?.title),
-                exitMessage: cleanString(viewModel.uiState.operationSuccess?.body),
+                operationId: cleanString(state.operationSuccess?.operationID),
+                exitTitle: cleanString(state.operationSuccess?.title),
+                exitMessage: cleanString(state.operationSuccess?.body),
                 result: "OK",
-                events: cleanEvents(viewModel.uiState.operationSuccess?.events),
-                exitUrl: cleanString(viewModel.uiState.operationSuccess?.exitURL),
+                events: cleanEvents(state.operationSuccess?.events),
+                exitUrl: cleanString(state.operationSuccess?.exitURL),
                 failureReason: nil,
                 continueUrl: nil
             )
-        } else if (viewModel.uiState.operationFailure != nil) {
+        } else if (state.operationFailure != nil) {
 
             return KhipuResult(
-                operationId: cleanString(viewModel.uiState.operationFailure?.operationID),
-                exitTitle: cleanString(viewModel.uiState.operationFailure?.title),
-                exitMessage: cleanString(viewModel.uiState.operationFailure?.body),
+                operationId: cleanString(state.operationFailure?.operationID),
+                exitTitle: cleanString(state.operationFailure?.title),
+                exitMessage: cleanString(state.operationFailure?.body),
                 result: "ERROR",
-                events: cleanEvents(viewModel.uiState.operationFailure?.events),
-                exitUrl: cleanString(viewModel.uiState.operationFailure?.exitURL),
-                failureReason: cleanString(viewModel.uiState.operationFailure?.reason?.rawValue),
+                events: cleanEvents(state.operationFailure?.events),
+                exitUrl: cleanString(state.operationFailure?.exitURL),
+                failureReason: cleanString(state.operationFailure?.reason?.rawValue),
                 continueUrl: nil
             )
-        } else if (viewModel.uiState.operationWarning != nil) {
+        } else if (state.operationWarning != nil) {
             return KhipuResult(
-                operationId: cleanString(viewModel.uiState.operationWarning?.operationID),
-                exitTitle: cleanString(viewModel.uiState.operationWarning?.title),
-                exitMessage: cleanString(viewModel.uiState.operationWarning?.body),
+                operationId: cleanString(state.operationWarning?.operationID),
+                exitTitle: cleanString(state.operationWarning?.title),
+                exitMessage: cleanString(state.operationWarning?.body),
                 result: "WARNING",
-                events: cleanEvents(viewModel.uiState.operationWarning?.events),
-                exitUrl: cleanString(viewModel.uiState.operationWarning?.exitURL),
-                failureReason: cleanString(viewModel.uiState.operationWarning?.reason?.rawValue),
+                events: cleanEvents(state.operationWarning?.events),
+                exitUrl: cleanString(state.operationWarning?.exitURL),
+                failureReason: cleanString(state.operationWarning?.reason?.rawValue),
                 continueUrl: nil
             )
-        } else if (viewModel.uiState.operationMustContinue != nil) {
+        } else if (state.operationMustContinue != nil) {
 
             return KhipuResult(
-                operationId: cleanString(viewModel.uiState.operationMustContinue?.operationID),
-                exitTitle: cleanString(viewModel.uiState.operationMustContinue?.title),
-                exitMessage: cleanString(viewModel.uiState.operationMustContinue?.body),
+                operationId: cleanString(state.operationMustContinue?.operationID),
+                exitTitle: cleanString(state.operationMustContinue?.title),
+                exitMessage: cleanString(state.operationMustContinue?.body),
                 result: "CONTINUE",
-                events: cleanEvents(viewModel.uiState.operationMustContinue?.events),
-                exitUrl: cleanString(viewModel.uiState.operationMustContinue?.exitURL),
-                failureReason: cleanString(viewModel.uiState.operationMustContinue?.reason?.rawValue),
-                continueUrl: cleanString(viewModel.uiState.operationInfo?.urls?.info)
+                events: cleanEvents(state.operationMustContinue?.events),
+                exitUrl: cleanString(state.operationMustContinue?.exitURL),
+                failureReason: cleanString(state.operationMustContinue?.reason?.rawValue),
+                continueUrl: cleanString(state.operationInfo?.urls?.info)
+            )
+        }
+
+        // A terminal message we could not read. Must come after the four branches above, so
+        // that a message which did deserialize still wins, and before the cancellation
+        // fallback below, which would otherwise claim the payer cancelled.
+        //
+        // `failureReason` is nil rather than some code of our own: the protocol enum has no
+        // value for "could not read the message", and nil states the only true thing — we do
+        // not know why. Titles are empty instead of new translation keys, because inventing
+        // copy for an internal failure is not this fix's job.
+        if (state.unprocessableMessageType != nil) {
+            return KhipuResult(
+                operationId: cleanString(getOperationId(state)),
+                exitTitle: "",
+                exitMessage: "",
+                result: "ERROR",
+                events: [KhipuEvent](),
+                exitUrl: "",
+                failureReason: nil,
+                continueUrl: nil
             )
         }
 
         return KhipuResult(
-            operationId: cleanString(getOperationId(viewModel.uiState)),
-            exitTitle: cleanString(viewModel.uiState.translator.t("page.operationFailure.operation.user.canceled.title", default: "")),
-            exitMessage: cleanString(viewModel.uiState.translator.t("page.operationFailure.operation.user.canceled.body", default: "")),
+            operationId: cleanString(getOperationId(state)),
+            exitTitle: cleanString(state.translator.t("page.operationFailure.operation.user.canceled.title", default: "")),
+            exitMessage: cleanString(state.translator.t("page.operationFailure.operation.user.canceled.body", default: "")),
             result: "ERROR",
             events: [KhipuEvent](),
             exitUrl: "",
