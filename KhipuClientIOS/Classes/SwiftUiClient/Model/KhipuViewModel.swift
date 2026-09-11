@@ -48,6 +48,26 @@ public class KhipuViewModel: ObservableObject {
     
     func handleLocationError(_ error: Error) {
     }
+
+    /// The person declined to share their location, or the system denied it.
+    ///
+    /// Answers the server with null coordinates and lets the payment continue, instead of
+    /// ending the operation. Matches Android, whose call site passes
+    /// `geolocationMandatory = false` and whose decline path sends a `GeolocationResponse`
+    /// with `latitude`, `longitude` and `accuracy` nil — and no `errorCode`, a field Android
+    /// never sets. Verified against `khipu-client-android` rather than inferred.
+    ///
+    /// Unlike Android, this does NOT go looking for a cached location first. There, declining
+    /// still queries `fusedLocationClient.lastLocation`, so a previously granted permission
+    /// makes it send real coordinates after the person just refused. Matching the intent
+    /// rather than that consequence is deliberate.
+    @MainActor
+    func declineGeolocation() {
+        print("Geolocation declined: reporting no location so the operation can continue.")
+        uiState.geolocationRequested = false
+        uiState.geolocationAcquired = true
+        sendGeolocationResponse(latitude: nil, longitude: nil, accuracy: nil, errorCode: nil)
+    }
     
     @MainActor
     func handleAuthStatusChange(_ status: CLAuthorizationStatus) {
