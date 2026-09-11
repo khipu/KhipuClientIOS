@@ -21,7 +21,7 @@ struct LocationAccessRequestComponent: View {
                             UIApplication.shared.open(url)
                         }
                     },
-                    declineButton: { viewModel.uiState.returnToApp = true }
+                    declineButton: { viewModel.declineGeolocation() }
                 )
             case .notDetermined:
                 if viewModel.uiState.geolocationRequested {
@@ -37,7 +37,7 @@ struct LocationAccessRequestComponent: View {
                                 viewModel.requestLocation()
                                 viewModel.uiState.geolocationAccessDeclinedAtWarningView = false
                             },
-                            declineButton: { viewModel.uiState.returnToApp = true }
+                            declineButton: { viewModel.declineGeolocation() }
                         )
                     } else {
                         LocationRequestWarningView(
@@ -63,7 +63,7 @@ struct LocationAccessRequestComponent: View {
                             UIApplication.shared.open(url)
                         }
                     },
-                    declineButton: { viewModel.uiState.returnToApp = true }
+                    declineButton: { viewModel.declineGeolocation() }
                 )
             }
         }

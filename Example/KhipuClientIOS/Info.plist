@@ -68,10 +68,6 @@
 	<key>NSFaceIDUsageDescription</key>
 	<string>Unlocks device for password storage</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string></string>	
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
+	<string>Your location is used to check that this payment is being made from the same place as the request to your bank.</string>
 </dict>
 </plist>
