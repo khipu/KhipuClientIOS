@@ -46,7 +46,23 @@ public class KhipuViewModel: ObservableObject {
         )
     }
     
+    /// Called by `CLLocationManagerDelegate.didFailWithError`.
+    ///
+    /// Used to be empty, which hung the payment: `requestLocation()` sets
+    /// `geolocationRequested = true` to show the spinner, and nothing ever turned it
+    /// back off when CoreLocation failed — `handleAuthStatusChange` does nothing for
+    /// `.notDetermined`, and the three places that clear the flag are all `.denied` or
+    /// `.restricted` routes. The operation stayed on the progress screen with no way out.
+    ///
+    /// Answering with null coordinates is the same shape Android uses when it cannot
+    /// obtain a location: a `GeolocationResponse` with everything nil and no `errorCode`.
+    /// The server learns there is no location and the flow moves on.
+    @MainActor
     func handleLocationError(_ error: Error) {
+        print("Location error: \(error). Reporting no location so the operation can continue.")
+        uiState.geolocationRequested = false
+        uiState.geolocationAcquired = true
+        sendGeolocationResponse(latitude: nil, longitude: nil, accuracy: nil, errorCode: nil)
     }
     
     @MainActor
@@ -74,9 +90,13 @@ public class KhipuViewModel: ObservableObject {
                 type: .geolocationResponse
             )
             
+            guard let message = try response.jsonString() else {
+                print("Could not serialize geolocation response")
+                return
+            }
             khipuSocketIOClient?.sendMessage(
                 type: MessageType.geolocationResponse.rawValue,
-                message: try response.jsonString()!
+                message: message
             )
         } catch {
             print("Error sending geolocation response: \(error)")
