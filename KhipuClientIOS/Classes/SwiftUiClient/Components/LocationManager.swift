@@ -33,8 +33,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         viewModel.handleLocationUpdate(location)
     }
     
+    // @MainActor like its sibling delegate callbacks: the handler mutates uiState,
+    // which drives SwiftUI.
+    @MainActor
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location error: \(error)")
         viewModel.handleLocationError(error)
     }
     
